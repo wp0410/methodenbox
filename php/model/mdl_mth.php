@@ -692,7 +692,7 @@ class TeachingMethodSearcher
         $method_list = array();
         $stm1 = $this->db_conn->prepare($this->sql_stmt . $this->sql_order_clause);
         
-        if ($sql_num_params > 0)
+        if ($this->sql_par_num > 0)
         {
             $param_array = array();
             $param_array[] = & $stm1;

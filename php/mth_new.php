@@ -391,7 +391,7 @@ if (! empty($_POST))
                 $(document).ready( function() {
                     $(':file').on('fileselect', function(event, numFiles, label) {
                         var input = $(this).parents('.input-group').find(':text'),
-                            log = numFiles > 1 ? numFiles + ' Dateien ausgew&aumlhlt' : label;
+                            log = numFiles > 1 ? numFiles + ' Dateien ausgew&auml;hlt' : label;
                         if (input.length) {
                             input.val(log);
                         } else {

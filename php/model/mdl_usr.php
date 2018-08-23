@@ -373,4 +373,145 @@ class UserAccount implements JsonSerializable
         }
     }
 }
+
+class UserAccountSearcher
+{
+    private $db_conn;
+    private $sql_stmt;
+    private $sql_where;
+    private $sql_par_types;
+    private $sql_par_values;
+    private $sql_par_num;
+    
+    /**
+     * Constructor
+     * 
+     * @param      mysqli    $db_cn         database connection
+     * @access     public
+     * @return     An initialized UserAccountSearcher instance
+     */
+    public function __construct($db_cn)
+    {
+        $this->db_conn = $db_cn;
+        
+        $this->sql_stmt =
+            'SELECT usr_id, usr_fst_name, usr_lst_name, usr_email, ' .
+            '       date_format(usr_registered,\'%Y-%m-%d %H:%i:%S\'), ' .
+            '       date_format(usr_lastlogin,\'%Y-%m-%d %H:%i:%S\'), ' .
+            '       usr_numinvlogin, usr_locked ' .
+            'FROM   ta_sec_user ';
+            
+        $this->sql_where = 'WHERE usr_id > 0 ';
+        $this->sql_par_types = '';
+        $this->sql_par_values = array();
+        $this->sql_par_num = 0;
+    }
+    
+    public function set_fstname($fst_name)
+    {
+        if (! empty($fst_name))
+        {
+            $this->where = $this->where . ' AND usr_fst_name LIKE ? ';
+            $this->sql_par_types = $this->sql_par_types . 's';
+            $this->sql_par_values[$this->sql_par_num] = '%' . $fst_name . '$';
+            $this->sql_par_num += 1;
+        }
+    }
+    
+    public function set_lstname($lst_name)
+    {
+        if (! empty($lst_name))
+        {
+            $this->where = $this->where . ' AND usr_lst_name LIKE ? ';
+            $this->sql_par_types = $this->sql_par_types . 's';
+            $this->sql_par_values[$this->sql_par_num] = '%' . $lst_name . '$';
+            $this->sql_par_num += 1;
+        }
+    }
+    
+    public function set_email($email)
+    {
+        if (! empty($email))
+        {
+            $this->where = $this->where . ' AND usr_email LIKE ? ';
+            $this->sql_par_types = $this->sql_par_types . 's';
+            $this->sql_par_values[$this->sql_par_num] = '%' . $email . '$';
+            $this->sql_par_num += 1;
+        }
+    }
+    
+    public function set_locked($lck)
+    {
+        if (! empty($lck))
+        {
+            $this->where = $this->where . ' AND usr_locked = ? ';
+            $this->sql_par_types = $this->sql_par_types . 'i';
+            if ($lck == 'LOCKED')
+            {
+                $this->sql_par_values[$this->sql_par_num] = 1;
+            }
+            else
+            {
+                $this->sql_par_values[$this->sql_par_num] = 0;
+            }
+            $this->sql_par_num += 1;
+        }
+    }
+    
+    public function get_result()
+    {
+        $usr_list = array();
+        
+        $stm1 = $this->db_conn->prepare($this->sql_stmt . $this->sql_where);
+        if ($this->sql_par_num > 0)
+        {
+            $param_array = array();
+            $param_array[] = & $stm1;
+            $param_array[] = & $this->sql_par_types;
+            for ($cnt = 0; $cnt < $this->sql_par_num; $cnt++)
+            {
+                $param_array[] = & $this->sql_par_values[$cnt];
+            }
+            call_user_func_array("mysqli_stmt_bind_param", $param_array);
+        }
+        if ($stm1->execute())
+        {
+            $usr_id = 0;
+            $usr_fstname = '';
+            $usr_lstname = '';
+            $usr_email = '';
+            $usr_registered = '';
+            $usr_lastlogin = '';
+            $usr_numinvlogin = 0;
+            $usr_locked = 0;
+
+            'SELECT usr_id, usr_fst_name, usr_lst_name, usr_email, ' .
+            '       date_format(usr_registered,\'%Y-%m-%d %H:%i:%S\'), ' .
+            '       date_format(usr_lastlogin,\'%Y-%m-%d %H:%i:%S\'), ' .
+            '       usr_numinvlogin, usr_locked ' .
+            'FROM   ta_sec_user ';
+
+            $stm1->bind_result($usr_id, $usr_fstname, $usr_lstname, $usr_email, $usr_registered, $usr_lastlogin, $usr_numinvlogin, $usr_locked);
+            
+            while($stm1->fetch() != NULL)
+            {
+                $usr_list[] = 
+                    array(
+                        'usr_id'          => $usr_id,
+                        'usr_fst_name'    => $usr_fstname,
+                        'usr_lst_name'    => $usr_lstname,
+                        'usr_email'       => $usr_email,
+                        'usr_registered'  => $usr_registered,
+                        'usr_lastlogin'   => $usr_lastlogin,
+                        'usr_numinvlogin' => $usr_numinvlogin,
+                        'usr_locked'      => $usr_locked
+                    );
+            }
+        }
+        $stm1->free_result();
+        $stm1->close();
+        
+        return $usr_list;
+    }
+}
 ?>

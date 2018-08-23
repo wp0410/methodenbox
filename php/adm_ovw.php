@@ -14,8 +14,11 @@ session_start();
 
 include 'model/mdl_ssn.php';
 include 'model/mdl_dbs.php';
+include 'model/mdl_par.php';
+include 'model/mdl_usr.php';
 
 // Check for valid user session with role 'ADMIN'
+/*--
 if (empty($_SESSION) || empty($_SESSION['user']))
 {
     die('Client user is not authenticated (0)');
@@ -41,7 +44,20 @@ if (! $usr_sess->validate_admin())
     die('Client user is not authenticated (2)');
 }
 $usr_sess->extend();
+--*/
 
+$usr_list = NULL;
+if (!empty($_POST))
+{
+    $db_conn = db_connect();
+    $usr_src = new UserAccountSearcher($db_conn);
+    $usr_src->set_fstname($_POST['usr_fst_name']);
+    $usr_src->set_lstname($_POST['usr_lst_name']);
+    $usr_src->set_email($_POST['usr_email']);
+    $usr_src->set_locked($_POST['usr_state_lck']);
+    
+    $usr_list = $usr_src->get_result();
+}
 ?>
 <!DOCTYPE html>
 <html lang="de">
@@ -52,6 +68,7 @@ $usr_sess->extend();
         <meta name="author" content="Walter Pachlinger (walter.pachlinger@gmx.at)">
         <link rel="stylesheet" href="/css/bootstrap.min.css">
         <link rel="stylesheet" href="/css/bootstrap-theme.css">
+        <link href="/css/bootstrap-toggle.min.css" rel="stylesheet">
     </head>
 
     <body>
@@ -81,9 +98,71 @@ $usr_sess->extend();
             </div> <!-- container-fluid -->
         </nav>
         
-        
-        
+        <div class="container" role="main">
+            <div class="page-header"><h1><?php echo GlobalParam::$title . ': Registrierte Benutzer Suchen'; ?></h1></div>
+            <div class="row">
+                <form id="s_method_form" method="post" action="/php/mth_res.php" data-toggle="validator" role="form">
+                    <div class="messages"></div>
+                    <div class="controls">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Vorname</th>
+                                    <th>Familienname</th>
+                                    <th>E-Mail Adresse</th>
+                                    <th>Gesperrt</th>
+                                    <th>Letzte Anmeldung</th>
+                                    <th>Anzahl ungültig</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="form-group">
+                                            <input id="usr_fst_name" type="text" name="usr_fst_name" class="form-control" placeholder="Vorname">
+                                        </div> <!-- form-group -->
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <input id="usr_lst_name" type="text" name="usr_lst_name" class="form-control" placeholder="Familienname">
+                                        </div> <!-- form-group -->
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <input id="usr_email" type="text" name="usr_email" class="form-control" placeholder="E-Mail Adresse">
+                                        </div> <!-- form-group -->
+                                    </td>
+                                    <td>
+                                        <!-- div class="btn-group-vertical" data-toggle="buttons"> -->
+                                        <div class="checkbox-inline">
+                                            <!-- label class="btn btn-primary btn-sm"> -->
+                                            <label>
+                                                <!-- input id="usr_state_lck" name="usr_state[]" value="LOCKED" type="checkbox" autocomplete="off"> -->
+                                                <input type="checkbox" data-toggle="toggle" id="usr_state_lck" name="usr_state" value="LOCKED" data-on="Ja" data-off="Nein"
+                                                    data-onstyle="success" data-offstyle="warning">
+                                                <!-- Gesperrt -->
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        <div class="form-group">
+                                            <input type="submit" class="btn btn-primary btn-send" value="Suche Starten">
+                                        </div> <!-- form-group -->
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div> <!-- controls -->
+                </form>
+            </div> <!-- row -->
+            <div class="row">
+                
+            </div> <!-- row -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script src="/js/bootstrap.min.js"></script>
+        <script src="/js/bootstrap-toggle.min.js"></script>
     </body>
 </html>

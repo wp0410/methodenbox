@@ -132,7 +132,7 @@ if (! empty($_POST))
         </nav>
     
         <div class="container" role="main">
-            <div class="page-header"><h1><?php echo $global_title; ?> - Kontakt</h1></div>
+            <div class="page-header"><h1><?php echo GlobalParam::$title . ': Kontakt'; ?></h1></div>
             <div class="row">
                 <form id="contact_form" method="post" action="/php/aux_ctc.php" data-toggle="validator" role="form">
                     <?php 

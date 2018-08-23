@@ -99,7 +99,7 @@ if (! empty($_POST))
 
     if ($success)
     {
-        header('Location: /php/index.php');
+        header('Location: /php/mth_ovw.php');
         exit;
     }
 }
