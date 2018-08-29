@@ -16,9 +16,10 @@ include 'model/mdl_dbs.php';
 include 'model/mdl_ssn.php';
 include 'model/mdl_jnl.php';
 include_once 'model/mdl_par.php';
+include 'frm_gen.php';
 
 // Check for valid user session
-/*
+$usr_is_authenticated = false;
 if (empty($_SESSION) || empty($_SESSION['user']))
 {
     die('Client user is not authenticated (0)');
@@ -37,7 +38,8 @@ if (! $usr_sess->valid())
     die('Client user is not authenticated (1)');
 }
 $usr_sess->extend();
-*/
+$usr_is_authenticated = true;
+
 ?>
 <!DOCTYPE html>
 <html lang="de">
@@ -53,32 +55,8 @@ $usr_sess->extend();
     </head>
 
     <body>
-        <nav class="navbar navbar-default">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="#"><?php echo GlobalParam::$title; ?></a>
-                </div>
-                <div id="navbar" class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav">
-                        <li><a href="#">Methode Suchen</a></li>
-                        <li><a href="/php/mth_new.php">Methode Erstellen</a></li>
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#">Registrieren</a></li>
-                        <li><a href="/php/usr_out.php">Abmelden</a></li>
-                        <li><a href="/php/aux_hlp.php">Hilfe</a></li>
-                        <li><a href="/php/aux_ctc.php">Kontakt</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-      
+        <?php create_menu($usr_is_authenticated, basename($_SERVER['PHP_SELF'])); ?>
+
         <div class="container" role="main">
             <div class="page-header"><h1><?php echo GlobalParam::$title . ': Suchen'; ?></h1></div>
             <div class="row">
@@ -91,6 +69,7 @@ $usr_sess->extend();
                                     <th>Methodenname</th>
                                     <th>Zeit Vorbereitung</th>
                                     <th>Zeit Durchführung</th>
+                                    <th>Jahrgang</th>
                                     <th>Unterrichtsphase</th>
                                     <th>Typ</th>
                                     <th>Sozialform</th>
@@ -107,33 +86,35 @@ $usr_sess->extend();
                                     </td>
                                     <td>
                                         <div class="form-group">
-                                            <input id="mth_prep" type="text" name="mth_prep" class="form-control" pattern="^[0-9]{1,}$">
+                                            <input id="mth_prep" type="text" name="mth_prep" class="form-control" pattern="^[0-9]{1,}$" size="3">
                                         </div>
                                     </td>
                                     <td>
                                         <div class="form-group">
-                                            <input id="mth_exec" type="text" name="mth_exec" class="form-control" pattern="^[0-9]{1,}$">
+                                            <input id="mth_exec" type="text" name="mth_exec" class="form-control" pattern="^[0-9]{1,}$" size="3">
                                         </div>
                                     </td>
                                     <td>
-                                        <!--
+                                        <div class="form-group">
+                                            <input id="mth_exec" type="text" name="mth_age_grp" class="form-control" pattern="^[0-9]{1,}$" maxlength="1" size="3">
+                                        </div>
+                                    </td>
+                                    <td>
                                         <div class="btn-group-vertical" data-toggle="buttons">
-                                            <label class="btn btn-primary btn-xs">
+                                            <label class="btn btn-info btn-sm">
                                                 <input id="mth_phase_entry" name="mth_phase[]" value="E" type="checkbox" autocomplete="off">Einstieg
                                             </label>
-                                            <label class="btn btn-primary btn-xs">
+                                            <label class="btn btn-info btn-sm">
                                                 <input id="mth_phase_info" name="mth_phase[]" value="I" type="checkbox" autocomplete="off"> Information
                                             </label>
-                                            <label class="btn btn-primary btn-xs">
+                                            <label class="btn btn-info btn-sm">
                                                 <input id="mth_phase_assert" name="mth_phase[]" value="S" type="checkbox" autocomplete="off"> Sicherung
                                             </label>
-                                            <label class="btn btn-primary btn-xs">
+                                            <label class="btn btn-info btn-sm">
                                                 <input id="mth_phase_activate" name="mth_phase[]" value="A" type="checkbox" autocomplete="off"> Aktivierung
                                             </label>
                                         </div>
-                                        -->
-                                        <!-- div class="btn-group-vertical"> -->
-                                        <ul class="list-group">
+                                        <!-- ul class="list-group">
                                             <li class="list-group-item">
                                             <label>
                                                 <input type="checkbox" data-toggle="toggle" id="mth_phase_entry" name="mth_phase[]" value="E" data-on="Einstieg" data-off="Einstieg"
@@ -159,33 +140,33 @@ $usr_sess->extend();
                                                 
                                             </label>
                                             </li>
-                                        </ul>
+                                        </ul -->
                                     </td>
                                     <td>
                                         <div class="btn-group-vertical" data-toggle="buttons">
-                                            <label class="btn btn-primary btn-xs">
+                                            <label class="btn btn-info btn-sm">
                                                 <input id="mth_type_exp" name="mth_type[]" value="E" type="checkbox" autocomplete="off">Erkl&auml;rung
                                             </label>
-                                            <label class="btn btn-primary btn-xs">
+                                            <label class="btn btn-info btn-sm">
                                                 <input id="mth_type_instr" name="mth_type[]" value="I" type="checkbox" autocomplete="off"> Instruktion
                                             </label>
-                                            <label class="btn btn-primary btn-xs">
+                                            <label class="btn btn-info btn-sm">
                                                 <input id="mth_type_example" name="mth_type[]" value="B" type="checkbox" autocomplete="off"> Beispiel
                                             </label>
                                         </div>
                                     </td>
                                     <td>
                                         <div class="btn-group-vertical" data-toggle="buttons">
-                                            <label class="btn btn-primary btn-xs">
+                                            <label class="btn btn-info btn-sm">
                                                 <input id="mth_soc_E" name="mth_soc[]" value="E" type="checkbox" autocomplete="off">Einzelarbeit
                                             </label>
-                                            <label class="btn btn-primary btn-xs">
+                                            <label class="btn btn-info btn-sm">
                                                 <input id="mth_soc_G" name="mth_soc[]" value="G" type="checkbox" autocomplete="off"> Gruppenarbeit
                                             </label>
-                                            <label class="btn btn-primary btn-xs">
+                                            <label class="btn btn-info btn-sm">
                                                 <input id="mth_soc_K" name="mth_soc[]" value="K" type="checkbox" autocomplete="off"> Klasse
                                             </label>
-                                            <label class="btn btn-primary btn-xs">
+                                            <label class="btn btn-info btn-sm">
                                                 <input id="mth_soc_P" name="mth_soc[]" value="P" type="checkbox" autocomplete="off"> Partnerarbeit
                                             </label>
                                         </div>

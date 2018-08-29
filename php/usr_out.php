@@ -41,6 +41,6 @@ $usr_session->destroy();
 unset($_SESSION['user']);
 session_destroy();
     
-header('Location: /index.html');
+header('Location: /php/app_ovw.php');
 exit;
 ?>

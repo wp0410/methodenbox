@@ -34,4 +34,26 @@ function db_connect()
         return $db_conn;
     }
 }
+
+/**
+ * Executes a non-select SQL statement with one parameter
+ * 
+ * @param          $db_conn       Database connection
+ * @param          $stmt          SQL statement to be executed
+ * @param          $par_type      Type of the single parameter
+ * @param          $par_value     Value of the single parameter
+ * 
+ * @return         TRUE           Success
+ * @return         FALSE          Error executing the statement
+ */
+function db_execute_stmt_one_param($db_conn, $stmt, $par_type, $par_value)
+{
+    $sql_stmt = $db_conn->prepare($stmt);
+    $sql_stmt->bind_param($par_type, $par_value);
+    $result = $sql_stmt->execute();
+    $sql_stmt->free_result();
+    $sql_stmt->close();
+    
+    return $result;
+}
 ?>

@@ -16,6 +16,7 @@ include 'model/mdl_usr.php';
 include 'model/mdl_jnl.php';
 include_once 'model/mdl_dbs.php';
 include_once 'model/mdl_par.php';
+include 'frm_gen.php';
 
 $success = false;
 $db_conn = db_connect();
@@ -110,141 +111,110 @@ else
 ?>
 <!DOCTYPE html>
 <html lang="de">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
-    <meta name="description" content="Ilse Pachlinger: Sammlung von Unterrichtsmethoden">
-    <meta name="author" content="Walter Pachlinger (walter.pachlinger@gmx.at)">
-
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/bootstrap-theme.css">
-    <script src='https://www.google.com/recaptcha/api.js'></script>
-  </head>
-
-  <body>
-    <nav class="navbar navbar-default">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#"><?php echo GlobalParam::$title; ?></a>
-        </div>
-        <div id="navbar" class="collapse navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li><a href="#">Methode Suchen</a></li>
-            <li><a href="#">Methode Erstellen</a></li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="/php/usr_new.php">Registrieren</a></li>
-            <li><a href="/php/usr_lin.php">Anmelden</a></li>
-            <li><a href="/php/aux_hlp.php">Hilfe</a></li>
-            <li><a href="/php/aux_ctc.php">Kontakt</a></li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-    
-    <div class="container" role="main">
-      <div class="page-header"><h1><?php echo GlobalParam::$title . ': Benutzerregistrierung'; ?></h1></div>
-
-      <div class="row">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="Ilse Pachlinger: Sammlung von Unterrichtsmethoden">
+        <meta name="author" content="Walter Pachlinger (walter.pachlinger@gmx.at)">
         
-        <form data-toggle="validator" id="register_form" method="post" action="/php/usr_new.php" role="form">
-          
-          <?php 
-            if ($success)
-            { 
-              echo '<div class="messages"></div>'; 
-            }
-            else
-            {
-              echo '<div class="messages"><div class="alert alert-' . $responseArray['type'] . '" role="alert">' . $responseArray['message'] . '</div></div>';
-            }
-          ?>
-          <div class="controls">
-            <div class="col-md-5">
-              
-              <div class="form-group" id="reg_fst_name">
-                <label for="user_fst_name">Vorname *</label>
-                <?php
-                  if ($success || empty($_POST) || empty($_POST['user_fst_name']))
-                  {
-                    echo '<input id="user_fst_name" type="text" name="user_fst_name" class="form-control" placeholder="Vorname" required>';
-                  }
-                  else 
-                  {
-                    echo '<input id="user_fst_name" type="text" name="user_fst_name" class="form-control" value="' . $_POST['user_fst_name'] . '" required>';
-                  }
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/bootstrap-theme.css">
+        <script src='https://www.google.com/recaptcha/api.js'></script>
+    </head>
+    <body>
+        <?php create_menu(false, basename($_SERVER['PHP_SELF'])); ?>
+    
+        <div class="container" role="main">
+            <div class="page-header"><h1><?php echo GlobalParam::$title . ': Benutzerregistrierung'; ?></h1></div>
+            <div class="row">
+                <form data-toggle="validator" id="register_form" method="post" action="/php/usr_new.php" role="form">
+                <?php 
+                    if ($success)
+                    { 
+                        echo '<div class="messages"></div>'; 
+                    }
+                    else
+                    {
+                        echo '<div class="messages"><div class="alert alert-' . $responseArray['type'] . '" role="alert">' . $responseArray['message'] . '</div></div>';
+                    }
                 ?>
-                <div class="help-block with-errors"></div>
-              </div>
-              
-              <div class="form-group" id="reg_lst_name">
-                <label for="user_lst_name">Nachname *</label>
-                <?php
-                  if ($success || empty($_POST) || empty($_POST['user_lst_name']))
-                  {
-                    echo '<input id="user_lst_name" type="text" name="user_lst_name" class="form-control" placeholder="Nachname" required>';
-                  }
-                  else
-                  {
-                    echo '<input id="user_lst_name" type="text" name="user_lst_name" class="form-control" value="' . $_POST['user_lst_name'] . '" required>';
-                  }
-                ?>
-                <div class="help-block with-errors"></div>
-              </div>
-              
-              <div class="form-group" id="reg_email">
-                <label for="user_email">E-Mail Adresse *</label>
-                <?php
-                  if ($success || empty($_POST) || empty($_POST['user_email']))
-                  {
-                    echo '<input id="user_email" type="email" name="user_email" class="form-control" placeholder="E-Mail Adresse" required>';
-                  }
-                  else
-                  {
-                    echo '<input id="user_email" type="email" name="user_email" class="form-control" value="' . $_POST['user_email'] . '" required>';
-                  }
-                ?>
-                <div class="help-block with-errors"></div>
-              </div> <!-- form-group -->
-              
-              <div class="form-group" id="reg_pwd">
-                <label for="user_pwd">Passwort *</label>
-                <input id="user_pwd" type="password" name="user_pwd" class="form-control" required>
-                <div class="help-block with-errors"></div>
-              </div> <!-- form-group -->
-              
-              <div class="form-group" id="reg_pwd_conf">
-                <label for="user_pwd_conf">Passwort Bestätigung *</label>
-                <input id="user_pwd_conf" type="password" name="user_pwd_conf" class="form-control" required data-match="#user_pwd" 
-                  data-match-error="Passwort Bestätigung stimmt nicht mit dem Passwort überein">
-                <div class="help-block with-errors"></div>
-              </div> <!-- form-group -->
-
-              <div class="g-recaptcha" data-sitekey="<?php echo GlobalParam::$captcha_sitekey; ?>"></div>
-              
-              <div class="form-group" id="login_submit">
-                <input type="submit" class="btn btn-primary btn-send" value="Bestätigen">
-              </div><!-- form-group -->
-              
-              <div class="form-group">
-                <p class="text-muted"><strong>*</strong>Pflichtfelder</p>
-              </div>
-            </div> <!-- col-md-5 -->
-          </div> <!-- controls -->
-        </form>
-        
-      </div> <!-- row -->
-    </div> <!-- container -->
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
-    <script src="/js/validator.js"></script>
-  </body>
+                    <div class="controls">
+                        <div class="col-md-5">
+                            <div class="form-group" id="reg_fst_name">
+                                <label for="user_fst_name">Vorname *</label>
+                                <?php
+                                    if ($success || empty($_POST) || empty($_POST['user_fst_name']))
+                                    {
+                                        echo '<input id="user_fst_name" type="text" name="user_fst_name" class="form-control" placeholder="Vorname" required>';
+                                    }
+                                    else 
+                                    {
+                                        echo '<input id="user_fst_name" type="text" name="user_fst_name" class="form-control" value="' . $_POST['user_fst_name'] . '" required>';
+                                    }
+                                ?>
+                                <div class="help-block with-errors"></div>
+                            </div>
+                            
+                            <div class="form-group" id="reg_lst_name">
+                                <label for="user_lst_name">Nachname *</label>
+                                <?php
+                                    if ($success || empty($_POST) || empty($_POST['user_lst_name']))
+                                    {
+                                        echo '<input id="user_lst_name" type="text" name="user_lst_name" class="form-control" placeholder="Nachname" required>';
+                                    }
+                                    else
+                                    {
+                                        echo '<input id="user_lst_name" type="text" name="user_lst_name" class="form-control" value="' . $_POST['user_lst_name'] . '" required>';
+                                    }
+                                    ?>
+                                <div class="help-block with-errors"></div>
+                            </div>
+                            
+                            <div class="form-group" id="reg_email">
+                                <label for="user_email">E-Mail Adresse *</label>
+                                <?php
+                                    if ($success || empty($_POST) || empty($_POST['user_email']))
+                                    {
+                                        echo '<input id="user_email" type="email" name="user_email" class="form-control" placeholder="E-Mail Adresse" required>';
+                                    }
+                                    else
+                                    {
+                                        echo '<input id="user_email" type="email" name="user_email" class="form-control" value="' . $_POST['user_email'] . '" required>';
+                                    }
+                                ?>
+                                <div class="help-block with-errors"></div>
+                            </div> <!-- form-group -->
+                            
+                            <div class="form-group" id="reg_pwd">
+                                <label for="user_pwd">Passwort *</label>
+                                <input id="user_pwd" type="password" name="user_pwd" class="form-control" required>
+                                <div class="help-block with-errors"></div>
+                            </div> <!-- form-group -->
+                            
+                            <div class="form-group" id="reg_pwd_conf">
+                                <label for="user_pwd_conf">Passwort Bestätigung *</label>
+                                <input id="user_pwd_conf" type="password" name="user_pwd_conf" class="form-control" required data-match="#user_pwd" 
+                                data-match-error="Passwort Bestätigung stimmt nicht mit dem Passwort überein">
+                                <div class="help-block with-errors"></div>
+                            </div> <!-- form-group -->
+                            
+                            <div class="g-recaptcha" data-sitekey="<?php echo GlobalParam::$captcha_sitekey; ?>"></div>
+                            
+                            <div class="form-group" id="login_submit">
+                                <input type="submit" class="btn btn-primary btn-send" value="Bestätigen">
+                                </div><!-- form-group -->
+                            
+                            <div class="form-group">
+                                <p class="text-muted"><strong>*</strong>Pflichtfelder</p>
+                            </div>
+                        </div> <!-- col-md-5 -->
+                    </div> <!-- controls -->
+                </form>
+            </div> <!-- row -->
+        </div> <!-- container -->
+    
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="/js/bootstrap.min.js"></script>
+        <script src="/js/validator.js"></script>
+    </body>
 </html>

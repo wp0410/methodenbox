@@ -5,7 +5,7 @@
 //  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this 
 //  file except in compliance with the License. You may obtain a copy of the License at
 //      http://www.apache.org/licenses/LICENSE-2.0
-//  Unless required by applicable law or agreed to in writing, softwaredistributed under 
+//  Unless required by applicable law or agreed to in writing, software distributed under 
 //  the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF 
 //  ANY KIND, either express or implied. See the License for the specific language 
 //  governing permissions and limitations under the License.
@@ -17,8 +17,10 @@ include 'model/mdl_mth.php';
 include 'model/mdl_ssn.php';
 include 'model/mdl_jnl.php';
 include_once 'model/mdl_par.php';
+include 'frm_gen.php';
 
 // Check for valid user session
+$usr_is_authenticated = false;
 if (empty($_SESSION) || empty($_SESSION['user']))
 {
     die('Client user is not authenticated (0)');
@@ -39,16 +41,23 @@ if (! $usr_sess->valid())
     $jnl_entry->store();
     die('Client user is not authenticated (1)');
 }
+$usr_sess->extend();
+$usr_is_authenticated = true;
 
 if (! empty($_POST))
 {
-    $method = new TeachingMethod($db_conn);
+    $method = new TeachingMethod($db_conn, $usr_sess->usr_id);
     $method->mth_name = $_POST['mth_name'];
     $method->mth_topic = $_POST['mth_topic'];
+    $method->mth_summary = $_POST['mth_summary'];
+    if (! empty($_POST['mth_age_grp']))
+    {
+      $method->mth_age_grp = $_POST['mth_age_grp'];
+    }
     
     $method->set_phase($_POST['mth_phase']);
     $method->set_type($_POST['mth_type']);
-    $method->mth_socform = $_POST['mth_soc'];
+    $method->set_soc_form($_POST['mth_soc']);
 
     $method->mth_prep_min = (int)$_POST['mth_prep_min'];
     $method->mth_prep_max = $method->mth_prep_min;
@@ -108,32 +117,8 @@ if (! empty($_POST))
     </head>
 
     <body>
-        <nav class="navbar navbar-default">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="#"><?php echo GlobalParam::$title; ?></a>
-                </div>
-                <div id="navbar" class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav">
-                        <li><a href="/php/mth_src.php">Methode Suchen</a></li>
-                        <li><a href="#">Methode Erstellen</a></li>
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#">Registrieren</a></li>
-                        <li><a href="/php/usr_out.php">Abmelden</a></li>
-                        <li><a href="/php/aux_hlp.php">Hilfe</a></li>
-                        <li><a href="/php/aux_ctc.php">Kontakt</a></li>
-                    </ul>
-                </div>
-            </div> <!-- container-fluid -->
-        </nav>
-    
+        <?php create_menu($usr_is_authenticated, basename($_SERVER['PHP_SELF'])); ?>
+
         <div class="container" role="main">
             <div class="page-header"><h1><?php echo GlobalParam::$title . ':   Neue Methode Erstellen'; ?></h1></div>
         
@@ -174,9 +159,9 @@ if (! empty($_POST))
                             <!-- Fachbereich -->
                             <div class="form-group">
                                 <ul class="list-group list-inline">
-                                    <li class="col-md-3"><h4><span class="label label-primary">Fachbereich</span></h4></li>    
+                                    <li class="col-md-3"><h4><span class="label label-primary">Fachbereich *</span></h4></li>    
                                     <li class="col-md-5">
-                                        <input id="mth_topic" type="text" name="mth_topic" class="form-control" placeholder="Fachbereich" />
+                                        <input id="mth_topic" type="text" name="mth_topic" class="form-control" placeholder="Fachbereich" required/>
                                     </li>
                                     <li>
                                         <div class="help-block with-errors"></div>
@@ -184,6 +169,30 @@ if (! empty($_POST))
                                 </ul>
                             </div>
                             
+                            <div class="form-group">
+                                <ul class="list-group list-inline">
+                                    <li class="col-md-3"><h4><span class="label label-primary">Kurzbeschreibung *</span></h4></li>
+                                    <li>
+                                        <textarea id="mth_summary" name="mth_summary" form="c_method_form" required cols="64" placeholder="Kurzbeschreibung"></textarea>
+                                    </li>
+                                    <li>
+                                        <div class="help-block with-errors"></div>
+                                    </li>
+                                </ul>
+                            </div> <!-- form-group -->
+                            
+                            <div class="form-group">
+                                <ul class="list-group list-inline">
+                                    <li class="col-md-3"><h4><span class="label label-primary">Jahrgang</span></h4></li>
+                                    <li class="col-md-1">
+                                        <input type="number" id="mth_age_grp" name="mth_age_grp" class="form-control" min="1" max="5">
+                                    </li>
+                                    <li>
+                                        <div class="help-block with-errors"></div>
+                                    </li>
+                                </ul>
+                            </div>
+
                             <!-- Preparation Time -->
                             <ul class="list-group list-inline">
                                 <li class="col-md-3"><h4><span class="label label-primary">Zeit Vorbereitung Lehrperson</span></h4></li>
@@ -251,15 +260,15 @@ if (! empty($_POST))
                                     <li class="col-md-3"><h4><span class="label label-primary">Typ</span></h4></li>
                                     <li class="list-group-item">
                                         <label for="mth_type_exp">Erkl&auml;rung</label>
-                                        <input id="mth_type_exp" type="checkbox" name="mth_type[]" value="E">
+                                        <input type="checkbox" id="mth_type_exp" name="mth_type[]" value="E">
                                     </li>
                                     <li class="list-group-item">
                                         <label for="mth_type_instr">Instruktion</label>
-                                        <input id="mth_type_instr" type="checkbox" name="mth_type[]" value="I">
+                                        <input type="checkbox" id="mth_type_instr" name="mth_type[]" value="I">
                                     </li>
                                     <li class="list-group-item">
                                         <label for="mth_type_example">Beispiel</label>
-                                        <input id="mth_type_example" type="checkbox" name="mth_type[]" value="B">
+                                        <input type="checkbox" id="mth_type_example" name="mth_type[]" value="B">
                                     </li>
                                 </ul> <!-- list-group -->
                             </div> <!-- form-group -->
@@ -267,22 +276,22 @@ if (! empty($_POST))
                             <!-- Sozialform -->
                             <div class="form-group">
                                 <ul class="list-group list-inline">
-                                    <li class="col-md-3"><h4><span class="label label-primary">Sozialform*</span></h4></li>
+                                    <li class="col-md-3"><h4><span class="label label-primary">Sozialform</span></h4></li>
                                     <li class="list-group-item">
                                         <label for="mth_soc_E">Einzelarbeit</label>
-                                        <input type="radio" id="mth_soc_E" name="mth_soc" value="E" checked>
+                                        <input type="checkbox" id="mth_soc_E" name="mth_soc[]" value="E">
                                     </li>
                                     <li class="list-group-item">
                                         <label for="mth_soc_G">Gruppenarbeit</label>
-                                        <input type="radio" id="mth_soc_G" name="mth_soc" value="G">
+                                        <input type="checkbox" id="mth_soc_G" name="mth_soc[]" value="G">
                                     </li>
                                     <li class="list-group-item">
                                         <label for="mth_soc_K">Klasse</label>
-                                        <input type="radio" id="mth_soc_K" name="mth_soc" value="K">
+                                        <input type="checkbox" id="mth_soc_K" name="mth_soc[]" value="K">
                                     </li>
                                     <li class="list-group-item">
                                         <label for="mth_soc_P">Partnerarbeit</label>
-                                        <input type="radio" id="mth_soc_P" name="mth_soc" value="P">
+                                        <input type="checkbox" id="mth_soc_P" name="mth_soc[]" value="P">
                                     </li>
                                 </ul>
                             </div> <!-- form-group -->
@@ -290,7 +299,7 @@ if (! empty($_POST))
                             <!-- File Selection -->
                             <div class="form-group">
                                 <ul class="list-group list-inline">
-                                    <li class="col-md-3"><h4><span class="label label-primary">Methodenbeschreibung *</span></h4></li>
+                                    <li class="col-md-3"><h4><span class="label label-primary">Methodendatei *</span></h4></li>
                                     <li>
                                         <div class="input-group col-md-8">
                                             <label class="input-group-btn" required>

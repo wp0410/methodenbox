@@ -5,7 +5,7 @@
 //  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this 
 //  file except in compliance with the License. You may obtain a copy of the License at
 //      http://www.apache.org/licenses/LICENSE-2.0
-//  Unless required by applicable law or agreed to in writing, softwaredistributed under 
+//  Unless required by applicable law or agreed to in writing, software distributed under 
 //  the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF 
 //  ANY KIND, either express or implied. See the License for the specific language 
 //  governing permissions and limitations under the License.
@@ -153,6 +153,13 @@ class UserSession implements JsonSerializable
         $this->sess_start_tm = strftime('%Y-%m-%d %H:%M:%S', time());
         $this->sess_end_tm = strftime('%Y-%m-%d %H:%M:%S', time() + GlobalParam::$session_timeout_sec);
         
+        // Clean up old left-over sessions for the same user:
+        $stm_cl = $this->db_conn->prepare("delete from ta_sec_user_session where sess_usr_id = ? and sess_end < now();");
+        $stm_cl->bind_param('i', $this->usr_id);
+        $stm_cl->execute();
+        $stm_cl->close();
+        
+        // Insert the data for the new user session into the database:
         $sql_stmt =
             'insert into ta_sec_user_session( sess_id, sess_start, sess_end, sess_usr_id, sess_usr_name, sess_type ) ' .
             'values( ?, ?, ?, ?, ?, ? ); ';

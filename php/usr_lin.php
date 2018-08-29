@@ -17,6 +17,7 @@ include 'model/mdl_ssn.php';
 include 'model/mdl_jnl.php';
 include 'model/mdl_dbs.php';
 include_once 'model/mdl_par.php';
+include 'frm_gen.php';
   
 //$ajaxRequest = ((!empty($_SERVER['HTTP_X_REQUESTED_WITH'])) && (strolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest'));
 $success = false;
@@ -94,92 +95,65 @@ else
 ?>
 <!DOCTYPE html>
 <html lang="de">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="Ilse Pachlinger: Sammlung von Unterrichtsmethoden">
+        <meta name="author" content="Walter Pachlinger (walter.pachlinger@gmx.at)">
     
-    <meta name="description" content="Ilse Pachlinger: Sammlung von Unterrichtsmethoden">
-    <meta name="author" content="Walter Pachlinger (walter.pachlinger@gmx.at)">
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/bootstrap-theme.css">
+    </head>
 
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/bootstrap-theme.css">
-  </head>
+    <body>
+        <?php create_menu(false, basename($_SERVER['PHP_SELF'])); ?>
 
-  <body>
-    <nav class="navbar navbar-default">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#"><?php echo GlobalParam::$title; ?></a>
-        </div>
-        <div id="navbar" class="collapse navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li><a href="#">Methode Suchen</a></li>
-            <li><a href="#">Methode Erstellen</a></li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="/php/usr_new.php">Registrieren</a></li>
-            <li><a href="#">Anmelden</a></li>
-            <li><a href="/php/aux_hlp.php">Hilfe</a></li>
-            <li><a href="/php/aux_ctc.php">Kontakt</a></li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+        <div class="container" role="main">
+            <div class="page-header"><h1><?php echo GlobalParam::$title . ': Anmelden'; ?></h1></div>
     
-    <div class="container" role="main">
-      <div class="page-header"><h1><?php echo GlobalParam::$title . ': Anmelden'; ?></h1></div>
-
-      <div class="row">
-        <form id="login_form" method="post" action="/php/usr_lin.php" data-toggle="validator" role="form">
-          
-          <?php 
-            if ($success)
-            { 
-              echo '<div class="messages"></div>'; 
-            }
-            else
-            {
-              echo '<div class="messages"><div class="alert alert-danger" role="alert">' . $responseArray['message'] . '</div></div>';
-            }
-          ?>
-          
-          <div class="controls">
-            <div class="col-md-5">
-              
-              <div class="form-group" id="login_email">
-                <label for="user_email">E-Mail Adresse *</label>
-                <input id="user_email" type="email" name="user_email" class="form-control" placeholder="E-Mail Adresse" required>
-                <div class="help-block with-errors"></div>
-              </div> <!-- form-group -->
-              
-              <div class="form-group" id="login_pwd">
-                <label for="user_pwd">Passwort *</label>
-                <input id="user_pwd" type="password" name="user_pwd" class="form-control" required>
-                <div class="help-block with-errors"></div>
-              </div> <!-- form-group -->
-              
-              <div class="form-group" id="login_submit">
-                <input type="submit" class="btn btn-primary btn-send" value="Anmelden">
-              </div><!-- form-group -->
-              
-              <div class="form-group">
-                <p class="text-muted"><strong>*</strong>Pflichtfelder</p>
-              </div>
-            </div> <!-- col-md-5 -->
-          </div> <!-- controls -->
-        </form>
-        
-      </div> <!-- row -->
-    </div> <!-- container -->
+            <div class="row">
+                <form id="login_form" method="post" action="/php/usr_lin.php" data-toggle="validator" role="form">
+                    <?php 
+                    if ($success)
+                    { 
+                        echo '<div class="messages"></div>'; 
+                    }
+                    else
+                    {
+                        echo '<div class="messages"><div class="alert alert-danger" role="alert">' . $responseArray['message'] . '</div></div>';
+                    }
+                    ?>
+                    
+                    <div class="controls">
+                        <div class="col-md-5">
+                          
+                            <div class="form-group" id="login_email">
+                                <label for="user_email">E-Mail Adresse *</label>
+                                <input id="user_email" type="email" name="user_email" class="form-control" placeholder="E-Mail Adresse" required>
+                                <div class="help-block with-errors"></div>
+                            </div> <!-- form-group -->
+                            
+                            <div class="form-group" id="login_pwd">
+                                <label for="user_pwd">Passwort *</label>
+                                <input id="user_pwd" type="password" name="user_pwd" class="form-control" required>
+                                <div class="help-block with-errors"></div>
+                            </div> <!-- form-group -->
+                            
+                            <div class="form-group" id="login_submit">
+                                <input type="submit" class="btn btn-primary btn-send" value="Anmelden">
+                            </div><!-- form-group -->
+                            
+                            <div class="form-group">
+                                <p class="text-muted"><strong>*</strong>Pflichtfelder</p>
+                            </div>
+                        </div> <!-- col-md-5 -->
+                    </div> <!-- controls -->
+                </form>
+            </div> <!-- row -->
+        </div> <!-- container -->
     
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
-    <script src="/js/validator.js"></script>
-   </body>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="/js/bootstrap.min.js"></script>
+        <script src="/js/validator.js"></script>
+    </body>
 </html>

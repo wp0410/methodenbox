@@ -16,8 +16,10 @@ include 'model/mdl_ssn.php';
 include 'model/mdl_jnl.php';
 include 'model/mdl_mth.php';
 include_once 'model/mdl_par.php';
+include 'frm_gen.php';
 
 // Check for valid user session
+$usr_is_authenticated = false;
 if (empty($_SESSION) || empty($_SESSION['user']))
 {
     die('Client user is not authenticated (0)');
@@ -36,6 +38,7 @@ if (! $usr_sess->valid())
     die('Client user is not authenticated (1)');
 }
 $usr_sess->extend();
+$usr_is_authenticated = true;
 
 $mth_search = new TeachingMethodSearcher($db_conn);
 
@@ -44,6 +47,7 @@ if (! empty($_POST))
     $mth_search->set_mth_name($_POST['mth_name']);
     $mth_search->set_mth_prep($_POST['mth_prep']);
     $mth_search->set_mth_exec($_POST['mth_exec']);
+    $mth_search->set_mth_age_grp($_POST['mth_age_grp']);
     $mth_search->set_mth_topic($_POST['mth_topic']);
     $mth_search->set_mth_phase($_POST['mth_phase']);
     $mth_search->set_mth_type($_POST['mth_type']);
@@ -64,197 +68,210 @@ $method_list = $mth_search->get_result();
         <link rel="stylesheet" href="/css/project.css">
     </head>
     <body>
-        <nav class="navbar navbar-default">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="#"><?php echo GlobalParam::$title; ?></a>
-                </div> <!-- navbar-header -->
-                <div id="navbar" class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav">
-                        <li><a href="/php/mth_src.php">Methode Suchen</a></li>
-                        <li><a href="/php/mth_new.php">Methode Erstellen</a></li>
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#">Registrieren</a></li>
-                        <li><a href="/php/usr_out.php">Abmelden</a></li>
-                        <li><a href="/php/aux_hlp.php">Hilfe</a></li>
-                        <li><a href="/php/aux_ctc.php">Kontakt</a></li>
-                    </ul>
-                </div> <!-- navbar -->
-            </div> <!-- container-fluid -->
-        </nav>
+        <?php create_menu($usr_is_authenticated, basename($_SERVER['PHP_SELF'])); ?>
 
         <div class="container" role="main">
             <div class="page-header"><h1><?php echo GlobalParam::$title . ': Ergebnis der Suche'; ?></h1></div>
-                <div class="row">
-                    <?php
-                        if (count($method_list) == 0)
-                        {
-                            echo '<div class="alert alert-warning" role="alert">';
-                            echo 'Es gibt keine Datens&auml;tze f&uuml;r die eingegebenen Suchkriterien';
-                            echo '</div>';
-                        }
-                    ?>
-                    <form id="r_method_form" method="post" action="/php/mth_src.php" data-toggle="validator" role="form">
-                        <div class="form-group">
-                            <input type="submit" class="btn btn-primary btn-send" value="Neue Suche">
-                        </div> <!-- form-group -->
-                    </form>
+            <div class="row">
+                <?php
+                    if (count($method_list) == 0)
+                    {
+                        echo '<div class="alert alert-warning" role="alert">';
+                        echo 'Es gibt keine Datens&auml;tze f&uuml;r die eingegebenen Suchkriterien';
+                        echo '</div>';
+                    }
+                ?>
+                <form id="r_method_form" method="post" action="/php/mth_src.php" data-toggle="validator" role="form">
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-primary btn-send" value="Neue Suche">
+                    </div> <!-- form-group -->
+                </form>
             
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Methodenname</th>
-                                <th>Zeit Vorbereitung</th>
-                                <th>Zeit Durchf&uuml;hrung</th>
-                                <th>Unterrichtsphase</th>
-                                <th>Typ</th>
-                                <th>Sozialform</th>
-                                <th>Fachbereich</th>
-                                <th>AutorIn</th>
-                                <th>Beschreibung</th>
-                            </tr>
-                        </thead>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Methodenname</th>
+                            <th>Zeit<br>Vorb.</th>
+                            <th>Zeit<br>Durchf.</th>
+                            <th>Jahr-<br>gang</th>
+                            <th>Phase</th>
+                            <th>Typ</th>
+                            <th>Sozialform</th>
+                            <th>Fachbereich</th>
+                            <th>AutorIn</th>
+                            <th>Beliebtheit</th>
+                            <th></th>
+                        </tr>
+                    </thead>
                     <tbody>
                         <?php
-                            $last_id = -1;
-                            $last_fguid = '';
-                            $last_fname = '';
-                            
                             foreach($method_list as $method)
                             {
-                                if ($last_id != $method['mth_id'])
+                                echo '<tr>';
+
+                                // Column: Methodenname
+                                echo '<td><button type="button" class="btn btn-light" data-toggle="popover" data-placement="right" title="Kurzbeschreibung" data-content="' . $method['mth_summary'] . '">';
+                                echo $method['mth_name'];
+                                echo '</button></td>';
+
+                                // Column: Zeit Vorbereitung
+                                if ($method['mth_prep_min'] == $method['mth_prep_max'])
                                 {
-                                    if ($last_id != -1)
-                                    {
-                                        echo '</td><td>';
-                                        echo '<a href="/php/mth_dnl.php?fid=' . $last_id . '&fguid=' . $last_fguid . '" download="' . $last_fname . '" class="btn btn-primary btn-sm role="button">';
-                                        echo '<span class="glyphicon glyphicon-file" aria-hidden="true"></span> Datei Laden</a>';
-                                        echo '</td></tr>';
-                                    }
-                                    $last_id = $method['mth_id'];
-                                    $last_fguid = $method['mth_att_guid'];
-                                    $last_fname = $method['mth_att_name'];
+                                    echo '<td>' . $method['mth_prep_min'] . '</td>';
+                                }
+                                else 
+                                {
+                                    echo '<td>' . $method['mth_prep_min'] . ' - ' . $method['mth_prep_max'] . '</td>';
+                                }
                                 
-                                    echo '<tr>';
-                                    echo '<td>' . $method['mth_name'] . '</td>';
-                                    if ($method['mth_prep_min'] == $method['mth_prep_max'])
-                                    {
-                                        echo '<td>' . $method['mth_prep_min'] . '</td>';
-                                    }
-                                    else 
-                                    {
-                                        echo '<td>' . $method['mth_prep_min'] . ' - ' . $method['mth_prep_max'] . '</td>';
-                                    }
-                                    if ($method['mth_exec_min'] == $method['mth_exec_max'])
-                                    {
-                                        echo '<td>' . $method['mth_exec_min'] . '</td>';
-                                    }
-                                    else
-                                    {
-                                        echo '<td>' . $method['mth_exec_min'] . ' - ' . $method['mth_exec_max'] . '</td>';
-                                    }
-                                    // Handle enumerations for mth_phase
-                                    echo '<td>';
-                                    $count = 0;
-                                    if (stristr($method['mth_phase'], 'E'))
-                                    {
-                                        if ($count > 0) { echo '<br>'; }
-                                        echo '<span class="label label-primary">Einstieg</span>';
-                                        $count += 1;
-                                    }
-                                    if (stristr($method['mth_phase'], 'I'))
-                                    {
-                                        if ($count > 0) { echo '<br>'; }
-                                        echo '<span class="label label-primary">Information</span>';
-                                        $count += 1;
-                                    }
-                                    if (stristr($method['mth_phase'], 'S'))
-                                    {
-                                        if ($count > 0) { echo '<br>'; }
-                                        echo '<span class="label label-primary">Sicherung</span>';
-                                        $count += 1;
-                                    }
-                                    if (stristr($method['mth_phase'], 'A'))
-                                    {
-                                        if ($count > 0) { echo '<br>'; }
-                                        echo '<span class="label label-primary">Aktivierung</span>';
-                                        $count += 1;
-                                    }
-                                    echo '</td>';
-                            
-                                    // Handle "Unterrichtstyp"                
-                                    echo '<td>';
-                                    $count = 0;
-                                    if (stristr($method['mth_type'], 'E'))
-                                    {
-                                        if ($count > 0) { echo '<br>'; }
-                                        echo '<span class="label label-primary">Erkl&auml;rung</span>';
-                                        $count += 1;
-                                    }
-                                    if (stristr($method['mth_type'], 'I'))
-                                    {
-                                        if ($count > 0) { echo '<br>'; }
-                                        echo '<span class="label label-primary">Instruktion</span>';
-                                        $count += 1;
-                                    }
-                                    if (stristr($method['mth_type'], 'B'))
-                                    {
-                                        if ($count > 0) { echo '<br>'; }
-                                        echo '<span class="label label-primary">Beispiel</span>';
-                                        $count += 1;
-                                    }
-                                    echo '</td>';
-                            
-                                    // Handle "Sozialform"                
-                                    echo '<td>';
-                                    $count = 0;
-                                    if (stristr($method['mth_soc_form'], 'E'))
-                                    {
-                                        if ($count > 0) { echo '<br>'; }
-                                        echo '<span class="label label-primary">Einzelarbeit</span>';
-                                        $count += 1;
-                                    }
-                                    if (stristr($method['mth_soc_form'], 'G'))
-                                    {
-                                        if ($count > 0) { echo '<br>'; }
-                                        echo '<span class="label label-primary">Gruppenarbeit</span>';
-                                        $count += 1;
-                                    }
-                                    if (stristr($method['mth_soc_form'], 'P'))
-                                    {
-                                        if ($count > 0) { echo '<br>'; }
-                                        echo '<span class="label label-primary">Partnerarbeit</span>';
-                                        $count += 1;
-                                    }
-                                    if (stristr($method['mth_soc_form'], 'K'))
-                                    {
-                                        if ($count > 0) { echo '<br>'; }
-                                        echo '<span class="label label-primary">Klasse</span>';
-                                        $count += 1;
-                                    }
-                                    echo '</td>';
-                            
-                                    echo '<td>' . $method['mth_topic'] . '</td>';
-                                    echo '<td>' . $method['mth_auth_name'];
+                                // Column: Zeit Durchfuehrung
+                                if ($method['mth_exec_min'] == $method['mth_exec_max'])
+                                {
+                                    echo '<td>' . $method['mth_exec_min'] . '</td>';
                                 }
                                 else
                                 {
-                                    echo '<br>' . $method['mth_auth_name'];
+                                    echo '<td>' . $method['mth_exec_min'] . ' - ' . $method['mth_exec_max'] . '</td>';
                                 }
-                            }
-                            
-                            if ($last_id != -1)
-                            {
-                                echo '</td><td>';
-                                echo '<a href="/php/mth_dnl.php?fid=' . $last_id . '&fguid=' . $last_fguid . '" download="' . $last_fname . '" class="btn btn-primary btn-sm role="button">';
-                                echo '<span class="glyphicon glyphicon-file" aria-hidden="true"></span> Datei Laden</a>';
+                                
+                                // Column: Jahrgang
+                                if ($method['mth_age_grp'] == 0)
+                                {
+                                    echo '<td></td>';
+                                }
+                                else
+                                {
+                                    echo '<td>' . $method['mth_age_grp'] . '</td>';
+                                }
+                                
+                                // Column: Unterrichtsphase
+                                echo '<td>';
+                                $count = 0;
+                                if (stristr($method['mth_phase'], 'E'))
+                                {
+                                    if ($count > 0) { echo '<br>'; }
+                                    echo '<span class="label label-primary">Einstieg</span>';
+                                    $count += 1;
+                                }
+                                if (stristr($method['mth_phase'], 'I'))
+                                {
+                                    if ($count > 0) { echo '<br>'; }
+                                    echo '<span class="label label-primary">Information</span>';
+                                    $count += 1;
+                                }
+                                if (stristr($method['mth_phase'], 'S'))
+                                {
+                                    if ($count > 0) { echo '<br>'; }
+                                    echo '<span class="label label-primary">Sicherung</span>';
+                                    $count += 1;
+                                }
+                                if (stristr($method['mth_phase'], 'A'))
+                                {
+                                    if ($count > 0) { echo '<br>'; }
+                                    echo '<span class="label label-primary">Aktivierung</span>';
+                                    $count += 1;
+                                }
+                                echo '</td>';
+                        
+                                // Column: Unterrichtstyp              
+                                echo '<td>';
+                                $count = 0;
+                                if (stristr($method['mth_type'], 'E'))
+                                {
+                                    if ($count > 0) { echo '<br>'; }
+                                    echo '<span class="label label-primary">Erkl&auml;rung</span>';
+                                    $count += 1;
+                                }
+                                if (stristr($method['mth_type'], 'I'))
+                                {
+                                    if ($count > 0) { echo '<br>'; }
+                                    echo '<span class="label label-primary">Instruktion</span>';
+                                    $count += 1;
+                                }
+                                if (stristr($method['mth_type'], 'B'))
+                                {
+                                    if ($count > 0) { echo '<br>'; }
+                                    echo '<span class="label label-primary">Beispiel</span>';
+                                    $count += 1;
+                                }
+                                echo '</td>';
+                        
+                                // Column: Sozialform
+                                echo '<td>';
+                                $count = 0;
+                                if (stristr($method['mth_soc_form'], 'E'))
+                                {
+                                    if ($count > 0) { echo '<br>'; }
+                                    echo '<span class="label label-primary">Einzelarbeit</span>';
+                                    $count += 1;
+                                }
+                                if (stristr($method['mth_soc_form'], 'G'))
+                                {
+                                    if ($count > 0) { echo '<br>'; }
+                                    echo '<span class="label label-primary">Gruppenarbeit</span>';
+                                    $count += 1;
+                                }
+                                if (stristr($method['mth_soc_form'], 'P'))
+                                {
+                                    if ($count > 0) { echo '<br>'; }
+                                    echo '<span class="label label-primary">Partnerarbeit</span>';
+                                    $count += 1;
+                                }
+                                if (stristr($method['mth_soc_form'], 'K'))
+                                {
+                                    if ($count > 0) { echo '<br>'; }
+                                    echo '<span class="label label-primary">Klasse</span>';
+                                    $count += 1;
+                                }
+                                echo '</td>';
+                        
+                                // Column: Fachbereich
+                                echo '<td>' . $method['mth_topic'] . '</td>';
+                                
+                                // Column: Autoring
+                                echo '<td>' . $method['mth_auth_name'] . '</td>';
+                                
+                                // Column: Bewertung
+                                echo '<td>';
+                                if (($method['rtg_count'] != 0) || ($method['dld_count'] != 0))
+                                {
+                                    if ($method['rtg_count'] != 0)
+                                    {
+                                        $rtg_avg = round($method['rtg_sum'] / $method['rtg_count'], 1, PHP_ROUND_HALF_UP);
+                                        //echo '    <span class="badge badge-primary">Bewertung: ' . $rtg_avg . '</span>';
+                                        
+                                        if ($method['rtg_count'] == 1)
+                                        {
+                                            echo '<span class="badge badge-primary">' . $method['rtg_count'] . ' Bewertung: ' . $rtg_avg . '</span>';
+                                        }
+                                        else
+                                        {
+                                            echo '<span class="badge badge-primary">' . $method['rtg_count'] . ' Bewertungen: ' . $rtg_avg . '</span>';
+                                        }
+                                    }
+                                    if ($method['dld_count'] != 0)
+                                    {
+                                        if ($method['rtg_count'] != 0)
+                                        {
+                                            echo '<br>';
+                                        }
+                                        
+                                        if ($method['dld_count'] == 1)
+                                        {
+                                            echo '<span class="badge badge-primary">' . $method['dld_count'] . ' Download</span>';
+                                        }
+                                        else
+                                        {
+                                            echo '<span class="badge badge-primary">' . $method['dld_count'] . ' Downloads</span>';
+                                        }
+                                    }
+                                }
+                                echo '</td>';
+
+                                // Column: Beschreibung
+                                echo '<td>';
+                                echo '<a href="/php/mth_dnl.php?fid=' . $method['mth_id'] . '&fguid=' . $method['mth_att_guid'] . '" download="' . $method['mth_att_name'] . '" class="btn btn-primary btn-sm role="button">';
+                                echo '<span class="glyphicon glyphicon-file" aria-hidden="true"></span>Datei</a>';
                                 echo '</td></tr>';
                             }
                         ?>
@@ -266,5 +283,15 @@ $method_list = $mth_search->get_result();
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script src="/js/bootstrap.min.js"></script>
         <script src="/js/validator.js"></script>
+        <script>
+            /* global $ */
+            $(function () {
+                $('[data-toggle="popover"]').popover()
+            })
+
+            $('.popover-dismiss').popover({
+                trigger: 'focus'
+            })
+        </script>
     </body>
 </html>

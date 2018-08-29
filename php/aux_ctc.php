@@ -14,31 +14,31 @@ session_start();
 
 include 'model/mdl_dbs.php';
 include 'model/mdl_ssn.php';
-include 'model/mdl_mlr.php';
+include 'model/mdl_jnl.php';
+include_once 'model/mdl_par.php';
+include 'frm_gen.php';
 
-$success = true;
-$err_msg = array();
-  
-$authenticated = false;
-  
 // Check for valid user session
 if (empty($_SESSION) || empty($_SESSION['user']))
 {
-    $authenticated = false;
+    die('Client user is not authenticated (0)');
 }
-else
+
+$db_conn = db_connect();
+$usr_sess = new UserSession($db_conn);
+$usr_sess->load_by_id($_SESSION['user']);
+
+if (! $usr_sess->valid())
 {
-    $db_conn = db_connect();
-    $usr_sess = new UserSession($db_conn);
-    $usr_sess->load_by_id($_SESSION['user']);
-    
-    $authenticated = $usr_sess->valid();
-    if ($authenticated)
-    {
-        $usr_sess->extend();
-    }
+    $jnl_entry = new JournalEntry($db_conn, $usr_sess->usr_id, $usr_sess->usr_name, 'SESSION.VALIDATE');
+    $jnl_entry->set_jnl_result(301, 'Invalid User Session');
+    $jnl_entry->set_jnl_data(json_encode($usr_sess));
+    $jnl_entry->store();
+    die('Client user is not authenticated (1)');
 }
-    
+$usr_sess->extend();
+$usr_is_authenticated = true;
+
 if (! empty($_POST))
 {
     if ((!empty($_POST['user_fst_name'])) && (!empty($_POST['user_lst_name'])) && (!empty($_POST['user_email'])) && (!empty($_POST['user_text'])))
@@ -96,41 +96,8 @@ if (! empty($_POST))
     </head>
 
     <body>
-        <nav class="navbar navbar-default">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="#"><?php echo $global_title; ?></a>
-                </div> <!-- navbar-header -->
-                <div id="navbar" class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav">
-                        <li><a href= <?php if ($authenticated) { echo '"/php/mth_src.php"'; } else { echo '"#"'; } ?> >Methode Suchen</a></li>
-                        <li><a href= <?php if ($authenticated) { echo '"/php/mth_new.php"'; } else { echo '"#"'; } ?> >Methode Erstellen</a></li>
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href= <?php if ($authenticated) { echo '"#"'; } else { echo '"/php/usr_new.php"'; } ?> >Registrieren</a></li>
-                            <?php 
-                                if ($authenticated) 
-                                { 
-                                    echo '<li><a href="/php/usr_out.php">Abmelden</a></li>'; 
-                                } 
-                                else 
-                                { 
-                                    echo '<li><a href="/php/usr_lin.php">Anmelden</a></li>'; 
-                                } 
-                            ?> 
-                        <li><a href="/php/aux_hlp.php">Hilfe</a></li>
-                        <li><a href="#">Kontakt</a></li>
-                    </ul>
-                </div> <!-- navbar -->
-            </div> <!-- container-fluid -->
-        </nav>
-    
+        <?php create_menu($usr_is_authenticated, basename($_SERVER['PHP_SELF'])); ?>
+        
         <div class="container" role="main">
             <div class="page-header"><h1><?php echo GlobalParam::$title . ': Kontakt'; ?></h1></div>
             <div class="row">

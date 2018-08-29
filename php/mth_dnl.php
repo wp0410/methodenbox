@@ -15,6 +15,7 @@ include 'model/mdl_dbs.php';
 include 'model/mdl_ssn.php';
 include 'model/mdl_jnl.php';
 include 'model/mdl_mth.php';
+include 'model/mdl_sta.php';
 
 // Check for valid user session
 if (empty($_SESSION) || empty($_SESSION['user']))
@@ -52,7 +53,10 @@ else
 
     if ($result->code == 0)
     {
-      echo $mth_desc->get_file_data();
+        $stat = new DownloadStatistics($db_conn, $usr_sess->usr_id, $_GET['fid']);
+        $stat->save();
+        
+        echo $mth_desc->get_file_data();
     }
     else
     {

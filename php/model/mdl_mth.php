@@ -5,7 +5,7 @@
 //  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this 
 //  file except in compliance with the License. You may obtain a copy of the License at
 //      http://www.apache.org/licenses/LICENSE-2.0
-//  Unless required by applicable law or agreed to in writing, softwaredistributed under 
+//  Unless required by applicable law or agreed to in writing, software distributed under 
 //  the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF 
 //  ANY KIND, either express or implied. See the License for the specific language 
 //  governing permissions and limitations under the License.
@@ -61,7 +61,7 @@ class MethodDescription implements JsonSerializable
             'att_mth_id' => $this->att_mth_id,
             'file_guid'  => $this->file_guid,
             'file_name'  => $this->file_name,
-            'file_type'  => $this->file_name,
+            'file_type'  => $this->file_type,
             'loaded'     => $this->loaded,
             'file_data'  => '*****' 
         );
@@ -152,6 +152,9 @@ class TeachingMethod implements JsonSerializable
     public $mth_type;
     public $mth_socform;
     public $mth_authors;
+    public $mth_summary;
+    public $mth_age_grp;
+    private $mth_owner;
     
     private $db_conn;
     private $mth_description;
@@ -160,10 +163,11 @@ class TeachingMethod implements JsonSerializable
      * Constructor
      * 
      * @param      mysqli    $db_cn         database connection
+     * @param      int       $mth_ow        id of current user
      * @access     public
      * @return     An initialized TeachingMethod instance
      */
-    public function __construct($db_cn)
+    public function __construct($db_cn, $mth_ow)
     {
         $this->mth_id = -1;
         $this->db_conn = $db_cn;
@@ -174,8 +178,11 @@ class TeachingMethod implements JsonSerializable
         $this->mth_topic = '';
         $this->mth_type = '';
         $this->mth_socform = '';
+        $this->mth_summary = '';
+        $this->mth_age_grp = '';
         $this->mth_description = new MethodDescription(null);
         $this->authors = array();
+        $this->mth_owner = $mth_ow;
     }
     
     /**
@@ -196,7 +203,10 @@ class TeachingMethod implements JsonSerializable
             'mth_socform' => $this->mth_socform,
             'mth_authors' => $this->mth_authors,
             'mth_topic'   => $this->mth_topic,
-            'mth_descr'   => array('guid' => $this->mth_description->file_guid, 'name' => $this->mth_description->file_name, 'type' => $this->mth_description->file_type)
+            'mth_summary' => $this->mth_summary,
+            'mth_age_grp' => $this->mth_age_grp,
+            'mth_descr'   => array('guid' => $this->mth_description->file_guid, 'name' => $this->mth_description->file_name, 'type' => $this->mth_description->file_type),
+            'mth_owner'   => $this->mth_owner
         );
     }
     
@@ -264,6 +274,23 @@ class TeachingMethod implements JsonSerializable
     }
     
     /**
+     * Sets the social form property of the teaching method
+     * 
+     * @param      array     $sf_list  List of social form short-cuts
+     * @access     public
+     * @return     TRUE      Success
+     * @return     FALSE     Error setting the property
+     */
+    public function set_soc_form($sf_list)
+    {
+        if (! empty($sf_list))
+        {
+            $this->mth_socform = $this->array_to_string($sf_list);
+        }
+        return true;
+    }
+    
+    /**
      * Sets the description file of the teaching method
      * 
      * @param      string    $mth_file Array of description elements for the 
@@ -322,7 +349,7 @@ class TeachingMethod implements JsonSerializable
      */
     private function validate()
     {
-        return true;
+        return ($this->mth_id >= 0);
     }
     
     /**
@@ -375,13 +402,13 @@ class TeachingMethod implements JsonSerializable
         $sql_stmt =
             'insert into ta_mth_method( ' .
                   'mth_name, mth_phase, mth_prep_min, mth_prep_max, mth_exec_min, mth_exec_max, ' .
-                  'mth_topic, mth_type, mth_soc_form ) ' .
-            'values( ?, ?, ?, ?, ?, ?, ?, ?, ? );';
+                  'mth_topic, mth_type, mth_soc_form, mth_summary, mth_age_grp, mth_owner_id ) ' .
+            'values( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? );';
         $stm1 = $this->db_conn->prepare($sql_stmt);
         $stm1->bind_param(
-            'ssiiiisss',
+            'ssiiiissssii',
             $this->mth_name, $this->mth_phase, $this->mth_prep_min, $this->mth_prep_max, $this->mth_exec_min, $this->mth_exec_min,
-            $this->mth_topic, $this->mth_type, $this->mth_socform);
+            $this->mth_topic, $this->mth_type, $this->mth_socform, $this->mth_summary, $this->mth_age_grp, $this->mth_owner);
         $result = $stm1->execute();
         if ($result)
         {
@@ -408,15 +435,19 @@ class TeachingMethod implements JsonSerializable
         $result = true;
         foreach($this->mth_authors as $auth)
         {
-            $stm3->bind_param('iis', $this->mth_id, $mth_seq, $auth);
-            if (! $stm3->execute())
+            $auth_name = trim($auth);
+            if (strlen($auth_name) > 0)
             {
-                $err_code = $stm3->errno;
-                $err_text = $stm3->error;
-                $result = false;
-                break;
+                $stm3->bind_param('iis', $this->mth_id, $mth_seq, $auth_name);
+                if (! $stm3->execute())
+                {
+                    $err_code = $stm3->errno;
+                    $err_text = $stm3->error;
+                    $result = false;
+                    break;
+                }
+                $mth_seq += 1;
             }
-            $mth_seq += 1;
         }
         $stm3->close();
         if (! $result)
@@ -445,6 +476,58 @@ class TeachingMethod implements JsonSerializable
         }
         
         return array('code' => 0, 'text' => 'OK');
+    }
+    
+    /**
+     * Deletes the dependent objects pof a teching method from the database and sets the
+     * status of the record to deleted (1)
+     * 
+     * @access     public
+     * @return     TRUE      Teaching method successfully deleted
+     * @return     FALSE     Error deleting the data from the database
+     */
+    public function delete()
+    {
+        if (! $this->validate())
+        {
+            return false;
+        }
+        
+        if ($this->db_conn->begin_transaction(MYSQLI_TRANS_START_READ_WRITE))
+        {
+            $result = db_execute_stmt_one_param($this->db_conn, 'delete from ta_mth_statistics_rating where rtg_mth_id = ?;', 'i', $this->mth_id);
+            if ($result)
+            {
+                $result = db_execute_stmt_one_param($this->db_conn, 'delete from ta_mth_statistics_download where dld_mth_id = ?;', 'i', $this->mth_id);
+            }
+            if ($result)
+            {
+                $result = db_execute_stmt_one_param($this->db_conn, 'delete from ta_mth_method_author where mth_id = ?;', 'i', $this->mth_id);
+            }
+            if ($result)
+            {
+                $result = db_execute_stmt_one_param($this->db_conn, 'delete from ta_mth_method_attachment where att_mth_id = ?;', 'i', $this->mth_id);
+            }
+            if ($result)
+            {
+                $result = db_execute_stmt_one_param($this->db_conn, 'update ta_mth_method set mth_status = 1 where mth_id = ?;', 'i', $this->mth_id);
+            }
+            
+            if ($result)
+            {
+                $this->db_conn->commit();
+            }
+            else
+            {
+                $this->db_conn->rollback();
+            }
+            
+            return $result;
+        }
+        else
+        {
+            return false;
+        }
     }
 }
 
@@ -477,13 +560,23 @@ class TeachingMethodSearcher
         $this->sql_stmt = 
             'select mth.mth_id, mth.mth_name, mth.mth_phase, mth.mth_prep_min, mth.mth_prep_max, ' .
             '       mth.mth_exec_min, mth.mth_exec_max, mth.mth_topic, mth.mth_type, mth.mth_soc_form, ' .
-            '       mau.mth_seq, mau.mth_auth_name, att.att_guid, att.att_name ' .
-            'from   ta_mth_method mth, ' .
-            '       ta_mth_method_author mau, ' .
-            '       ta_mth_method_attachment att ' .
-            'where  mth.mth_id  = mau.mth_id ' .
-            '  and  mth.mth_id  = att.att_mth_id ';
-        $this->sql_order_clause = ' order by mth_name, mth_id, mth_seq; ';
+            '       mth.mth_age_grp, mth.mth_summary, rtg.rtg_count, rtg.rtg_sum, ' .
+            '       dld.dld_count, dld.dld_last_date, ' .
+            '       mau.mth_auth_name, att.att_guid, att.att_name ' .
+            'from   ta_mth_method mth ' .
+            '       inner join ta_mth_method_attachment att on mth.mth_id = att.att_mth_id ' .
+            '       inner join ( select mth_id, group_concat(mth_auth_name order by mth_seq separator "<br>") as mth_auth_name ' .
+            '                    from ta_mth_method_author ' .
+            '                    group by mth_id ) mau on mth.mth_id = mau.mth_id ' .
+            '       left join  ( select rtg_mth_id, count(1) as rtg_count, sum(rtg_rating) as rtg_sum ' .
+            '                    from ta_mth_statistics_rating ' .
+            '                    group by rtg_mth_id ) rtg on mth.mth_id = rtg.rtg_mth_id ' .
+            '       left join ( select dld_mth_id, count(1) as dld_count, max(dld_date) as dld_last_date' .
+            '                   from ta_mth_statistics_download ' .
+            '                   group by dld_mth_id ) dld on mth.mth_id = dld.dld_mth_id ' .
+            'where  mth.mth_status = 0 ';
+
+        $this->sql_order_clause = ' order by mth_name, mth_id ';
         $this->sql_par_values = array();
         $this->sql_par_types = '';
         $this->sql_par_num = 0;
@@ -561,6 +654,23 @@ class TeachingMethodSearcher
             $this->sql_par_num += 1;
             $this->sql_par_types = $this->sql_par_types . 'i';
             $this->sql_par_values[$this->sql_par_num] = $mth_exec;
+            $this->sql_par_num += 1;
+        }
+    }
+    
+    /**
+     * Sets the search criterion to be compared to the age group of the teaching method
+     * 
+     * @param      integer   $mth_age_grp   Search criterion for age group
+     * @access     public
+     */
+    public function set_mth_age_grp($mth_age_grp)
+    {
+        if (! empty($mth_age_grp))
+        {
+            $this->sql_stmt = $this->sql_stmt . ' and mth.mth_age_grp is not null and mth.mth_age_grp = ? ';
+            $this->sql_par_types = $this->sql_par_types . 'i';
+            $this->sql_par_values[$this->sql_par_num] = $mth_age_grp;
             $this->sql_par_num += 1;
         }
     }
@@ -644,11 +754,13 @@ class TeachingMethodSearcher
             {
                 if ($i == 0)
                 {
-                    $this->sql_stmt = $this->sql_stmt . ' and mth.mth_soc in (?';
+                    // $this->sql_stmt = $this->sql_stmt . ' and mth.mth_soc in (?';
+                    $this->sql_stmt = $this->sql_stmt . ' and (instr(mth.mth_soc_form,?) > 0 ';
                 }
                 else
                 {
-                    $this->sql_stmt = $this->sql_stmt . ',?';
+                    // $this->sql_stmt = $this->sql_stmt . ',?';
+                    $this->sql_stmt = $this->sql_stmt . ' or instr(mth.mth_soc_form,?) > 0 ';
                 }
                 $this->sql_par_types = $this->sql_par_types . 's';
                 $this->sql_par_values[$this->sql_par_num] = $mth_socform[$i];
@@ -716,11 +828,18 @@ class TeachingMethodSearcher
             $mth_phase = '';
             $mth_type = '';
             $mth_soc = '';
-            $mth_seq = 0;
+            $mth_age_grp = 0;
+            $mth_summary = '';
+            $rtg_count = 0;
+            $rtg_sum = 0;
+            $dld_count = 0;
+            $dld_last_date = '';
             $mth_author = '';
             $mth_att_guid = '';
             
-            $stm1->bind_result($mth_id, $mth_name, $mth_phase, $mth_prep_min, $mth_prep_max, $mth_exec_min, $mth_exec_max, $mth_topic, $mth_type, $mth_soc, $mth_seq, $mth_author, $mth_att_guid, $mth_att_name);
+            $stm1->bind_result(
+                $mth_id, $mth_name, $mth_phase, $mth_prep_min, $mth_prep_max, $mth_exec_min, $mth_exec_max, $mth_topic, $mth_type, $mth_soc, 
+                $mth_age_grp, $mth_summary, $rtg_count, $rtg_sum, $dld_count, $dld_last_date, $mth_author, $mth_att_guid, $mth_att_name);
     
             while ($stm1->fetch() != NULL)
             {
@@ -736,7 +855,12 @@ class TeachingMethodSearcher
                         'mth_topic' => $mth_topic,
                         'mth_type' => $mth_type,
                         'mth_soc_form' => $mth_soc,
-                        'mth_seq' => $mth_seq,
+                        'mth_age_grp' => $mth_age_grp,
+                        'mth_summary' => $mth_summary,
+                        'rtg_count' => $rtg_count,
+                        'rtg_sum' => $rtg_sum,
+                        'dld_count' => $dld_count,
+                        'dld_last_date' => $dld_last_date,
                         'mth_auth_name' => $mth_author,
                         'mth_att_guid' => $mth_att_guid,
                         'mth_att_name' => $mth_att_name
@@ -748,6 +872,230 @@ class TeachingMethodSearcher
         $stm1->close();
         
         return $method_list;
+    }
+}
+
+/**
+ * MethodListByDownload      Retrieve all teaching methods downloaded by the current 
+ *                           user but not yet rated
+ * 
+ * @package   MethodListByDownload
+ * @author    Walter Pachlinger (walter.pachlinger@gmx.at)
+ * @version   $Revision: 1.0 $
+ * @access    public
+ */
+class MethodListByDownload
+{
+    private $db_conn;
+    private $usr_id;
+
+    /**
+     * Constructor: creates and initializes the object
+     * 
+     * @param      mysqli    $db_cn         database connection
+     * @param      int       $us_id         Identifier of a user account
+     * @access     public
+     * @return     An initialized MethodListByDownload object
+     */
+    public function __construct($db_cn, $us_id)    
+    {
+        $this->db_conn = $db_cn;
+        $this->usr_id = $us_id;
+    }
+    
+    /**
+     * Executes the select statement based on the given user identification and returns
+     * the list of found teaching methods as an array
+     * 
+     * @access     public
+     * @return     Array of teaching methods that are mapped to an associative array each
+     */
+    public function get_result()
+    {
+        $select_stmt = 
+            'select mth.mth_id, mth.mth_name, mth.mth_phase, mth.mth_prep_min, mth.mth_prep_max, ' .
+            '       mth.mth_exec_min, mth.mth_exec_max, mth.mth_topic, mth.mth_type, mth.mth_soc_form, ' .
+            '       mth.mth_age_grp, mth.mth_summary, ' .
+            '       dld.dld_count, dld.dld_last_date, ' .
+            '       coalesce(rtg.rtg_count,0) rtg_count ' .
+            'from   ta_mth_method mth ' .
+            '       inner join ( select dld_usr_id, dld_mth_id, count(1) as dld_count, max(dld_date) as dld_last_date' .
+            '                    from ta_mth_statistics_download ' .
+            '                    group by dld_mth_id, dld_usr_id ) dld on mth.mth_id = dld.dld_mth_id ' .
+            '       left join  ( select rtg_mth_id, count(1) as rtg_count ' .
+            '                    from ta_mth_statistics_rating ' .
+            '                    group by rtg_mth_id ) rtg on mth.mth_id = rtg.rtg_mth_id ' .
+            'where  mth.mth_status = 0 ' .
+            '  and  dld.dld_usr_id = ? ' .
+            'order by dld_last_date desc;';
+
+
+        $method_list = array();
+        $stm5 = $this->db_conn->prepare($select_stmt);
+        $stm5->bind_param('i', $this->usr_id);
+        if ($stm5->execute())
+        {
+            $mth_id = 0;
+            $mth_name = '';
+            $mth_topic = '';
+            $mth_prep_min = 0;
+            $mth_prep_max = 0;
+            $mth_exec_min = 0;
+            $mth_exec_max = 0;
+            $mth_phase = '';
+            $mth_type = '';
+            $mth_soc = '';
+            $mth_age_grp = 0;
+            $mth_summary = '';
+            $dld_count = 0;
+            $dld_last_date = '';
+            $rtg_count = 0;
+            
+            $stm5->bind_result(
+                $mth_id, $mth_name, $mth_phase, $mth_prep_min, $mth_prep_max, $mth_exec_min, $mth_exec_max, $mth_topic, $mth_type, $mth_soc, 
+                $mth_age_grp, $mth_summary, $dld_count, $dld_last_date, $rtg_count);
+            
+            while($stm5->fetch() != NULL)
+            {
+                $method_list[] = 
+                    array(
+                        'mth_id' => $mth_id,
+                        'mth_name' => $mth_name,
+                        'mth_phase' => $mth_phase,
+                        'mth_prep_min' => $mth_prep_min,
+                        'mth_prep_max' => $mth_prep_max,
+                        'mth_exec_min' => $mth_exec_min,
+                        'mth_exec_max' => $mth_exec_max,
+                        'mth_topic' => $mth_topic,
+                        'mth_type' => $mth_type,
+                        'mth_soc_form' => $mth_soc,
+                        'mth_age_grp' => $mth_age_grp,
+                        'mth_summary' => $mth_summary,
+                        'dld_count' => $dld_count,
+                        'dld_last_date' => $dld_last_date,
+                        'rtg_count' => $rtg_count
+                    );
+                
+            }
+            
+            $stm5->free_result();
+            $stm5->close();
+            
+            return $method_list;
+        }
+    }
+}
+
+/**
+ * MethodListByOwnership     Retrieve all teaching methods that are owned by the current
+ *                           user
+ * 
+ * @package   MethodListByOwnership
+ * @author    Walter Pachlinger (walter.pachlinger@gmx.at)
+ * @version   $Revision: 1.0 $
+ * @access    public
+ */
+class MethodListByOwnership
+{
+    private $db_conn;
+    private $usr_id;
+    
+    /**
+     * Constructor: creates and initializes the object
+     * 
+     * @param      mysqli    $db_cn         database connection
+     * @param      int       $us_id         Identifier of a user account
+     * @access     public
+     * @return     An initialized MethodListByOwnership object
+     */
+    public function __construct($db_cn, $us_id)
+    {
+        $this->db_conn = $db_cn;
+        $this->usr_id = $us_id;
+    }
+    
+    /**
+     * Executes the select statement based on the given user identification and returns
+     * the list of found teaching methods as an array
+     * 
+     * @access     public
+     * @return     Array of teaching methods that are mapped to an associative array each
+     */
+    public function get_result()
+    {
+        $select_stmt = 
+            'select mth.mth_id, mth.mth_name, mth.mth_phase, mth.mth_prep_min, mth.mth_prep_max, ' .
+            '       mth.mth_exec_min, mth.mth_exec_max, mth.mth_topic, mth.mth_type, mth.mth_soc_form, ' .
+            '       mth.mth_age_grp, mth.mth_summary, ' .
+            '       dld.dld_count, dld.dld_last_date, ' .
+            '       coalesce(rtg.rtg_count,0) rtg_count, coalesce(rtg.rtg_sum,0) rtg_sum, ' .
+            '       coalesce(rtg.rtg_sum,0) / (coalesce(rtg.rtg_count,0) + 1) rtg_sort ' .
+            'from   ta_mth_method mth ' .
+            '       left join ( select dld_usr_id, dld_mth_id, count(1) as dld_count, max(dld_date) as dld_last_date' .
+            '                   from ta_mth_statistics_download ' .
+            '                   group by dld_mth_id, dld_usr_id ) dld on mth.mth_id = dld.dld_mth_id ' .
+            '       left join  ( select rtg_mth_id, count(1) as rtg_count, sum(rtg_rating) as rtg_sum ' .
+            '                    from ta_mth_statistics_rating ' .
+            '                    group by rtg_mth_id ) rtg on mth.mth_id = rtg.rtg_mth_id ' .
+            'where  mth.mth_status = 0 and mth.mth_owner_id = ? ' .
+            'order by rtg_sort asc;';
+        
+        $method_list = array();
+        $stm6 = $this->db_conn->prepare($select_stmt);
+        $stm6->bind_param('i', $this->usr_id);
+        if ($stm6->execute())
+        {
+            $mth_id = 0;
+            $mth_name = '';
+            $mth_topic = '';
+            $mth_prep_min = 0;
+            $mth_prep_max = 0;
+            $mth_exec_min = 0;
+            $mth_exec_max = 0;
+            $mth_phase = '';
+            $mth_type = '';
+            $mth_soc = '';
+            $mth_age_grp = 0;
+            $mth_summary = '';
+            $dld_count = 0;
+            $dld_last_date = '';
+            $rtg_count = 0;
+            $rtg_sum = 0;
+            $rtg_sort = 0;
+            
+            $stm6->bind_result(
+                $mth_id, $mth_name, $mth_phase, $mth_prep_min, $mth_prep_max, $mth_exec_min, $mth_exec_max, $mth_topic, $mth_type, $mth_soc, 
+                $mth_age_grp, $mth_summary, $dld_count, $dld_last_date, $rtg_count, $rtg_sum, $rtg_sort);
+            
+            while($stm6->fetch() != NULL)
+            {
+                $method_list[] = 
+                    array(
+                        'mth_id' => $mth_id,
+                        'mth_name' => $mth_name,
+                        'mth_phase' => $mth_phase,
+                        'mth_prep_min' => $mth_prep_min,
+                        'mth_prep_max' => $mth_prep_max,
+                        'mth_exec_min' => $mth_exec_min,
+                        'mth_exec_max' => $mth_exec_max,
+                        'mth_topic' => $mth_topic,
+                        'mth_type' => $mth_type,
+                        'mth_soc_form' => $mth_soc,
+                        'mth_age_grp' => $mth_age_grp,
+                        'mth_summary' => $mth_summary,
+                        'dld_count' => $dld_count,
+                        'dld_last_date' => $dld_last_date,
+                        'rtg_count' => $rtg_count,
+                        'rtg_sum' => $rtg_sum
+                    );
+                
+            }
+            
+            $stm6->free_result();
+            $stm6->close();
+            
+            return $method_list;
+        }
     }
 }
 ?>
