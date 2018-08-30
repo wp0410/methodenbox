@@ -101,15 +101,16 @@ else
         <meta name="description" content="Ilse Pachlinger: Sammlung von Unterrichtsmethoden">
         <meta name="author" content="Walter Pachlinger (walter.pachlinger@gmx.at)">
     
-        <link rel="stylesheet" href="/css/bootstrap.min.css">
-        <link rel="stylesheet" href="/css/bootstrap-theme.css">
+        <!-- link rel="stylesheet" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/bootstrap-theme.css" -->
+        <?php style_sheet_refs(); ?>
     </head>
 
     <body>
         <?php create_menu(false, basename($_SERVER['PHP_SELF'])); ?>
 
         <div class="container" role="main">
-            <div class="page-header"><h1><?php echo GlobalParam::$title . ': Anmelden'; ?></h1></div>
+            <div class="page-header"><h1><?php echo GlobalParam::$app_config['app_title'] . ': Anmelden'; ?></h1></div>
     
             <div class="row">
                 <form id="login_form" method="post" action="/php/usr_lin.php" data-toggle="validator" role="form">
@@ -152,8 +153,9 @@ else
             </div> <!-- row -->
         </div> <!-- container -->
     
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <!-- script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script src="/js/bootstrap.min.js"></script>
-        <script src="/js/validator.js"></script>
+        <script src="/js/validator.js"></script> -->
+        <?php script_refs(); ?>
     </body>
 </html>

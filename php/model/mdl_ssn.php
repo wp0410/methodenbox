@@ -151,7 +151,7 @@ class UserSession implements JsonSerializable
         $this->usr_id = $user_id;
         $this->usr_name = $user_name;
         $this->sess_start_tm = strftime('%Y-%m-%d %H:%M:%S', time());
-        $this->sess_end_tm = strftime('%Y-%m-%d %H:%M:%S', time() + GlobalParam::$session_timeout_sec);
+        $this->sess_end_tm = strftime('%Y-%m-%d %H:%M:%S', time() + GlobalParam::$app_config['session_timeout_sec']);
         
         // Clean up old left-over sessions for the same user:
         $stm_cl = $this->db_conn->prepare("delete from ta_sec_user_session where sess_usr_id = ? and sess_end < now();");
@@ -184,7 +184,7 @@ class UserSession implements JsonSerializable
         {
             return $this->valid;
         }
-        $this->sess_end_tm = strftime('%Y-%m-%d %H:%M:%S', time() + GlobalParam::$session_timeout_sec);
+        $this->sess_end_tm = strftime('%Y-%m-%d %H:%M:%S', time() + GlobalParam::$app_config['session_timeout_sec']);
 
         $sql_stmt =
             'update ta_sec_user_session set sess_end = ? where sess_id = ?; ';

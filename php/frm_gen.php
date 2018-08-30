@@ -51,7 +51,7 @@ function create_menu($usr_is_authenticated, $current_form)
     echo '                <span class="icon-bar"></span>';
     echo '                <span class="icon-bar"></span>';
     echo '            </button>';
-    echo '            <a class="navbar-brand" href="#">' . GlobalParam::$title . '</a>';
+    echo '            <a class="navbar-brand" href="#">' . GlobalParam::$app_config['app_title'] . '</a>';
     echo '        </div>';
     echo '        <div id="navbar" class="collapse navbar-collapse">';
     echo '            <ul class="nav navbar-nav">';
@@ -97,5 +97,86 @@ function create_menu($usr_is_authenticated, $current_form)
     echo '        </div>';
     echo '    </div>';
     echo '</nav>';
+}
+
+function style_sheet_refs()
+{
+    // app_ovw.php:
+    // aux_ctx.php:
+    // mth_adm.php:
+    // mth_new.php:
+    // mth_res.php:
+    // mth_rtg.php:
+    // mth_src.php:
+    // usr_lin.php:
+    // usr_new.php:
+    //    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    //    <link rel="stylesheet" href="/css/bootstrap-theme.css">
+    
+    // mth_adm.php:
+    // mth_new.php:
+    // mth_res.php:
+    // mth_rtg.php:
+    // mth_src.php:
+    //    <link rel="stylesheet" href="/css/project.css">
+
+    // mth_src.php:
+    //    <link rel="stylesheet" href="/css/bootstrap-toggle.min.css">
+
+    echo '<link rel="stylesheet" href="/css/bootstrap.min.css">';
+    echo '<link rel="stylesheet" href="/css/bootstrap-theme.css">';
+    echo '<link rel="stylesheet" href="/css/project.css">';
+    echo '<link rel="stylesheet" href="/css/bootstrap-toggle.min.css">';
+}
+
+function script_refs()
+{
+    // app_ovw.php:
+    // aux_ctx.php:
+    // mth_new.php:
+    // mth_ovw.php:
+    // mth_res.php:
+    // mth_src.php:
+    // usr_lin.php:
+    // usr_new.php:
+    //    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    // app_ovw.php:
+    // aux_ctx.php:
+    // mth_adm.php:
+    // mth_new.php:
+    // mth_ovw.php:
+    // mth_res.php:
+    // mth_rtg.php:
+    // mth_src.php:
+    // usr_lin.php:
+    // usr_new.php:
+    //    <script src="/js/bootstrap.min.js"></script>
+
+    // aux_ctx.php:
+    // mth_adm.php:
+    // mth_new.php:
+    // mth_res.php:
+    // mth_rtg.php:
+    // mth_src.php:
+    // usr_lin.php:
+    // usr_new.php:
+    //    <script src="/js/validator.js"></script>
+
+    // mth_adm.php:
+    // mth_rtg.php:
+    //    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+    // mth_rtg.php:
+    //    <script src="/js/star-rating.js" type="text/javascript"></script>
+
+    // mth_src.php:
+    //    <script src="/js/bootstrap-toggle.min.js"></script>
+
+    echo '<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>';
+    echo '<script src="/js/bootstrap.min.js"></script>';
+    echo '<script src="/js/validator.js"></script>';
+    echo '<script src="/js/star-rating.js" type="text/javascript"></script>';
+    echo '<script src="/js/bootstrap-toggle.min.js"></script>';
 }
 ?>

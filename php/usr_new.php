@@ -5,7 +5,7 @@
 //  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this 
 //  file except in compliance with the License. You may obtain a copy of the License at
 //      http://www.apache.org/licenses/LICENSE-2.0
-//  Unless required by applicable law or agreed to in writing, softwaredistributed under 
+//  Unless required by applicable law or agreed to in writing, software distributed under 
 //  the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF 
 //  ANY KIND, either express or implied. See the License for the specific language 
 //  governing permissions and limitations under the License.
@@ -33,7 +33,7 @@ if (! empty($_POST))
         {
             // Input was validated by Google re-Captcha
             // Get the result from Google
-            $verify_req = 'https://www.google.com/recaptcha/api/siteverify?secret=' . GlobalParam::$captcha_secret . '&response=' . $_POST['g-recaptcha-response'] . '&remoteip=' . $_SERVER['REMOTE_ADDR'];
+            $verify_req = 'https://www.google.com/recaptcha/api/siteverify?secret=' . GlobalParam::$captcha_cnf['secret'] . '&response=' . $_POST['g-recaptcha-response'] . '&remoteip=' . $_SERVER['REMOTE_ADDR'];
             $captcha_res = file_get_contents($verify_req);
 
             if ($captcha_res.success == false)
@@ -117,15 +117,16 @@ else
         <meta name="description" content="Ilse Pachlinger: Sammlung von Unterrichtsmethoden">
         <meta name="author" content="Walter Pachlinger (walter.pachlinger@gmx.at)">
         
-        <link rel="stylesheet" href="/css/bootstrap.min.css">
-        <link rel="stylesheet" href="/css/bootstrap-theme.css">
+        <!-- link rel="stylesheet" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/bootstrap-theme.css" -->
+        <?php style_sheet_refs(); ?>
         <script src='https://www.google.com/recaptcha/api.js'></script>
     </head>
     <body>
         <?php create_menu(false, basename($_SERVER['PHP_SELF'])); ?>
     
         <div class="container" role="main">
-            <div class="page-header"><h1><?php echo GlobalParam::$title . ': Benutzerregistrierung'; ?></h1></div>
+            <div class="page-header"><h1><?php echo GlobalParam::$app_config['app_title'] . ': Benutzerregistrierung'; ?></h1></div>
             <div class="row">
                 <form data-toggle="validator" id="register_form" method="post" action="/php/usr_new.php" role="form">
                 <?php 
@@ -198,7 +199,7 @@ else
                                 <div class="help-block with-errors"></div>
                             </div> <!-- form-group -->
                             
-                            <div class="g-recaptcha" data-sitekey="<?php echo GlobalParam::$captcha_sitekey; ?>"></div>
+                            <div class="g-recaptcha" data-sitekey="<?php echo GlobalParam::$captcha_cnf['sitekey']; ?>"></div>
                             
                             <div class="form-group" id="login_submit">
                                 <input type="submit" class="btn btn-primary btn-send" value="Bestätigen">
@@ -213,8 +214,9 @@ else
             </div> <!-- row -->
         </div> <!-- container -->
     
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <!-- script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script src="/js/bootstrap.min.js"></script>
-        <script src="/js/validator.js"></script>
+        <script src="/js/validator.js"></script> -->
+        <?php script_refs(); ?>
     </body>
 </html>

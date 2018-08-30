@@ -272,7 +272,7 @@ class UserAccount implements JsonSerializable
                 {
                     $this->num_inv_login += 1;
                     
-                    if ($this->num_inv_login > GlobalParam::$invalid_login_limit)
+                    if ($this->num_inv_login > GlobalParam::$app_config['invalid_login_limit'])
                     {
                         $this->usr_locked = 1;
                         $result['code'] = 109;

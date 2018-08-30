@@ -48,9 +48,9 @@ class MailjetMailer
      */
     public function send()
     {
-        if (GlobalParam::$ctc_send_mail)
+        if (GlobalParam::$app_config['ctc_send_mail'])
         {
-            $emailFrom      = array('Email' => GlobalParam::$ctc_sender_email, 'Name' => GlobalParam::$ctc_sender_name);
+            $emailFrom      = array('Email' => GlobalParam::$mailer_cnf['sender_email'], 'Name' => GlobalParam::$mailer_cnf['sender_name']);
             $emailToList    = array();
             $emailToList[]  = array('Email' => $this->recipient);
             $emailMsgList   = array();
@@ -64,7 +64,7 @@ class MailjetMailer
             curl_setopt($curl_sess, CURLOPT_POSTFIELDS, $json_data);
             curl_setopt($curl_sess, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($curl_sess, CURLOPT_HTTPHEADER, array('Content-Type: application/json', 'Content-Length: ' . strlen($json_data)));
-            curl_setopt($curl_sess, CURLOPT_USERPWD, GlobalParam::$mj_password);
+            curl_setopt($curl_sess, CURLOPT_USERPWD, GlobalParam::$mailer_cnf['mj_password']);
         
             $json_res = curl_exec($curl_sess);
             $result = json_decode($json_res, true);

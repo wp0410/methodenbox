@@ -81,7 +81,7 @@ if (!empty($_POST))
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#"><?php echo GlobalParam::$title; ?></a>
+                    <a class="navbar-brand" href="#"><?php echo GlobalParam::$app_config['app_title']; ?></a>
                 </div> <!-- navbar-header -->
                 <div id="navbar" class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
@@ -99,7 +99,7 @@ if (!empty($_POST))
         </nav>
         
         <div class="container" role="main">
-            <div class="page-header"><h1><?php echo GlobalParam::$title . ': Registrierte Benutzer Suchen'; ?></h1></div>
+            <div class="page-header"><h1><?php echo GlobalParam::$app_config['app_title'] . ': Registrierte Benutzer Suchen'; ?></h1></div>
             <div class="row">
                 <form id="s_method_form" method="post" action="/php/mth_res.php" data-toggle="validator" role="form">
                     <div class="messages"></div>

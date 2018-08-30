@@ -21,30 +21,24 @@
  */
 class GlobalParam
 {
-    public static $title = 'Methodenbox';
+    public static $app_config = array(
+        'app_title' => 'Methodenbox',
+        'invalid_login_limit' => 3,
+        'session_timeout_sec' => 1800,
+        'ctc_send_mail' => false,           // Send mail from Contact form { true, false }
+        'file_storage_type' => 'DATABASE'   // Storage method for uploaded files {'DATABASE' | 'FILESYS' }
+    );
+
+    public static $captcha_cnf = array(
+        'sitekey' => '6LcnGzMUAAAAAEAy80E68H1vlybVXTKGjss0tjrO',
+        'secret'  => '6LcnGzMUAAAAAKo31wWlV2DX7b2rX3lofHOjkCGY'
+    );
     
-    public static $captcha_sitekey = '6LcnGzMUAAAAAEAy80E68H1vlybVXTKGjss0tjrO';
-    
-    public static $captcha_secret  = '6LcnGzMUAAAAAKo31wWlV2DX7b2rX3lofHOjkCGY';
-    
-    public static $invalid_login_limit = 3;
-    
-    public static $session_timeout_sec = 6000;
-    
-    // Send mail from Contact form { true, false }
-    public static $ctc_send_mail = false;
-    
-    // Sender for Contact form mails [e-mail address]
-    public static $ctc_sender_email = 'walter.pachlinger@gmail.com';
-    
-    // Full name of sender of Contact form mails
-    public static $ctc_sender_name  = 'Walter Pachlinger';
-    
-    // Password for MailJet access
-    public static $mj_password = 'a0fbc3344ea28b934ccfaabb76f2df6c:f0105dca8cf8bd76e7ea416ba95266dc';
-    
-    // Storage method for uploaded files {'DATABASE' | 'FILESYS' }
-    public static $file_storage_type = 'DATABASE';
+    public static $mailer_cnf = array(
+        sender_email => 'walter.pachlinger@gmail.com',                                            // Sender for Contact form mails [e-mail address]
+        sender_name  => 'Walter Pachlinger',                                                      // Full name of sender of Contact form mails
+        mj_password  => 'a0fbc3344ea28b934ccfaabb76f2df6c:f0105dca8cf8bd76e7ea416ba95266dc'       // Password for MailJet access
+    );
     
     public static $mime_types = array(
         'application/pdf' => '.pdf',

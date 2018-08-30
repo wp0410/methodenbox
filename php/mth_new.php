@@ -111,16 +111,18 @@ if (! empty($_POST))
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="Ilse Pachlinger: Sammlung von Unterrichtsmethoden">
         <meta name="author" content="Walter Pachlinger (walter.pachlinger@gmx.at)">
-        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        
+        <!-- link rel="stylesheet" href="/css/bootstrap.min.css">
         <link rel="stylesheet" href="/css/bootstrap-theme.css">
-        <link rel="stylesheet" href="/css/project.css">
+        <link rel="stylesheet" href="/css/project.css" -->
+        <?php style_sheet_refs(); ?>
     </head>
 
     <body>
         <?php create_menu($usr_is_authenticated, basename($_SERVER['PHP_SELF'])); ?>
 
         <div class="container" role="main">
-            <div class="page-header"><h1><?php echo GlobalParam::$title . ':   Neue Methode Erstellen'; ?></h1></div>
+            <div class="page-header"><h1><?php echo GlobalParam::$app_config['app_title'] . ':   Neue Methode Erstellen'; ?></h1></div>
         
             <div class="row">
                 <form id="c_method_form" method="post" action="/php/mth_new.php" data-toggle="validator" role="form" enctype="multipart/form-data">
@@ -383,9 +385,10 @@ if (! empty($_POST))
             </div> <!-- modal fade -->
         </div> <!-- container -->
     
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <!-- script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script src="/js/bootstrap.min.js"></script>
-        <script src="/js/validator.js"></script>
+        <script src="/js/validator.js"></script> -->
+        <?php script_refs(); ?>
         <script>
             /* global $ */
             $(function() {

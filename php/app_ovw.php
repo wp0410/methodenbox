@@ -25,9 +25,12 @@ $usr_is_authenticated = false;
         
         <meta name="description" content="Ilse Pachlinger: Sammlung von Unterrichtsmethoden">
         <meta name="author" content="Walter Pachlinger (walter.pachlinger@gmx.at)">
-        
+
+        <!--        
         <link rel="stylesheet" href="/css/bootstrap.min.css">
         <link rel="stylesheet" href="/css/bootstrap-theme.css">
+        -->
+        <?php style_sheet_refs(); ?>
     </head>
 
     <body>
@@ -44,7 +47,10 @@ $usr_is_authenticated = false;
             </div>
         </div>
     
+        <!--
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script src="/js/bootstrap.min.js"></script>
+        -->
+        <?php script_refs(); ?>
     </body>
 </html>

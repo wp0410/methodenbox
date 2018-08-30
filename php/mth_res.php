@@ -5,7 +5,7 @@
 //  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this 
 //  file except in compliance with the License. You may obtain a copy of the License at
 //      http://www.apache.org/licenses/LICENSE-2.0
-//  Unless required by applicable law or agreed to in writing, softwaredistributed under 
+//  Unless required by applicable law or agreed to in writing, software distributed under 
 //  the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF 
 //  ANY KIND, either express or implied. See the License for the specific language 
 //  governing permissions and limitations under the License.
@@ -63,15 +63,17 @@ $method_list = $mth_search->get_result();
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="Ilse Pachlinger: Sammlung von Unterrichtsmethoden">
         <meta name="author" content="Walter Pachlinger (walter.pachlinger@gmx.at)">
-        <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+        <!-- link rel="stylesheet" href="/css/bootstrap.min.css">
         <link rel="stylesheet" href="/css/bootstrap-theme.css">
-        <link rel="stylesheet" href="/css/project.css">
+        <link rel="stylesheet" href="/css/project.css" -->
+        <?php style_sheet_refs(); ?>
     </head>
     <body>
         <?php create_menu($usr_is_authenticated, basename($_SERVER['PHP_SELF'])); ?>
 
         <div class="container" role="main">
-            <div class="page-header"><h1><?php echo GlobalParam::$title . ': Ergebnis der Suche'; ?></h1></div>
+            <div class="page-header"><h1><?php echo GlobalParam::$app_config['app_title'] . ': Ergebnis der Suche'; ?></h1></div>
             <div class="row">
                 <?php
                     if (count($method_list) == 0)
@@ -280,9 +282,10 @@ $method_list = $mth_search->get_result();
             </div> <!-- row -->    
         </div> <!-- container -->
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <!-- script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script src="/js/bootstrap.min.js"></script>
-        <script src="/js/validator.js"></script>
+        <script src="/js/validator.js"></script> -->
+        <?php script_refs(); ?>
         <script>
             /* global $ */
             $(function () {

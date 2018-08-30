@@ -141,3 +141,6 @@
 [28-Aug-2018 12:04:03 UTC] PHP   1. {main}() /home/ubuntu/workspace/php/mth_new.php:0
 [28-Aug-2018 12:04:03 UTC] PHP   2. TeachingMethod->store() /home/ubuntu/workspace/php/mth_new.php:95
 [28-Aug-2018 12:06:09 UTC] PHP Parse error:  syntax error, unexpected ''<span class="badge badge-prim' (T_CONSTANT_ENCAPSED_STRING) in /home/ubuntu/workspace/php/mth_res.php on line 244
+[29-Aug-2018 12:11:03 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/ubuntu/workspace/php/aux_ctc.php on line 116
+[29-Aug-2018 12:11:03 UTC] PHP Stack trace:
+[29-Aug-2018 12:11:03 UTC] PHP   1. {main}() /home/ubuntu/workspace/php/aux_ctc.php:0
