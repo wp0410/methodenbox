@@ -25,6 +25,7 @@ class GlobalParam
         'app_title' => 'Methodenbox',
         'invalid_login_limit' => 3,
         'session_timeout_sec' => 1800,
+        'deploy_zone' => 'DEV',             // Deployment zone { 'DEV' | 'DEMO' | 'PROD' }
         'ctc_send_mail' => false,           // Send mail from Contact form { true, false }
         'file_storage_type' => 'DATABASE'   // Storage method for uploaded files {'DATABASE' | 'FILESYS' }
     );

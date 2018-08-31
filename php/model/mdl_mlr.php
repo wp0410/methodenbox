@@ -10,7 +10,6 @@
 //  ANY KIND, either express or implied. See the License for the specific language 
 //  governing permissions and limitations under the License.
 //----------------------------------------------------------------------------------------
-include 'mdl_par.php';
 
 /**
  * MailjetMailer        Send E-Mail using the MailJet API

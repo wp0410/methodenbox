@@ -11,7 +11,6 @@
 //  governing permissions and limitations under the License.
 //----------------------------------------------------------------------------------------
 include_once 'mdl_msc.php';
-include_once 'mdl_par.php';
 
 /**
  * UserAccount     Authentication information for an application user

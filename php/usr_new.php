@@ -12,14 +12,21 @@
 //----------------------------------------------------------------------------------------
 session_start();
 
-include 'model/mdl_usr.php';
-include 'model/mdl_jnl.php';
-include_once 'model/mdl_dbs.php';
 include_once 'model/mdl_par.php';
-include 'frm_gen.php';
+include_once 'model/mdl_dbs.php';
+include_once 'model/mdl_usr.php';
+include_once 'model/mdl_jnl.php';
+include_once 'model/mdl_err.php';
+include_once 'model/mdl_frm.php';
 
 $success = false;
-$db_conn = db_connect();
+//$db_conn = db_connect();
+$db_conn = DatabaseConnection::get_connection();
+if ($db_conn == null)
+{
+    $app_err = DatabaseConnection::get_error();
+    $app_err->handle_fatal();
+}
 
 if (! empty($_POST))
 {

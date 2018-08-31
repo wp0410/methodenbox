@@ -10,14 +10,14 @@
 //  ANY KIND, either express or implied. See the License for the specific language 
 //  governing permissions and limitations under the License.
 //----------------------------------------------------------------------------------------
-
 session_start();
 
-include 'model/mdl_dbs.php';
-include 'model/mdl_ssn.php';
-include 'model/mdl_jnl.php';
 include_once 'model/mdl_par.php';
-include 'frm_gen.php';
+include_once 'model/mdl_dbs.php';
+include_once 'model/mdl_ssn.php';
+include_once 'model/mdl_jnl.php';
+include_once 'model/mdl_err.php';
+include_once 'model/mdl_frm.php';
 
 // Check for valid user session
 if (empty($_SESSION) || empty($_SESSION['user']))
@@ -26,7 +26,14 @@ if (empty($_SESSION) || empty($_SESSION['user']))
 }
 else
 {
-    $db_conn = db_connect();
+    // $db_conn = db_connect();
+    $db_conn = DatabaseConnection::get_connection();
+    if ($db_conn == null)
+    {
+        $app_err = DatabaseConnection::get_error();
+        $app_err->handle_fatal();
+    }
+
     $usr_sess = new UserSession($db_conn);
     $usr_sess->load_by_id($_SESSION['user']);
     
@@ -64,7 +71,9 @@ else
         <div class="container" role="main">
             <div class="page-header"><h1><?php echo GlobalParam::$app_config['app_title'] . ': Hilfe'; ?></h1></div>
             <div class="row">
-                <p class="lead">Hier kommt der Hilfetext hin ...</p>
+                <div class="alert alert-info" role="alert">
+                    <p class="lead">Hier kommt der Hilfetext hin ...</p>
+                </div>
             </div>
         </div>
 

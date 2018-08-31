@@ -10,22 +10,36 @@
 //  ANY KIND, either express or implied. See the License for the specific language 
 //  governing permissions and limitations under the License.
 //----------------------------------------------------------------------------------------
-session_start();
-
 include_once 'model/mdl_par.php';
+include_once 'model/mdl_err.php';
 include_once 'model/mdl_frm.php';
 
+$error_info = new ErrorInfo();
+
+if (empty($_GET))
+{
+    $error_info->err_last_action = null;
+    $error_info->err_number = null;
+    $error_info->err_text = null;
+    
+}
+else
+{
+    $error_info->err_last_action = $_GET['err_last_action'];
+    $error_info->err_number = $_GET['err_number'];
+    $error_info->err_text = $_GET['err_text'];
+}
 $usr_is_authenticated = false;
 ?>
 
 <!DOCTYPE html>
-    <html lang="de">
+<html lang="de">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="Ilse Pachlinger: Sammlung von Unterrichtsmethoden">
         <meta name="author" content="Walter Pachlinger (walter.pachlinger@gmx.at)">
-
+        
         <?php style_sheet_refs(); ?>
     </head>
 
@@ -33,18 +47,15 @@ $usr_is_authenticated = false;
         <?php create_menu($usr_is_authenticated, basename($_SERVER['PHP_SELF'])); ?>
 
         <div class="container" role="main">
-            <div class="page-header"><h1><?php echo GlobalParam::$app_config['app_title'] . ': '; ?> &Uuml;bersicht</h1></div>
+            <div class="page-header"><h1> <?php echo GlobalParam::$app_config['app_title'] . ': '; ?> Kritischer Fehler</h1></div>
     
             <div class="row">
-                <div class="alert alert-info" role="alert">
-                    <p class="lead">
-                        Sie m&uuml;ssen sich anmelden, um auf den Inhalt der Methodenbox zugreifen zu k&ouml;nnen. 
-                        Wenn Sie noch keine Anmeldedaten haben, m&uuml;ssen Sie die Registrierung durchführen (Men&uuml; "Registrieren").
-                    </p>
+                <div class="alert alert-danger" role="alert">
+                    <?php $error_info->format_error(); ?>
                 </div>
             </div>
         </div>
-    
+
         <?php script_refs(); ?>
     </body>
 </html>

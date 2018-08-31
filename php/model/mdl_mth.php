@@ -10,8 +10,6 @@
 //  ANY KIND, either express or implied. See the License for the specific language 
 //  governing permissions and limitations under the License.
 //----------------------------------------------------------------------------------------
-include_once 'mdl_msc.php';
-include_once 'mdl_par.php';
 
 /**
  * MethodDescription    Description file of a teaching method

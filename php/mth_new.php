@@ -12,23 +12,36 @@
 //----------------------------------------------------------------------------------------
 session_start();
 
-include 'model/mdl_dbs.php';
-include 'model/mdl_mth.php';
-include 'model/mdl_ssn.php';
-include 'model/mdl_jnl.php';
+include_once 'model/mdl_dbs.php';
+include_once 'model/mdl_mth.php';
+include_once 'model/mdl_ssn.php';
+include_once 'model/mdl_jnl.php';
 include_once 'model/mdl_par.php';
-include 'frm_gen.php';
+include_once 'model/mdl_err.php';
+include_once 'model/mdl_frm.php';
 
 // Check for valid user session
 $usr_is_authenticated = false;
 if (empty($_SESSION) || empty($_SESSION['user']))
 {
-    die('Client user is not authenticated (0)');
+    // die('Client user is not authenticated (0)');
+    $app_err = new ErrorInfo();
+    $app_err->err_last_action = 'Validate User Authentication';
+    $app_err->err_number = 300;
+    $app_err->err_text = 'No User Session';
+    $app_err->handle_fatal();
 }
 
 $success = true;
 $err_msg = array();
-$db_conn = db_connect();
+
+// $db_conn = db_connect();
+$db_conn = DatabaseConnection::get_connection();
+if ($db_conn == null)
+{
+    $app_err = DatabaseConnection::get_error();
+    $app_err->handle_fatal();
+}
 
 $usr_sess = new UserSession($db_conn);
 $usr_sess->load_by_id($_SESSION['user']);
@@ -39,8 +52,15 @@ if (! $usr_sess->valid())
     $jnl_entry->set_jnl_result(301, 'Invalid User Session');
     $jnl_entry->set_jnl_data(json_encode($usr_sess));
     $jnl_entry->store();
-    die('Client user is not authenticated (1)');
+    
+    // die('Client user is not authenticated (1)');
+    $app_err = new ErrorInfo();
+    $app_err->err_last_action = 'Validate User Authentication';
+    $app_err->err_number = 301;
+    $app_err->err_text = 'Invalid User Session';
+    $app_err->handle_fatal();
 }
+
 $usr_sess->extend();
 $usr_is_authenticated = true;
 
