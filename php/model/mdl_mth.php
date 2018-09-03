@@ -462,8 +462,8 @@ class TeachingMethod implements JsonSerializable
         $stm4->bind_param('isssb', $this->mth_id, $this->mth_description->file_name, $this->mth_description->file_type, $this->mth_description->file_guid, $null);
         $stm4->send_long_data(4, file_get_contents($this->mth_description->file_temp_path));
         $result = $stm4->execute();
-        $err_code = $stm3->errno;
-        $err_text = $stm3->error;
+        $err_code = $stm4->errno;
+        $err_text = $stm4->error;
         $stm4->close();
         
         if (! $result)
