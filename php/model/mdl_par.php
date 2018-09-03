@@ -42,6 +42,7 @@ class GlobalParam
     public static $mailer_cnf = array(
         sender_email => 'walter.pachlinger@gmail.com',                                            // Sender for Contact form mails [e-mail address]
         sender_name  => 'Walter Pachlinger',                                                      // Full name of sender of Contact form mails
+        target_email => 'walter.pachlinger@gmx.at',
         mj_password  => 'a0fbc3344ea28b934ccfaabb76f2df6c:f0105dca8cf8bd76e7ea416ba95266dc'       // Password for MailJet access
     );
     

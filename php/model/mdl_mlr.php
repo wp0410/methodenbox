@@ -21,10 +21,11 @@
  */
 class MailjetMailer
 {
-    public $recipient;
-    public $subject;
-    public $text;
-    
+    public $emailSubject;
+    public $emailText;
+    private $emailToList;
+    private $emailFrom;
+
     /**
      * Constructor
      * 
@@ -33,9 +34,21 @@ class MailjetMailer
      */
     public function __construct()
     {
-        $this->recipient = '';
-        $this->subject = '';
-        $this->text = '';
+        $this->emailFrom = array();
+        $this->emailToList = array();
+        $this->emailSubject = '';
+        $this->emailText = '';
+    }
+    
+    public function set_sender($sender_email, $sender_full_name)
+    {
+        $this->emailFrom['Email'] = $sender_email;
+        $this->emailFrom['Name']  = $sender_full_name;
+    }
+    
+    public function add_recipient($recipient_email)
+    {
+        $this->emailToList[] = array('Email' => $recipient_email);
     }
     
     /**
@@ -45,15 +58,12 @@ class MailjetMailer
      * @return     TRUE      E-mail successfully sent
      * @return     FALSE     Error sending e-mail
      */
-    public function send()
+    public function send($do_send)
     {
-        if (GlobalParam::$app_config['ctc_send_mail'])
+        if ($do_send)
         {
-            $emailFrom      = array('Email' => GlobalParam::$mailer_cnf['sender_email'], 'Name' => GlobalParam::$mailer_cnf['sender_name']);
-            $emailToList    = array();
-            $emailToList[]  = array('Email' => $this->recipient);
             $emailMsgList   = array();
-            $emailMsgList[] = array('From' => $emailFrom, 'To' => $emailToList, 'Subject' => $this->subject, 'TextPart' => $this->text);
+            $emailMsgList[] = array('From' => $this->emailFrom, 'To' => $this->emailToList, 'Subject' => $this->emailSubject, 'TextPart' => $this->emailText);
             $emailData      = array('Messages' => $emailMsgList);
     
             $json_data = json_encode($emailData);        

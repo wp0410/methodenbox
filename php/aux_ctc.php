@@ -96,10 +96,14 @@ if (! empty($_POST))
             else
             {
                 $mj_mailer = new MailjetMailer();
-                $mj_mailer->recipient = $_POST['user_email'];
-                $mj_mailer->subject = 'Methodenbox.Kontakt Anfrage von ' . $_POST['user_fst_name'] . ' ' . $_POST['user_lst_name'];
-                $mj_mailer->text = $POST['user_text'];
-                $mj_mailer->send();
+                
+                $mj_mailer->emailSubject = 'Methodenbox: Anfrage von ' . $_POST['user_fst_name'] . ' ' . $_POST['user_lst_name'];
+                $mj_mailer->emailText = $_POST['user_text'];
+                $mj_mailer->set_sender(GlobalParam::$mailer_cnf['sender_email'], GlobalParam::$mailer_cnf['sender_name']);
+                $mj_mailer->add_recipient(GlobalParam::$mailer_cnf['target_email']);
+                $mj_mailer->add_recipient($_POST['user_email']);
+                
+                $mj_mailer->send(GlobalParam::$app_config['ctc_send_mail']);
                 
                 $add_msg = 'Ihre Anfrage wurde erfolgreich verarbeitet. Sie werden in den n&auml;chsten Tagen eine R&uuml;ckmeldung erhalten.';
                 if ($usr_is_authenticated)
