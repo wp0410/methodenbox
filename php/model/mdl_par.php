@@ -31,8 +31,12 @@ class GlobalParam
     );
 
     public static $captcha_cnf = array(
-        'sitekey' => '6LcnGzMUAAAAAEAy80E68H1vlybVXTKGjss0tjrO',
-        'secret'  => '6LcnGzMUAAAAAKo31wWlV2DX7b2rX3lofHOjkCGY'
+        'DEV' => array(
+            'sitekey' => '6LcnGzMUAAAAAEAy80E68H1vlybVXTKGjss0tjrO',
+            'secret'  => '6LcnGzMUAAAAAKo31wWlV2DX7b2rX3lofHOjkCGY' ),
+        'DEMO' => array(
+            'sitekey' => '6LdngW0UAAAAAN2DkVNuKIkKlCFjKKpyLiWp-7bm',
+            'secret'  => '6LdngW0UAAAAAPBUZGEPaQI--Z_YuwwNQ12QNi7t' ),
     );
     
     public static $mailer_cnf = array(

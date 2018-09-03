@@ -223,3 +223,14 @@
 [31-Aug-2018 08:05:19 UTC] PHP   1. {main}() /home/ubuntu/workspace/php/mth_dnl.php:0
 [31-Aug-2018 08:05:19 UTC] PHP   2. DatabaseConnection::get_connection() /home/ubuntu/workspace/php/mth_dnl.php:33
 [31-Aug-2018 08:05:19 UTC] PHP   3. DatabaseConnection::connect() /home/ubuntu/workspace/php/model/mdl_dbs.php:63
+[31-Aug-2018 11:34:14 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/ubuntu/workspace/php/mth_new_1.php on line 156
+[31-Aug-2018 11:34:14 UTC] PHP Stack trace:
+[31-Aug-2018 11:34:14 UTC] PHP   1. {main}() /home/ubuntu/workspace/php/mth_new_1.php:0
+[03-Sep-2018 06:56:44 UTC] PHP Warning:  TeachingMethod::store(): Couldn't fetch mysqli_stmt in /home/ubuntu/workspace/php/model/mdl_mth.php on line 465
+[03-Sep-2018 06:56:44 UTC] PHP Stack trace:
+[03-Sep-2018 06:56:44 UTC] PHP   1. {main}() /home/ubuntu/workspace/php/mth_new.php:0
+[03-Sep-2018 06:56:44 UTC] PHP   2. TeachingMethod->store() /home/ubuntu/workspace/php/mth_new.php:136
+[03-Sep-2018 06:56:44 UTC] PHP Warning:  TeachingMethod::store(): Couldn't fetch mysqli_stmt in /home/ubuntu/workspace/php/model/mdl_mth.php on line 466
+[03-Sep-2018 06:56:44 UTC] PHP Stack trace:
+[03-Sep-2018 06:56:44 UTC] PHP   1. {main}() /home/ubuntu/workspace/php/mth_new.php:0
+[03-Sep-2018 06:56:44 UTC] PHP   2. TeachingMethod->store() /home/ubuntu/workspace/php/mth_new.php:136

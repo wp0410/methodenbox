@@ -22,6 +22,9 @@ include_once 'model/mdl_frm.php';
 
 // Check for valid user session
 $usr_is_authenticated = false;
+$success = true;
+$err_msg = array();
+
 if (empty($_SESSION) || empty($_SESSION['user']))
 {
     // die('Client user is not authenticated (0)');
@@ -31,9 +34,6 @@ if (empty($_SESSION) || empty($_SESSION['user']))
     $app_err->err_text = 'No User Session';
     $app_err->handle_fatal();
 }
-
-$success = true;
-$err_msg = array();
 
 // $db_conn = db_connect();
 $db_conn = DatabaseConnection::get_connection();
@@ -66,6 +66,20 @@ $usr_is_authenticated = true;
 
 if (! empty($_POST))
 {
+    /*
+    $err_msg[] = 'usr_id      = ' . $usr_sess->usr_id;
+    $err_msg[] = 'mth_name    = ' . $_POST['mth_name'];
+    $err_msg[] = 'mth_topic   = ' . $_POST['mth_topic'];
+    $err_msg[] = 'mth_summary = ' . $_POST['mth_summary'];
+    $err_msg[] = 'mth_age_grp = ' . $_POST['mth_age_grp'];
+    $err_msg[] = 'mth_phase   = ' . $_POST['mth_phase'];
+    $err_msg[] = 'mth_type    = ' . $_POST['mth_type'];
+    $err_msg[] = 'mth_soc     = ' . $_POST['mth_soc'];
+    $err_msg[] = 'mth_prep    = ' . $_POST['mth_prep_min'] . ' --- ' . $_POST['mth_prep_max'];
+    $err_msg[] = 'mth_exec    = ' . $_POST['mth_exec_min'] . ' --- ' . $_POST['mth_exec_max'];
+    $err_msg[] = 'mth_authors = ' . $_POST['mth_authors'];
+    */
+    
     $method = new TeachingMethod($db_conn, $usr_sess->usr_id);
     $method->mth_name = $_POST['mth_name'];
     $method->mth_topic = $_POST['mth_topic'];
@@ -109,10 +123,22 @@ if (! empty($_POST))
             $err_msg[] = $res['text'];
         }
     }
-
+    
+    /*
+    $err_msg[] = 'File GUID = ' . $method->mth_description->file_guid;
+    $err_msg[] = 'File NAME = ' . $method->mth_description->file_name;
+    $err_msg[] = 'File TYPE = ' . $method->mth_description->file_type;
+    $err_msg[] = 'File PATH = ' . $method->mth_description->file_temp_path;
+    */
+    
     if ($success)
     {
         $res = $method->store();
+        
+        if ($res['code'] != 0)
+        {
+            $err_msg[] = 'Fehler beim Speichern der Unterrichtsmethode';
+        }
         
         $jnl_entry = new JournalEntry($db_conn, $usr_sess->usr_id, $usr_sess->usr_name, 'METHOD.CREATE');
         $jnl_entry->set_jnl_result($res['code'], $res['text']);
@@ -132,259 +158,302 @@ if (! empty($_POST))
         <meta name="description" content="Ilse Pachlinger: Sammlung von Unterrichtsmethoden">
         <meta name="author" content="Walter Pachlinger (walter.pachlinger@gmx.at)">
         
-        <!-- link rel="stylesheet" href="/css/bootstrap.min.css">
-        <link rel="stylesheet" href="/css/bootstrap-theme.css">
-        <link rel="stylesheet" href="/css/project.css" -->
         <?php style_sheet_refs(); ?>
     </head>
 
     <body>
         <?php create_menu($usr_is_authenticated, basename($_SERVER['PHP_SELF'])); ?>
-
+            
         <div class="container" role="main">
             <div class="page-header"><h1><?php echo GlobalParam::$app_config['app_title'] . ':   Neue Methode Erstellen'; ?></h1></div>
-        
-            <div class="row">
-                <form id="c_method_form" method="post" action="/php/mth_new.php" data-toggle="validator" role="form" enctype="multipart/form-data">
-                    <?php
-                        if ($success)
+            <form id="c_method_form" method="post" action="/php/mth_new.php" data-toggle="validator" role="form" enctype="multipart/form-data">
+                <?php
+                    if ($success)
+                    {
+                        echo '<div class="messages"></div>';
+                    }
+                    else 
+                    {
+                        echo '<div class="messages"><div class="alert alert-danger" role="alert">';
+                        foreach($err_msg as $msg)
                         {
-                            echo '<div class="messages"></div>';
+                            echo '<p>' . $msg . '</p>';
                         }
-                        else 
-                        {
-                            echo '<div class="messages"><div class="alert alert-danger" role="alert">';
-                            foreach($err_msg as $msg)
-                            {
-                                echo '<p>' . $msg . '</p>';
-                            }
-                            echo '</div></div>';
-                        }
-                    ?>
+                        echo '</div></div>';
+                    }
+                ?>
+                
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <h4>
+                                <span class="label label-primary">Name der Methode *</span>
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input id="mth_name" type="text" name="mth_name" class="form-control" placeholder="Name der Methode" required />
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
 
-                    <div class="controls">
-                        <div class="col-md-12">
-                        
-                            <!-- Methodenname -->
-                            <div class="form-group">
-                                <ul class="list-group list-inline">
-                                    <li class="col-md-3"><h4><span class="label label-primary">Methodenname *</span></h4></li>    
-                                    <li class="col-md-5">
-                                        <input id="mth_name" type="text" name="mth_name" class="form-control" placeholder="Name der Methode" required />
-                                    </li>
-                                    <li>
-                                        <div class="help-block with-errors"></div>
-                                    </li>
-                                </ul>
-                            </div>
-                        
-                            <!-- Fachbereich -->
-                            <div class="form-group">
-                                <ul class="list-group list-inline">
-                                    <li class="col-md-3"><h4><span class="label label-primary">Fachbereich *</span></h4></li>    
-                                    <li class="col-md-5">
-                                        <input id="mth_topic" type="text" name="mth_topic" class="form-control" placeholder="Fachbereich" required/>
-                                    </li>
-                                    <li>
-                                        <div class="help-block with-errors"></div>
-                                    </li>
-                                </ul>
-                            </div>
-                            
-                            <div class="form-group">
-                                <ul class="list-group list-inline">
-                                    <li class="col-md-3"><h4><span class="label label-primary">Kurzbeschreibung *</span></h4></li>
-                                    <li>
-                                        <textarea id="mth_summary" name="mth_summary" form="c_method_form" required cols="64" placeholder="Kurzbeschreibung"></textarea>
-                                    </li>
-                                    <li>
-                                        <div class="help-block with-errors"></div>
-                                    </li>
-                                </ul>
-                            </div> <!-- form-group -->
-                            
-                            <div class="form-group">
-                                <ul class="list-group list-inline">
-                                    <li class="col-md-3"><h4><span class="label label-primary">Jahrgang</span></h4></li>
-                                    <li class="col-md-1">
-                                        <input type="number" id="mth_age_grp" name="mth_age_grp" class="form-control" min="1" max="5">
-                                    </li>
-                                    <li>
-                                        <div class="help-block with-errors"></div>
-                                    </li>
-                                </ul>
-                            </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <h4>
+                                <span class="label label-primary">Fachbereich *</span>
+                            </h4>
+                        </div>
+                    </div>    
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input id="mth_topic" type="text" name="mth_topic" class="form-control" placeholder="Fachbereich" required/>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+                </div> <!-- class="row" -->
 
-                            <!-- Preparation Time -->
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <h4>
+                                <span class="label label-primary">Beschreibung *</span>
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <textarea id="mth_summary" name="mth_summary" form="c_method_form" required cols="48" rows="3" maxlength="300" placeholder="Kurzbeschreibung"></textarea>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <h4>
+                                <span class="label label-primary">AutorInnen *</span>
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <textarea id="mth_authors" name="mth_authors" form="c_method_form" required cols="48" rows="3"></textarea>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+                </div> <!-- class="row" -->
+                
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <h4>
+                                <span class="label label-primary">Jahrgang</span>
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <input type="number" id="mth_age_grp" name="mth_age_grp" class="form-control" min="1" max="5">
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <h4>
+                                <span class="label label-primary">Vorbereitungszeit</span>
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="form-group">
+                            <label for="mth_prep_min">Von *</label>
+                            <input id="mth_prep_min" type="text" name="mth_prep_min" class="form-control" pattern="^[0-9]{1,}$" required />
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="form-group">
+                            <label for="mth_prep_max">Bis</label>
+                            <input id="mth_prep_max" type="text" name="mth_prep_max" pattern="^[0-9]{0,}$" class="form-control" />
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <h4>
+                                <span class="label label-primary">Dauer im Unterricht</span>
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="form-group">
+                            <label for="mth_exec_min">Von *</label>
+                            <input id="mth_exec_min" type="text" name="mth_exec_min" class="form-control" pattern="^[0-9]{1,}$" required />
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="form-group">
+                            <label for="mth_exec_max">Bis</label>
+                            <input id="mth_exec_max" type="text" name="mth_exec_max" pattern="^[0-9]{0,}$" class="form-control" />
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+                 </div> <!-- class="row" -->
+                
+                <div class="row">
+                    
+               </div> <!-- class="row" -->
+                
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <h4>
+                                <span class="label label-primary">Unterrichtsphase</span>
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <label for="mth_phase_entry">Einstieg</label>
+                                    <input id="mth_phase_entry" type="checkbox" name="mth_phase[]" value="E">
+                                </li>
+                                <li class="list-group-item">
+                                    <label for="mth_phase_info">Information</label>
+                                    <input id="mth_phase_info" type="checkbox" name="mth_phase[]" value="I">
+                                </li>
+                                <li class="list-group-item">
+                                    <label for="mth_phase_assert">Sicherung</label>
+                                    <input id="mth_phase_assert" type="checkbox" name="mth_phase[]" value="S">
+                                </li>
+                                <li class="list-group-item">
+                                    <label for="mth_phase_activate">Aktivierung</label>
+                                    <input id="mth_phase_activate" type="checkbox" name="mth_phase[]" value="A">
+                                </li>
+                            </ul> <!-- list-group -->
+                        </div> <!-- form-group> -->
+                    </div>
+
+                    <div class="col-md-1">
+                        <div class="form-group">
+                            <h4>
+                                <span class="label label-primary">Typ</span>
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <label for="mth_type_exp">Erkl&auml;rung</label>
+                                    <input type="checkbox" id="mth_type_exp" name="mth_type[]" value="E">
+                                </li>
+                                <li class="list-group-item">
+                                    <label for="mth_type_instr">Instruktion</label>
+                                    <input type="checkbox" id="mth_type_instr" name="mth_type[]" value="I">
+                                </li>
+                                <li class="list-group-item">
+                                    <label for="mth_type_example">Beispiel</label>
+                                    <input type="checkbox" id="mth_type_example" name="mth_type[]" value="B">
+                                </li>
+                            </ul> <!-- list-group -->
+                        </div> <!-- form-group -->
+                    </div>
+
+                    <div class="col-md-1">
+                        <div class="form-group">
+                            <h4>
+                                <span class="label label-primary">Sozialform</span>
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <label for="mth_soc_E">Einzeln</label>
+                                    <input type="checkbox" id="mth_soc_E" name="mth_soc[]" value="E">
+                                </li>
+                                <li class="list-group-item">
+                                    <label for="mth_soc_G">Gruppe</label>
+                                    <input type="checkbox" id="mth_soc_G" name="mth_soc[]" value="G">
+                                </li>
+                                <li class="list-group-item">
+                                    <label for="mth_soc_K">Klasse</label>
+                                    <input type="checkbox" id="mth_soc_K" name="mth_soc[]" value="K">
+                                </li>
+                                <li class="list-group-item">
+                                    <label for="mth_soc_P">Partner</label>
+                                    <input type="checkbox" id="mth_soc_P" name="mth_soc[]" value="P">
+                                </li>
+                            </ul>
+                        </div> <!-- form-group -->
+                    </div>
+                </div> <!-- class="row" -->
+                
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <h4>
+                                <span class="label label-primary">Methodendatei *</span>
+                            </h4>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-10">
+                       <div class="form-group">
+                            <div class="input-group">
+                                <label class="input-group-btn" required>
+                                    <span class="btn btn-primary">
+                                        Datei ausw&auml;hlen &hellip; 
+                                        <input type="file" style="display: none;" id = "mth_file" name="mth_file" multiple accept=".pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx">
+                                    </span>
+                                </label>
+                                <input type="text" class="form-control" id="mth_file_name", name="mth_file_name" required aria-describedby="mth_file">
+                            </div> <!-- input-group -->
+                            <div class="help-block with-errors"></div>
+                        </div> <!-- form-group -->
+                    </div>
+                </div> <!-- class="row" -->
+                
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="form-group">
                             <ul class="list-group list-inline">
-                                <li class="col-md-3"><h4><span class="label label-primary">Zeit Vorbereitung Lehrperson</span></h4></li>
-                                <li>
-                                    <div class="form-group">
-                                        <label for="mth_prep_min">Von *</label>
-                                        <input id="mth_prep_min" type="text" name="mth_prep_min" class="form-control" pattern="^[0-9]{1,}$" required />
-                                        <div class="help-block with-errors"></div>
+                                <li class="list-group-item">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input id="usr_accept" type="checkbox" name="usr_accept" value="YES" required> 
+                                            * Richtlinie f&uuml;r die Bereitstellung von Unterrichtsmaterial gelesen und akzeptiert
+                                        </label>
                                     </div>
                                 </li>
-                                <li>
-                                    <div class="form-group">
-                                        <label for="mth_prep_max">Bis</label>
-                                        <input id="mth_prep_max" type="text" name="mth_prep_max" pattern="^[0-9]{0,}$" class="form-control" />
-                                        <div class="help-block with-errors"></div>
-                                    </div>
+                                <li class="list-group-item">
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#conditionModal">Richtlinie anzeigen</button>
                                 </li>
                             </ul>
-                            
-                            <!-- Execution Time -->
-                            <ul class="list-group list-inline">
-                                <li class="col-md-3"><h4><span class="label label-primary">Zeit Durchf&uuml;hrung im Unterricht</span></h4></li>
-                                <li>
-                                    <div class = "form-group">
-                                        <label for="mth_exec_min">Von *</label>
-                                        <input id="mth_exec_min" type="text" name="mth_exec_min" class="form-control" pattern="^[0-9]{1,}$" required />
-                                        <div class="help-block with-errors"></div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class = "form-group">
-                                        <label for="mth_exec_max">Bis</label>
-                                        <input id="mth_exec_max" type="text" name="mth_exec_max" pattern="^[0-9]{0,}$" class="form-control" />
-                                        <div class="help-block with-errors"></div>
-                                    </div>
-                                </li>
-                            </ul>
-                            
-                            <!-- Unterrichtsphase -->
-                            <div class="form-group">
-                                <ul class="list-group list-inline">
-                                    <li class="col-md-3"><h4><span class="label label-primary">Unterrichtsphase</span></h4></li>
-                                    <li class="list-group-item">
-                                        <label for="mth_phase_entry">Einstieg</label>
-                                        <input id="mth_phase_entry" type="checkbox" name="mth_phase[]" value="E">
-                                    </li>
-                                    <li class="list-group-item">
-                                        <label for="mth_phase_info">Information</label>
-                                        <input id="mth_phase_info" type="checkbox" name="mth_phase[]" value="I">
-                                    </li>
-                                    <li class="list-group-item">
-                                        <label for="mth_phase_assert">Sicherung</label>
-                                        <input id="mth_phase_assert" type="checkbox" name="mth_phase[]" value="S">
-                                    </li>
-                                    <li class="list-group-item">
-                                        <label for="mth_phase_activate">Aktivierung</label>
-                                        <input id="mth_phase_activate" type="checkbox" name="mth_phase[]" value="A">
-                                    </li>
-                                </ul> <!-- list-group -->
-                            </div> <!-- form-group> -->
-                            
-                            <!-- Typ -->
-                            <div class="form-group">
-                                <ul class="list-group list-inline">
-                                    <li class="col-md-3"><h4><span class="label label-primary">Typ</span></h4></li>
-                                    <li class="list-group-item">
-                                        <label for="mth_type_exp">Erkl&auml;rung</label>
-                                        <input type="checkbox" id="mth_type_exp" name="mth_type[]" value="E">
-                                    </li>
-                                    <li class="list-group-item">
-                                        <label for="mth_type_instr">Instruktion</label>
-                                        <input type="checkbox" id="mth_type_instr" name="mth_type[]" value="I">
-                                    </li>
-                                    <li class="list-group-item">
-                                        <label for="mth_type_example">Beispiel</label>
-                                        <input type="checkbox" id="mth_type_example" name="mth_type[]" value="B">
-                                    </li>
-                                </ul> <!-- list-group -->
-                            </div> <!-- form-group -->
-                            
-                            <!-- Sozialform -->
-                            <div class="form-group">
-                                <ul class="list-group list-inline">
-                                    <li class="col-md-3"><h4><span class="label label-primary">Sozialform</span></h4></li>
-                                    <li class="list-group-item">
-                                        <label for="mth_soc_E">Einzelarbeit</label>
-                                        <input type="checkbox" id="mth_soc_E" name="mth_soc[]" value="E">
-                                    </li>
-                                    <li class="list-group-item">
-                                        <label for="mth_soc_G">Gruppenarbeit</label>
-                                        <input type="checkbox" id="mth_soc_G" name="mth_soc[]" value="G">
-                                    </li>
-                                    <li class="list-group-item">
-                                        <label for="mth_soc_K">Klasse</label>
-                                        <input type="checkbox" id="mth_soc_K" name="mth_soc[]" value="K">
-                                    </li>
-                                    <li class="list-group-item">
-                                        <label for="mth_soc_P">Partnerarbeit</label>
-                                        <input type="checkbox" id="mth_soc_P" name="mth_soc[]" value="P">
-                                    </li>
-                                </ul>
-                            </div> <!-- form-group -->
-                            
-                            <!-- File Selection -->
-                            <div class="form-group">
-                                <ul class="list-group list-inline">
-                                    <li class="col-md-3"><h4><span class="label label-primary">Methodendatei *</span></h4></li>
-                                    <li>
-                                        <div class="input-group col-md-8">
-                                            <label class="input-group-btn" required>
-                                                <span class="btn btn-primary">
-                                                    Datei ausw&auml;hlen &hellip; 
-                                                    <input type="file" style="display: none;" id = "mth_file" name="mth_file" multiple accept=".pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx">
-                                                </span>
-                                            </label>
-                                            <input type="text" class="form-control" id="mth_file_name", name="mth_file_name" required aria-describedby="mth_file">
-                                        </div> <!-- input-group -->
-                                    </li>
-                                    <li>
-                                        <div class="help-block with-errors"></div>
-                                    </li>
-                                </ul>
-                            </div> <!-- form-group -->
-                            
-                            <div class="form-group">
-                                <ul class="list-group list-inline">
-                                    <li class="col-md-3"><h4><span class="label label-primary">AutorInnen *</span></h4></li>
-                                    <li>
-                                        <textarea id="mth_authors" name="mth_authors" form="c_method_form" required cols="64"></textarea>
-                                    </li>
-                                    <li>
-                                        <div class="help-block with-errors"></div>
-                                    </li>
-                                </ul>
-                            </div> <!-- form-group -->
-                            
-                            <div class="form-group">
-                                <ul class="list-group list-inline">
-                                    <li>
-                                        <div class="checkbox">
-                                            <label>
-                                                <input id="usr_accept" type="checkbox" name="usr_accept" value="YES" required> 
-                                                * Richtlinie f&uuml;r die Bereitstellung von Unterrichtsmaterial gelesen und akzeptiert
-                                            </label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#conditionModal">Richtlinie anzeigen</button>
-                                    </li>
-                                </ul>
-                            </div> <!-- form-group -->
-                            
-                            <!-- Submit Button -->
-                            <ul class="list-inline">
-                                <li>
-                                    <div class="form-group" id="c_method_submit">
-                                        <input type="submit" class="btn btn-primary btn-send" value="Eingabe abschlie&szlig;en und neue Methode anlegen">
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="form-group">
-                                        <p class="text-muted"><strong>*</strong>Pflichtfelder</p>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div> <!-- col-md12 -->
-                    </div> <!-- controls -->
-                </form> <!-- form -->
-            </div> <!-- row -->
-        
+                        </div>
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <h4>
+                            <span class="text-primary">Mit * gekennzeichnete Felder m&uuml;ssen eingegeben werden</span>
+                            </h4>
+                        </div>
+                    </div>
+                </div> <!-- class="row" -->
+                
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="form-group" id="c_method_submit">
+                            <input type="submit" class="btn btn-primary btn-send" value="Eingabe abschlie&szlig;en und neue Unterrichtsmethode anlegen">
+                        </div>
+                    </div>
+                </div> <!-- class="row" -->
+            </form> <!-- id="c_method_form" -->            
+
             <div class="modal fade" id="conditionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
@@ -403,8 +472,7 @@ if (! empty($_POST))
                     </div> <!-- modal-content -->
                 </div> <!-- modal-dialog -->
             </div> <!-- modal fade -->
-        </div> <!-- container -->
-    
+        </div> <!-- class="container" -->
         <!-- script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script src="/js/bootstrap.min.js"></script>
         <script src="/js/validator.js"></script> -->

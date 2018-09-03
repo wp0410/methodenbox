@@ -155,7 +155,7 @@ class TeachingMethod implements JsonSerializable
     private $mth_owner;
     
     private $db_conn;
-    private $mth_description;
+    public $mth_description;
 
     /**
      * Constructor
@@ -307,7 +307,7 @@ class TeachingMethod implements JsonSerializable
             $ftype = mime_content_type($mth_file['tmp_name']);
             if (! array_key_exists($ftype, GlobalParam::$mime_types))
             {
-                $result = array('code' => 401, 'text' => '[E_401] Invalid File Type');
+                $result = array('code' => 401, 'text' => '[E_401] Invalid File Type (' . $ftype . ')');
             }
             else
             {
@@ -347,7 +347,7 @@ class TeachingMethod implements JsonSerializable
      */
     private function validate()
     {
-        return ($this->mth_id >= 0);
+        return true;
     }
     
     /**
@@ -486,7 +486,7 @@ class TeachingMethod implements JsonSerializable
      */
     public function delete()
     {
-        if (! $this->validate())
+        if ($this->mth_id < 0)
         {
             return false;
         }

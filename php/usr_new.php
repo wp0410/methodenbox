@@ -40,7 +40,8 @@ if (! empty($_POST))
         {
             // Input was validated by Google re-Captcha
             // Get the result from Google
-            $verify_req = 'https://www.google.com/recaptcha/api/siteverify?secret=' . GlobalParam::$captcha_cnf['secret'] . '&response=' . $_POST['g-recaptcha-response'] . '&remoteip=' . $_SERVER['REMOTE_ADDR'];
+            $google_secret = GlobalParam::$captcha_cnf[GlobalParam::$app_config['deploy_zone']]['secret'];
+            $verify_req = 'https://www.google.com/recaptcha/api/siteverify?secret=' . $google_secret . '&response=' . $_POST['g-recaptcha-response'] . '&remoteip=' . $_SERVER['REMOTE_ADDR'];
             $captcha_res = file_get_contents($verify_req);
 
             if ($captcha_res.success == false)
@@ -107,7 +108,7 @@ if (! empty($_POST))
 
     if ($success)
     {
-        header('Location: /php/mth_ovw.php');
+        header('Location: /php/app_ovw.php');
         exit;
     }
 }
@@ -206,7 +207,7 @@ else
                                 <div class="help-block with-errors"></div>
                             </div> <!-- form-group -->
                             
-                            <div class="g-recaptcha" data-sitekey="<?php echo GlobalParam::$captcha_cnf['sitekey']; ?>"></div>
+                            <div class="g-recaptcha" data-sitekey="<?php echo GlobalParam::$captcha_cnf[GlobalParam::$app_config['deploy_zone']]['sitekey']; ?>"></div>
                             
                             <div class="form-group" id="login_submit">
                                 <input type="submit" class="btn btn-primary btn-send" value="Bestätigen">
