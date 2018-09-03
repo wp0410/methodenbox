@@ -234,3 +234,6 @@
 [03-Sep-2018 06:56:44 UTC] PHP Stack trace:
 [03-Sep-2018 06:56:44 UTC] PHP   1. {main}() /home/ubuntu/workspace/php/mth_new.php:0
 [03-Sep-2018 06:56:44 UTC] PHP   2. TeachingMethod->store() /home/ubuntu/workspace/php/mth_new.php:136
+[03-Sep-2018 07:49:48 UTC] PHP Fatal error:  Class 'MailjetMailer' not found in /home/ubuntu/workspace/php/aux_ctc.php on line 96
+[03-Sep-2018 07:49:48 UTC] PHP Stack trace:
+[03-Sep-2018 07:49:48 UTC] PHP   1. {main}() /home/ubuntu/workspace/php/aux_ctc.php:0

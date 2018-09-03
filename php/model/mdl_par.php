@@ -26,7 +26,7 @@ class GlobalParam
         'invalid_login_limit' => 3,
         'session_timeout_sec' => 1800,
         'deploy_zone' => 'DEV',             // Deployment zone { 'DEV' | 'DEMO' | 'PROD' }
-        'ctc_send_mail' => false,           // Send mail from Contact form { true, false }
+        'ctc_send_mail' => true,            // Send mail from Contact form { true, false }
         'file_storage_type' => 'DATABASE'   // Storage method for uploaded files {'DATABASE' | 'FILESYS' }
     );
 
@@ -63,7 +63,7 @@ class GlobalParam
         array('item_name' => 'Registrieren', 'item_ref' => '/php/usr_new.php', 'item_menu' => 'R', 'auth_req' => 0, 'item_show' => 1),
         array('item_name' => 'Anmelden', 'item_ref' => '/php/usr_lin.php', 'item_menu' => 'R', 'auth_req' => 0, 'item_show' => 0),
         array('item_name' => 'Abmelden', 'item_ref' => '/php/usr_out.php', 'item_menu' => 'R', 'auth_req' => 1, 'item_show' => 0),
-        array('item_name' => 'Kontakt', 'item_ref' => '/php/aux_ctc.php', 'item_menu' => 'R', 'auth_req' => 1, 'item_show' => 1),
+        array('item_name' => 'Kontakt', 'item_ref' => '/php/aux_ctc.php', 'item_menu' => 'R', 'auth_req' => 0, 'item_show' => 1),
         array('item_name' => 'Hilfe', 'item_ref' => '/php/aux_hlp.php', 'item_menu' => 'R', 'auth_req' => -1, 'item_show' => 1)
     );
 }

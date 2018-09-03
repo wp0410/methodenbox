@@ -79,6 +79,15 @@ $usr_is_authenticated = true;
         <div class="container" role="main">
             <div class="page-header"><h1><?php echo GlobalParam::$app_config['app_title'] . ': &Uumlbersicht'; ?></h1></div>
         
+            <?php
+                if ( !empty($_GET) && !empty($_GET['add_msg']) )
+                {
+                    echo '<div class="row"><div class="alert alert-warning" role="alert"><p class="lead">';
+                    echo $_GET['add_msg'];
+                    echo '</p></div></div>';
+                }
+            ?>
+
             <div class="row">
                 <div class="alert alert-info" role="alert">
                 <p class="lead">W&auml;hlen Sie "Methode Suchen", um Unterrichtsmethoden auszuw&auml;hlen.</p>
