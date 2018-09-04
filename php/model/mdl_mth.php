@@ -382,6 +382,30 @@ class TeachingMethod implements JsonSerializable
         $stm2->close();
     }
     
+    private function store_attachment()
+    {
+        $null = null;
+        $sql_stmt =
+            'insert into ta_mth_method_attachment( att_mth_id, att_name, att_type, att_guid, att_data ) ' .
+            'values( ?, ?, ?, ?, ? );';
+        $stm4 = $this->db_conn->prepare($sql_stmt);
+        $stm4->bind_param('isssb', $this->mth_id, $this->mth_description->file_name, $this->mth_description->file_type, $this->mth_description->file_guid, $null);
+        $stm4->send_long_data(4, file_get_contents($this->mth_description->file_temp_path));
+        $result = $stm4->execute();
+        $err_code = $stm4->errno;
+        $err_text = $stm4->error;
+        $stm4->close();
+
+        if ($result)
+        {
+            return array('code' => 0, 'text' => 'OK');
+        }
+        else 
+        {
+            return array('code' => 413, 'text' => '[E_411] DB Insert Error on mth_attachment ([' . $err_code . '] ' . $err_text . ')');
+        }
+    }
+    
     /**
      * Stores a teaching method object in the database
      * 
@@ -395,6 +419,11 @@ class TeachingMethod implements JsonSerializable
         if (! $this->validate())
         {
             return array('code' => 410, 'text' => '[E_410] Die Daten der Unterrichtsmethode sind nicht vollständig');
+        }
+        
+        if (! $this->db_conn->begin_transaction(MYSQLI_TRANS_START_READ_WRITE))
+        {
+            return array('code' => 414, 'text' => '[E_414] Die Datenbanktransaktion kann nicht gestartet werden');
         }
         
         $sql_stmt =
@@ -422,6 +451,7 @@ class TeachingMethod implements JsonSerializable
         
         if (! $result)
         {
+            $this->db_conn->rollback();
             return array('code' => 411, 'text' => '[E_411] DB Insert Error on mth ([' . $err_code . '] ' . $err_text . ')');
         }
         
@@ -450,28 +480,22 @@ class TeachingMethod implements JsonSerializable
         $stm3->close();
         if (! $result)
         {
-            $this->undo_mth();
+            // $this->undo_mth();
+            $this->db_conn->rollback();
             return array('code' => 412, 'text' => '[E_411] DB Insert Error on mth_authors ([' . $err_code . '] ' . $err_text . ')');
         }
-        
-        $null = null;
-        $sql_stmt =
-            'insert into ta_mth_method_attachment( att_mth_id, att_name, att_type, att_guid, att_data ) ' .
-            'values( ?, ?, ?, ?, ? );';
-        $stm4 = $this->db_conn->prepare($sql_stmt);
-        $stm4->bind_param('isssb', $this->mth_id, $this->mth_description->file_name, $this->mth_description->file_type, $this->mth_description->file_guid, $null);
-        $stm4->send_long_data(4, file_get_contents($this->mth_description->file_temp_path));
-        $result = $stm4->execute();
-        $err_code = $stm4->errno;
-        $err_text = $stm4->error;
-        $stm4->close();
-        
-        if (! $result)
+
+        $result = $this->store_attachment();        
+
+        if ($result['code'] != 0)
         {
-            $this->undo_mth_authors();
-            $this->undo_mth();
-            return array('code' => 413, 'text' => '[E_411] DB Insert Error on mth_attachment ([' . $err_code . '] ' . $err_text . ')');
+            // $this->undo_mth_authors();
+            // $this->undo_mth();
+            $this->db_conn->rollback();
+            return $result;
         }
+        
+        $this->db_conn->commit();
         
         return array('code' => 0, 'text' => 'OK');
     }

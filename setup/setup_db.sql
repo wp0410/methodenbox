@@ -33,7 +33,8 @@ create table ta_sec_user_session (
     sess_start datetime not null,
     sess_end datetime not null,
     sess_usr_id int not null,
-    sess_usr_name varchar(255) collate utf8_unicode_ci not null
+    sess_usr_name varchar(255) collate utf8_unicode_ci not null,
+	sess_type int default 0 not null
 );
 
 /* ----------------------------------------------------------------------------
