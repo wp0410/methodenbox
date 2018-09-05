@@ -382,7 +382,15 @@ class TeachingMethod implements JsonSerializable
         $stm2->close();
     }
     
-    private function store_attachment()
+    /**
+     * Stores the attached document and assigns it to the teaching method
+     * 
+     * @access     private
+     * @return     array('code', 'text')
+     * @return     array['code']  Numeric error code, 0 if OK
+     * @return     array['text']  Error text ('OK' if OK)
+     */
+   private function store_attachment()
     {
         $null = null;
         $sql_stmt =
@@ -390,7 +398,15 @@ class TeachingMethod implements JsonSerializable
             'values( ?, ?, ?, ?, ? );';
         $stm4 = $this->db_conn->prepare($sql_stmt);
         $stm4->bind_param('isssb', $this->mth_id, $this->mth_description->file_name, $this->mth_description->file_type, $this->mth_description->file_guid, $null);
-        $stm4->send_long_data(4, file_get_contents($this->mth_description->file_temp_path));
+        if (GlobalParam::$app_config['file_storage_type'] == 'DATABASE')
+        {
+            $stm4->send_long_data(4, file_get_contents($this->mth_description->file_temp_path));
+        }
+        else
+        {
+            $doc_file_name = GlobalParam::$app_config['file_storage_path'] . '/' . $this->mth_id . '_' . $this->mth_description->file_guid;
+            move_uploaded_file($this->mth_description->file_temp_path, $doc_file_name);
+        }
         $result = $stm4->execute();
         $err_code = $stm4->errno;
         $err_text = $stm4->error;

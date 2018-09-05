@@ -27,7 +27,8 @@ class GlobalParam
         'session_timeout_sec' => 1800,
         'deploy_zone' => 'DEV',             // Deployment zone { 'DEV' | 'DEMO' | 'PROD' }
         'ctc_send_mail' => true,            // Send mail from Contact form { true, false }
-        'file_storage_type' => 'DATABASE'   // Storage method for uploaded files {'DATABASE' | 'FILESYS' }
+        'file_storage_type' => 'DATABASE',  // Storage method for uploaded files {'DATABASE' | 'FILESYS' }
+        'file_storage_path' => '/doc'       // FILESYS path to store method attachments 
     );
 
     public static $captcha_cnf = array(

@@ -124,9 +124,9 @@ function style_sheet_refs()
     //    <link rel="stylesheet" href="/css/bootstrap-toggle.min.css">
 
     echo '<link rel="stylesheet" href="/css/bootstrap.min.css">';
-    echo '<link rel="stylesheet" href="/css/bootstrap-theme.css">';
+    echo '<link rel="stylesheet" href="/css/bootstrap-theme.min.css">';
     echo '<link rel="stylesheet" href="/css/project.css">';
-    echo '<link rel="stylesheet" href="/css/bootstrap-toggle.min.css">';
+    // echo '<link rel="stylesheet" href="/css/bootstrap-toggle.min.css">';
 }
 
 function script_refs()
@@ -177,6 +177,6 @@ function script_refs()
     echo '<script src="/js/bootstrap.min.js"></script>';
     echo '<script src="/js/validator.js"></script>';
     echo '<script src="/js/star-rating.js" type="text/javascript"></script>';
-    echo '<script src="/js/bootstrap-toggle.min.js"></script>';
+    // echo '<script src="/js/bootstrap-toggle.min.js"></script>';
 }
 ?>
