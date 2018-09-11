@@ -40,12 +40,25 @@ class MailjetMailer
         $this->emailText = '';
     }
     
+    /**
+     * Sets the sender information for the info mail
+     * 
+     * @access     public
+     * @param      string    $sender_email       Sender's e-mail address
+     * @param      string    $sender_full_name   Sender's full name
+     */
     public function set_sender($sender_email, $sender_full_name)
     {
         $this->emailFrom['Email'] = $sender_email;
         $this->emailFrom['Name']  = $sender_full_name;
     }
     
+    /**
+     * Add a recipient to the recipient list of the info mail
+     * 
+     * @access     public
+     * @param      string    $recipient_email    Recipient's e-mail address
+     */
     public function add_recipient($recipient_email)
     {
         $this->emailToList[] = array('Email' => $recipient_email);
@@ -55,6 +68,7 @@ class MailjetMailer
      * Sends an e-mail using the MailJet API
      * 
      * @access     public
+     * @param      boolean   $do_send  TRUE: send e-mail; FALSE: suppress e-mail
      * @return     TRUE      E-mail successfully sent
      * @return     FALSE     Error sending e-mail
      */

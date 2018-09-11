@@ -10,12 +10,28 @@
 //  ANY KIND, either express or implied. See the License for the specific language 
 //  governing permissions and limitations under the License.
 //----------------------------------------------------------------------------------------
+
+/**
+ * ErrorInfo       Encapsulates the description of an error that occurred within the
+ *                 application
+ * 
+ * @package        DatabaseConnection
+ * @author         Walter Pachlinger (walter.pachlinger@gmx.at)
+ * @version        $Revision: 1.0 $
+ * @access         public
+ */
 class ErrorInfo
 {
     public $err_last_action;
     public $err_number;
     public $err_text;
     
+    /**
+     * Constructor           Initializes an "ErrorInfo" object
+     * 
+     * @access     public
+     * @return     Initialized ErrorInfo object
+     */
     public function __construct()
     {
         $this->err_last_action = null;
@@ -23,6 +39,13 @@ class ErrorInfo
         $this->err_text = null;
     }
     
+    /**
+     * Handles the error described by the ErrorInfo instance as a critical
+     * failure
+     * 
+     * @access     public
+     * @return     none
+     */
     public function handle_fatal()
     {
         if ($this->err_text)
@@ -33,6 +56,13 @@ class ErrorInfo
         }
     }
     
+    /**
+     * Creates HTML code that displays the ErrorInfo instance and outputs this
+     * code to the console
+     * 
+     * @access     public
+     * @return     null
+     */
     public function format_error()
     {
         echo '<p class="lead>Kritischer Fehler"</p>';

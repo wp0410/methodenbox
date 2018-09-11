@@ -25,10 +25,11 @@ class GlobalParam
         'app_title' => 'Methodenbox',
         'invalid_login_limit' => 3,
         'session_timeout_sec' => 1800,
+        'bootstrap_version' => '4.1',         // {'3', '4.1' }
         'deploy_zone' => 'DEV',             // Deployment zone { 'DEV' | 'DEMO' | 'PROD' }
         'ctc_send_mail' => true,            // Send mail from Contact form { true, false }
         'file_storage_type' => 'DATABASE',  // Storage method for uploaded files {'DATABASE' | 'FILESYS' }
-        'file_storage_path' => '/doc'       // FILESYS path to store method attachments 
+        'file_storage_path' => ''           // FILESYS path to store method attachments 
     );
 
     public static $captcha_cnf = array(
@@ -67,6 +68,22 @@ class GlobalParam
         array('item_name' => 'Abmelden', 'item_ref' => '/php/usr_out.php', 'item_menu' => 'R', 'auth_req' => 1, 'item_show' => 0),
         array('item_name' => 'Kontakt', 'item_ref' => '/php/aux_ctc.php', 'item_menu' => 'R', 'auth_req' => 0, 'item_show' => 1),
         array('item_name' => 'Hilfe', 'item_ref' => '/php/aux_hlp.php', 'item_menu' => 'R', 'auth_req' => -1, 'item_show' => 1)
+    );
+    
+    public static $main_menu_bs4 = array(
+        array('item_group' => 'Benutzer', 'item_list' => array(
+            array('item_name' => 'Registrieren', 'item_ref' => '/php/bs4/usr_new.php', 'auth_req' => 0, 'item_show' => 1),
+            array('item_name' => 'Anmelden', 'item_ref' => '/php/bs4/usr_lin.php',  'auth_req' => 0, 'item_show' => 0),
+            array('item_name' => 'Abmelden', 'item_ref' => '/php/bs4/usr_out.php', 'auth_req' => 1, 'item_show' => 0))
+        ),
+        array('item_group' => 'Unterrichtsmethode', 'item_list' => array(
+            array('item_name' => 'Erstellen', 'item_ref' => '/php/mth_new.php', 'auth_req' => 1, 'item_show' => 1),
+            array('item_name' => 'Suchen', 'item_ref' => '/php/mth_src.php', 'auth_req' => 1, 'item_show' => 1),
+            array('item_name' => 'Bewerten', 'item_ref' => '/php/mth_rtg.php', 'auth_req' => 1, 'item_show' => 1),
+            array('item_name' => 'Verwalten', 'item_ref' => '/php/mth_adm.php', 'auth_req' => 1, 'item_show' => 1))
+        ),
+        array('item_group' => '', 'item' => array('item_name' => 'Kontakt', 'item_ref' => '/php/aux_ctc.php', 'auth_req' => 0, 'item_show' => 1)),
+        array('item_group' => '', 'item' => array('item_name' => 'Hilfe', 'item_ref' => '/php/aux_hlp.php', 'auth_req' => -1, 'item_show' => 1))
     );
 }
 ?>

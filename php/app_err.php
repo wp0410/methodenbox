@@ -12,7 +12,7 @@
 //----------------------------------------------------------------------------------------
 include_once 'model/mdl_par.php';
 include_once 'model/mdl_err.php';
-include_once 'model/mdl_frm.php';
+include_once 'model/mdl_bs3.php';
 
 $error_info = new ErrorInfo();
 
@@ -40,11 +40,11 @@ $usr_is_authenticated = false;
         <meta name="description" content="Ilse Pachlinger: Sammlung von Unterrichtsmethoden">
         <meta name="author" content="Walter Pachlinger (walter.pachlinger@gmx.at)">
         
-        <?php style_sheet_refs(); ?>
+        <?php FormatHelper::style_sheet_refs(); ?>
     </head>
 
     <body>
-        <?php create_menu($usr_is_authenticated, basename($_SERVER['PHP_SELF'])); ?>
+        <?php FormatHelper::create_menu($usr_is_authenticated, basename($_SERVER['PHP_SELF'])); ?>
 
         <div class="container" role="main">
             <div class="page-header"><h1> <?php echo GlobalParam::$app_config['app_title'] . ': '; ?> Kritischer Fehler</h1></div>
@@ -56,6 +56,6 @@ $usr_is_authenticated = false;
             </div>
         </div>
 
-        <?php script_refs(); ?>
+        <?php FormatHelper::script_refs(); ?>
     </body>
 </html>

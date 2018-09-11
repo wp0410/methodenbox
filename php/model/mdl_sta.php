@@ -11,6 +11,14 @@
 //  governing permissions and limitations under the License.
 //----------------------------------------------------------------------------------------
 
+/**
+ * DownloadStatistics        Entry that describes a successful download of a teaching method
+ * 
+ * @package   DownloadStatistics
+ * @author    Walter Pachlinger (walter.pachlinger@gmx.at)
+ * @version   $Revision: 1.0 $
+ * @access    public
+ */
 class DownloadStatistics 
 {
     private $db_conn;
@@ -19,6 +27,15 @@ class DownloadStatistics
     private $dld_date;
     private $is_stored;
     
+    /**
+     * Constructor
+     * 
+     * @access     public
+     * @param      mysqli    $db_cn    Database connection
+     * @param      integer   $usr_id   Identifier of an authenticated user
+     * @param      integer   $mth_id   Identifier of the downloaded method
+     * @return     An initialized DownloadStatistics object
+     */
     public function __construct($db_cn, $usr_id, $mth_id)
     {
         $this->db_conn = $db_cn;
@@ -28,6 +45,13 @@ class DownloadStatistics
         $this->is_stored = false;
     }
     
+    /**
+     * Stores the DownloadStatistics object in the database
+     * 
+     * @access     public
+     * @return     TRUE      object successfully stored
+     * @return     FALSE     error storing the object
+     */
     public function save()
     {
         $sql_stmt = 'insert into ta_mth_statistics_download( dld_mth_id, dld_usr_id, dld_date ) values ( ?, ?, ? ); ';
@@ -40,6 +64,14 @@ class DownloadStatistics
     }
 }
 
+/**
+ * RatingStatistics          Entry that describes a successful rating of a teaching method
+ * 
+ * @package   RatingStatistics
+ * @author    Walter Pachlinger (walter.pachlinger@gmx.at)
+ * @version   $Revision: 1.0 $
+ * @access    public
+ */
 class RatingStatistics
 {
     private $db_conn;
@@ -50,6 +82,15 @@ class RatingStatistics
     public  $rtg_comment;
     private $is_stored;
     
+    /**
+     * Constructor
+     * 
+     * @access     public
+     * @param      mysqli    $db_cn    Database connection
+     * @param      integer   $usr_id   Identification of the rating user
+     * @param      integer   $mth_id   Identification of the rated method
+     * @param      integer   $rate     Rating value
+     */
     public function __construct($db_cn, $usr_id, $mth_id, $rate)
     {
         $this->db_conn = $db_cn;
@@ -61,6 +102,13 @@ class RatingStatistics
         $this->is_stored = false;
     }
     
+    /**
+     * Stores the RatingStatistics object in the database
+     * 
+     * @access     public
+     * @return     TRUE      Object stored successfully
+     * @return     FALSE     Error storing the object
+     */
     public function save()
     {
         $sql_stmt = 'insert into ta_mth_statistics_rating( rtg_mth_id, rtg_usr_id, rtg_date, rtg_rating, rtg_comment ) values ( ?, ?, ?, ?, ? ); ';

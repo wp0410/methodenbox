@@ -16,7 +16,7 @@ include_once 'model/mdl_par.php';
 include_once 'model/mdl_dbs.php';
 include_once 'model/mdl_ssn.php';
 include_once 'model/mdl_jnl.php';
-include_once 'model/mdl_frm.php';
+include_once 'model/mdl_bs3.php';
 include_once 'model/mdl_err.php';
 include_once 'model/mdl_mlr.php';
 
@@ -138,13 +138,13 @@ if (! empty($_POST))
         <meta name="description" content="Ilse Pachlinger: Sammlung von Unterrichtsmethoden">
         <meta name="author" content="Walter Pachlinger (walter.pachlinger@gmx.at)">
         
-        <?php style_sheet_refs(); ?>
+        <?php FormatHelper::style_sheet_refs(); ?>
         
         <script src='https://www.google.com/recaptcha/api.js'></script>
     </head>
 
     <body>
-        <?php create_menu($usr_is_authenticated, basename($_SERVER['PHP_SELF'])); ?>
+        <?php FormatHelper::create_menu($usr_is_authenticated, basename($_SERVER['PHP_SELF'])); ?>
         
         <div class="container" role="main">
             <div class="page-header"><h1><?php echo GlobalParam::$app_config['app_title'] . ': Kontakt'; ?></h1></div>
@@ -263,6 +263,6 @@ if (! empty($_POST))
         <script src="/js/bootstrap.min.js"></script>
         <script src="/js/validator.js"></script> -->
         
-        <?php script_refs(); ?>
+        <?php FormatHelper::script_refs(); ?>
     </body>
 </html>

@@ -18,7 +18,7 @@ include_once 'model/mdl_ssn.php';
 include_once 'model/mdl_jnl.php';
 include_once 'model/mdl_par.php';
 include_once 'model/mdl_err.php';
-include_once 'model/mdl_frm.php';
+include_once 'model/mdl_bs3.php';
 
 // Check for valid user session
 $usr_is_authenticated = false;
@@ -158,11 +158,11 @@ if (! empty($_POST))
         <meta name="description" content="Ilse Pachlinger: Sammlung von Unterrichtsmethoden">
         <meta name="author" content="Walter Pachlinger (walter.pachlinger@gmx.at)">
         
-        <?php style_sheet_refs(); ?>
+        <?php FormatHelper::style_sheet_refs(); ?>
     </head>
 
     <body>
-        <?php create_menu($usr_is_authenticated, basename($_SERVER['PHP_SELF'])); ?>
+        <?php FormatHelper::create_menu($usr_is_authenticated, basename($_SERVER['PHP_SELF'])); ?>
             
         <div class="container" role="main">
             <div class="page-header"><h1><?php echo GlobalParam::$app_config['app_title'] . ':   Neue Methode Erstellen'; ?></h1></div>
@@ -473,10 +473,7 @@ if (! empty($_POST))
                 </div> <!-- modal-dialog -->
             </div> <!-- modal fade -->
         </div> <!-- class="container" -->
-        <!-- script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-        <script src="/js/bootstrap.min.js"></script>
-        <script src="/js/validator.js"></script> -->
-        <?php script_refs(); ?>
+        <?php  FormatHelper::script_refs(); ?>
         <script>
             /* global $ */
             $(function() {

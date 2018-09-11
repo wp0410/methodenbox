@@ -1,0 +1,15 @@
+[10-Sep-2018 13:12:46 UTC] PHP Warning:  include_once(/php/model/mdl_par.php): failed to open stream: No such file or directory in /home/ubuntu/workspace/php/bs3/app_ovw.php on line 15
+[10-Sep-2018 13:12:46 UTC] PHP Stack trace:
+[10-Sep-2018 13:12:46 UTC] PHP   1. {main}() /home/ubuntu/workspace/php/bs3/app_ovw.php:0
+[10-Sep-2018 13:12:46 UTC] PHP Warning:  include_once(): Failed opening '/php/model/mdl_par.php' for inclusion (include_path='.:/usr/share/php:/usr/share/pear') in /home/ubuntu/workspace/php/bs3/app_ovw.php on line 15
+[10-Sep-2018 13:12:46 UTC] PHP Stack trace:
+[10-Sep-2018 13:12:46 UTC] PHP   1. {main}() /home/ubuntu/workspace/php/bs3/app_ovw.php:0
+[10-Sep-2018 13:12:46 UTC] PHP Warning:  include_once(/php/model/mdl_bs3.php): failed to open stream: No such file or directory in /home/ubuntu/workspace/php/bs3/app_ovw.php on line 16
+[10-Sep-2018 13:12:46 UTC] PHP Stack trace:
+[10-Sep-2018 13:12:46 UTC] PHP   1. {main}() /home/ubuntu/workspace/php/bs3/app_ovw.php:0
+[10-Sep-2018 13:12:46 UTC] PHP Warning:  include_once(): Failed opening '/php/model/mdl_bs3.php' for inclusion (include_path='.:/usr/share/php:/usr/share/pear') in /home/ubuntu/workspace/php/bs3/app_ovw.php on line 16
+[10-Sep-2018 13:12:46 UTC] PHP Stack trace:
+[10-Sep-2018 13:12:46 UTC] PHP   1. {main}() /home/ubuntu/workspace/php/bs3/app_ovw.php:0
+[10-Sep-2018 13:12:46 UTC] PHP Fatal error:  Call to undefined function style_sheet_refs() in /home/ubuntu/workspace/php/bs3/app_ovw.php on line 29
+[10-Sep-2018 13:12:46 UTC] PHP Stack trace:
+[10-Sep-2018 13:12:46 UTC] PHP   1. {main}() /home/ubuntu/workspace/php/bs3/app_ovw.php:0

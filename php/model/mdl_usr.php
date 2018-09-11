@@ -5,7 +5,7 @@
 //  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this 
 //  file except in compliance with the License. You may obtain a copy of the License at
 //      http://www.apache.org/licenses/LICENSE-2.0
-//  Unless required by applicable law or agreed to in writing, softwaredistributed under 
+//  Unless required by applicable law or agreed to in writing, software distributed under 
 //  the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF 
 //  ANY KIND, either express or implied. See the License for the specific language 
 //  governing permissions and limitations under the License.
@@ -373,6 +373,14 @@ class UserAccount implements JsonSerializable
     }
 }
 
+/**
+ * UserAccountSearcher  Search for a user account
+ * 
+ * @package   UserAccountSearcher
+ * @author    Walter Pachlinger (walter.pachlinger@gmx.at)
+ * @version   $Revision: 1.0 $
+ * @access    public
+ */
 class UserAccountSearcher
 {
     private $db_conn;
@@ -406,6 +414,12 @@ class UserAccountSearcher
         $this->sql_par_num = 0;
     }
     
+    /**
+     * Setter: sets the "first name" attribute to search for
+     * 
+     * @access     public
+     * @param      string    $fst_name      First name to search for
+     */
     public function set_fstname($fst_name)
     {
         if (! empty($fst_name))
@@ -417,6 +431,12 @@ class UserAccountSearcher
         }
     }
     
+    /**
+     * Setter: sets the "last name" attribute to search for
+     * 
+     * @access     public
+     * @param      string    $lst_name      Last name to search for
+     */
     public function set_lstname($lst_name)
     {
         if (! empty($lst_name))
@@ -428,6 +448,12 @@ class UserAccountSearcher
         }
     }
     
+    /**
+     * Setter: sets the "e-mail address" attribute to search for
+     * 
+     * @access     public
+     * @param      string    $email      E-mail address to search for
+     */
     public function set_email($email)
     {
         if (! empty($email))
@@ -439,6 +465,12 @@ class UserAccountSearcher
         }
     }
     
+    /**
+     * Setter: sets the "locked" attribute to search for
+     * 
+     * @access     public
+     * @param      integer   $lck      Search for locked or unlocked uesrs
+     */
     public function set_locked($lck)
     {
         if (! empty($lck))
@@ -457,6 +489,12 @@ class UserAccountSearcher
         }
     }
     
+    /**
+     * Applies the search criteria and returns the found user accounts
+     * 
+     * @access     public
+     * @return     Array of user accounts
+     */
     public function get_result()
     {
         $usr_list = array();

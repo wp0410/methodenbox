@@ -18,7 +18,7 @@ include_once 'model/mdl_ssn.php';
 include_once 'model/mdl_jnl.php';
 include_once 'model/mdl_mth.php';
 include_once 'model/mdl_sta.php';
-include_once 'model/mdl_frm.php';
+include_once 'model/mdl_bs3.php';
 include_once 'model/mdl_err.php';
 
 // Check for valid user session
@@ -77,13 +77,10 @@ $method_list = $mth_search->get_result();
         <meta name="description" content="Ilse Pachlinger: Sammlung von Unterrichtsmethoden">
         <meta name="author" content="Walter Pachlinger (walter.pachlinger@gmx.at)">
         
-        <!-- link rel="stylesheet" href="/css/bootstrap.min.css">
-        <link rel="stylesheet" href="/css/bootstrap-theme.css">
-        <link rel="stylesheet" href="/css/project.css" -->
-        <?php style_sheet_refs(); ?>
+        <?php FormatHelper::style_sheet_refs(); ?>
     </head>
     <body>
-        <?php create_menu($usr_is_authenticated, basename($_SERVER['PHP_SELF'])); ?>
+        <?php FormatHelper::create_menu($usr_is_authenticated, basename($_SERVER['PHP_SELF'])); ?>
 
         <div class="container" role="main">
             <div class="page-header"><h1><?php echo GlobalParam::$app_config['app_title'] . ': Unterrichtsmethoden Verwalten'; ?></h1></div>
@@ -152,10 +149,7 @@ $method_list = $mth_search->get_result();
             </div> <!-- row -->
         </div> <!-- container -->
         
-        <!-- script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-        <script src="/js/bootstrap.min.js"></script>
-        <script src="/js/validator.js"></script> -->
-        <?php script_refs(); ?>
+        <?php FormatHelper::script_refs(); ?>
         
     </body>
 </html>

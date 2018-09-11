@@ -12,8 +12,8 @@
 //----------------------------------------------------------------------------------------
 session_start();
 
-include_once 'model/mdl_par.php';
-include_once 'model/mdl_bs3.php';
+include_once '../model/mdl_par.php';
+include_once '../model/mdl_bs4.php';
 
 $usr_is_authenticated = false;
 ?>
@@ -26,11 +26,11 @@ $usr_is_authenticated = false;
         <meta name="description" content="Ilse Pachlinger: Sammlung von Unterrichtsmethoden">
         <meta name="author" content="Walter Pachlinger (walter.pachlinger@gmx.at)">
 
-        <?php FormatHelper::style_sheet_refs(); ?>
+        <?php style_sheet_refs(); ?>
     </head>
 
     <body>
-        <?php FormatHelper::create_menu($usr_is_authenticated, basename($_SERVER['PHP_SELF'])); ?>
+        <?php create_menu($usr_is_authenticated, basename($_SERVER['PHP_SELF'])); ?>
 
         <div class="container" role="main">
             <div class="page-header"><h1><?php echo GlobalParam::$app_config['app_title'] . ': '; ?> &Uuml;bersicht</h1></div>
@@ -53,6 +53,6 @@ $usr_is_authenticated = false;
             </div>
         </div>
     
-        <?php FormatHelper::script_refs(); ?>
+        <?php script_refs(); ?>
     </body>
 </html>

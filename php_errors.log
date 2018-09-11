@@ -1,0 +1,13 @@
+[10-Sep-2018 13:10:26 UTC] PHP Fatal error:  Call to undefined function menu_item() in /home/ubuntu/workspace/php/model/mdl_bs3.php on line 83
+[10-Sep-2018 13:10:26 UTC] PHP Stack trace:
+[10-Sep-2018 13:10:26 UTC] PHP   1. {main}() /home/ubuntu/workspace/php/app_ovw.php:0
+[10-Sep-2018 13:10:26 UTC] PHP   2. create_menu() /home/ubuntu/workspace/php/app_ovw.php:33
+[10-Sep-2018 13:18:19 UTC] PHP Warning:  include_once(/home/ubuntu/workspace/php/model/mdl_frm.php): failed to open stream: No such file or directory in /home/ubuntu/workspace/php/aux_hlp.php on line 20
+[10-Sep-2018 13:18:19 UTC] PHP Stack trace:
+[10-Sep-2018 13:18:19 UTC] PHP   1. {main}() /home/ubuntu/workspace/php/aux_hlp.php:0
+[10-Sep-2018 13:18:19 UTC] PHP Warning:  include_once(): Failed opening '/home/ubuntu/workspace/php/model/mdl_frm.php' for inclusion (include_path='.:/usr/share/php:/usr/share/pear') in /home/ubuntu/workspace/php/aux_hlp.php on line 20
+[10-Sep-2018 13:18:19 UTC] PHP Stack trace:
+[10-Sep-2018 13:18:19 UTC] PHP   1. {main}() /home/ubuntu/workspace/php/aux_hlp.php:0
+[10-Sep-2018 13:18:19 UTC] PHP Fatal error:  Call to undefined function style_sheet_refs() in /home/ubuntu/workspace/php/aux_hlp.php on line 65
+[10-Sep-2018 13:18:19 UTC] PHP Stack trace:
+[10-Sep-2018 13:18:19 UTC] PHP   1. {main}() /home/ubuntu/workspace/php/aux_hlp.php:0

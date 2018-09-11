@@ -10,12 +10,27 @@
 //  ANY KIND, either express or implied. See the License for the specific language 
 //  governing permissions and limitations under the License.
 //----------------------------------------------------------------------------------------
+
+/**
+ * DatabaseConnection        Encapsulates the connection to the MySQL database
+ * 
+ * @package        DatabaseConnection
+ * @author         Walter Pachlinger (walter.pachlinger@gmx.at)
+ * @version        $Revision: 1.0 $
+ * @access         public
+ */
 class DatabaseConnection
 {
     private static $db_connection = null;
-    
     private static $db_error = null;
     
+    /**
+     * Establishes a connection to the MySQL database
+     * 
+     * @access     private
+     * @return     Database connection (mysqli)
+     * @return     In case of error: null
+     */
     private static function connect()
     {
         if (self::$db_error != null)
@@ -56,6 +71,14 @@ class DatabaseConnection
         }
     }
     
+    /**
+     * Getter: retrieves the mysqli connection to the database. Establishes the
+     * connection in case it is not yet established
+     * 
+     * @access     public
+     * @return     Database connection (mysqli)
+     * @return     In case of error: null
+     */
     public static function get_connection()
     {
         if (self::$db_connection == null)
@@ -65,6 +88,14 @@ class DatabaseConnection
         return self::$db_connection;
     }
     
+    /**
+     * Getter: retrieves the description of the error that occurred when
+     * tying to establish the database connection
+     * 
+     * @access     public
+     * @return     ErrorInfo bject describing the database error
+     * @return     null in case no error occurred
+     */
     public static function get_error()
     {
         return self::$db_error;
@@ -72,52 +103,15 @@ class DatabaseConnection
 }
 
 /**
- * Established a connection to the MySQL database
- * 
- * @return         mysqli    database connection
- * @return         null      error connecting to the database
- */
-function db_connect_old()
-{
-    if (GlobalParam::$app_config['deploy_zone'] == 'DEMO')
-    {
-        $db_host = 'sql113.byethost.com';
-        $db_username = 'b8_22634095';
-        $db_password = 'UthmaifKocyoHu1';
-        $db_name = 'b8_22634095_mthbox';
-        $db_port = 3306;
-    }
-    
-    if (GlobalParam::$app_config['deploy_zone'] == 'DEV')
-    {
-        $db_host = getenv('IP');
-        $db_username = getenv('C9_USER');
-        $db_password = null;
-        $db_name = 'c9';
-        $db_port = null;
-    }
-
-    $db_conn = new mysqli($db_host, $db_username, $db_password, $db_name, $db_port);
-    if ($db_conn->connect_error)
-    {
-        return null;
-    }
-    else 
-    {
-        return $db_conn;
-    }
-}
-
-/**
  * Executes a non-select SQL statement with one parameter
  * 
- * @param          $db_conn       Database connection
- * @param          $stmt          SQL statement to be executed
- * @param          $par_type      Type of the single parameter
- * @param          $par_value     Value of the single parameter
+ * @param          mysqli    $db_conn       Database connection
+ * @param          string    $stmt          SQL statement to be executed
+ * @param          string    $par_type      Type of the single parameter
+ * @param          object    $par_value     Value of the single parameter
  * 
- * @return         TRUE           Success
- * @return         FALSE          Error executing the statement
+ * @return         TRUE      Success
+ * @return         FALSE     Error executing the statement
  */
 function db_execute_stmt_one_param($db_conn, $stmt, $par_type, $par_value)
 {
