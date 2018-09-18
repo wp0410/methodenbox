@@ -33,22 +33,26 @@ $usr_is_authenticated = false;
         <?php FormatHelper::create_menu($usr_is_authenticated, basename($_SERVER['PHP_SELF'])); ?>
 
         <div class="container" role="main">
-            <div class="page-header"><h1><?php echo GlobalParam::$app_config['app_title'] . ': '; ?> &Uuml;bersicht</h1></div>
+            <div class="row">
+                <div class="col">
+                    <div class="page-header"><h1><?php echo GlobalParam::$app_config['app_title'] . ': '; ?> &Uuml;bersicht</h1></div>
+                </div>
+            </div>
     
             <?php
                 if ( !empty($_GET) && !empty($_GET['add_msg']) )
                 {
-                    echo '<div class="row"><div class="alert alert-warning" role="alert"><p class="lead">';
+                    echo '<div class="row"><div class="col"><div class="alert alert-warning" role="alert"><p class="lead">';
                     echo $_GET['add_msg'];
-                    echo '</p></div></div>';
+                    echo '</p></div></div></div>';
                 }
             ?>
             <div class="row">
-                <div class="alert alert-info" role="alert">
-                    <p class="lead">
-                        Sie m&uuml;ssen sich anmelden, um auf den Inhalt der Methodenbox zugreifen zu k&ouml;nnen. 
-                        Wenn Sie noch keine Anmeldedaten haben, m&uuml;ssen Sie die Registrierung durchführen (Men&uuml; "Registrieren").
-                    </p>
+                <div class="col">
+                    <div class="alert alert-info" role="alert">
+                        <p class="lead">Sie m&uuml;ssen sich anmelden, um auf den Inhalt der Methodenbox zugreifen zu k&ouml;nnen (Men&uuml; "Anmelden").</p>
+                        <p class="lead">Wenn Sie noch keine Anmeldedaten haben, m&uuml;ssen Sie die Registrierung durchführen (Men&uuml; "Registrieren").</p>
+                    </div>
                 </div>
             </div>
         </div>

@@ -437,10 +437,13 @@ class TeachingMethod implements JsonSerializable
             return array('code' => 410, 'text' => '[E_410] Die Daten der Unterrichtsmethode sind nicht vollständig');
         }
         
+        /*
         if (! $this->db_conn->begin_transaction(MYSQLI_TRANS_START_READ_WRITE))
         {
             return array('code' => 414, 'text' => '[E_414] Die Datenbanktransaktion kann nicht gestartet werden');
         }
+        */
+        $trans_started = $this->db_conn->begin_transaction(MYSQLI_TRANS_START_READ_WRITE);
         
         $sql_stmt =
             'insert into ta_mth_method( ' .
@@ -467,7 +470,10 @@ class TeachingMethod implements JsonSerializable
         
         if (! $result)
         {
-            $this->db_conn->rollback();
+            if ($trans_started)
+            {
+                $this->db_conn->rollback();
+            }
             return array('code' => 411, 'text' => '[E_411] DB Insert Error on mth ([' . $err_code . '] ' . $err_text . ')');
         }
         
@@ -496,8 +502,14 @@ class TeachingMethod implements JsonSerializable
         $stm3->close();
         if (! $result)
         {
-            // $this->undo_mth();
-            $this->db_conn->rollback();
+            if ($trans_started)
+            {
+                $this->db_conn->rollback();
+            }
+            else
+            {
+                $this->undo_mth();
+            }
             return array('code' => 412, 'text' => '[E_411] DB Insert Error on mth_authors ([' . $err_code . '] ' . $err_text . ')');
         }
 
@@ -505,13 +517,22 @@ class TeachingMethod implements JsonSerializable
 
         if ($result['code'] != 0)
         {
-            // $this->undo_mth_authors();
-            // $this->undo_mth();
-            $this->db_conn->rollback();
+            if ($trans_started)
+            {
+                $this->db_conn->rollback();
+            }
+            else
+            {
+                $this->undo_mth_authors();
+                $this->undo_mth();
+            }
             return $result;
         }
         
-        $this->db_conn->commit();
+        if ($trans_started)
+        {
+            $this->db_conn->commit();
+        }
         
         return array('code' => 0, 'text' => 'OK');
     }
@@ -598,9 +619,10 @@ class TeachingMethodSearcher
         $this->sql_stmt = 
             'select mth.mth_id, mth.mth_name, mth.mth_phase, mth.mth_prep_min, mth.mth_prep_max, ' .
             '       mth.mth_exec_min, mth.mth_exec_max, mth.mth_topic, mth.mth_type, mth.mth_soc_form, ' .
-            '       mth.mth_age_grp, mth.mth_summary, rtg.rtg_count, rtg.rtg_sum, ' .
-            '       dld.dld_count, dld.dld_last_date, ' .
-            '       mau.mth_auth_name, att.att_guid, att.att_name ' .
+            '       mth.mth_age_grp, mth.mth_summary, coalesce(rtg.rtg_count,0) as rtg_count, coalesce(rtg.rtg_sum,0) as rtg_sum, ' .
+            '       coalesce(dld.dld_count,0) dld_count, dld.dld_last_date, ' .
+            '       mau.mth_auth_name, att.att_guid, att.att_name, ' .
+            '       (coalesce(rtg.rtg_count,0) + 1) / (coalesce(dld.dld_count,0) + 1) + (coalesce(rtg.rtg_sum,0) + 2.5) / (coalesce(rtg.rtg_count,0) + 1) as rtg_digest ' .
             'from   ta_mth_method mth ' .
             '       inner join ta_mth_method_attachment att on mth.mth_id = att.att_mth_id ' .
             '       inner join ( select mth_id, group_concat(mth_auth_name order by mth_seq separator "<br>") as mth_auth_name ' .
@@ -614,7 +636,8 @@ class TeachingMethodSearcher
             '                   group by dld_mth_id ) dld on mth.mth_id = dld.dld_mth_id ' .
             'where  mth.mth_status = 0 ';
 
-        $this->sql_order_clause = ' order by mth_name, mth_id ';
+        // $this->sql_order_clause = ' order by mth_name, mth_id ';
+        $this->sql_order_clause = ' order by rtg_digest desc ';
         $this->sql_par_values = array();
         $this->sql_par_types = '';
         $this->sql_par_num = 0;
@@ -874,10 +897,11 @@ class TeachingMethodSearcher
             $dld_last_date = '';
             $mth_author = '';
             $mth_att_guid = '';
+            $rtg_digest = 0;
             
             $stm1->bind_result(
                 $mth_id, $mth_name, $mth_phase, $mth_prep_min, $mth_prep_max, $mth_exec_min, $mth_exec_max, $mth_topic, $mth_type, $mth_soc, 
-                $mth_age_grp, $mth_summary, $rtg_count, $rtg_sum, $dld_count, $dld_last_date, $mth_author, $mth_att_guid, $mth_att_name);
+                $mth_age_grp, $mth_summary, $rtg_count, $rtg_sum, $dld_count, $dld_last_date, $mth_author, $mth_att_guid, $mth_att_name, $rtg_digest);
     
             while ($stm1->fetch() != NULL)
             {
@@ -1069,9 +1093,9 @@ class MethodListByOwnership
             '       coalesce(rtg.rtg_count,0) rtg_count, coalesce(rtg.rtg_sum,0) rtg_sum, ' .
             '       coalesce(rtg.rtg_sum,0) / (coalesce(rtg.rtg_count,0) + 1) rtg_sort ' .
             'from   ta_mth_method mth ' .
-            '       left join ( select dld_usr_id, dld_mth_id, count(1) as dld_count, max(dld_date) as dld_last_date' .
+            '       left join ( select dld_mth_id, count(1) as dld_count, max(dld_date) as dld_last_date' .
             '                   from ta_mth_statistics_download ' .
-            '                   group by dld_mth_id, dld_usr_id ) dld on mth.mth_id = dld.dld_mth_id ' .
+            '                   group by dld_mth_id ) dld on mth.mth_id = dld.dld_mth_id ' .
             '       left join  ( select rtg_mth_id, count(1) as rtg_count, sum(rtg_rating) as rtg_sum ' .
             '                    from ta_mth_statistics_rating ' .
             '                    group by rtg_mth_id ) rtg on mth.mth_id = rtg.rtg_mth_id ' .

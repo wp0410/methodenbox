@@ -58,5 +58,23 @@ from   ta_mth_method mth
                     from ta_mth_statistics_rating
                     group by rtg_mth_id ) rtg on mth.mth_id = rtg.rtg_mth_id
 where  mth.mth_id >= 0
-;                 
+;    
+
+
+select mth.mth_id, mth.mth_name, mth.mth_phase, mth.mth_prep_min, mth.mth_prep_max,
+       mth.mth_exec_min, mth.mth_exec_max, mth.mth_topic, mth.mth_type, mth.mth_soc_form,
+       mth.mth_age_grp, mth.mth_summary,
+       dld.dld_count, dld.dld_last_date,
+       coalesce(rtg.rtg_count,0) rtg_count, coalesce(rtg.rtg_sum,0) rtg_sum,
+       coalesce(rtg.rtg_sum,0) / (coalesce(rtg.rtg_count,0) + 1) rtg_sort
+from   ta_mth_method mth
+       left join ( select dld_mth_id, count(1) as dld_count, max(dld_date) as dld_last_date
+                   from ta_mth_statistics_download
+                   group by dld_mth_id ) dld on mth.mth_id = dld.dld_mth_id
+       left join  ( select rtg_mth_id, count(1) as rtg_count, sum(rtg_rating) as rtg_sum
+                    from ta_mth_statistics_rating
+                    group by rtg_mth_id ) rtg on mth.mth_id = rtg.rtg_mth_id
+where  mth.mth_status = 0 and mth.mth_owner_id = 1
+order by rtg_sort asc;
+
 

@@ -132,52 +132,26 @@ else
         <?php FormatHelper::create_menu(false, basename($_SERVER['PHP_SELF'])); ?>
     
         <div class="container" role="main">
-            <div class="page-header"><h1><?php echo GlobalParam::$app_config['app_title'] . ': Benutzerregistrierung'; ?></h1></div>
             <div class="row">
-                <form data-toggle="validator" id="register_form" method="post" action="/php/usr_new.php" role="form">
+                <div class="col">
+                    <div class="page-header"><h1><?php echo GlobalParam::$app_config['app_title'] . ': Benutzerregistrierung'; ?></h1></div>
+                </div>
+            </div>
+
+            <form data-toggle="validator" id="register_form" method="post" action="/php/usr_new.php" role="form">
+            
                 <?php 
-                    if ($success)
-                    { 
-                        echo '<div class="messages"></div>'; 
-                    }
-                    else
+                    if (! $success)
                     {
+                        echo '<div class="row"><div class="col">';    
                         echo '<div class="messages"><div class="alert alert-' . $responseArray['type'] . '" role="alert">' . $responseArray['message'] . '</div></div>';
+                        echo '</div></div>';
                     }
                 ?>
-                    <div class="controls">
-                        <div class="col-md-5">
-                            <div class="form-group" id="reg_fst_name">
-                                <label for="user_fst_name">Vorname *</label>
-                                <?php
-                                    if ($success || empty($_POST) || empty($_POST['user_fst_name']))
-                                    {
-                                        echo '<input id="user_fst_name" type="text" name="user_fst_name" class="form-control" placeholder="Vorname" required>';
-                                    }
-                                    else 
-                                    {
-                                        echo '<input id="user_fst_name" type="text" name="user_fst_name" class="form-control" value="' . $_POST['user_fst_name'] . '" required>';
-                                    }
-                                ?>
-                                <div class="help-block with-errors"></div>
-                            </div>
-                            
-                            <div class="form-group" id="reg_lst_name">
-                                <label for="user_lst_name">Nachname *</label>
-                                <?php
-                                    if ($success || empty($_POST) || empty($_POST['user_lst_name']))
-                                    {
-                                        echo '<input id="user_lst_name" type="text" name="user_lst_name" class="form-control" placeholder="Nachname" required>';
-                                    }
-                                    else
-                                    {
-                                        echo '<input id="user_lst_name" type="text" name="user_lst_name" class="form-control" value="' . $_POST['user_lst_name'] . '" required>';
-                                    }
-                                    ?>
-                                <div class="help-block with-errors"></div>
-                            </div>
-                            
-                            <div class="form-group" id="reg_email">
+                <div class="controls">
+                    <div class="row form-row">
+                        <div class="col col-md-8">
+                            <div class="form-group has-feedback" id="reg_email">
                                 <label for="user_email">E-Mail Adresse *</label>
                                 <?php
                                     if ($success || empty($_POST) || empty($_POST['user_email']))
@@ -189,35 +163,83 @@ else
                                         echo '<input id="user_email" type="email" name="user_email" class="form-control" value="' . $_POST['user_email'] . '" required>';
                                     }
                                 ?>
-                                <div class="help-block with-errors"></div>
+                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                             </div> <!-- form-group -->
-                            
-                            <div class="form-group" id="reg_pwd">
+                        </div>
+                    </div>
+                    <div class="row form-row">
+                        <div class="col col-md-4">
+                            <div class="form-group has-feedback" id="reg_fst_name">
+                                <label for="user_fst_name">Vorname *</label>
+                                <?php
+                                    if ($success || empty($_POST) || empty($_POST['user_fst_name']))
+                                    {
+                                        echo '<input id="user_fst_name" type="text" name="user_fst_name" class="form-control" placeholder="Vorname" required>';
+                                    }
+                                    else 
+                                    {
+                                        echo '<input id="user_fst_name" type="text" name="user_fst_name" class="form-control" value="' . $_POST['user_fst_name'] . '" required>';
+                                    }
+                                ?>
+                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                            </div>
+                        </div>
+                        <div class="col col-md-4">
+                            <div class="form-group has-feedback" id="reg_lst_name">
+                                <label for="user_lst_name">Nachname *</label>
+                                <?php
+                                    if ($success || empty($_POST) || empty($_POST['user_lst_name']))
+                                    {
+                                        echo '<input id="user_lst_name" type="text" name="user_lst_name" class="form-control" placeholder="Nachname" required>';
+                                    }
+                                    else
+                                    {
+                                        echo '<input id="user_lst_name" type="text" name="user_lst_name" class="form-control" value="' . $_POST['user_lst_name'] . '" required>';
+                                    }
+                                    ?>
+                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row form-row">
+                        <div class="col col-md-4">
+                            <div class="form-group has-feedback" id="reg_pwd">
                                 <label for="user_pwd">Passwort *</label>
                                 <input id="user_pwd" type="password" name="user_pwd" class="form-control" required>
-                                <div class="help-block with-errors"></div>
+                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                             </div> <!-- form-group -->
-                            
-                            <div class="form-group" id="reg_pwd_conf">
+                        </div>
+                        <div class="col col-md-4">
+                            <div class="form-group has-feedback" id="reg_pwd_conf">
                                 <label for="user_pwd_conf">Passwort Bestätigung *</label>
                                 <input id="user_pwd_conf" type="password" name="user_pwd_conf" class="form-control" required data-match="#user_pwd" 
-                                data-match-error="Passwort Bestätigung stimmt nicht mit dem Passwort überein">
-                                <div class="help-block with-errors"></div>
+                                       data-match-error="Passwort Bestätigung stimmt nicht mit dem Passwort überein">
+                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                             </div> <!-- form-group -->
-                            
+                        </div>
+                    </div>
+                    
+                    <div class="row form-row">
+                        <div class="col col-md-4">
                             <div class="g-recaptcha" data-sitekey="<?php echo GlobalParam::$captcha_cnf[GlobalParam::$app_config['deploy_zone']]['sitekey']; ?>"></div>
-                            
+                        </div>
+                    </div>
+                    
+                    <div class="row form-row"><div class="col col-md-8"><hr></div></div>
+
+                    <div class="row form-row">
+                        <div class="col col-md-2">
                             <div class="form-group" id="login_submit">
-                                <input type="submit" class="btn btn-primary btn-send" value="Bestätigen">
-                                </div><!-- form-group -->
-                            
-                            <div class="form-group">
-                                <p class="text-muted"><strong>*</strong>Pflichtfelder</p>
+                                <input type="submit" class="btn btn-primary btn-send" value="Registrieren">
                             </div>
-                        </div> <!-- col-md-5 -->
-                    </div> <!-- controls -->
-                </form>
-            </div> <!-- row -->
+                        </div>
+                        <div class="col col-md-6">
+                            <span class="text-primary">Mit * gekennzeichnete Felder m&uuml;ssen eingegeben werden.</p>
+                        </div>
+                    </div>        
+                </div> <!-- controls -->
+            </form>
         </div> <!-- container -->
     
         <?php FormatHelper::script_refs(); ?>

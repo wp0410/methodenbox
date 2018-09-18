@@ -47,11 +47,17 @@ $usr_is_authenticated = false;
         <?php FormatHelper::create_menu($usr_is_authenticated, basename($_SERVER['PHP_SELF'])); ?>
 
         <div class="container" role="main">
-            <div class="page-header"><h1> <?php echo GlobalParam::$app_config['app_title'] . ': '; ?> Kritischer Fehler</h1></div>
+            <div class="row">
+                <div class="col">
+                    <div class="page-header"><h1> <?php echo GlobalParam::$app_config['app_title'] . ': '; ?> Kritischer Fehler</h1></div>
+                </div>
+            </div>
     
             <div class="row">
-                <div class="alert alert-danger" role="alert">
-                    <?php $error_info->format_error(); ?>
+                <div class="col">
+                    <div class="alert alert-danger" role="alert">
+                        <?php $error_info->format_error(); ?>
+                    </div>
                 </div>
             </div>
         </div>

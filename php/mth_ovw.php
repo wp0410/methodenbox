@@ -68,46 +68,48 @@ $usr_is_authenticated = true;
         <meta name="description" content="Ilse Pachlinger: Sammlung von Unterrichtsmethoden">
         <meta name="author" content="Walter Pachlinger (walter.pachlinger@gmx.at)">
         
-        <!-- link rel="stylesheet" href="/css/bootstrap.min.css">
-        <link rel="stylesheet" href="/css/bootstrap-theme.css" -->
-        <? FormatHelper::php style_sheet_refs(); ?>
+        <?php FormatHelper::style_sheet_refs(); ?>
     </head>
 
     <body>
+        
         <?php FormatHelper::create_menu($usr_is_authenticated, basename($_SERVER['PHP_SELF'])); ?>
 
         <div class="container" role="main">
-            <div class="page-header"><h1><?php echo GlobalParam::$app_config['app_title'] . ': &Uumlbersicht'; ?></h1></div>
+            <div class="row">
+                <div class="col">
+                    <div class="page-header"><h1><?php echo GlobalParam::$app_config['app_title'] . ': &Uumlbersicht'; ?></h1></div>
+                </div>
+            </div>
         
             <?php
                 if ( !empty($_GET) && !empty($_GET['add_msg']) )
                 {
-                    echo '<div class="row"><div class="alert alert-warning" role="alert"><p class="lead">';
+                    echo '<div class="row"><div class="col"><div class="alert alert-warning" role="alert"><p class="lead">';
                     echo $_GET['add_msg'];
-                    echo '</p></div></div>';
+                    echo '</p></div></div></div>';
                 }
             ?>
 
             <div class="row">
-                <div class="alert alert-info" role="alert">
-                <p class="lead">W&auml;hlen Sie "Methode Suchen", um Unterrichtsmethoden auszuw&auml;hlen.</p>
-                    
+                <div class="col">
+                    <div class="alert alert-info" role="alert">
+                    <p class="lead">W&auml;hlen Sie "Methode Suchen", um Unterrichtsmethoden auszuw&auml;hlen.</p>
+                        
+                    </div>
+                    <div class="alert alert-info" role="alert">
+                        <p class="lead">W&auml;hlen Sie "Methode Erstellen", um eine neue Unterrichtsmethode anzulegen.</p>
+                    </div>
+                    <div class="alert alert-info" role="alert">
+                        <p class="lead">W&auml;hlen Sie "Methode Bewerten", um eine Bewertung f&uuml;r eine Unterrichtsmethode abzugeben.</p>
+                    </div>
+                    <div class="alert alert-info" role="alert">
+                        <p class="lead">W&auml;hlen Sie "Methoden Verwalten", um die von Ihnen hochgeladenen Unterrichtsmethoden zu bearbeiten.</p>
+                    </div>
                 </div>
-                <div class="alert alert-info" role="alert">
-                    <p class="lead">W&auml;hlen Sie "Methode Erstellen", um eine neue Unterrichtsmethode anzulegen.</p>
-                </div>
-                <div class="alert alert-info" role="alert">
-                    <p class="lead">W&auml;hlen Sie "Methode Bewerten", um eine Bewertung f&uuml;r eine Unterrichtsmethode abzugeben.</p>
-                </div>
-                <div class="alert alert-info" role="alert">
-                    <p class="lead">W&auml;hlen Sie "Methoden Verwalten", um die von Ihnen hochgeladenen Unterrichtsmethoden zu bearbeiten.</p>
-                </div>
-
             </div> <!-- row -->
         </div> <!-- container -->
     
-        <!-- script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-        <script src="/js/bootstrap.min.js"></script> -->
         <?php FormatHelper::script_refs(); ?>
     </body>
 </html>

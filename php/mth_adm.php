@@ -83,70 +83,112 @@ $method_list = $mth_search->get_result();
         <?php FormatHelper::create_menu($usr_is_authenticated, basename($_SERVER['PHP_SELF'])); ?>
 
         <div class="container" role="main">
-            <div class="page-header"><h1><?php echo GlobalParam::$app_config['app_title'] . ': Unterrichtsmethoden Verwalten'; ?></h1></div>
             <div class="row">
-                <form id="rating_form" method="post" action="/php/mth_rtg.php" role="form">
-                    <?php
-                        if (count($method_list) == 0)
-                        {
-                            echo '<div class="alert alert-warning" role="alert">';
-                            echo '<p class="lead">Sie haben keine Unterrichtsmethoden zur Verf&uuml;gung gestellt.</p>';
-                            echo '</div>';
-                        }
-                    ?>
+                <div class="col">
+                    <div class="page-header"><h1><?php echo GlobalParam::$app_config['app_title'] . ': Unterrichtsmethoden Verwalten'; ?></h1></div>
+                </div>
+            </div>
+            
+            <form id="rating_form" method="post" action="/php/mth_rtg.php" role="form">
+                <div class="row">
+                    <div class="col">
+                        <?php
+                            if (count($method_list) == 0)
+                            {
+                                echo '<div class="alert alert-warning" role="alert">';
+                                echo '<p class="lead">Sie haben keine Unterrichtsmethoden zur Verf&uuml;gung gestellt.</p>';
+                                echo '</div>';
+                            }
+                        ?>
 
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Methodenname</th>
-                                <th>Kurzbeschreibung</th>
-                                <th>Jahrgang</th>
-                                <th>Fachbereich</th>
-                                <th>Downlads</th>
-                                <th>Letzter<br>Downlad</th>
-                                <th>Bewertungen</th>
-                                <th>Bewertung &Oslash;</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                                foreach($method_list as $method)
-                                {
-                                    echo '<tr>';
-                                    
-                                    echo '<td>' . $method['mth_name'] . '</td>';
-                                    echo '<td>' . $method['mth_summary'] . '</td>';
-                                    
-                                    if ($method['mth_age_grp'] != 0)
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Methodenname</th>
+                                    <th>Kurzbeschreibung</th>
+                                    <th>Jahrgang</th>
+                                    <th>Fachbereich</th>
+                                    <th>Downlads</th>
+                                    <th>Bewertungen</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                    foreach($method_list as $method)
                                     {
-                                        echo '<td>' . $method['mth_age_grp'] . '</td>';
-                                    }
-                                    else
-                                    {
-                                        echo '<td></td>';
-                                    }
-                                    echo '<td>' . $method['mth_topic'] . '</td>';
-                                    echo '<td><span class="badge badge-primary">' . $method['dld_count'] . '</span></td>';
-                                    echo '<td>' . substr($method['dld_last_date'], 0, 10) . '</td>';
-                                    echo '<td><span class="badge badge-primary">' . $method['rtg_count'] . '</span></td>';
-                                    
-                                    if ($method['rtg_count'] == 0)
-                                    {
-                                        echo '<td></td>';
-                                    }
-                                    else
-                                    {
-                                        $rtg_avg = round($method['rtg_sum'] / $method['rtg_count'], 1, PHP_ROUND_HALF_UP);
-                                        echo '<td><span class="badge badge-primary">' . $rtg_avg . '</span></td>';
-                                    }
+                                        echo '<tr>';
+                                        
+                                        echo '<td>' . $method['mth_name'] . '</td>';
+                                        echo '<td>' . $method['mth_summary'] . '</td>';
+                                        
+                                        if ($method['mth_age_grp'] != 0)
+                                        {
+                                            echo '<td>' . $method['mth_age_grp'] . '</td>';
+                                        }
+                                        else
+                                        {
+                                            echo '<td></td>';
+                                        }
+                                        
+                                        echo '<td>' . $method['mth_topic'] . '</td>';
+                                        
+                                        /*
+                                        echo '<td><span class="badge badge-primary">' . $method['dld_count'] . '</span></td>';
+                                        echo '<td>' . substr($method['dld_last_date'], 0, 10) . '</td>';
+                                        */
+                                        echo '<td>';
+                                        echo '<span class="label label-primary">Downloads: ' . $method['dld_count'] . '</span>';
+                                        echo '<br>';
+                                        echo '<span class="label label-primary">Zuletzt:   ' . substr($method['dld_last_date'], 0, 10) . '</span>';
+                                        echo '</td>';
 
-                                    echo '</tr>';
-                                }
-                            ?>
-                        </tbody>
-                    </table>
-                </form>
-            </div> <!-- row -->
+                                        /*                                        
+                                        echo '<td><span class="badge badge-primary">' . $method['rtg_count'] . '</span></td>';
+                                        if ($method['rtg_count'] == 0)
+                                        {
+                                            echo '<td></td>';
+                                        }
+                                        else
+                                        {
+                                            $rtg_avg = round($method['rtg_sum'] / $method['rtg_count'], 1, PHP_ROUND_HALF_UP);
+                                            echo '<td><span class="badge badge-primary">' . $rtg_avg . '</span></td>';
+                                        }
+                                        */
+                                        echo '<td>';
+                                        echo '<span class="label label-primary">Anzahl: ' . $method['rtg_count'] . '</span>';
+                                        echo '<br>';
+                                        
+                                        if ($method['rtg_count'] > 0)
+                                        {
+                                            $rtg_avg = round($method['rtg_sum'] / $method['rtg_count'], 1, PHP_ROUND_HALF_UP);
+                                            
+                                            if ($rtg_avg < 1.5)
+                                            {
+                                                $label_mode = 'label-danger';
+                                            }
+                                            else
+                                            {
+                                                if ($rtg_avg > 3.5)
+                                                {
+                                                    $label_mode = 'label-success';
+                                                }
+                                                else
+                                                {
+                                                    $label_mode = 'label-warning';
+                                                }
+                                            }
+                                            echo '<span class="label ' . $label_mode . '">Wertung: ' . number_format($rtg_avg,2) . '</span>';                                            
+                                        }
+                                        echo '</td>';
+        
+                                        echo '</tr>';
+                                    }
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </form>
         </div> <!-- container -->
         
         <?php FormatHelper::script_refs(); ?>

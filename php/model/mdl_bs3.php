@@ -42,7 +42,7 @@ class FormatHelper
         echo '                <span class="icon-bar"></span>';
         echo '                <span class="icon-bar"></span>';
         echo '            </button>';
-        echo '            <a class="navbar-brand" href="#">' . GlobalParam::$app_config['app_title'] . '</a>';
+        echo '            <a class="navbar-brand" href="/php/app_ovw.php">' . GlobalParam::$app_config['app_title'] . '</a>';
         echo '        </div>';
         echo '        <div id="navbar" class="collapse navbar-collapse">';
         echo '            <ul class="nav navbar-nav">';

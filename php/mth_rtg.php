@@ -95,84 +95,92 @@ $method_list = $mth_search->get_result();
         <?php FormatHelper::create_menu($usr_is_authenticated, basename($_SERVER['PHP_SELF'])); ?>
 
         <div class="container" role="main">
-            <div class="page-header"><h1><?php echo GlobalParam::$app_config['app_title'] . ': Unterrichtsmethoden Bewertung'; ?></h1></div>
             <div class="row">
-                <form id="rating_form" method="post" action="/php/mth_rtg.php" role="form">
-                    <?php
-                        if (count($method_list) == 0)
-                        {
-                            echo '<div class="alert alert-warning" role="alert">';
-                            echo 'Es gibt keine Unterrichtsmethoden, die sie geladen aber noch nicht bewertet haben';
-                            echo '</div>';
-                        }
-                    ?>
+                <div class="col">
+                    <div class="page-header"><h1><?php echo GlobalParam::$app_config['app_title'] . ': Unterrichtsmethoden Bewertung'; ?></h1></div>
+                </div>
+            </div>
+            
+            <form id="rating_form" method="post" action="/php/mth_rtg.php" role="form">
+                <?php
+                    if (count($method_list) == 0)
+                    {
+                        echo '<div class="row"><div class="col">';
+                        echo '<div class="alert alert-warning" role="alert">';
+                        echo 'Es gibt keine Unterrichtsmethoden, die sie geladen aber noch nicht bewertet haben';
+                        echo '</div></div></div>';
+                    }
+                ?>
 
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Methodenname</th>
-                                <th>Kurzbeschreibung</th>
-                                <th>Jahrgang</th>
-                                <th>Fachbereich</th>
-                                <th>Zuletzt geladen</th>
-                                <th>Bewertung</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                                $mth_index = 0;
-                                
-                                foreach($method_list as $method)
-                                {
-                                    if ($method['rtg_count'] == 0)
+                <div class="row form-row">
+                    <div class="col">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Methodenname</th>
+                                    <th>Kurzbeschreibung</th>
+                                    <th>Jahrgang</th>
+                                    <th>Fachbereich</th>
+                                    <th>Zuletzt geladen</th>
+                                    <th>Bewertung</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                    $mth_index = 0;
+                                    
+                                    foreach($method_list as $method)
                                     {
-                                        echo '<tr>';
-                                        
-                                        echo '<td>' . $method['mth_name'] . '</td>';
-                                        echo '<td>' . $method['mth_summary'] . '</td>';
-                                        
-                                        if ( $method['mth_age_grp'] == "0")
+                                        if ($method['rtg_count'] == 0)
                                         {
-                                            echo '<td></td>';
+                                            echo '<tr>';
+                                            
+                                            echo '<td>' . $method['mth_name'] . '</td>';
+                                            echo '<td>' . $method['mth_summary'] . '</td>';
+                                            
+                                            if ( $method['mth_age_grp'] == "0")
+                                            {
+                                                echo '<td></td>';
+                                            }
+                                            else
+                                            {
+                                                echo '<td>' . $method['mth_age_grp'] . '</td>';
+                                            }
+                                            echo '<td>' . $method['mth_topic'] . '</td>';
+                                            echo '<td>' . substr($method['dld_last_date'], 0, 10) . '</td>';
+                                            
+                                            echo '<td><div class="form-group" id="mth_rate_' . $method['mth_id'] . '">';
+                                            echo '<input id="rate_val_' . $mth_index . 
+                                                 '" name="method[' . $mth_index . '][rate_val]" type="text" class="rating" data-min="0" data-max="5" data-step="1" data-size="xs">';
+                                            echo '<input id="mth_id_' . $mth_index . 
+                                                 '" name="method[' . $mth_index . '][mth_id]" type="hidden" value="' . $method['mth_id'] . '" class="form-control">';
+                                            
+                                            echo '</div></td>';
+        
+                                            echo '</tr>';
+                                            
+                                            $mth_index += 1;
                                         }
-                                        else
-                                        {
-                                            echo '<td>' . $method['mth_age_grp'] . '</td>';
-                                        }
-                                        echo '<td>' . $method['mth_topic'] . '</td>';
-                                        echo '<td>' . substr($method['dld_last_date'], 0, 10) . '</td>';
-                                        
-                                        echo '<td><div class="form-group" id="mth_rate_' . $method['mth_id'] . '">';
-                                        echo '<input id="rate_val_' . $mth_index . 
-                                             '" name="method[' . $mth_index . '][rate_val]" type="text" class="rating" data-min="0" data-max="5" data-step="1" data-size="xs">';
-                                        echo '<input id="mth_id_' . $mth_index . 
-                                             '" name="method[' . $mth_index . '][mth_id]" type="hidden" value="' . $method['mth_id'] . '" class="form-control">';
-                                        
-                                        echo '</div></td>';
-    
-                                        echo '</tr>';
-                                        
-                                        $mth_index += 1;
                                     }
-                                }
-                                
-                                if ($mth_index > 0)
-                                {
-                                    echo '<tr><td></td><td></td><td></td><td></td><td></td><td>';
-                                    echo '<input type="submit" class="btn btn-primary btn-send" value="Bewertung abschicken">';
-                                    echo '</td></tr>';
-                                }
-                                else
-                                {
-                                    echo '<tr><td colspan="6"><div class="alert alert-warning" role="alert">';
-                                    echo 'Es gibt keine Unterrichtsmethoden, die sie geladen aber noch nicht bewertet haben';
-                                    echo '</div></td></tr>';
-                                }
-                            ?>
-                        </tbody>
-                    </table>
-                </form>
-            </div> <!-- row -->
+                                    
+                                    if ($mth_index > 0)
+                                    {
+                                        echo '<tr><td></td><td></td><td></td><td></td><td></td><td>';
+                                        echo '<input type="submit" class="btn btn-primary btn-send" value="Bewertung abschicken">';
+                                        echo '</td></tr>';
+                                    }
+                                    else
+                                    {
+                                        echo '<tr><td colspan="6"><div class="alert alert-warning" role="alert">';
+                                        echo 'Es gibt keine Unterrichtsmethoden, die sie geladen aber noch nicht bewertet haben';
+                                        echo '</div></td></tr>';
+                                    }
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </form>
         </div> <!-- container -->
         
         <?php FormatHelper::script_refs(); ?>

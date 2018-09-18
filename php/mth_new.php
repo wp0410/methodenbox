@@ -165,7 +165,11 @@ if (! empty($_POST))
         <?php FormatHelper::create_menu($usr_is_authenticated, basename($_SERVER['PHP_SELF'])); ?>
             
         <div class="container" role="main">
-            <div class="page-header"><h1><?php echo GlobalParam::$app_config['app_title'] . ':   Neue Methode Erstellen'; ?></h1></div>
+            <div class="row">
+                <div class="col">
+                    <div class="page-header"><h1><?php echo GlobalParam::$app_config['app_title'] . ':   Neue Methode Erstellen'; ?></h1></div>
+                </div>
+            </div>
             <form id="c_method_form" method="post" action="/php/mth_new.php" data-toggle="validator" role="form" enctype="multipart/form-data">
                 <?php
                     if ($success)
@@ -183,134 +187,98 @@ if (! empty($_POST))
                     }
                 ?>
                 
-                <div class="row">
+                <div class="row form-row">
                     <div class="col-md-2">
-                        <div class="form-group">
-                            <h4>
-                                <span class="label label-primary">Name der Methode *</span>
-                            </h4>
-                        </div>
+                        <h4><span class="label label-primary">Name der Methode *</span></h4>
                     </div>
                     <div class="col-md-4">
-                        <div class="form-group">
+                        <div class="form-group has-feedback">
                             <input id="mth_name" type="text" name="mth_name" class="form-control" placeholder="Name der Methode" required />
-                            <div class="help-block with-errors"></div>
+                            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                         </div>
                     </div>
 
                     <div class="col-md-2">
-                        <div class="form-group">
-                            <h4>
-                                <span class="label label-primary">Fachbereich *</span>
-                            </h4>
-                        </div>
+                        <h4><span class="label label-primary">Fachbereich *</span></h4>
                     </div>    
                     <div class="col-md-4">
-                        <div class="form-group">
+                        <div class="form-group has-feedback">
                             <input id="mth_topic" type="text" name="mth_topic" class="form-control" placeholder="Fachbereich" required/>
-                            <div class="help-block with-errors"></div>
+                            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                         </div>
                     </div>
                 </div> <!-- class="row" -->
 
                 <div class="row">
                     <div class="col-md-2">
-                        <div class="form-group">
-                            <h4>
-                                <span class="label label-primary">Beschreibung *</span>
-                            </h4>
-                        </div>
+                        <h4><span class="label label-primary">Beschreibung *</span></h4>
                     </div>
                     <div class="col-md-4">
-                        <div class="form-group">
+                        <div class="form-group has-feedback">
                             <textarea id="mth_summary" name="mth_summary" form="c_method_form" required cols="48" rows="3" maxlength="300" placeholder="Kurzbeschreibung"></textarea>
-                            <div class="help-block with-errors"></div>
+                            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                         </div>
                     </div>
                     <div class="col-md-2">
-                        <div class="form-group">
-                            <h4>
-                                <span class="label label-primary">AutorInnen *</span>
-                            </h4>
-                        </div>
+                        <h4><span class="label label-primary">AutorInnen *</span></h4>
                     </div>
                     <div class="col-md-4">
-                        <div class="form-group">
+                        <div class="form-group has-feedback">
                             <textarea id="mth_authors" name="mth_authors" form="c_method_form" required cols="48" rows="3"></textarea>
-                            <div class="help-block with-errors"></div>
+                            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                         </div>
                     </div>
                 </div> <!-- class="row" -->
                 
                 <div class="row">
                     <div class="col-md-2">
-                        <div class="form-group">
-                            <h4>
-                                <span class="label label-primary">Jahrgang</span>
-                            </h4>
-                        </div>
+                        <h4><span class="label label-primary">Jahrgang</span></h4>
                     </div>
                     <div class="col-md-2">
-                        <div class="form-group">
+                        <div class="form-group has-feedback">
                             <input type="number" id="mth_age_grp" name="mth_age_grp" class="form-control" min="1" max="5">
-                            <div class="help-block with-errors"></div>
+                            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                         </div>
                     </div>
                     <div class="col-md-2">
-                        <div class="form-group">
-                            <h4>
-                                <span class="label label-primary">Vorbereitungszeit</span>
-                            </h4>
-                        </div>
+                        <h4> <span class="label label-primary">Vorbereitungszeit</span></h4>
                     </div>
                     <div class="col-md-1">
-                        <div class="form-group">
+                        <div class="form-group has-feedback">
                             <label for="mth_prep_min">Von *</label>
                             <input id="mth_prep_min" type="text" name="mth_prep_min" class="form-control" pattern="^[0-9]{1,}$" required />
-                            <div class="help-block with-errors"></div>
+                            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                         </div>
                     </div>
                     <div class="col-md-1">
-                        <div class="form-group">
+                        <div class="form-group has-feedback">
                             <label for="mth_prep_max">Bis</label>
                             <input id="mth_prep_max" type="text" name="mth_prep_max" pattern="^[0-9]{0,}$" class="form-control" />
-                            <div class="help-block with-errors"></div>
+                            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                         </div>
                     </div>
                     <div class="col-md-2">
-                        <div class="form-group">
-                            <h4>
-                                <span class="label label-primary">Dauer im Unterricht</span>
-                            </h4>
-                        </div>
+                        <h4><span class="label label-primary">Dauer im Unterricht</span></h4>
                     </div>
                     <div class="col-md-1">
-                        <div class="form-group">
+                        <div class="form-group has-feedback">
                             <label for="mth_exec_min">Von *</label>
                             <input id="mth_exec_min" type="text" name="mth_exec_min" class="form-control" pattern="^[0-9]{1,}$" required />
-                            <div class="help-block with-errors"></div>
+                            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                         </div>
                     </div>
                     <div class="col-md-1">
-                        <div class="form-group">
+                        <div class="form-group has-feedback">
                             <label for="mth_exec_max">Bis</label>
                             <input id="mth_exec_max" type="text" name="mth_exec_max" pattern="^[0-9]{0,}$" class="form-control" />
-                            <div class="help-block with-errors"></div>
+                            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                         </div>
                     </div>
-                 </div> <!-- class="row" -->
-                
-                <div class="row">
-                    
-               </div> <!-- class="row" -->
+                </div> <!-- class="row" -->
                 
                 <div class="row">
                     <div class="col-md-2">
-                        <div class="form-group">
-                            <h4>
-                                <span class="label label-primary">Unterrichtsphase</span>
-                            </h4>
-                        </div>
+                        <h4><span class="label label-primary">Unterrichtsphase</span></h4>
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
@@ -336,11 +304,7 @@ if (! empty($_POST))
                     </div>
 
                     <div class="col-md-1">
-                        <div class="form-group">
-                            <h4>
-                                <span class="label label-primary">Typ</span>
-                            </h4>
-                        </div>
+                        <h4><span class="label label-primary">Typ</span></h4>
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
@@ -362,11 +326,7 @@ if (! empty($_POST))
                     </div>
 
                     <div class="col-md-1">
-                        <div class="form-group">
-                            <h4>
-                                <span class="label label-primary">Sozialform</span>
-                            </h4>
-                        </div>
+                        <h4><span class="label label-primary">Sozialform</span></h4>
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
@@ -394,15 +354,11 @@ if (! empty($_POST))
                 
                 <div class="row">
                     <div class="col-md-2">
-                        <div class="form-group">
-                            <h4>
-                                <span class="label label-primary">Methodendatei *</span>
-                            </h4>
-                        </div>
+                        <h4> <span class="label label-primary">Methodendatei *</span></h4>
                     </div>
                     
                     <div class="col-md-10">
-                       <div class="form-group">
+                       <div class="form-group has-feedback">
                             <div class="input-group">
                                 <label class="input-group-btn" required>
                                     <span class="btn btn-primary">
@@ -412,14 +368,14 @@ if (! empty($_POST))
                                 </label>
                                 <input type="text" class="form-control" id="mth_file_name", name="mth_file_name" required aria-describedby="mth_file">
                             </div> <!-- input-group -->
-                            <div class="help-block with-errors"></div>
+                            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                         </div> <!-- form-group -->
                     </div>
                 </div> <!-- class="row" -->
                 
                 <div class="row">
                     <div class="col-md-8">
-                        <div class="form-group">
+                        <div class="form-group has-feedback">
                             <ul class="list-group list-inline">
                                 <li class="list-group-item">
                                     <div class="checkbox">
@@ -433,15 +389,12 @@ if (! empty($_POST))
                                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#conditionModal">Richtlinie anzeigen</button>
                                 </li>
                             </ul>
+                            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                         </div>
                     </div>
                     <div class="col-md-1"></div>
                     <div class="col-md-3">
-                        <div class="form-group">
-                            <h4>
-                            <span class="text-primary">Mit * gekennzeichnete Felder m&uuml;ssen eingegeben werden</span>
-                            </h4>
-                        </div>
+                        <h4><span class="text-primary">Mit * gekennzeichnete Felder m&uuml;ssen eingegeben werden</span></h4>
                     </div>
                 </div> <!-- class="row" -->
                 

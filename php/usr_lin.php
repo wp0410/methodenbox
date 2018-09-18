@@ -20,7 +20,6 @@ include_once 'model/mdl_jnl.php';
 include_once 'model/mdl_err.php';
 include_once 'model/mdl_bs3.php';
   
-//$ajaxRequest = ((!empty($_SERVER['HTTP_X_REQUESTED_WITH'])) && (strolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest'));
 $success = false;
 $db_conn = DatabaseConnection::get_connection();
 if ($db_conn == null)
@@ -115,47 +114,51 @@ else
         <?php FormatHelper::create_menu(false, basename($_SERVER['PHP_SELF'])); ?>
 
         <div class="container" role="main">
-            <div class="page-header"><h1><?php echo GlobalParam::$app_config['app_title'] . ': Anmelden'; ?></h1></div>
-    
             <div class="row">
-                <form id="login_form" method="post" action="/php/usr_lin.php" data-toggle="validator" role="form">
-                    <?php 
-                    if ($success)
-                    { 
-                        echo '<div class="messages"></div>'; 
-                    }
-                    else
-                    {
-                        echo '<div class="messages"><div class="alert alert-danger" role="alert">' . $responseArray['message'] . '</div></div>';
-                    }
-                    ?>
-                    
-                    <div class="controls">
-                        <div class="col-md-5">
-                          
-                            <div class="form-group" id="login_email">
+                <div class="col col-md-6">
+                    <div class="page-header"><h1><?php echo GlobalParam::$app_config['app_title'] . ': Anmelden'; ?></h1></div>
+                </div>
+            </div>
+    
+            <form id="login_form" method="post" action="/php/usr_lin.php" data-toggle="validator" role="form">
+                <?php 
+                if (! $success)
+                {
+                    echo '<div class="messages"><div class="alert alert-danger" role="alert">' . $responseArray['message'] . '</div></div>';
+                }
+                ?>
+                
+                <div class="controls">
+                    <div class="row form-row">
+                        <div class="col col-md-6">
+                            <div class="form-group has-feedback" id="login_email">
                                 <label for="user_email">E-Mail Adresse *</label>
                                 <input id="user_email" type="email" name="user_email" class="form-control" placeholder="E-Mail Adresse" required>
-                                <div class="help-block with-errors"></div>
-                            </div> <!-- form-group -->
-                            
-                            <div class="form-group" id="login_pwd">
+                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-row">
+                        <div class="col col-md-6">
+                            <div class="form-group has-feedback" id="login_pwd">
                                 <label for="user_pwd">Passwort *</label>
                                 <input id="user_pwd" type="password" name="user_pwd" class="form-control" required>
-                                <div class="help-block with-errors"></div>
-                            </div> <!-- form-group -->
-                            
+                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-row">
+                        <div class="col col-md-2">
                             <div class="form-group" id="login_submit">
                                 <input type="submit" class="btn btn-primary btn-send" value="Anmelden">
-                            </div><!-- form-group -->
-                            
-                            <div class="form-group">
-                                <p class="text-muted"><strong>*</strong>Pflichtfelder</p>
                             </div>
-                        </div> <!-- col-md-5 -->
-                    </div> <!-- controls -->
-                </form>
-            </div> <!-- row -->
+                        </div>
+                        <div class="col col-md-4">
+                            <span class="text-primary">Mit * gekennzeichnete Felder m&uuml;ssen eingegeben werden.</p>
+                        </div>
+                    </div>
+                </div> <!-- controls -->
+            </form>
         </div> <!-- container -->
     
         <?php FormatHelper::script_refs(); ?>
