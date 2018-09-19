@@ -25,3 +25,7 @@ body {
     cursor: inherit;
     display: block;
 }
+
+.popover{
+    max-width: 100%;
+}

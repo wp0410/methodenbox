@@ -78,3 +78,10 @@ where  mth.mth_status = 0 and mth.mth_owner_id = 1
 order by rtg_sort asc;
 
 
+select rtg.rtg_mth_id, rtg.rtg_usr_id, usr.usr_email, usr.usr_fst_name, usr.usr_lst_name, 
+       rtg.rtg_date, rtg.rtg_rating, rtg.rtg_comment
+from   ta_mth_statistics_rating rtg,
+       ta_sec_user usr
+where  rtg.rtg_usr_id = usr.usr_id;
+
+

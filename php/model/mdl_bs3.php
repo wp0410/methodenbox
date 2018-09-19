@@ -117,6 +117,8 @@ class FormatHelper
     public static function script_refs()
     {
         echo '<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>';
+        echo '<script src="https://unpkg.com/popper.js/dist/umd/popper.min.js"></script>';
+        echo '<script src="https://unpkg.com/tooltip.js/dist/umd/tooltip.min.js"></script>';
         echo '<script src="/js/bootstrap.min.js"></script>';
         echo '<script src="/js/validator.js"></script>';
         echo '<script src="/js/star-rating.js" type="text/javascript"></script>';

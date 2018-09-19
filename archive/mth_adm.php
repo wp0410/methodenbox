@@ -154,9 +154,8 @@ $method_list = $mth_search->get_result();
                                             echo '<td><span class="badge badge-primary">' . $rtg_avg . '</span></td>';
                                         }
                                         */
-                                        
                                         echo '<td>';
-                                        echo '<a href="javascript:void(0);" data-href="/php/pov_rtg.php?mth_id=' . $method['mth_id'] . '" class="openPopup">';
+                                        echo '<a class="hover" id="' . $method['mth_id'] . '" href="#" role="button">';
                                         echo '<span class="label label-primary">Anzahl: ' . $method['rtg_count'] . '</span>';
                                         echo '<br>';
                                         
@@ -193,36 +192,40 @@ $method_list = $mth_search->get_result();
             </form>
         </div> <!-- container -->
         
-        <!-- Modal -->
-        <div class="modal fade" id="rtgModal" role="dialog">
-            <div class="modal-dialog">
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h3 class="modal-title">Liste der Bewertungen</h3>
-                    </div>
-                    <div class="modal-body">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Schlie&szlig;en</button>
-                    </div>
-                </div>
-            </div>
-        </div>        
-
         <?php FormatHelper::script_refs(); ?>
-        
+
         <script type="text/javascript">
             /* global $ */
-            $(document).ready(function(){
-                $('.openPopup').on('click',function(){
-                    var dataURL = $(this).attr('data-href');
-                    $('.modal-body').load(dataURL,function(){
-                        $('#rtgModal').modal({show:true});
-                    });
-                }); 
-            });            
+            $(function () {
+              $('[data-toggle="popover"]').popover()
+            })            
+        </script>
+
+        <script type="text/javascript">
+            /* global $ */
+            $(document).ready(function(){  
+                $('.hover').popover({  
+                               container:document.getElementById('main_container'),
+                               title:'Bewertungen',
+                               content:fetchData,
+                               html:true,
+                               placement:'left' });  
+                function fetchData(){  
+                    var fetch_data = '';  
+                    var element = $(this);  
+                    var id = element.attr("id");  
+                    $.ajax({  
+                        url:"/php/pov_rtg.php",  
+                        method:"POST",  
+                        async:false,  
+                        data:{id:id},  
+                        success:function(data){  
+                            fetch_data = data;  
+                        }  
+                    });  
+                return fetch_data;  
+                }  
+            });  
         </script>
     </body>
 </html>
