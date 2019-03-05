@@ -1,0 +1,941 @@
+[19-Oct-2018 14:47:53 UTC] PHP Warning:  include_once(/mbx/view/frm_common.php): failed to open stream: No such file or directory in /home/ubuntu/workspace/mbx/view/frm_template.php on line 2
+[19-Oct-2018 14:47:53 UTC] PHP Stack trace:
+[19-Oct-2018 14:47:53 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/view/frm_template.php:0
+[19-Oct-2018 14:47:53 UTC] PHP Warning:  include_once(): Failed opening '/mbx/view/frm_common.php' for inclusion (include_path='.:/usr/share/php:/usr/share/pear') in /home/ubuntu/workspace/mbx/view/frm_template.php on line 2
+[19-Oct-2018 14:47:53 UTC] PHP Stack trace:
+[19-Oct-2018 14:47:53 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/view/frm_template.php:0
+[19-Oct-2018 14:47:53 UTC] PHP Fatal error:  Class 'FormElements' not found in /home/ubuntu/workspace/mbx/view/frm_template.php on line 10
+[19-Oct-2018 14:47:53 UTC] PHP Stack trace:
+[19-Oct-2018 14:47:53 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/view/frm_template.php:0
+[19-Oct-2018 14:48:33 UTC] PHP Fatal error:  Class 'GlobalParameter' not found in /home/ubuntu/workspace/mbx/view/frm_common.php on line 35
+[19-Oct-2018 14:48:33 UTC] PHP Stack trace:
+[19-Oct-2018 14:48:33 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/view/frm_template.php:0
+[19-Oct-2018 14:48:33 UTC] PHP   2. FormElements::topNavigationBar() /home/ubuntu/workspace/mbx/view/frm_template.php:13
+[19-Oct-2018 14:52:12 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ')' in /home/ubuntu/workspace/mbx/model/aux_parameter.php on line 23
+[19-Oct-2018 14:52:12 UTC] PHP Stack trace:
+[19-Oct-2018 14:52:12 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/view/frm_template.php:0
+[20-Oct-2018 06:05:54 UTC] PHP Warning:  include_once(/mbx/model/aux_parameter.php): failed to open stream: No such file or directory in /home/ubuntu/workspace/mbx/view/usr_login.php on line 13
+[20-Oct-2018 06:05:54 UTC] PHP Stack trace:
+[20-Oct-2018 06:05:54 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/view/usr_login.php:0
+[20-Oct-2018 06:05:54 UTC] PHP Warning:  include_once(): Failed opening '/mbx/model/aux_parameter.php' for inclusion (include_path='.:/usr/share/php:/usr/share/pear') in /home/ubuntu/workspace/mbx/view/usr_login.php on line 13
+[20-Oct-2018 06:05:54 UTC] PHP Stack trace:
+[20-Oct-2018 06:05:54 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/view/usr_login.php:0
+[20-Oct-2018 06:05:54 UTC] PHP Warning:  include_once(/mbx/view/frm_common.php): failed to open stream: No such file or directory in /home/ubuntu/workspace/mbx/view/usr_login.php on line 14
+[20-Oct-2018 06:05:54 UTC] PHP Stack trace:
+[20-Oct-2018 06:05:54 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/view/usr_login.php:0
+[20-Oct-2018 06:05:54 UTC] PHP Warning:  include_once(): Failed opening '/mbx/view/frm_common.php' for inclusion (include_path='.:/usr/share/php:/usr/share/pear') in /home/ubuntu/workspace/mbx/view/usr_login.php on line 14
+[20-Oct-2018 06:05:54 UTC] PHP Stack trace:
+[20-Oct-2018 06:05:54 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/view/usr_login.php:0
+[20-Oct-2018 06:05:54 UTC] PHP Fatal error:  Class 'FormElements' not found in /home/ubuntu/workspace/mbx/view/usr_login.php on line 36
+[20-Oct-2018 06:05:54 UTC] PHP Stack trace:
+[20-Oct-2018 06:05:54 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/view/usr_login.php:0
+[20-Oct-2018 06:06:17 UTC] PHP Warning:  include_once(/methodenbox/mbx/model/aux_parameter.php): failed to open stream: No such file or directory in /home/ubuntu/workspace/mbx/view/usr_login.php on line 13
+[20-Oct-2018 06:06:17 UTC] PHP Stack trace:
+[20-Oct-2018 06:06:17 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/view/usr_login.php:0
+[20-Oct-2018 06:06:17 UTC] PHP Warning:  include_once(): Failed opening '/methodenbox/mbx/model/aux_parameter.php' for inclusion (include_path='.:/usr/share/php:/usr/share/pear') in /home/ubuntu/workspace/mbx/view/usr_login.php on line 13
+[20-Oct-2018 06:06:17 UTC] PHP Stack trace:
+[20-Oct-2018 06:06:17 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/view/usr_login.php:0
+[20-Oct-2018 06:06:17 UTC] PHP Warning:  include_once(/mbx/view/frm_common.php): failed to open stream: No such file or directory in /home/ubuntu/workspace/mbx/view/usr_login.php on line 14
+[20-Oct-2018 06:06:17 UTC] PHP Stack trace:
+[20-Oct-2018 06:06:17 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/view/usr_login.php:0
+[20-Oct-2018 06:06:17 UTC] PHP Warning:  include_once(): Failed opening '/mbx/view/frm_common.php' for inclusion (include_path='.:/usr/share/php:/usr/share/pear') in /home/ubuntu/workspace/mbx/view/usr_login.php on line 14
+[20-Oct-2018 06:06:17 UTC] PHP Stack trace:
+[20-Oct-2018 06:06:17 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/view/usr_login.php:0
+[20-Oct-2018 06:06:17 UTC] PHP Fatal error:  Class 'FormElements' not found in /home/ubuntu/workspace/mbx/view/usr_login.php on line 36
+[20-Oct-2018 06:06:17 UTC] PHP Stack trace:
+[20-Oct-2018 06:06:17 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/view/usr_login.php:0
+[23-Oct-2018 07:47:50 UTC] PHP Parse error:  syntax error, unexpected '.', expecting ')' in /home/ubuntu/workspace/mbx/model/aux_text.php on line 23
+[23-Oct-2018 07:47:50 UTC] PHP Stack trace:
+[23-Oct-2018 07:47:50 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/view/mth_search.php:0
+[23-Oct-2018 07:47:50 UTC] PHP   2. include_once() /home/ubuntu/workspace/mbx/view/mth_search.php:14
+[23-Oct-2018 07:48:42 UTC] PHP Fatal error:  Class 'GlobalParam' not found in /home/ubuntu/workspace/mbx/model/sql_connection.php on line 41
+[23-Oct-2018 07:48:42 UTC] PHP Stack trace:
+[23-Oct-2018 07:48:42 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/view/mth_search.php:0
+[23-Oct-2018 07:48:42 UTC] PHP   2. DatabaseConnection::get_connection() /home/ubuntu/workspace/mbx/view/mth_search.php:17
+[23-Oct-2018 07:48:42 UTC] PHP   3. DatabaseConnection::connect() /home/ubuntu/workspace/mbx/model/sql_connection.php:86
+[23-Oct-2018 07:49:16 UTC] PHP Fatal error:  Class 'FormElements' not found in /home/ubuntu/workspace/mbx/view/mth_search.php on line 30
+[23-Oct-2018 07:49:16 UTC] PHP Stack trace:
+[23-Oct-2018 07:49:16 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/view/mth_search.php:0
+[23-Oct-2018 08:00:55 UTC] PHP Fatal error:  Class 'MethodSubjectFactory' not found in /home/ubuntu/workspace/mbx/view/mth_search.php on line 60
+[23-Oct-2018 08:00:55 UTC] PHP Stack trace:
+[23-Oct-2018 08:00:55 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/view/mth_search.php:0
+[23-Oct-2018 08:10:50 UTC] PHP Fatal error:  Class 'GlobalParameter' not found in /home/ubuntu/workspace/mbx/model/sql_connection.php on line 41
+[23-Oct-2018 08:10:50 UTC] PHP Stack trace:
+[23-Oct-2018 08:10:50 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/ctrl/mth_value.php:0
+[23-Oct-2018 08:10:50 UTC] PHP   2. MethodSubject->getAreas() /home/ubuntu/workspace/mbx/ctrl/mth_value.php:33
+[23-Oct-2018 08:10:50 UTC] PHP   3. DatabaseConnection::get_connection() /home/ubuntu/workspace/mbx/model/mth_selection.php:52
+[23-Oct-2018 08:10:50 UTC] PHP   4. DatabaseConnection::connect() /home/ubuntu/workspace/mbx/model/sql_connection.php:86
+[23-Oct-2018 08:10:55 UTC] PHP Fatal error:  Class 'GlobalParameter' not found in /home/ubuntu/workspace/mbx/model/sql_connection.php on line 41
+[23-Oct-2018 08:10:55 UTC] PHP Stack trace:
+[23-Oct-2018 08:10:55 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/ctrl/mth_value.php:0
+[23-Oct-2018 08:10:55 UTC] PHP   2. MethodSubject->getAreas() /home/ubuntu/workspace/mbx/ctrl/mth_value.php:33
+[23-Oct-2018 08:10:55 UTC] PHP   3. DatabaseConnection::get_connection() /home/ubuntu/workspace/mbx/model/mth_selection.php:52
+[23-Oct-2018 08:10:55 UTC] PHP   4. DatabaseConnection::connect() /home/ubuntu/workspace/mbx/model/sql_connection.php:86
+[23-Oct-2018 08:11:10 UTC] PHP Fatal error:  Class 'GlobalParameter' not found in /home/ubuntu/workspace/mbx/model/sql_connection.php on line 41
+[23-Oct-2018 08:11:10 UTC] PHP Stack trace:
+[23-Oct-2018 08:11:10 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/ctrl/mth_value.php:0
+[23-Oct-2018 08:11:10 UTC] PHP   2. MethodSubject->getAreas() /home/ubuntu/workspace/mbx/ctrl/mth_value.php:33
+[23-Oct-2018 08:11:10 UTC] PHP   3. DatabaseConnection::get_connection() /home/ubuntu/workspace/mbx/model/mth_selection.php:52
+[23-Oct-2018 08:11:10 UTC] PHP   4. DatabaseConnection::connect() /home/ubuntu/workspace/mbx/model/sql_connection.php:86
+[23-Oct-2018 08:13:19 UTC] PHP Fatal error:  Class 'GlobalParameter' not found in /home/ubuntu/workspace/mbx/model/sql_connection.php on line 41
+[23-Oct-2018 08:13:19 UTC] PHP Stack trace:
+[23-Oct-2018 08:13:19 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/ctrl/mth_value.php:0
+[23-Oct-2018 08:13:19 UTC] PHP   2. MethodSubject->getAreas() /home/ubuntu/workspace/mbx/ctrl/mth_value.php:33
+[23-Oct-2018 08:13:19 UTC] PHP   3. DatabaseConnection::get_connection() /home/ubuntu/workspace/mbx/model/mth_selection.php:52
+[23-Oct-2018 08:13:19 UTC] PHP   4. DatabaseConnection::connect() /home/ubuntu/workspace/mbx/model/sql_connection.php:86
+[23-Oct-2018 08:13:46 UTC] PHP Fatal error:  Class 'GlobalParameter' not found in /home/ubuntu/workspace/mbx/model/sql_connection.php on line 41
+[23-Oct-2018 08:13:46 UTC] PHP Stack trace:
+[23-Oct-2018 08:13:46 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/ctrl/mth_value.php:0
+[23-Oct-2018 08:13:46 UTC] PHP   2. MethodSubject->getAreas() /home/ubuntu/workspace/mbx/ctrl/mth_value.php:33
+[23-Oct-2018 08:13:46 UTC] PHP   3. DatabaseConnection::get_connection() /home/ubuntu/workspace/mbx/model/mth_selection.php:52
+[23-Oct-2018 08:13:46 UTC] PHP   4. DatabaseConnection::connect() /home/ubuntu/workspace/mbx/model/sql_connection.php:86
+[23-Oct-2018 08:14:19 UTC] PHP Fatal error:  Class 'GlobalParameter' not found in /home/ubuntu/workspace/mbx/model/sql_connection.php on line 41
+[23-Oct-2018 08:14:19 UTC] PHP Stack trace:
+[23-Oct-2018 08:14:19 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/ctrl/mth_value.php:0
+[23-Oct-2018 08:14:19 UTC] PHP   2. MethodSubject->getAreas() /home/ubuntu/workspace/mbx/ctrl/mth_value.php:33
+[23-Oct-2018 08:14:19 UTC] PHP   3. DatabaseConnection::get_connection() /home/ubuntu/workspace/mbx/model/mth_selection.php:52
+[23-Oct-2018 08:14:19 UTC] PHP   4. DatabaseConnection::connect() /home/ubuntu/workspace/mbx/model/sql_connection.php:86
+[23-Oct-2018 10:01:30 UTC] PHP Fatal error:  Cannot pass parameter 2 by reference in /home/ubuntu/workspace/mbx/model/mth_selection.php on line 47
+[23-Oct-2018 10:01:30 UTC] PHP Stack trace:
+[23-Oct-2018 10:01:30 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/view/mth_search.php:0
+[23-Oct-2018 10:01:30 UTC] PHP   2. MethodSelectionFactory::getClasses() /home/ubuntu/workspace/mbx/view/mth_search.php:81
+[23-Oct-2018 12:44:13 UTC] PHP Warning:  include_once(../model/app_error.php): failed to open stream: No such file or directory in /home/ubuntu/workspace/mbx/view/usr_login.php on line 14
+[23-Oct-2018 12:44:13 UTC] PHP Stack trace:
+[23-Oct-2018 12:44:13 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/view/usr_login.php:0
+[23-Oct-2018 12:44:13 UTC] PHP Warning:  include_once(): Failed opening '../model/app_error.php' for inclusion (include_path='.:/usr/share/php:/usr/share/pear') in /home/ubuntu/workspace/mbx/view/usr_login.php on line 14
+[23-Oct-2018 12:44:13 UTC] PHP Stack trace:
+[23-Oct-2018 12:44:13 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/view/usr_login.php:0
+[23-Oct-2018 12:44:13 UTC] PHP Fatal error:  Class 'AppError' not found in /home/ubuntu/workspace/mbx/view/usr_login.php on line 18
+[23-Oct-2018 12:44:13 UTC] PHP Stack trace:
+[23-Oct-2018 12:44:13 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/view/usr_login.php:0
+[23-Oct-2018 12:45:04 UTC] PHP Warning:  include_once(../model/app_error.php): failed to open stream: No such file or directory in /home/ubuntu/workspace/mbx/view/usr_login.php on line 14
+[23-Oct-2018 12:45:04 UTC] PHP Stack trace:
+[23-Oct-2018 12:45:04 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/view/usr_login.php:0
+[23-Oct-2018 12:45:04 UTC] PHP Warning:  include_once(): Failed opening '../model/app_error.php' for inclusion (include_path='.:/usr/share/php:/usr/share/pear') in /home/ubuntu/workspace/mbx/view/usr_login.php on line 14
+[23-Oct-2018 12:45:04 UTC] PHP Stack trace:
+[23-Oct-2018 12:45:04 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/view/usr_login.php:0
+[23-Oct-2018 12:45:04 UTC] PHP Fatal error:  Class 'AppError' not found in /home/ubuntu/workspace/mbx/view/usr_login.php on line 18
+[23-Oct-2018 12:45:04 UTC] PHP Stack trace:
+[23-Oct-2018 12:45:04 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/view/usr_login.php:0
+[23-Oct-2018 12:45:42 UTC] PHP Fatal error:  Class 'AppError' not found in /home/ubuntu/workspace/mbx/view/usr_login.php on line 18
+[23-Oct-2018 12:45:42 UTC] PHP Stack trace:
+[23-Oct-2018 12:45:42 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/view/usr_login.php:0
+[23-Oct-2018 12:47:16 UTC] PHP Fatal error:  Class 'AppError' not found in /home/ubuntu/workspace/mbx/view/usr_register.php on line 18
+[23-Oct-2018 12:47:16 UTC] PHP Stack trace:
+[23-Oct-2018 12:47:16 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/view/usr_register.php:0
+[24-Oct-2018 10:15:23 UTC] PHP Fatal error:  Call to a member function bind_param() on a non-object in /home/ubuntu/workspace/mbx/model/mth_selection.php on line 48
+[24-Oct-2018 10:15:23 UTC] PHP Stack trace:
+[24-Oct-2018 10:15:23 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/view/mth_search.php:0
+[24-Oct-2018 10:15:23 UTC] PHP   2. MethodSelectionFactory::getClasses() /home/ubuntu/workspace/mbx/view/mth_search.php:144
+[24-Oct-2018 10:15:23 UTC] PHP   3. MethodSelectionFactory::getOptions() /home/ubuntu/workspace/mbx/model/mth_selection.php:67
+[24-Oct-2018 10:18:18 UTC] PHP Fatal error:  Call to a member function bind_param() on a non-object in /home/ubuntu/workspace/mbx/model/mth_selection.php on line 48
+[24-Oct-2018 10:18:18 UTC] PHP Stack trace:
+[24-Oct-2018 10:18:18 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/view/mth_search.php:0
+[24-Oct-2018 10:18:18 UTC] PHP   2. MethodSelectionFactory::getClasses() /home/ubuntu/workspace/mbx/view/mth_search.php:144
+[24-Oct-2018 10:18:18 UTC] PHP   3. MethodSelectionFactory::getOptions() /home/ubuntu/workspace/mbx/model/mth_selection.php:67
+[24-Oct-2018 10:22:05 UTC] PHP Fatal error:  Call to a member function bind_param() on a non-object in /home/ubuntu/workspace/mbx/model/mth_selection.php on line 48
+[24-Oct-2018 10:22:05 UTC] PHP Stack trace:
+[24-Oct-2018 10:22:05 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/view/mth_search.php:0
+[24-Oct-2018 10:22:05 UTC] PHP   2. MethodSelectionFactory::getClasses() /home/ubuntu/workspace/mbx/view/mth_search.php:144
+[24-Oct-2018 10:22:05 UTC] PHP   3. MethodSelectionFactory::getOptions() /home/ubuntu/workspace/mbx/model/mth_selection.php:67
+[24-Oct-2018 10:24:08 UTC] PHP Fatal error:  Call to a member function bind_param() on a non-object in /home/ubuntu/workspace/mbx/model/mth_selection.php on line 48
+[24-Oct-2018 10:24:08 UTC] PHP Stack trace:
+[24-Oct-2018 10:24:08 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/view/mth_search.php:0
+[24-Oct-2018 10:24:08 UTC] PHP   2. MethodSelectionFactory::getClasses() /home/ubuntu/workspace/mbx/view/mth_search.php:144
+[24-Oct-2018 10:24:08 UTC] PHP   3. MethodSelectionFactory::getOptions() /home/ubuntu/workspace/mbx/model/mth_selection.php:67
+[24-Oct-2018 10:25:55 UTC] PHP Fatal error:  Call to a member function bind_param() on a non-object in /home/ubuntu/workspace/mbx/model/mth_selection.php on line 48
+[24-Oct-2018 10:25:55 UTC] PHP Stack trace:
+[24-Oct-2018 10:25:55 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/view/mth_search.php:0
+[24-Oct-2018 10:25:55 UTC] PHP   2. MethodSelectionFactory::getClasses() /home/ubuntu/workspace/mbx/view/mth_search.php:144
+[24-Oct-2018 10:25:55 UTC] PHP   3. MethodSelectionFactory::getOptions() /home/ubuntu/workspace/mbx/model/mth_selection.php:67
+[24-Oct-2018 10:27:43 UTC] PHP Fatal error:  Call to a member function bind_param() on a non-object in /home/ubuntu/workspace/mbx/model/mth_selection.php on line 48
+[24-Oct-2018 10:27:43 UTC] PHP Stack trace:
+[24-Oct-2018 10:27:43 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/view/mth_search.php:0
+[24-Oct-2018 10:27:43 UTC] PHP   2. MethodSelectionFactory::getClasses() /home/ubuntu/workspace/mbx/view/mth_search.php:145
+[24-Oct-2018 10:27:43 UTC] PHP   3. MethodSelectionFactory::getOptions() /home/ubuntu/workspace/mbx/model/mth_selection.php:67
+[24-Oct-2018 11:06:47 UTC] PHP Parse error:  syntax error, unexpected 'echo' (T_ECHO), expecting ',' or ';' in /home/ubuntu/workspace/mbx/ctrl/mth_result.php on line 18
+[27-Oct-2018 06:13:47 UTC] PHP Warning:  include_once(../model_aux_text.php): failed to open stream: No such file or directory in /home/ubuntu/workspace/mbx/ctrl/usr_register.php on line 14
+[27-Oct-2018 06:13:47 UTC] PHP Stack trace:
+[27-Oct-2018 06:13:47 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/ctrl/usr_register.php:0
+[27-Oct-2018 06:13:47 UTC] PHP Warning:  include_once(): Failed opening '../model_aux_text.php' for inclusion (include_path='.:/usr/share/php:/usr/share/pear') in /home/ubuntu/workspace/mbx/ctrl/usr_register.php on line 14
+[27-Oct-2018 06:13:47 UTC] PHP Stack trace:
+[27-Oct-2018 06:13:47 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/ctrl/usr_register.php:0
+[27-Oct-2018 07:08:52 UTC] PHP Warning:  include_once(../model_aux_text.php): failed to open stream: No such file or directory in /home/ubuntu/workspace/mbx/ctrl/usr_register.php on line 14
+[27-Oct-2018 07:08:52 UTC] PHP Stack trace:
+[27-Oct-2018 07:08:52 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/ctrl/usr_register.php:0
+[27-Oct-2018 07:08:52 UTC] PHP Warning:  include_once(): Failed opening '../model_aux_text.php' for inclusion (include_path='.:/usr/share/php:/usr/share/pear') in /home/ubuntu/workspace/mbx/ctrl/usr_register.php on line 14
+[27-Oct-2018 07:08:52 UTC] PHP Stack trace:
+[27-Oct-2018 07:08:52 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/ctrl/usr_register.php:0
+[27-Oct-2018 14:12:17 UTC] PHP Warning:  include_once(../model_aux_text.php): failed to open stream: No such file or directory in /home/ubuntu/workspace/mbx/ctrl/usr_register.php on line 14
+[27-Oct-2018 14:12:17 UTC] PHP Stack trace:
+[27-Oct-2018 14:12:17 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/ctrl/usr_register.php:0
+[27-Oct-2018 14:12:17 UTC] PHP Warning:  include_once(): Failed opening '../model_aux_text.php' for inclusion (include_path='.:/usr/share/php:/usr/share/pear') in /home/ubuntu/workspace/mbx/ctrl/usr_register.php on line 14
+[27-Oct-2018 14:12:17 UTC] PHP Stack trace:
+[27-Oct-2018 14:12:17 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/ctrl/usr_register.php:0
+[27-Oct-2018 14:48:04 UTC] PHP Warning:  include_once(../model_aux_text.php): failed to open stream: No such file or directory in /home/ubuntu/workspace/mbx/ctrl/usr_register.php on line 14
+[27-Oct-2018 14:48:04 UTC] PHP Stack trace:
+[27-Oct-2018 14:48:04 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/ctrl/usr_register.php:0
+[27-Oct-2018 14:48:04 UTC] PHP Warning:  include_once(): Failed opening '../model_aux_text.php' for inclusion (include_path='.:/usr/share/php:/usr/share/pear') in /home/ubuntu/workspace/mbx/ctrl/usr_register.php on line 14
+[27-Oct-2018 14:48:04 UTC] PHP Stack trace:
+[27-Oct-2018 14:48:04 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/ctrl/usr_register.php:0
+[27-Oct-2018 14:51:18 UTC] PHP Warning:  include_once(../model_aux_text.php): failed to open stream: No such file or directory in /home/ubuntu/workspace/mbx/ctrl/usr_confirm.php on line 14
+[27-Oct-2018 14:51:18 UTC] PHP Stack trace:
+[27-Oct-2018 14:51:18 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/ctrl/usr_confirm.php:0
+[27-Oct-2018 14:51:18 UTC] PHP Warning:  include_once(): Failed opening '../model_aux_text.php' for inclusion (include_path='.:/usr/share/php:/usr/share/pear') in /home/ubuntu/workspace/mbx/ctrl/usr_confirm.php on line 14
+[27-Oct-2018 14:51:18 UTC] PHP Stack trace:
+[27-Oct-2018 14:51:18 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/ctrl/usr_confirm.php:0
+[27-Oct-2018 14:51:19 UTC] PHP Fatal error:  Call to undefined function verifyPassword() in /home/ubuntu/workspace/mbx/model/usr_account.php on line 286
+[27-Oct-2018 14:51:19 UTC] PHP Stack trace:
+[27-Oct-2018 14:51:19 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/ctrl/usr_confirm.php:0
+[27-Oct-2018 14:51:19 UTC] PHP   2. UserAccount->verifyChallenge() /home/ubuntu/workspace/mbx/ctrl/usr_confirm.php:46
+[27-Oct-2018 14:52:41 UTC] PHP Fatal error:  Call to undefined function verifyPassword() in /home/ubuntu/workspace/mbx/model/usr_account.php on line 286
+[27-Oct-2018 14:52:41 UTC] PHP Stack trace:
+[27-Oct-2018 14:52:41 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/ctrl/usr_confirm.php:0
+[27-Oct-2018 14:52:41 UTC] PHP   2. UserAccount->verifyChallenge() /home/ubuntu/workspace/mbx/ctrl/usr_confirm.php:46
+[27-Oct-2018 14:53:48 UTC] PHP Fatal error:  Call to undefined method MethodSelectionFactory::getClasses() in /home/ubuntu/workspace/mbx/view/mth_search.php on line 118
+[27-Oct-2018 14:53:48 UTC] PHP Stack trace:
+[27-Oct-2018 14:53:48 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/view/mth_search.php:0
+[28-Oct-2018 04:47:11 UTC] PHP Warning:  include_once(../model_aux_text.php): failed to open stream: No such file or directory in /home/ubuntu/workspace/mbx/ctrl/usr_register.php on line 14
+[28-Oct-2018 04:47:11 UTC] PHP Stack trace:
+[28-Oct-2018 04:47:11 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/ctrl/usr_register.php:0
+[28-Oct-2018 04:47:11 UTC] PHP Warning:  include_once(): Failed opening '../model_aux_text.php' for inclusion (include_path='.:/usr/share/php:/usr/share/pear') in /home/ubuntu/workspace/mbx/ctrl/usr_register.php on line 14
+[28-Oct-2018 04:47:11 UTC] PHP Stack trace:
+[28-Oct-2018 04:47:11 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/ctrl/usr_register.php:0
+[28-Oct-2018 04:47:48 UTC] PHP Fatal error:  Call to undefined method MethodSelectionFactory::getClasses() in /home/ubuntu/workspace/mbx/view/mth_search.php on line 118
+[28-Oct-2018 04:47:48 UTC] PHP Stack trace:
+[28-Oct-2018 04:47:48 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/view/mth_search.php:0
+[28-Oct-2018 04:52:28 UTC] PHP Fatal error:  Class 'MethodSubject' not found in /home/ubuntu/workspace/mbx/ctrl/mth_value.php on line 32
+[28-Oct-2018 04:52:28 UTC] PHP Stack trace:
+[28-Oct-2018 04:52:28 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/ctrl/mth_value.php:0
+[28-Oct-2018 04:59:58 UTC] PHP Warning:  Creating default object from empty value in /home/ubuntu/workspace/mbx/view/mth_search.php on line 25
+[28-Oct-2018 04:59:58 UTC] PHP Stack trace:
+[28-Oct-2018 04:59:58 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/view/mth_search.php:0
+[28-Oct-2018 04:59:58 UTC] PHP Fatal error:  Call to a member function isAuthenticated() on a non-object in /home/ubuntu/workspace/mbx/view/mth_search.php on line 26
+[28-Oct-2018 04:59:58 UTC] PHP Stack trace:
+[28-Oct-2018 04:59:58 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/view/mth_search.php:0
+[28-Oct-2018 05:00:46 UTC] PHP Warning:  Creating default object from empty value in /home/ubuntu/workspace/mbx/view/mth_search.php on line 25
+[28-Oct-2018 05:00:46 UTC] PHP Stack trace:
+[28-Oct-2018 05:00:46 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/view/mth_search.php:0
+[28-Oct-2018 05:06:45 UTC] PHP Warning:  include_once(../model_aux_text.php): failed to open stream: No such file or directory in /home/ubuntu/workspace/mbx/ctrl/usr_login.php on line 14
+[28-Oct-2018 05:06:45 UTC] PHP Stack trace:
+[28-Oct-2018 05:06:45 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/ctrl/usr_login.php:0
+[28-Oct-2018 05:06:45 UTC] PHP Warning:  include_once(): Failed opening '../model_aux_text.php' for inclusion (include_path='.:/usr/share/php:/usr/share/pear') in /home/ubuntu/workspace/mbx/ctrl/usr_login.php on line 14
+[28-Oct-2018 05:06:45 UTC] PHP Stack trace:
+[28-Oct-2018 05:06:45 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/ctrl/usr_login.php:0
+[28-Oct-2018 05:06:45 UTC] PHP Fatal error:  Call to undefined function verifyPassword() in /home/ubuntu/workspace/mbx/model/usr_account.php on line 250
+[28-Oct-2018 05:06:45 UTC] PHP Stack trace:
+[28-Oct-2018 05:06:45 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/ctrl/usr_login.php:0
+[28-Oct-2018 05:06:45 UTC] PHP   2. UserAccount->userLogin() /home/ubuntu/workspace/mbx/ctrl/usr_login.php:35
+[28-Oct-2018 05:07:20 UTC] PHP Fatal error:  Call to undefined function verifyPassword() in /home/ubuntu/workspace/mbx/model/usr_account.php on line 250
+[28-Oct-2018 05:07:20 UTC] PHP Stack trace:
+[28-Oct-2018 05:07:20 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/ctrl/usr_login.php:0
+[28-Oct-2018 05:07:20 UTC] PHP   2. UserAccount->userLogin() /home/ubuntu/workspace/mbx/ctrl/usr_login.php:34
+[28-Oct-2018 05:07:57 UTC] PHP Warning:  Missing argument 1 for UserSession::isSessionValid(), called in /home/ubuntu/workspace/mbx/model/usr_session.php on line 157 and defined in /home/ubuntu/workspace/mbx/model/usr_session.php on line 146
+[28-Oct-2018 05:07:57 UTC] PHP Stack trace:
+[28-Oct-2018 05:07:57 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/view/mth_search.php:0
+[28-Oct-2018 05:07:57 UTC] PHP   2. UserSession->validateSession() /home/ubuntu/workspace/mbx/view/mth_search.php:23
+[28-Oct-2018 05:07:57 UTC] PHP   3. UserSession->extendSession() /home/ubuntu/workspace/mbx/model/usr_session.php:199
+[28-Oct-2018 05:07:57 UTC] PHP   4. UserSession->isSessionValid() /home/ubuntu/workspace/mbx/model/usr_session.php:157
+[28-Oct-2018 05:07:57 UTC] PHP Warning:  Missing argument 2 for UserSession::isSessionValid(), called in /home/ubuntu/workspace/mbx/model/usr_session.php on line 157 and defined in /home/ubuntu/workspace/mbx/model/usr_session.php on line 146
+[28-Oct-2018 05:07:57 UTC] PHP Stack trace:
+[28-Oct-2018 05:07:57 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/view/mth_search.php:0
+[28-Oct-2018 05:07:57 UTC] PHP   2. UserSession->validateSession() /home/ubuntu/workspace/mbx/view/mth_search.php:23
+[28-Oct-2018 05:07:57 UTC] PHP   3. UserSession->extendSession() /home/ubuntu/workspace/mbx/model/usr_session.php:199
+[28-Oct-2018 05:07:57 UTC] PHP   4. UserSession->isSessionValid() /home/ubuntu/workspace/mbx/model/usr_session.php:157
+[28-Oct-2018 05:10:07 UTC] PHP Fatal error:  Call to undefined method MethodSelectionFactory::getClasses() in /home/ubuntu/workspace/mbx/view/mth_upload.php on line 139
+[28-Oct-2018 05:10:07 UTC] PHP Stack trace:
+[28-Oct-2018 05:10:07 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/view/mth_upload.php:0
+[30-Oct-2018 06:29:11 UTC] PHP Fatal error:  Maximum function nesting level of '256' reached, aborting! in /home/ubuntu/workspace/mbx/model/usr_session.php on line 136
+[30-Oct-2018 06:29:11 UTC] PHP Stack trace:
+[30-Oct-2018 06:29:11 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/view/mth_search.php:0
+[30-Oct-2018 06:29:11 UTC] PHP   2. UserSession->validateSession() /home/ubuntu/workspace/mbx/view/mth_search.php:23
+[30-Oct-2018 06:29:11 UTC] PHP   3. UserSession->isSessionValid() /home/ubuntu/workspace/mbx/model/usr_session.php:191
+[30-Oct-2018 06:29:11 UTC] PHP   4. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:153
+[30-Oct-2018 06:29:11 UTC] PHP   5. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP   6. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP   7. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP   8. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP   9. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP  10. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP  11. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP  12. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP  13. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP  14. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP  15. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP  16. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP  17. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP  18. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP  19. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP  20. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP  21. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP  22. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP  23. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP  24. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP  25. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP  26. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP  27. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP  28. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP  29. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP  30. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP  31. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP  32. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP  33. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP  34. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP  35. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP  36. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP  37. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP  38. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP  39. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP  40. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP  41. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP  42. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP  43. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP  44. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP  45. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP  46. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP  47. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP  48. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP  49. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP  50. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP  51. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP  52. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP  53. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP  54. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP  55. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP  56. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP  57. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP  58. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP  59. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP  60. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP  61. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP  62. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP  63. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP  64. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP  65. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP  66. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP  67. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP  68. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP  69. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP  70. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP  71. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP  72. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP  73. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP  74. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP  75. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP  76. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP  77. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP  78. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP  79. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP  80. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP  81. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP  82. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP  83. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP  84. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP  85. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP  86. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP  87. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP  88. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP  89. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP  90. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP  91. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP  92. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP  93. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP  94. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP  95. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP  96. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP  97. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP  98. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP  99. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 100. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP 101. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 102. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 103. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP 104. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 105. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 106. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP 107. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 108. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 109. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP 110. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 111. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 112. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP 113. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 114. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 115. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP 116. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 117. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 118. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP 119. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 120. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 121. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP 122. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 123. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 124. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP 125. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 126. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 127. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP 128. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 129. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 130. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP 131. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 132. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 133. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP 134. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 135. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 136. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP 137. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 138. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 139. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP 140. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 141. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 142. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP 143. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 144. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 145. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP 146. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 147. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 148. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP 149. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 150. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 151. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP 152. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 153. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 154. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP 155. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 156. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 157. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP 158. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 159. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 160. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP 161. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 162. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 163. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP 164. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 165. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 166. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP 167. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 168. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 169. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP 170. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 171. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 172. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP 173. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 174. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 175. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP 176. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 177. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 178. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP 179. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 180. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 181. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP 182. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 183. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 184. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP 185. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 186. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 187. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP 188. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 189. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 190. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP 191. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 192. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 193. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP 194. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 195. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 196. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP 197. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 198. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 199. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP 200. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 201. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 202. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP 203. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 204. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 205. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP 206. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 207. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 208. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP 209. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 210. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 211. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP 212. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 213. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 214. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP 215. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 216. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 217. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP 218. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 219. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 220. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP 221. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 222. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 223. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP 224. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 225. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 226. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP 227. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 228. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 229. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP 230. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 231. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 232. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP 233. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 234. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 235. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP 236. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 237. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 238. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP 239. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 240. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 241. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP 242. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 243. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 244. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP 245. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 246. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 247. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP 248. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 249. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 250. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP 251. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 252. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 253. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:11 UTC] PHP 254. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 255. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:11 UTC] PHP 256. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP Fatal error:  Maximum function nesting level of '256' reached, aborting! in /home/ubuntu/workspace/mbx/model/usr_session.php on line 134
+[30-Oct-2018 06:29:19 UTC] PHP Stack trace:
+[30-Oct-2018 06:29:19 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/ctrl/usr_login.php:0
+[30-Oct-2018 06:29:19 UTC] PHP   2. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/ctrl/usr_login.php:50
+[30-Oct-2018 06:29:19 UTC] PHP   3. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP   4. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP   5. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP   6. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP   7. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP   8. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP   9. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP  10. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP  11. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP  12. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP  13. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP  14. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP  15. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP  16. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP  17. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP  18. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP  19. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP  20. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP  21. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP  22. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP  23. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP  24. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP  25. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP  26. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP  27. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP  28. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP  29. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP  30. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP  31. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP  32. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP  33. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP  34. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP  35. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP  36. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP  37. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP  38. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP  39. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP  40. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP  41. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP  42. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP  43. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP  44. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP  45. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP  46. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP  47. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP  48. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP  49. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP  50. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP  51. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP  52. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP  53. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP  54. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP  55. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP  56. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP  57. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP  58. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP  59. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP  60. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP  61. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP  62. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP  63. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP  64. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP  65. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP  66. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP  67. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP  68. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP  69. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP  70. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP  71. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP  72. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP  73. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP  74. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP  75. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP  76. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP  77. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP  78. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP  79. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP  80. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP  81. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP  82. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP  83. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP  84. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP  85. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP  86. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP  87. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP  88. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP  89. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP  90. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP  91. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP  92. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP  93. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP  94. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP  95. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP  96. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP  97. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP  98. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP  99. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 100. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 101. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP 102. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 103. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 104. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP 105. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 106. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 107. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP 108. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 109. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 110. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP 111. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 112. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 113. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP 114. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 115. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 116. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP 117. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 118. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 119. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP 120. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 121. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 122. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP 123. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 124. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 125. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP 126. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 127. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 128. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP 129. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 130. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 131. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP 132. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 133. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 134. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP 135. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 136. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 137. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP 138. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 139. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 140. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP 141. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 142. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 143. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP 144. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 145. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 146. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP 147. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 148. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 149. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP 150. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 151. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 152. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP 153. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 154. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 155. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP 156. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 157. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 158. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP 159. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 160. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 161. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP 162. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 163. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 164. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP 165. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 166. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 167. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP 168. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 169. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 170. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP 171. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 172. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 173. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP 174. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 175. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 176. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP 177. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 178. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 179. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP 180. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 181. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 182. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP 183. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 184. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 185. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP 186. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 187. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 188. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP 189. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 190. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 191. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP 192. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 193. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 194. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP 195. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 196. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 197. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP 198. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 199. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 200. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP 201. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 202. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 203. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP 204. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 205. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 206. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP 207. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 208. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 209. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP 210. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 211. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 212. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP 213. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 214. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 215. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP 216. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 217. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 218. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP 219. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 220. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 221. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP 222. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 223. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 224. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP 225. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 226. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 227. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP 228. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 229. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 230. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP 231. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 232. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 233. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP 234. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 235. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 236. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP 237. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 238. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 239. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP 240. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 241. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 242. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP 243. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 244. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 245. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP 246. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 247. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 248. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP 249. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 250. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 251. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP 252. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 253. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 254. UserSession->getSessionHash() /home/ubuntu/workspace/mbx/model/usr_session.php:52
+[30-Oct-2018 06:29:19 UTC] PHP 255. json_encode() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[30-Oct-2018 06:29:19 UTC] PHP 256. UserSession->jsonSerialize() /home/ubuntu/workspace/mbx/model/usr_session.php:136
+[31-Oct-2018 07:04:28 UTC] PHP Fatal error:  Access to undeclared static property: GlobalParameter::$urlConfig in /home/ubuntu/workspace/mbx/view/frm_common.php on line 74
+[31-Oct-2018 07:04:28 UTC] PHP Stack trace:
+[31-Oct-2018 07:04:28 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/view/usr_login.php:0
+[31-Oct-2018 07:04:28 UTC] PHP   2. FormElements::topNavigationBar() /home/ubuntu/workspace/mbx/view/usr_login.php:28
+[01-Nov-2018 06:04:32 UTC] PHP Fatal error:  Call to a member function bind_param() on a non-object in /home/ubuntu/workspace/mbx/model/mth_method.php on line 102
+[01-Nov-2018 06:04:32 UTC] PHP Stack trace:
+[01-Nov-2018 06:04:32 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/ctrl/mth_upload.php:0
+[01-Nov-2018 06:04:32 UTC] PHP   2. TeachingMethod->createMethod() /home/ubuntu/workspace/mbx/ctrl/mth_upload.php:99
+[01-Nov-2018 06:11:54 UTC] PHP Catchable fatal error:  Object of class AppResult could not be converted to string in /home/ubuntu/workspace/mbx/model/mth_method.php on line 114
+[01-Nov-2018 06:11:54 UTC] PHP Stack trace:
+[01-Nov-2018 06:11:54 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/ctrl/mth_upload.php:0
+[01-Nov-2018 06:11:54 UTC] PHP   2. TeachingMethod->createMethod() /home/ubuntu/workspace/mbx/ctrl/mth_upload.php:99
+[01-Nov-2018 06:13:15 UTC] PHP Catchable fatal error:  Object of class AppResult could not be converted to string in /home/ubuntu/workspace/mbx/model/mth_method.php on line 114
+[01-Nov-2018 06:13:15 UTC] PHP Stack trace:
+[01-Nov-2018 06:13:15 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/ctrl/mth_upload.php:0
+[01-Nov-2018 06:13:15 UTC] PHP   2. TeachingMethod->createMethod() /home/ubuntu/workspace/mbx/ctrl/mth_upload.php:99
+[01-Nov-2018 06:15:26 UTC] PHP Fatal error:  Cannot pass parameter 1 by reference in /home/ubuntu/workspace/mbx/model/mth_selection.php on line 77
+[01-Nov-2018 06:15:26 UTC] PHP Stack trace:
+[01-Nov-2018 06:15:26 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/ctrl/mth_upload.php:0
+[01-Nov-2018 06:15:26 UTC] PHP   2. json_encode() /home/ubuntu/workspace/mbx/ctrl/mth_upload.php:102
+[01-Nov-2018 06:15:26 UTC] PHP   3. TeachingMethod->jsonSerialize() /home/ubuntu/workspace/mbx/ctrl/mth_upload.php:102
+[01-Nov-2018 06:15:26 UTC] PHP   4. MethodSelectionFactory::getSubjectName() /home/ubuntu/workspace/mbx/model/mth_method.php:58
+[01-Nov-2018 06:37:39 UTC] PHP Fatal error:  Call to a member function isOK() on a non-object in /home/ubuntu/workspace/mbx/ctrl/mth_upload.php on line 110
+[01-Nov-2018 06:37:39 UTC] PHP Stack trace:
+[01-Nov-2018 06:37:39 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/ctrl/mth_upload.php:0
+[01-Nov-2018 06:42:48 UTC] PHP Fatal error:  Call to a member function isOK() on a non-object in /home/ubuntu/workspace/mbx/ctrl/mth_upload.php on line 111
+[01-Nov-2018 06:42:48 UTC] PHP Stack trace:
+[01-Nov-2018 06:42:48 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/ctrl/mth_upload.php:0
+[03-Nov-2018 06:31:35 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/ubuntu/workspace/mbx/model/aux_helpers.php on line 35
+[03-Nov-2018 06:31:35 UTC] PHP Stack trace:
+[03-Nov-2018 06:31:35 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/view/mth_search.php:0
+[03-Nov-2018 06:31:35 UTC] PHP   2. MethodSelectionFactory::getAuthors() /home/ubuntu/workspace/mbx/view/mth_search.php:233
+[03-Nov-2018 06:31:35 UTC] PHP   3. Helpers::arrayToString() /home/ubuntu/workspace/mbx/model/mth_selection.php:191
+[03-Nov-2018 06:31:35 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/ubuntu/workspace/mbx/model/mth_selection.php on line 192
+[03-Nov-2018 06:31:35 UTC] PHP Stack trace:
+[03-Nov-2018 06:31:35 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/view/mth_search.php:0
+[03-Nov-2018 06:31:35 UTC] PHP   2. MethodSelectionFactory::getAuthors() /home/ubuntu/workspace/mbx/view/mth_search.php:233
+[03-Nov-2018 06:32:13 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/ubuntu/workspace/mbx/model/aux_helpers.php on line 35
+[03-Nov-2018 06:32:13 UTC] PHP Stack trace:
+[03-Nov-2018 06:32:13 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/view/mth_search.php:0
+[03-Nov-2018 06:32:13 UTC] PHP   2. MethodSelectionFactory::getAuthors() /home/ubuntu/workspace/mbx/view/mth_search.php:233
+[03-Nov-2018 06:32:13 UTC] PHP   3. Helpers::arrayToString() /home/ubuntu/workspace/mbx/model/mth_selection.php:191
+[03-Nov-2018 06:32:13 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/ubuntu/workspace/mbx/model/mth_selection.php on line 192
+[03-Nov-2018 06:32:13 UTC] PHP Stack trace:
+[03-Nov-2018 06:32:13 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/view/mth_search.php:0
+[03-Nov-2018 06:32:13 UTC] PHP   2. MethodSelectionFactory::getAuthors() /home/ubuntu/workspace/mbx/view/mth_search.php:233
+[03-Nov-2018 06:33:02 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/ubuntu/workspace/mbx/model/mth_selection.php on line 192
+[03-Nov-2018 06:33:03 UTC] PHP Stack trace:
+[03-Nov-2018 06:33:03 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/view/mth_search.php:0
+[03-Nov-2018 06:33:03 UTC] PHP   2. MethodSelectionFactory::getAuthors() /home/ubuntu/workspace/mbx/view/mth_search.php:233
+[03-Nov-2018 06:34:52 UTC] PHP Warning:  Illegal string offset 'VAL' in /home/ubuntu/workspace/mbx/view/mth_search.php on line 235
+[03-Nov-2018 06:34:52 UTC] PHP Stack trace:
+[03-Nov-2018 06:34:52 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/view/mth_search.php:0
+[03-Nov-2018 06:34:52 UTC] PHP Warning:  Illegal string offset 'NAME' in /home/ubuntu/workspace/mbx/view/mth_search.php on line 235
+[03-Nov-2018 06:34:52 UTC] PHP Stack trace:
+[03-Nov-2018 06:34:52 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/view/mth_search.php:0
+[03-Nov-2018 06:34:52 UTC] PHP Warning:  Illegal string offset 'VAL' in /home/ubuntu/workspace/mbx/view/mth_search.php on line 235
+[03-Nov-2018 06:34:52 UTC] PHP Stack trace:
+[03-Nov-2018 06:34:52 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/view/mth_search.php:0
+[03-Nov-2018 06:34:52 UTC] PHP Warning:  Illegal string offset 'NAME' in /home/ubuntu/workspace/mbx/view/mth_search.php on line 235
+[03-Nov-2018 06:34:52 UTC] PHP Stack trace:
+[03-Nov-2018 06:34:52 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/view/mth_search.php:0
+[03-Nov-2018 06:35:04 UTC] PHP Fatal error:  Call to a member function execute() on a non-object in /home/ubuntu/workspace/mbx/model/mth_method_view.php on line 166
+[03-Nov-2018 06:35:04 UTC] PHP Stack trace:
+[03-Nov-2018 06:35:04 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/ctrl/mth_result.php:0
+[03-Nov-2018 06:35:04 UTC] PHP   2. MethodResultView->retrieveLines() /home/ubuntu/workspace/mbx/ctrl/mth_result.php:61
+[03-Nov-2018 06:47:47 UTC] PHP Fatal error:  Call to a member function execute() on a non-object in /home/ubuntu/workspace/mbx/model/mth_method_view.php on line 166
+[03-Nov-2018 06:47:47 UTC] PHP Stack trace:
+[03-Nov-2018 06:47:47 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/ctrl/mth_result.php:0
+[03-Nov-2018 06:47:47 UTC] PHP   2. MethodResultView->retrieveLines() /home/ubuntu/workspace/mbx/ctrl/mth_result.php:61
+[03-Nov-2018 06:48:46 UTC] PHP Fatal error:  Call to a member function execute() on a non-object in /home/ubuntu/workspace/mbx/model/mth_method_view.php on line 167
+[03-Nov-2018 06:48:46 UTC] PHP Stack trace:
+[03-Nov-2018 06:48:46 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/ctrl/mth_result.php:0
+[03-Nov-2018 06:48:46 UTC] PHP   2. MethodResultView->retrieveLines() /home/ubuntu/workspace/mbx/ctrl/mth_result.php:61
+[03-Nov-2018 06:49:47 UTC] PHP Warning:  mysqli_stmt::bind_result(): Number of bind variables doesn't match number of fields in prepared statement in /home/ubuntu/workspace/mbx/model/mth_method_view.php on line 190
+[03-Nov-2018 06:49:47 UTC] PHP Stack trace:
+[03-Nov-2018 06:49:47 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/ctrl/mth_result.php:0
+[03-Nov-2018 06:49:47 UTC] PHP   2. MethodResultView->retrieveLines() /home/ubuntu/workspace/mbx/ctrl/mth_result.php:61
+[03-Nov-2018 06:49:47 UTC] PHP   3. mysqli_stmt->bind_result() /home/ubuntu/workspace/mbx/model/mth_method_view.php:190
+[03-Nov-2018 06:56:17 UTC] PHP Fatal error:  Call to a member function execute() on a non-object in /home/ubuntu/workspace/mbx/model/mth_method_view.php on line 169
+[03-Nov-2018 06:56:17 UTC] PHP Stack trace:
+[03-Nov-2018 06:56:17 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/ctrl/mth_result.php:0
+[03-Nov-2018 06:56:17 UTC] PHP   2. MethodResultView->retrieveLines() /home/ubuntu/workspace/mbx/ctrl/mth_result.php:61
+[04-Nov-2018 07:02:01 UTC] PHP Fatal error:  Call to a member function prepare() on a non-object in /home/ubuntu/workspace/mbx/model/mth_stat_download.php on line 40
+[04-Nov-2018 07:02:01 UTC] PHP Stack trace:
+[04-Nov-2018 07:02:01 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/ctrl/mth_download.php:0
+[04-Nov-2018 07:02:01 UTC] PHP   2. MethodDownload->saveDownload() /home/ubuntu/workspace/mbx/ctrl/mth_download.php:65
+[04-Nov-2018 07:05:00 UTC] PHP Fatal error:  Call to a member function prepare() on a non-object in /home/ubuntu/workspace/mbx/model/mth_stat_download.php on line 40
+[04-Nov-2018 07:05:00 UTC] PHP Stack trace:
+[04-Nov-2018 07:05:00 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/ctrl/mth_download.php:0
+[04-Nov-2018 07:05:00 UTC] PHP   2. MethodDownload->saveDownload() /home/ubuntu/workspace/mbx/ctrl/mth_download.php:63
+[04-Nov-2018 07:07:10 UTC] PHP Fatal error:  Call to a member function prepare() on a non-object in /home/ubuntu/workspace/mbx/model/mth_stat_download.php on line 39
+[04-Nov-2018 07:07:10 UTC] PHP Stack trace:
+[04-Nov-2018 07:07:10 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/ctrl/mth_download.php:0
+[04-Nov-2018 07:07:10 UTC] PHP   2. MethodDownload->saveDownload() /home/ubuntu/workspace/mbx/ctrl/mth_download.php:63
+[04-Nov-2018 07:08:15 UTC] PHP Warning:  date() expects at least 1 parameter, 0 given in /home/ubuntu/workspace/mbx/model/mth_stat_download.php on line 29
+[04-Nov-2018 07:08:15 UTC] PHP Stack trace:
+[04-Nov-2018 07:08:15 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/ctrl/mth_download.php:0
+[04-Nov-2018 07:08:15 UTC] PHP   2. MethodDownload->__construct() /home/ubuntu/workspace/mbx/ctrl/mth_download.php:62
+[04-Nov-2018 07:08:15 UTC] PHP   3. date() /home/ubuntu/workspace/mbx/model/mth_stat_download.php:29
+[04-Nov-2018 07:08:15 UTC] PHP Fatal error:  Call to a member function getFileData() on a non-object in /home/ubuntu/workspace/mbx/ctrl/mth_download.php on line 65
+[04-Nov-2018 07:08:15 UTC] PHP Stack trace:
+[04-Nov-2018 07:08:15 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/ctrl/mth_download.php:0
+[04-Nov-2018 07:11:50 UTC] PHP Fatal error:  Call to a member function getFileData() on a non-object in /home/ubuntu/workspace/mbx/ctrl/mth_download.php on line 65
+[04-Nov-2018 07:11:50 UTC] PHP Stack trace:
+[04-Nov-2018 07:11:50 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/ctrl/mth_download.php:0
+[07-Nov-2018 11:45:53 UTC] PHP Fatal error:  Class 'UserSession' not found in /home/ubuntu/workspace/mbx/ctrl/mth_rating.php on line 21
+[07-Nov-2018 11:45:53 UTC] PHP Stack trace:
+[07-Nov-2018 11:45:53 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/ctrl/mth_rating.php:0
+[07-Nov-2018 11:49:58 UTC] PHP Fatal error:  Class 'UserSession' not found in /home/ubuntu/workspace/mbx/ctrl/mth_rating.php on line 21
+[07-Nov-2018 11:49:58 UTC] PHP Stack trace:
+[07-Nov-2018 11:49:58 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/ctrl/mth_rating.php:0
+[08-Nov-2018 06:11:00 UTC] PHP Parse error:  syntax error, unexpected 'if' (T_IF), expecting ',' or ';' in /home/ubuntu/workspace/mbx/ctrl/mth_rating.php on line 36
+[08-Nov-2018 13:34:48 UTC] PHP Fatal error:  Call to a member function execute() on a non-object in /home/ubuntu/workspace/mbx/model/mth_method_view.php on line 193
+[08-Nov-2018 13:34:48 UTC] PHP Stack trace:
+[08-Nov-2018 13:34:48 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/ctrl/mth_search_result.php:0
+[08-Nov-2018 13:34:48 UTC] PHP   2. MethodResultView->retrieveLines() /home/ubuntu/workspace/mbx/ctrl/mth_search_result.php:70
+[09-Nov-2018 06:06:48 UTC] PHP Fatal error:  Call to a member function execute() on a non-object in /home/ubuntu/workspace/mbx/model/mth_method_view.php on line 193
+[09-Nov-2018 06:06:48 UTC] PHP Stack trace:
+[09-Nov-2018 06:06:48 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/ctrl/mth_search_result.php:0
+[09-Nov-2018 06:06:48 UTC] PHP   2. MethodResultView->retrieveLines() /home/ubuntu/workspace/mbx/ctrl/mth_search_result.php:70
+[09-Nov-2018 11:24:15 UTC] PHP Fatal error:  Call to a member function execute() on a non-object in /home/ubuntu/workspace/mbx/model/mth_method_view.php on line 193
+[09-Nov-2018 11:24:15 UTC] PHP Stack trace:
+[09-Nov-2018 11:24:15 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/ctrl/mth_search_result.php:0
+[09-Nov-2018 11:24:15 UTC] PHP   2. MethodResultView->retrieveLines() /home/ubuntu/workspace/mbx/ctrl/mth_search_result.php:70
+[09-Nov-2018 13:05:45 UTC] PHP Fatal error:  Call to a member function execute() on a non-object in /home/ubuntu/workspace/mbx/model/mth_method_view.php on line 193
+[09-Nov-2018 13:05:45 UTC] PHP Stack trace:
+[09-Nov-2018 13:05:45 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/ctrl/mth_search_result.php:0
+[09-Nov-2018 13:05:45 UTC] PHP   2. MethodResultView->retrieveLines() /home/ubuntu/workspace/mbx/ctrl/mth_search_result.php:70
+[09-Nov-2018 13:13:45 UTC] PHP Fatal error:  Call to undefined method MethodResultView::numRemaining() in /home/ubuntu/workspace/mbx/ctrl/mth_search_result.php on line 76
+[09-Nov-2018 13:13:45 UTC] PHP Stack trace:
+[09-Nov-2018 13:13:45 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/ctrl/mth_search_result.php:0
+[10-Nov-2018 13:06:47 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/ubuntu/workspace/mbx/ctrl/mth_rating_details.php on line 31
+[10-Nov-2018 13:06:47 UTC] PHP Stack trace:
+[10-Nov-2018 13:06:47 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/ctrl/mth_rating_details.php:0
+[10-Nov-2018 13:06:47 UTC] PHP Fatal error:  Cannot access empty property in /home/ubuntu/workspace/mbx/view/mth_rating_details.php on line 75
+[10-Nov-2018 13:06:47 UTC] PHP Stack trace:
+[10-Nov-2018 13:06:47 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/ctrl/mth_rating_details.php:0
+[10-Nov-2018 13:06:47 UTC] PHP   2. RatingListView->renderHtml() /home/ubuntu/workspace/mbx/ctrl/mth_rating_details.php:36
+[10-Nov-2018 13:08:45 UTC] PHP Fatal error:  Cannot access empty property in /home/ubuntu/workspace/mbx/view/mth_rating_details.php on line 75
+[10-Nov-2018 13:08:45 UTC] PHP Stack trace:
+[10-Nov-2018 13:08:45 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/ctrl/mth_rating_details.php:0
+[10-Nov-2018 13:08:45 UTC] PHP   2. RatingListView->renderHtml() /home/ubuntu/workspace/mbx/ctrl/mth_rating_details.php:36
+[10-Nov-2018 13:15:04 UTC] PHP Fatal error:  Non-abstract method MethodRatingList::__construct() must contain body in /home/ubuntu/workspace/mbx/model/mth_stat_rating.php on line 116
+[10-Nov-2018 13:15:04 UTC] PHP Stack trace:
+[10-Nov-2018 13:15:04 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/ctrl/mth_rating_details.php:0
+[12-Nov-2018 10:53:29 UTC] PHP Parse error:  syntax error, unexpected 'echo' (T_ECHO), expecting ',' or ';' in /home/ubuntu/workspace/mbx/view/frm_common.php on line 26
+[12-Nov-2018 10:53:29 UTC] PHP Stack trace:
+[12-Nov-2018 10:53:29 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/view/usr_login.php:0
+[14-Nov-2018 07:19:38 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/ubuntu/workspace/mbx/view/mth_admin.php on line 107
+[14-Nov-2018 07:19:38 UTC] PHP Stack trace:
+[14-Nov-2018 07:19:38 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/view/mth_admin.php:0
+[14-Nov-2018 07:20:27 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/ubuntu/workspace/mbx/view/mth_admin.php on line 107
+[14-Nov-2018 07:20:27 UTC] PHP Stack trace:
+[14-Nov-2018 07:20:27 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/view/mth_admin.php:0
+[15-Nov-2018 06:31:48 UTC] PHP Fatal error:  Class 'MethodAdminResultView' not found in /home/ubuntu/workspace/mbx/ctrl/mth_search_admin.php on line 92
+[15-Nov-2018 06:31:48 UTC] PHP Stack trace:
+[15-Nov-2018 06:31:48 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/ctrl/mth_search_admin.php:0
+[15-Nov-2018 08:01:00 UTC] PHP Parse error:  syntax error, unexpected ''<div class="alert alert-info"' (T_ENCAPSED_AND_WHITESPACE) in /home/ubuntu/workspace/mbx/ctrl/mth_delete.php on line 20
+[15-Nov-2018 09:49:31 UTC] PHP Fatal error:  Call to a member function prepare() on a non-object in /home/ubuntu/workspace/mbx/model/mth_method.php on line 131
+[15-Nov-2018 09:49:31 UTC] PHP Stack trace:
+[15-Nov-2018 09:49:31 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/ctrl/aux_frm_embedded.php:0
+[15-Nov-2018 09:49:31 UTC] PHP   2. TeachingMethod->loadMethod() /home/ubuntu/workspace/mbx/ctrl/aux_frm_embedded.php:30
+[15-Nov-2018 09:50:32 UTC] PHP Fatal error:  Call to a member function bind_param() on a non-object in /home/ubuntu/workspace/mbx/model/mth_method.php on line 131
+[15-Nov-2018 09:50:32 UTC] PHP Stack trace:
+[15-Nov-2018 09:50:32 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/ctrl/aux_frm_embedded.php:0
+[15-Nov-2018 09:50:32 UTC] PHP   2. TeachingMethod->loadMethod() /home/ubuntu/workspace/mbx/ctrl/aux_frm_embedded.php:30
+[15-Nov-2018 11:23:23 UTC] PHP Warning:  Missing argument 2 for MethodResultView::InitAdminListStmt(), called in /home/ubuntu/workspace/mbx/ctrl/mth_search_admin.php on line 51 and defined in /home/ubuntu/workspace/mbx/model/mth_method_view.php on line 65
+[15-Nov-2018 11:23:23 UTC] PHP Stack trace:
+[15-Nov-2018 11:23:23 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/ctrl/mth_search_admin.php:0
+[15-Nov-2018 11:23:23 UTC] PHP   2. MethodResultView->InitAdminListStmt() /home/ubuntu/workspace/mbx/ctrl/mth_search_admin.php:51
+[15-Nov-2018 11:39:43 UTC] PHP Fatal error:  Cannot access private property TeachingMethod::$mth_authors in /home/ubuntu/workspace/mbx/ctrl/aux_frm_embedded.php on line 179
+[15-Nov-2018 11:39:43 UTC] PHP Stack trace:
+[15-Nov-2018 11:39:43 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/ctrl/aux_frm_embedded.php:0
+[18-Nov-2018 06:50:44 UTC] PHP Fatal error:  Call to a member function bind_param() on a non-object in /home/ubuntu/workspace/mbx/model/mth_method_file.php on line 130
+[18-Nov-2018 06:50:44 UTC] PHP Stack trace:
+[18-Nov-2018 06:50:44 UTC] PHP   1. {main}() /home/ubuntu/workspace/mbx/ctrl/mth_update_file.php:0
+[18-Nov-2018 06:50:44 UTC] PHP   2. TeachingMethodFile->saveFile() /home/ubuntu/workspace/mbx/ctrl/mth_update_file.php:39

@@ -156,12 +156,12 @@ $method_list = $mth_search->get_result();
                                         */
                                         
                                         echo '<td>';
-                                        echo '<a href="javascript:void(0);" data-href="/php/pov_rtg.php?mth_id=' . $method['mth_id'] . '" class="openPopup">';
-                                        echo '<span class="label label-primary">Anzahl: ' . $method['rtg_count'] . '</span>';
-                                        echo '<br>';
                                         
                                         if ($method['rtg_count'] > 0)
                                         {
+                                            echo '<a href="javascript:void(0);" data-href="/php/pov_rtg.php?mth_id=' . $method['mth_id'] . '" class="openPopup btn btn-default">';
+                                            echo '<span class="label label-primary">Anzahl: ' . $method['rtg_count'] . '</span>';
+                                            echo '<br>';
                                             $rtg_avg = round($method['rtg_sum'] / $method['rtg_count'], 1, PHP_ROUND_HALF_UP);
                                             
                                             if ($rtg_avg < 1.5)
@@ -180,8 +180,13 @@ $method_list = $mth_search->get_result();
                                                 }
                                             }
                                             echo '<span class="label ' . $label_mode . '">Wertung: ' . number_format($rtg_avg,2) . '</span>';                                            
+                                            echo '</a>';
                                         }
-                                        echo '</a></td>';
+                                        else
+                                        {
+                                            echo '<span class="label label-primary">Anzahl: ' . $method['rtg_count'] . '</span>';
+                                        }
+                                        echo '</td>';
 
                                         echo '</tr>';
                                     }
@@ -195,7 +200,7 @@ $method_list = $mth_search->get_result();
         
         <!-- Modal -->
         <div class="modal fade" id="rtgModal" role="dialog">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-lg">
                 <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header">

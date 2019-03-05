@@ -427,7 +427,7 @@ if (! empty($_POST))
             </div> <!-- modal fade -->
         </div> <!-- class="container" -->
         <?php  FormatHelper::script_refs(); ?>
-        <script>
+        <script type="text/javascript">
             /* global $ */
             $(function() {
                 $(document).on('change', ':file', function() {
