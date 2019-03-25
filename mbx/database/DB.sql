@@ -36,14 +36,21 @@ create table ta_mth_subject_area (
     mth_area_name     varchar(63) collate utf8_unicode_ci not null
 );
 
-insert into ta_mth_subject_area values(10, 'BW', 'Betriebswirtschaft', 1, 'BW.01', 'Betriebswirtschaft Teil 1');
-insert into ta_mth_subject_area values(10, 'BW', 'Betriebswirtschaft', 2, 'BW.02', 'Betriebswirtschaft Teil 2');
-insert into ta_mth_subject_area values(10, 'BW', 'Betriebswirtschaft', 3, 'BW.03', 'Betriebswirtschaft Teil 3');
-insert into ta_mth_subject_area values(10, 'BW', 'Betriebswirtschaft', 4, 'BW.04', 'Betriebswirtschaft Teil 4');
-insert into ta_mth_subject_area values(10, 'BW', 'Betriebswirtschaft', 5, 'BW.05', 'Betriebswirtschaft Teil 5');
+insert into ta_mth_subject_area values(10, 'BW', 'Betriebswirtschaft', 1, 'BW.01', 'Führung');
+insert into ta_mth_subject_area values(10, 'BW', 'Betriebswirtschaft', 2, 'BW.02', 'Investition');
+insert into ta_mth_subject_area values(10, 'BW', 'Betriebswirtschaft', 3, 'BW.03', 'Kaufvertrag');
+insert into ta_mth_subject_area values(10, 'BW', 'Betriebswirtschaft', 4, 'BW.04', 'Kennzahlen');
+insert into ta_mth_subject_area values(10, 'BW', 'Betriebswirtschaft', 5, 'BW.05', 'Management');
+insert into ta_mth_subject_area values(10, 'BW', 'Betriebswirtschaft', 6, 'BW.06', 'Marketing');
+insert into ta_mth_subject_area values(10, 'BW', 'Betriebswirtschaft', 7, 'BW.07', 'Materialwirtschaft');
+insert into ta_mth_subject_area values(10, 'BW', 'Betriebswirtschaft', 8, 'BW.08', 'Organisation');
+insert into ta_mth_subject_area values(10, 'BW', 'Betriebswirtschaft', 9, 'BW.09', 'Personal');
+insert into ta_mth_subject_area values(10, 'BW', 'Betriebswirtschaft',10, 'BW.10', 'Rechtsformen');
+
 insert into ta_mth_subject_area values(20, 'RW', 'Rechnungswesen', 1, 'RW.01', 'Rechnungswesen Teil 1');
 insert into ta_mth_subject_area values(20, 'RW', 'Rechnungswesen', 2, 'RW.02', 'Rechnungswesen Teil 2');
 insert into ta_mth_subject_area values(20, 'RW', 'Rechnungswesen', 3, 'RW.03', 'Rechnungswesen Teil 3');
+
 insert into ta_mth_subject_area values(30, 'WI', 'Wirtschaftsinformatik', 1, 'WI.01', 'Kapitel 1');
 insert into ta_mth_subject_area values(30, 'WI', 'Wirtschaftsinformatik', 2, 'WI.02', 'Kapitel 2');
 insert into ta_mth_subject_area values(30, 'WI', 'Wirtschaftsinformatik', 3, 'WI.03', 'Kapitel 3');
@@ -112,7 +119,7 @@ create table ta_mth_method_rating (
     rtg_value           decimal not null,
     rtg_summary         varchar(400) collate utf8_unicode_ci,
     
-    foreign key fk_mth_method (rtg_mth_id) references ta_mth_method_header (mth_id) match full on delete cascade on update cascade,
+    foreign key fk_rtg_method (rtg_mth_id) references ta_mth_method_header (mth_id) match full on delete cascade on update cascade,
     foreign key fk_usr_account (rtg_usr_id) references ta_usr_account (usr_id) match full on delete set null on update set null
 );
 
@@ -122,7 +129,7 @@ create table ta_mth_method_download (
     dnl_usr_id          int,
     dnl_date            datetime not null,
     
-    foreign key fk_mth_method (dnl_mth_id) references ta_mth_method_header (mth_id) match full on delete cascade on update cascade,
+    foreign key fk_dnl_method (dnl_mth_id) references ta_mth_method_header (mth_id) match full on delete cascade on update cascade,
     foreign key fk_usr_account (dnl_usr_id) references ta_usr_account (usr_id) match full on delete set null on update set null
 );
 

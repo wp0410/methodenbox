@@ -17,11 +17,11 @@ function handle_warning(int $errno, string $errstr, string $errfile = null, int 
     switch($errno)
     {
         case E_USER_WARNING:
-            // TO DO: Log the warning
+            log_msg('E_USER_WARNING', $errstr, $errfile, $errline);
             $result = true;
             break;
         case E_USER_NOTICE:
-            // TO DO: Log the notice
+            log_msg('E_USER_NOTICE', $errstr, $errfile, $errline);
             $result = true;
             break;
         default:
@@ -31,8 +31,27 @@ function handle_warning(int $errno, string $errstr, string $errfile = null, int 
     return $result;
 }
 
-function set_warning_handler()
+function set_private_warning_handler()
 {
     set_error_handler(handle_warning, E_USER_WARNING | E_USER_NOTICE);
+}
+
+function log_msg(string $err_type, string $errstr, string $errfile, int $errline)
+{
+    $log_str = strftime('%Y-%m-%d %H:%M:%S', time()) + '   ' + $err_type;
+    if (($errfile != null) && (strlen($errfile) > 0))
+    {
+        $log_str = $log_str + '   file: ' + $errfile;
+    }
+    if ($errline != null)
+    {
+        $log_str = $log_str + '   line: ' + $errline;
+    }
+    if ($errstr != null)
+    {
+        $log_str = $log_str + '\n' + $errstr + '\n';
+    }
+    
+    error_log($log_str, 3, GlobalParameter::$applicationConfig['logDestination']);
 }
 ?>

@@ -182,4 +182,3 @@ class TeachingMethod implements JsonSerializable
     }
 }
 ?>
-
