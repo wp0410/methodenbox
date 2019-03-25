@@ -80,7 +80,7 @@ $mailer->emailHtml =
     '<p></p>' .
     '<p>--</p>' .
     '<p>Ihr Methodenbox Team</p></body></html>';
-$mailer->sendMail(true);
+$mailer->sendMail(GlobalParameter::$applicationConfig['doSendEmail']);
 
 $res = new AppResult(901);
 header('Location: ../view/usr_confirm.php?res_code=' . $res->code . '&res_text=' . $res->textUrlEncoded());

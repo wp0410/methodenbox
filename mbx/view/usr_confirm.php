@@ -42,8 +42,7 @@ $res = new AppResult($_GET);
             <?php 
             if ($res->code != 0) 
             { 
-                echo '<div class="col col-sm-1 col-md-3 col-xl-3"></div>';
-                FormElements::showAlert($res->style(), 'col col-sm-10 col-md-6 col-xl-6', $res->text); 
+                FormElements::showAlert($res->style(), 'col col-sm-10 col-md-6 col-xl-6', $res->text, 'col col-sm-1 col-md-3 col-xl-3'); 
             } 
             ?>
 

@@ -167,9 +167,14 @@ class FormElements
         echo '</ul></div></nav>';
     }
     
-    public static function showAlert($alert_type, $col_format, $alert_text)
+    public static function showAlert($alert_type, $col_format, $alert_text, $col_intend = null)
     {
-        echo '<div class="row row-fluid"><div class="' . $col_format . '">';
+        echo '<div class="row row-fluid">';
+        if (($col_intend != null) && (strlen($col_intend) > 0))
+        {
+            echo '<div class="' . $col_intend . '"></div>';
+        }
+        echo '<div class="' . $col_format . '">';
         echo '<div class="alert alert-' . $alert_type . '" role="alert"><center><h5>' . $alert_text . '</h4></center></div></div></div>';
     }
 }
