@@ -13,8 +13,12 @@
 include_once '../model/aux_parameter.php';
 include_once '../model/app_result.php';
 include_once '../view/frm_common.php';
+include_once '../model/app_warning.php';
+
+set_private_warning_handler();
 
 session_start();
+
 $res = new AppResult($_GET);
 ?>
 <!DOCTYPE html>
@@ -23,7 +27,7 @@ $res = new AppResult($_GET);
         <meta charset="utf-8">
         <title><?php echo GlobalParameter::$applicationConfig['applicationTitle'] . ' - Registrierung';?></title>
         <?php FormElements::styleSheetRefs(); ?>
-        <script src='https://www.google.com/recaptcha/api.js'></script>
+        <script src='https://www.google.com/recaptcha/api.js' async defer></script>
     </head>
     <body>
         <?php FormElements::topNavigationBar('USR.REG', 0, 0); ?>

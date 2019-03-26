@@ -15,8 +15,8 @@ include_once '../model/app_result.php';
 include_once '../view/frm_common.php';
 include_once '../model/app_warning.php';
 
-session_start();
 set_private_warning_handler();
+session_start();
 
 $res = new AppResult($_GET);
 ?>

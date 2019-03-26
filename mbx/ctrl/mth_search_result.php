@@ -15,6 +15,9 @@ include_once '../model/aux_parameter.php';
 include_once '../model/aux_helpers.php';
 include_once '../model/mth_method_view.php';
 include_once '../view/mth_search_result.php';
+include_once '../model/app_warning.php';
+
+set_private_warning_handler();
 
 session_start();
 $db_conn = DatabaseConnection::get_connection();

@@ -14,6 +14,9 @@ include_once '../model/sql_connection.php';
 include_once '../model/usr_session.php';
 include_once '../model/mth_selection.php';
 include_once '../view/frm_common.php';
+include_once '../model/app_warning.php';
+
+set_private_warning_handler();
 
 session_start();
 $db_conn = DatabaseConnection::get_connection();

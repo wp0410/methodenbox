@@ -166,6 +166,10 @@ class TeachingMethod implements JsonSerializable
     
     public function deleteMethod($mth_id)
     {
+        //$stm_dl1 = $this->db_conn->prepare('delete from ta_mth_method_file where file_mth_id=?;');
+        //$stm_dl1->bind_param('i', $mth_id);
+        
+        
         $stm_mh3 = $this->db_conn->prepare('delete from ta_mth_method_header where mth_id=?;');
         $stm_mh3->bind_param('i', $mth_id);
         if ($stm_mh3->execute())

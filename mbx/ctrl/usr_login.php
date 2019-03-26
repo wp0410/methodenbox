@@ -14,6 +14,9 @@ include_once '../model/aux_parameter.php';
 include_once '../model/sql_connection.php';
 include_once '../model/usr_account.php';
 include_once '../model/usr_session.php';
+include_once '../model/app_warning.php';
+
+set_private_warning_handler();
 
 session_start();
 

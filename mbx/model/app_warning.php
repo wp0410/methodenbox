@@ -33,7 +33,7 @@ function handle_warning(int $errno, string $errstr, string $errfile = null, int 
 
 function set_private_warning_handler()
 {
-    set_error_handler(handle_warning, E_USER_WARNING | E_USER_NOTICE);
+    set_error_handler('handle_warning', E_USER_WARNING | E_USER_NOTICE);
 }
 
 function log_msg(string $err_type, string $errstr, string $errfile, int $errline)

@@ -15,6 +15,9 @@ include_once '../model/aux_helpers.php';
 include_once '../model/usr_session.php';
 include_once '../model/mth_method_file.php';
 include_once '../model/mth_stat_download.php';
+include_once '../model/app_warning.php';
+
+set_private_warning_handler();
 
 session_start();
 $db_conn = DatabaseConnection::get_connection();
