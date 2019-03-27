@@ -54,6 +54,20 @@ class Helpers
         
         return $result;
     }
+    
+    public static function stringEndsWith($the_str, $the_end)
+    {
+        $len = strlen($the_end); 
+        if ($len == 0) 
+        { 
+            return true; 
+        }
+        if ($len > strlen($the_str))
+        {
+            return false;
+        }
+        
+        return (substr($the_str, -$len) === $the_end); 
+    }
 }
-
 ?>

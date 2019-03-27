@@ -67,13 +67,14 @@ $res = new AppResult($_GET);
 
         <div class="container-fluid">
            <div class="row row-fluid"><br></div>
-           <div class="row row-fluid"><div class="col col-md-2 col-xl-2"></div>
+           <div class="row row-fluid">
+                <div class="col col-md-2 col-xl-2"></div>
                 <div class="col-md-8 col-xl-8">
                     <div class="alert alert-primary" role="alert"><center><h4>Methode Anlegen</h4></center></div>
                 </div>
             </div>
             
-            <?php if ($res->code != 0) { FormElements::showAlert($res->style, 'col-md-8 col-xl-8', $res->text); } ?>
+            <?php if ($res->code != 0) { FormElements::showAlert($res->style(), 'col-md-8 col-xl-8', $res->text, 'col col-md-2 col-xl-2'); } ?>
             
             <form id="mth_upload" enctype="multipart/form-data" method="post" action="../ctrl/mth_upload.php">
                 <div class="controls">
@@ -233,7 +234,7 @@ $res = new AppResult($_GET);
                                     <label class="input-group-btn">
                                         <span class="btn btn-outline-dark">
                                             Datei ausw&auml;hlen &hellip; 
-                                            <input type="file" style="display: none;" id="mth_file" name="mth_file" multiple accept=".zip, .gz, .tar">
+                                            <input type="file" style="display: none;" id="mth_file" name="mth_file" multiple accept=".zip, .gz, .tar, .7z, .rar, .tgz">
                                         </span>
                                     </label>
                                     <input type="text" class="form-control" id="mth_file_name", name="mth_file_name" aria-describedby="mth_file">
@@ -313,8 +314,9 @@ $res = new AppResult($_GET);
                             return ($('#mth_add_author').val().length > 0);
                         }
                     },
-                    mth_file: {
-                        required: true
+                    mth_file_name: {
+                        required: true,
+                        remote: "../ctrl/mth_file_check.php"
                     },
                     confirm_agb: {
                         required: true
@@ -355,6 +357,10 @@ $res = new AppResult($_GET);
                     },
                     confirm_author: {
                         required: "Bitte best&auml;tigen Sie das Einverst&auml;ndnis der zus&auml;tzlichen AutorInnen"
+                    },
+                    mth_file_name: {
+                        required: "Bitte eine Archivdatei (ZIP, 7Z, RAR, GZ, TAR, TGZ) ausw&auml;hlen",
+                        remote: "Die Datei hat das falsche Format. Bitte eine Archivdatei (ZIP, 7Z, RAR, GZ, TAR, TGZ) ausw&auml;hlen"
                     },
                     confirm_agb: {
                         required: "Bitte best&auml;tigen Sie die AGB"

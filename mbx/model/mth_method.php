@@ -165,12 +165,17 @@ class TeachingMethod implements JsonSerializable
         return $result;
     }
     
-    public function deleteMethod($mth_id)
+    public function deleteMethod($mth_id = null)
     {
         $result = new AppResult(0);
         
+        if ($mth_id != null)
+        {
+            $this->mth_id = $mth_id;
+        }
+        
         $stm_dl1 = $this->db_conn->prepare('delete from ta_mth_method_file where file_mth_id=?;');
-        $stm_dl1->bind_param('i', $mth_id);
+        $stm_dl1->bind_param('i', $this->mth_id);
         if (! $stm_dl1->execute())
         {
             $result = new AppResult(604);
@@ -181,7 +186,7 @@ class TeachingMethod implements JsonSerializable
         if ($result->isOK())
         {
             $stm_dl2 = $this->db_conn->prepare('delete from ta_mth_method_rating where rtg_mth_id=?;');
-            $stm_dl2->bind_param('i', $mth_id);
+            $stm_dl2->bind_param('i', $this->mth_id);
             if (! $stm_dl2->execute())
             {
                 $result = new AppResult(604);
@@ -193,7 +198,7 @@ class TeachingMethod implements JsonSerializable
         if ($result->isOK())
         {
             $stm_dl3 = $this->db_conn->prepare('delete from ta_mth_method_download where dnl_mth_id=?;');
-            $stm_dl3->bind_param('i', $mth_id);
+            $stm_dl3->bind_param('i', $this->mth_id);
             if (! $stm_dl3->execute())
             {
                 $result = new AppResult(604);
@@ -205,7 +210,7 @@ class TeachingMethod implements JsonSerializable
         if ($result->isOK())
         {
             $stm_mh3 = $this->db_conn->prepare('delete from ta_mth_method_header where mth_id=?;');
-            $stm_mh3->bind_param('i', $mth_id);
+            $stm_mh3->bind_param('i', $this->mth_id);
             if (! $stm_mh3->execute())
             {
                 $result = new AppResult(604);

@@ -86,6 +86,7 @@ $mth->mth_phase = $_POST['mth_phase'];
 $res = $mth->createMethod();
 if (! $res->isOK())
 {
+    $mth->deleteMethod();
     header('Location: ../view/mth_upload.php?res_code=' . $res->code . '&res_text=' . $res->textUrlEncoded());
     exit;
 }
@@ -94,6 +95,7 @@ $mth_file = new TeachingMethodFile($db_conn);
 $res = $mth_file->saveFile($mth->getId(), $_FILES['mth_file']);
 if (! $res->isOK())
 {
+    $mth->deleteMethod();
     header('Location: ../view/mth_upload.php?res_code=' . $res->code . '&res_text=' . $res->textUrlEncoded());
     exit;
 }
