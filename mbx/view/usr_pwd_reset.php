@@ -56,7 +56,7 @@ session_start();
                         <div class="col col-sm-1 col-md-3 col-xl-3"></div>
                         <div class="col col-sm-5 col-md-3 col-xl-3">
                             <div class="form-group" id="reset_pwd">
-                                <label for="reset_pwd_1">Passwort *</label>
+                                <label for="reset_pwd_1">Neues Passwort *</label>
                                 <input id="reset_pwd_1" type="password" name="reset_pwd_1" class="form-control" placeholder="Passwort">
                             </div>
                         </div>

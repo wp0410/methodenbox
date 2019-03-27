@@ -12,7 +12,9 @@
 //----------------------------------------------------------------------------------------
 include_once '../model/aux_parameter.php';
 include_once '../view/frm_common.php';
+include_once '../model/app_warning.php';
 
+set_private_warning_handler();
 session_start();
 ?>
 
@@ -27,6 +29,10 @@ session_start();
         <?php FormElements::topNavigationBar('Template', 0, 0); ?>
         <?php FormElements::bottomNavigationBar('Template', 0, 0); ?>
         
+        <div class="container-fluid">
+            
+        </div>
+
         <?php FormElements::scriptRefs(); ?>
         <script type="text/javascript">
             /* global $ */

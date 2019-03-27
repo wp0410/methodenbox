@@ -96,7 +96,7 @@ $res = new AppResult($_GET);
             <div class="row form-row">
                 <div class="col col-sm-1 col-md-3 col-xl-3"></div>
                 <div class="col col-sm-10 col-md-6 col-xl-6">
-                    <a href="../crtl/usr_conf_req.php" class="btn btn-outline-primary btn-block btn-sm" role="button">
+                    <a href="../ctrl/usr_conf_req.php" class="btn btn-outline-primary btn-block btn-sm" role="button">
                         E-Mail zur Best&auml;tigung der Registrierung nicht erhalten? Hier klicken ...
                     </a>
                 </div>

@@ -94,17 +94,18 @@ class TeachingMethod implements JsonSerializable
         $mth_phase = Helpers::arrayToString($this->mth_phase);
         $mth_soc_form = Helpers::arrayToString($this->mth_soc_form);
         $mth_authors = Helpers::arrayToString($this->mth_authors);
+        $mth_create_time = Helpers::dateTimeString(time());
         
         $sql_stmt =
             'insert into ta_mth_method_header( ' . 
             '   mth_name, mth_summary, mth_subject, mth_subject_area, mth_age_grp, mth_prep_time, mth_exec_time, ' .
-            '   mth_phase, mth_soc_form, mth_authors, mth_owner_id ) ' .
+            '   mth_phase, mth_soc_form, mth_authors, mth_owner_id, mth_create_time ) ' .
             'values ( ' .
-            '   ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? );';
+            '   ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? );';
         $stm_mh1 = $this->db_conn->prepare($sql_stmt);
-        $stm_mh1->bind_param('ssssssssssi', $this->mth_name, $this->mth_summary, $this->mth_subject, $this->mth_subject_area,
+        $stm_mh1->bind_param('ssssssssssis', $this->mth_name, $this->mth_summary, $this->mth_subject, $this->mth_subject_area,
                     $this->mth_age_grp, $this->mth_prep_time, $this->mth_exec_time, $mth_phase, $mth_soc_form, 
-                    $mth_authors, $this->mth_owner_id);
+                    $mth_authors, $this->mth_owner_id, $mth_create_time);
         if ($stm_mh1->execute())
         {
             $this->mth_id = $stm_mh1->insert_id;
@@ -166,21 +167,52 @@ class TeachingMethod implements JsonSerializable
     
     public function deleteMethod($mth_id)
     {
-        //$stm_dl1 = $this->db_conn->prepare('delete from ta_mth_method_file where file_mth_id=?;');
-        //$stm_dl1->bind_param('i', $mth_id);
+        $result = new AppResult(0);
         
-        
-        $stm_mh3 = $this->db_conn->prepare('delete from ta_mth_method_header where mth_id=?;');
-        $stm_mh3->bind_param('i', $mth_id);
-        if ($stm_mh3->execute())
-        {
-            $result = new AppResult(0);
-        }
-        else
+        $stm_dl1 = $this->db_conn->prepare('delete from ta_mth_method_file where file_mth_id=?;');
+        $stm_dl1->bind_param('i', $mth_id);
+        if (! $stm_dl1->execute())
         {
             $result = new AppResult(604);
+            $result->text = $result->text . ' \n[' . $stm_dl1->error . ']';
         }
-        $stm_mh3->close();
+        $stm_dl1->close();
+        
+        if ($result->isOK())
+        {
+            $stm_dl2 = $this->db_conn->prepare('delete from ta_mth_method_rating where rtg_mth_id=?;');
+            $stm_dl2->bind_param('i', $mth_id);
+            if (! $stm_dl2->execute())
+            {
+                $result = new AppResult(604);
+                $result->text = $result->text . ' \n[' . $stm_dl2->error . ']';
+            }
+            $stm_dl2->close();
+        }
+        
+        if ($result->isOK())
+        {
+            $stm_dl3 = $this->db_conn->prepare('delete from ta_mth_method_download where dnl_mth_id=?;');
+            $stm_dl3->bind_param('i', $mth_id);
+            if (! $stm_dl3->execute())
+            {
+                $result = new AppResult(604);
+                $result->text = $result->text . ' \n[' . $stm_dl3->error . ']';
+            }
+            $stm_dl3->close();
+        }
+    
+        if ($result->isOK())
+        {
+            $stm_mh3 = $this->db_conn->prepare('delete from ta_mth_method_header where mth_id=?;');
+            $stm_mh3->bind_param('i', $mth_id);
+            if (! $stm_mh3->execute())
+            {
+                $result = new AppResult(604);
+                $result->text = $result->text . ' \n[' . $stm_mh3->error . ']';
+            }
+            $stm_mh3->close();
+        }
         
         return $result;
     }

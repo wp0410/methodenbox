@@ -42,41 +42,46 @@ class FormElements
     
     public static function topNavigationBar($current_form_id, $usr_authenticated, $usr_role)
     {
-        // Sub Menu Configuration
+        // Sub Menu Configuration: client user is authenticated
         $sub_menu_auth_1 = array(
-                'AUX.ERR'  => array( 'MTH.SRCH'=>0, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>0, 'USR.CONF'=>0, 'USR.IN'=>0, 'USR.OUT'=>0),
-                'MTH.SRCH' => array( 'MTH.SRCH'=>0, 'MTH.NEW'=>1, 'MTH.RATE'=>1, 'MTH.ADM'=>1, 'USR.REG'=>0, 'USR.CONF'=>0, 'USR.IN'=>0, 'USR.OUT'=>1),
-                'MTH.NEW'  => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>0, 'MTH.RATE'=>1, 'MTH.ADM'=>1, 'USR.REG'=>0, 'USR.CONF'=>0, 'USR.IN'=>0, 'USR.OUT'=>1),
-                'MTH.RATE' => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>1, 'MTH.RATE'=>0, 'MTH.ADM'=>1, 'USR.REG'=>0, 'USR.CONF'=>0, 'USR.IN'=>0, 'USR.OUT'=>1),
-                'MTH.ADM'  => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>1, 'MTH.RATE'=>1, 'MTH.ADM'=>0, 'USR.REG'=>0, 'USR.CONF'=>0, 'USR.IN'=>0, 'USR.OUT'=>1),
-                'USR.REG'  => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>0, 'USR.CONF'=>1, 'USR.IN'=>1, 'USR.OUT'=>0),
-                'USR.CONF' => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>1, 'USR.CONF'=>0, 'USR.IN'=>1, 'USR.OUT'=>0),
-                'USR.IN'   => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>1, 'USR.CONF'=>1, 'USR.IN'=>0, 'USR.OUT'=>0),
-                'USR.OUT'  => array()
-            );
+            'AUX.ERR'  => array( 'MTH.SRCH'=>0, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>0, 'USR.CONF'=>0, 'USR.IN'=>0, 'USR.OUT'=>0 ),
+            'AUX.HLP'  => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>1, 'MTH.RATE'=>1, 'MTH.ADM'=>1, 'USR.REG'=>0, 'USR.CONF'=>0, 'USR.IN'=>0, 'USR.OUT'=>1 ),
+            'MTH.SRCH' => array( 'MTH.SRCH'=>0, 'MTH.NEW'=>1, 'MTH.RATE'=>1, 'MTH.ADM'=>1, 'USR.REG'=>0, 'USR.CONF'=>0, 'USR.IN'=>0, 'USR.OUT'=>1 ),
+            'MTH.NEW'  => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>0, 'MTH.RATE'=>1, 'MTH.ADM'=>1, 'USR.REG'=>0, 'USR.CONF'=>0, 'USR.IN'=>0, 'USR.OUT'=>1 ),
+            'MTH.RATE' => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>1, 'MTH.RATE'=>0, 'MTH.ADM'=>1, 'USR.REG'=>0, 'USR.CONF'=>0, 'USR.IN'=>0, 'USR.OUT'=>1 ),
+            'MTH.ADM'  => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>1, 'MTH.RATE'=>1, 'MTH.ADM'=>0, 'USR.REG'=>0, 'USR.CONF'=>0, 'USR.IN'=>0, 'USR.OUT'=>1 ),
+            'USR.REG'  => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>0, 'USR.CONF'=>1, 'USR.IN'=>1, 'USR.OUT'=>0 ),
+            'USR.CONF' => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>1, 'USR.CONF'=>0, 'USR.IN'=>1, 'USR.OUT'=>0 ),
+            'USR.IN'   => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>1, 'USR.CONF'=>1, 'USR.IN'=>0, 'USR.OUT'=>0 ),
+            'USR.OUT'  => array()
+        );
+            
+        // Sub Menu Configuration: client user is NOT authenticated
         $sub_menu_auth_0 = array(
-                'AUX.ERR'  => array( 'MTH.SRCH'=>0, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>0, 'USR.CONF'=>0, 'USR.IN'=>0, 'USR.OUT'=>0 ),
-                'MTH.SRCH' => array( 'MTH.SRCH'=>0, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>1, 'USR.CONF'=>1, 'USR.IN'=>1, 'USR.OUT'=>0 ),
-                'MTH.NEW'  => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>0, 'USR.CONF'=>0, 'USR.IN'=>0, 'USR.OUT'=>0 ),
-                'MTH.RATE' => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>0, 'USR.CONF'=>0, 'USR.IN'=>0, 'USR.OUT'=>0 ),
-                'MTH.ADM'  => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>0, 'USR.CONF'=>0, 'USR.IN'=>0, 'USR.OUT'=>0 ),
-                'USR.REG'  => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>0, 'USR.CONF'=>1, 'USR.IN'=>1, 'USR.OUT'=>0 ),
-                'USR.CONF' => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>1, 'USR.CONF'=>0, 'USR.IN'=>1, 'USR.OUT'=>0 ),
-                'USR.IN'   => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>1, 'USR.CONF'=>1, 'USR.IN'=>0, 'USR.OUT'=>0 ),
-                'USR.PWD'  => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>1, 'USR.CONF'=>1, 'USR.IN'=>0, 'USR.OUT'=>0 ),
-                'USR.OUT'  => array()
-            );
+            'AUX.ERR'  => array( 'MTH.SRCH'=>0, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>0, 'USR.CONF'=>0, 'USR.IN'=>0, 'USR.OUT'=>0 ),
+            'AUX.HLP'  => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>1, 'USR.CONF'=>1, 'USR.IN'=>1, 'USR.OUT'=>0 ),
+            'MTH.SRCH' => array( 'MTH.SRCH'=>0, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>1, 'USR.CONF'=>1, 'USR.IN'=>1, 'USR.OUT'=>0 ),
+            'MTH.NEW'  => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>0, 'USR.CONF'=>0, 'USR.IN'=>0, 'USR.OUT'=>0 ),
+            'MTH.RATE' => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>0, 'USR.CONF'=>0, 'USR.IN'=>0, 'USR.OUT'=>0 ),
+            'MTH.ADM'  => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>0, 'USR.CONF'=>0, 'USR.IN'=>0, 'USR.OUT'=>0 ),
+            'USR.REG'  => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>0, 'USR.CONF'=>1, 'USR.IN'=>1, 'USR.OUT'=>0 ),
+            'USR.CONF' => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>1, 'USR.CONF'=>0, 'USR.IN'=>1, 'USR.OUT'=>0 ),
+            'USR.IN'   => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>1, 'USR.CONF'=>1, 'USR.IN'=>0, 'USR.OUT'=>0 ),
+            'USR.PWD'  => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>1, 'USR.CONF'=>1, 'USR.IN'=>0, 'USR.OUT'=>0 ),
+            'USR.OUT'  => array()
+        );
+            
         $sub_menu_config = array(
-                'MTH.SRCH' => array('TEXT' => 'Suchen', 'LINK' => '../view/mth_search.php'), 
-                'MTH.NEW'  => array('TEXT' => 'Anlegen', 'LINK' => '../view/mth_upload.php'), 
-                'MTH.RATE' => array('TEXT' => 'Bewerten', 'LINK' => '../view/mth_rating.php'), 
-                'MTH.ADM'  => array('TEXT' => 'Verwalten', 'LINK' => '../view/mth_admin.php'), 
-                'USR.REG'  => array('TEXT' => 'Registrieren', 'LINK' => '../view/usr_register.php'), 
-                'USR.CONF' => array('TEXT' => 'Registrierung Best&auml;tigen', 'LINK' => '../view/usr_confirm.php'), 
-                'USR.IN'   => array('TEXT' => 'Anmelden', 'LINK' => '../view/usr_login.php'), 
-                'USR.OUT'  => array('TEXT' => 'Abmelden', 'LINK' => '../ctrl/usr_logout.php'),
-                'AUX.HLP'  => array('TEXT' => 'Hilfe', 'LINK' => '../view/aux_help.php')
-            );
+            'MTH.SRCH' => array('TEXT' => 'Suchen', 'LINK' => '../view/mth_search.php'), 
+            'MTH.NEW'  => array('TEXT' => 'Anlegen', 'LINK' => '../view/mth_upload.php'), 
+            'MTH.RATE' => array('TEXT' => 'Bewerten', 'LINK' => '../view/mth_rating.php'), 
+            'MTH.ADM'  => array('TEXT' => 'Verwalten', 'LINK' => '../view/mth_admin.php'), 
+            'USR.REG'  => array('TEXT' => 'Registrieren', 'LINK' => '../view/usr_register.php'), 
+            'USR.CONF' => array('TEXT' => 'Registrierung Best&auml;tigen', 'LINK' => '../view/usr_confirm.php'), 
+            'USR.IN'   => array('TEXT' => 'Anmelden', 'LINK' => '../view/usr_login.php'), 
+            'USR.OUT'  => array('TEXT' => 'Abmelden', 'LINK' => '../ctrl/usr_logout.php'),
+            'AUX.HLP'  => array('TEXT' => 'Hilfe', 'LINK' => '../view/aux_help.php')
+        );
 
         echo '<nav class="navbar navbar-expand-lg navbar-primary bg-light">';
         echo '<a class="navbar-brand" href="#">' . GlobalParameter::$applicationConfig['applicationTitle'] . '</a>';
@@ -161,10 +166,55 @@ class FormElements
         echo '<span class="navbar-toggler-icon"></span></button>';
         echo '<div class="collapse navbar-collapse" id="bottomNavbar">';
         echo '<ul class="navbar-nav">';
-        echo '<li class="nav-item"><a class="nav-link" href="#">Impressum</a></li>';
-        echo '<li class="nav-item"><a class="nav-link" href="#">Kontakt</a></li>';
-        echo '<li class="nav-item"><a class="nav-link" href="#">AGB</a></li>';
+        // echo '<li class="nav-item"><a class="nav-link" href="#">Impressum</a></li>';
+        // echo '<li class="nav-item"><a class="nav-link" href="#">Kontakt</a></li>';
+        // echo '<li class="nav-item"><a class="nav-link" href="#">AGB</a></li>';
+        echo '<li class="nav-item"><button class="btn btn-link btn-sm" data-toggle="modal" data-target="#ImpressumModal">Impressum</button></li>';
+        echo '<li class="nav-item"><botton class="btn btn-link btn-sm" data-toggle="modal" data-target="#KontaktModal">Kontakt</button></a></li>';
+        echo '<li class="nav-item"><botton class="btn btn-link btn-sm" data-toggle="modal" data-target="#AGBModal">AGB</button></li>';
         echo '</ul></div></nav>';
+        
+        // Modal: Impressum
+        echo '<div class="modal fade" id="ImpressumModal" tabindex="-1" role="dialog" aria-labelledby="ImpressumModalLabel" aria-hidden="true">';
+        echo '   <div class="modal-dialog" role="document">';
+        echo '      <div class="modal-content">';
+        echo '         <div class="modal-header">';
+        echo '            <h5 class="modal-title" id="ImpressumModalLabel">Impressum</h5>';
+        echo '            <button type="button" class="close" data-dismiss="modal" aria-label="Schlie&szlig;en"><span aria-hidden="true">&times;</span></button>';
+        echo '         </div>';
+        echo '         <div class="modal-body">Hier sollte der Text f&uuml;r das Impressum stehen ...</div>';
+        echo '         <div class="modal-footer"><button type="button" class="btn btn-light" data-dismiss="modal">Schlie&szlig;en</button></div>';
+        echo '      </div>';
+        echo '   </div>';
+        echo '</div>';
+
+        // Modal: Kontakt
+        echo '<div class="modal fade" id="KontaktModal" tabindex="-1" role="dialog" aria-labelledby="KontaktModalLabel" aria-hidden="true">';
+        echo '   <div class="modal-dialog" role="document">';
+        echo '      <div class="modal-content">';
+        echo '         <div class="modal-header">';
+        echo '            <h5 class="modal-title" id="KontaktModalLabel">Kontakt</h5>';
+        echo '            <button type="button" class="close" data-dismiss="modal" aria-label="Schlie&szlig;en"><span aria-hidden="true">&times;</span></button>';
+        echo '         </div>';
+        echo '         <div class="modal-body">Achtung, Baustelle!</div>';
+        echo '         <div class="modal-footer"><button type="button" class="btn btn-light" data-dismiss="modal">Schlie&szlig;en</button></div>';
+        echo '      </div>';
+        echo '   </div>';
+        echo '</div>';
+
+        // Modal: AGB
+        echo '<div class="modal fade" id="AGBModal" tabindex="-1" role="dialog" aria-labelledby="AGBModalLabel" aria-hidden="true">';
+        echo '   <div class="modal-dialog" role="document">';
+        echo '      <div class="modal-content">';
+        echo '         <div class="modal-header">';
+        echo '            <h5 class="modal-title" id="ImpressumModalLabel">Allgemeine Gesch&auml;ftsbedingungen</h5>';
+        echo '            <button type="button" class="close" data-dismiss="modal" aria-label="Schlie&szlig;en"><span aria-hidden="true">&times;</span></button>';
+        echo '         </div>';
+        echo '         <div class="modal-body">Hier sollte der Text f&uuml;r die Allgemeinen Gesch&auml;ftsbedingungen stehen ...</div>';
+        echo '         <div class="modal-footer"><button type="button" class="btn btn-light" data-dismiss="modal">Schlie&szlig;en</button></div>';
+        echo '      </div>';
+        echo '   </div>';
+        echo '</div>';
     }
     
     public static function showAlert($alert_type, $col_format, $alert_text, $col_intend = null)
