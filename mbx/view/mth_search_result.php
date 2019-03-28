@@ -49,8 +49,18 @@ class MethodSearchResultView
         
         // Column 1: toggle button that operates the accordion
         $this->addOutput('<div class="col-md-1 col-xl-1">');
-        $this->addOutput('<span><button class="btn btn-sm btn-light collapsed" id="res_btn_' . $line_no . '" type="button" data-toggle="collapse" ');
-        $this->addOutput('data-target="#res_coll_' . $line_no . '" aria-expanded="false" aria-controls="res_coll_' . $line_no . '">');
+        // $this->addOutput('<span><button class="btn btn-sm btn-light collapsed" id="res_btn_' . $line_no . '" type="button" data-toggle="collapse" ');
+        $this->addOutput('<button class="btn btn-sm btn-light" id="res_btn_' . $line_no . '" data-toggle="collapse" ');
+        
+        if ($line_no == 1)
+        {
+            $this->addOutput('data-target="#res_coll_' . $line_no . '" aria-expanded="true" aria-controls="res_coll_' . $line_no . '">');
+        }
+        else
+        {
+            $this->addOutput('data-target="#res_coll_' . $line_no . '" aria-expanded="false" aria-controls="res_coll_' . $line_no . '">');
+            
+        }
         $this->addOutput('<div id="res_tgl_' . $line_no . '"><i id="res_img_' . $line_no . '" class="fa fa-caret-right"></i></div></button></div>'); // class="col-md-1 col-xl-1"
         
         // Column 2: Method Name
@@ -94,14 +104,15 @@ class MethodSearchResultView
         $this->addOutput(substr($line->mth_create_tm, 0, 10));
         $this->addOutput('</span></div>');
         
-        $this->addOutput('</span></div></div>'); //  span + row + card-header
+        // $this->addOutput('</span></div></div>'); //  span + row + card-header
+        $this->addOutput('</div></div>'); //  row + card-header
 
         // Method details (card body with 1 row with table with body only)
         $this->addOutput('<div class="collapse" id="res_coll_' . $line_no . '" aria-labelledby="res_line_' . $line_no . '" data-parent="#mth_result">');
         $this->addOutput('<div class="card-body"><div class="row"><table class="table table-sm"><tbody>');
         
         // Table row 1: method summary
-        $this->addOutput('<tr><th scope="row" class="table-secondary">Beschreibung</td><td colspan=5><span>' . htmlentities($line->mth_summary) . '</span></th></tr>');
+        $this->addOutput('<tr><th scope="row" class="table-secondary"><td>Beschreibung</td><td colspan=5><span>' . htmlentities($line->mth_summary) . '</span></th></tr>');
 
         // Table row 2: field headers
         $this->addOutput('<tr><th scope="col" class="table-secondary">Unterrichtsfach</th>');
@@ -175,6 +186,7 @@ class MethodSearchResultView
         foreach($this->res_lines as $line)
         {
             $this->renderLine($line_no, $line);
+            $line_no++;
         }
         
         if ($this->num_remain > 0)
