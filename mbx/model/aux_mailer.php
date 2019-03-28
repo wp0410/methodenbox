@@ -120,7 +120,7 @@ class MailjetMailer
         }
         else
         {
-            trigger_error('INFO: Sending E-Mails is turned OFF', E_USER_NOTICE);
+            // trigger_error('INFO: Sending E-Mails is turned OFF', E_USER_NOTICE);
             return true;
         }
     }

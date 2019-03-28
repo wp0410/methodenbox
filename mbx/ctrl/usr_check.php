@@ -10,6 +10,9 @@
 //  ANY KIND, either express or implied. See the License for the specific language 
 //  governing permissions and limitations under the License.
 //----------------------------------------------------------------------------------------
+include_once '../model/aux_parameter.php';
+include_once '../model/sql_connection.php';
+include_once '../model/usr_account.php';
 
 if (empty($_GET))
 {
@@ -19,13 +22,24 @@ else
 {
     if (! empty($_GET['user_email']))
     {
-        if ($_GET['user_email'] == 'test@test.com')
+        $usr_email = $_GET['user_email'];
+        
+        if (($usr_email == null) || (strlen($usr_email) == 0))
         {
             echo 'false';
         }
         else
         {
-            echo 'true';
+            $db_conn = DatabaseConnection::get_connection();
+            $usr = new UserAccount($db_conn);
+            if ($usr->checkByEmail($usr_email))
+            {
+                echo 'false';
+            }
+            else
+            {
+                echo 'true';
+            }
         }
     }
     else

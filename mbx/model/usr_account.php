@@ -113,9 +113,11 @@ class UserAccount implements JsonSerializable
         
         // Check for duplicates
         $usr_exists = 0;
-        $sql_stmt = 'select count(1) as usr_exists from ta_usr_account where usr_email = ? or (usr_fst_name = ? and usr_lst_name = ?);';
+        // $sql_stmt = 'select count(1) as usr_exists from ta_usr_account where usr_email = ? or (usr_fst_name = ? and usr_lst_name = ?);';
+        $sql_stmt = 'select count(1) as usr_exists from ta_usr_account where usr_email = ?;';
         $stm_u1 = $this->db_conn->prepare($sql_stmt);
-        $stm_u1->bind_param('sss', $this->usr_email, $this->usr_fst_name, $this->usr_lst_name);
+        // $stm_u1->bind_param('sss', $this->usr_email, $this->usr_fst_name, $this->usr_lst_name);
+        $stm_u1->bind_param('s', $this->usr_email);
         if ($stm_u1->execute())
         {
             $stm_u1->bind_result($usr_exists);
@@ -182,6 +184,26 @@ class UserAccount implements JsonSerializable
         $stm_u5->close();
         
         return new AppResult(0);
+    }
+    
+    public function checkByEmail($usr_email)
+    {
+        $usr_exists = 0;
+        
+        $sql_stmt =
+            'select count(1) ' .
+            'from   ta_usr_account ' .
+            'where  usr_email = ?;';
+        $stm_u7 = $this->db_conn->prepare($sql_stmt);
+        $stm_u7->bind_param('s', $usr_email);
+        if ($stm_u7->execute())
+        {
+            $stm_u7->bind_result($usr_exists);
+            $stm_u7->fetch();
+            $stm_u7->close();
+        }
+        
+        return ($usr_exists > 0);
     }
     
     public function loadByEmail($usr_email)

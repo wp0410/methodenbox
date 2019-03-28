@@ -187,7 +187,7 @@ class MethodSearchResultView
             else
             {
                 $this->addOutput('<div class="card"><div class="card-header" id="rest">');
-                $this->addOutput($res_view->getNumRemaining());
+                $this->addOutput($this->num_remain);
                 $this->addOutput(' weitere Datens&auml;tze vorhanden &hellip;</div></div>');
             }
         }
