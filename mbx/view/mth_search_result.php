@@ -47,7 +47,7 @@ class MethodSearchResultView
         $this->addOutput('<div class="card"><div class="card-header" id="res_line_' . $line_no . '">');
         $this->addOutput('<div class="row">');
         
-        // Column 1: toggle button that operates the carousel
+        // Column 1: toggle button that operates the accordion
         $this->addOutput('<div class="col-md-1 col-xl-1">');
         $this->addOutput('<span><button class="btn btn-sm btn-light collapsed" id="res_btn_' . $line_no . '" type="button" data-toggle="collapse" ');
         $this->addOutput('data-target="#res_coll_' . $line_no . '" aria-expanded="false" aria-controls="res_coll_' . $line_no . '">');
@@ -112,12 +112,21 @@ class MethodSearchResultView
         $this->addOutput('<th scope="col" class="table-secondary">AutorIn</th></tr>');
 
         // Table row 3: field values (subject, subject area, preparation time, execution time, age group, main author)
+        /*
         $this->addOutput('<tr><td><span>' . htmlentities($line->mth_subject_txt) . '</span></td>');
         $this->addOutput('<td><span>' . htmlentities($line->mth_subj_area_txt) . '</span></td>');
         $this->addOutput('<td><span>' . htmlentities($line->mth_prep_tm_txt) . '</span></td>');
         $this->addOutput('<td><span>' . htmlentities($line->mth_exec_tm_txt) . '</span></td>');
         $this->addOutput('<td><span>' . htmlentities($line->mth_age_grp_txt) . '</span></td>');
         $this->addOutput('<td><span>' . htmlentities($line->mth_authors_arr[0]) . '</span></td></tr>');
+        */
+        
+        $this->addOutput('<tr><td><span>' . $line->mth_subject_txt . '</span></td>');
+        $this->addOutput('<td><span>' . $line->mth_subj_area_txt . '</span></td>');
+        $this->addOutput('<td><span>' . $line->mth_prep_tm_txt . '</span></td>');
+        $this->addOutput('<td><span>' . $line->mth_exec_tm_txt . '</span></td>');
+        $this->addOutput('<td><span>' . $line->mth_age_grp_txt . '</span></td>');
+        $this->addOutput('<td><span>' . $line->mth_authors_arr[0] . '</span></td></tr>');
 
         // Table row 4: field values (social form, phase) + download button
         $this->addOutput('<tr><td>');

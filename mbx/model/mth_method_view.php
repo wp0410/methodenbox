@@ -77,7 +77,7 @@ class MethodResultView
     
     public function getNumRemaining()
     {
-        return $this->num_rows_db - $this->num_rows_db;
+        return $this->num_rows_db - $this->num_rows_view;
     }
     
     private function compareLike($att_name, $att_value)

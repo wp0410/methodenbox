@@ -97,11 +97,11 @@ switch($sort)
 
 $res_view->retrieveLines($max_lines);
 $mth_view = new MethodSearchResultView($cur_usr_id > 0);
+$mth_view->numRemaining($res_view->getNumRemaining());
 foreach ($res_view->lines as $line)
 {
     $mth_view->addMethod($line);
 }
-$mth_view->numRemaining($res_view->getNumRemaining());
 $mth_view->renderHtml();
 $mth_view->outputHtml();
 ?>
