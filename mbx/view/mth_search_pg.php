@@ -310,7 +310,7 @@ else
             $(document).ready(function () {
                 $('#filter_apply').click(function () {
                     $.post(
-                        "/mbx/ctrl/mth_search_result.php",
+                        "/mbx/ctrl/mth_search_result_pg.php",
                         {
                             mth_subject: $('#mth_subject').val(),
                             mth_area: $('#mth_area').val(),
@@ -389,6 +389,21 @@ else
                     }
                 );
             }); 
+        </script>
+        <script type="text/javascript">
+            /* global $ */
+            function goto_page(page_no) {
+                $.post(
+                    "/mbx/ctrl/mth_search_result_pg.php",
+                    {
+                        cch_obj_id: $('#stm_cch').val(),
+                        pg_no: page_no
+                    },
+                    function(data, status) {
+                        $('#mth_result').html(data);
+                    }
+                );
+            }
         </script>
     </body>
  </html>   

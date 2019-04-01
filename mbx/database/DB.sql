@@ -133,6 +133,13 @@ create table ta_mth_method_download (
     foreign key fk_dnl_usr_id (dnl_usr_id) references ta_usr_account (usr_id) match full on delete set null on update set null
 );
 
+create table ta_aux_cache (
+    cch_obj_id          varchar(32) collate utf8_unicode_ci not null primary key,
+    cch_obj_data        varchar(4000) collate utf8_unicode_ci not null,
+    cch_store_date      datetime not null,
+    cch_expiry_date     datetime not null
+);
+
 create or replace view vi_mth_method_download as
     select dnl_mth_id, 
            count(1) as dnl_cnt, 

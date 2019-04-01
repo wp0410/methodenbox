@@ -72,7 +72,7 @@ class FormElements
         );
             
         $sub_menu_config = array(
-            'MTH.SRCH' => array('TEXT' => 'Suchen', 'LINK' => '../view/mth_search.php'), 
+            'MTH.SRCH' => array('TEXT' => 'Suchen', 'LINK' => '../view/mth_search_pg.php'), 
             'MTH.NEW'  => array('TEXT' => 'Anlegen', 'LINK' => '../view/mth_upload.php'), 
             'MTH.RATE' => array('TEXT' => 'Bewerten', 'LINK' => '../view/mth_rating.php'), 
             'MTH.ADM'  => array('TEXT' => 'Verwalten', 'LINK' => '../view/mth_admin.php'), 

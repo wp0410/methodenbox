@@ -10,21 +10,21 @@
 //  ANY KIND, either express or implied. See the License for the specific language 
 //  governing permissions and limitations under the License.
 //----------------------------------------------------------------------------------------
-include_once '../model/mth_method_view.php';
+include_once '../model/mth_method_view_pg.php';
 
 class MethodSearchResultView
 {
-    private $res_lines; 
-    private $num_remain;
     private $output;
     private $usr_authenticated;
+    private $mth_view;
+    private $max_pages;
     
-    public function __construct($usr_auth)
+    public function __construct($usr_auth, $mth_view, $max_pages)
     {
-        $this->res_lines = array();
-        $this->num_remain = 0;
+        $this->mth_view = $mth_view;
         $this->output = '';
         $this->usr_authenticated = $usr_auth;
+        $this->max_pages = $max_pages;
     }
     
     private function addOutput($text)
@@ -32,14 +32,122 @@ class MethodSearchResultView
         $this->output = $this->output . $text;
     }
     
-    public function addMethod($method)
+    public function renderHtml()
     {
-        $this->res_lines[] = $method;
+        $this->renderPagination();
+        
+        $this->addOutput('<div class="accordion" id="mth_result_lines">');
+        
+        $line_no = 1;
+        foreach($this->mth_view->lines as $line)
+        {
+            $this->renderLine($line_no, $line);
+            $line_no++;
+        }
+        
+        $this->addOutput('</div>');
     }
     
-    public function numRemaining($num)
+    public function renderPagination()
     {
-        $this->num_remain = $num;
+        $num_pages = ($this->mth_view->total_rows / $this->mth_view->lines_per_page) + 1;
+        $cur_page = $this->mth_view->current_page;
+        
+        if ($num_pages == 1)
+        {
+            return;
+        }
+        
+        $this->addOutput('<div class="card"><div class="card-body">');
+        $this->addOutput('<form id="frm_hidden"><input type="hidden" id="stmt_cch" name="stm_cch" value="' . $this->mth_view->getCacheId() . '"></form>');
+        $this->addOutput('<span class="badge badge-warning">' . $num_pages . '</span>');
+
+        $this->addOutput('<nav aria-label="ResultPagination">');
+        $this->addOutput('<ul class="pagination justify-content-center">');
+        
+        // GOTO first page
+        $target_page = 1;
+        if ($cur_page == $target_page)
+        {
+            $this->addOutput('<li class="page-item disabled">');
+        }
+        else
+        {
+            $this->addOutput('<li class="page-item">');
+        }
+        $this->addOutput('<a class="page-link" href="javascript:goto_page(' . $target_page . ');" aria-label="First"><i class="fa fa-angle-double-left" aria-hidden="true"></i></a></li>');
+
+        // GOTO previous page
+        $target_page = $cur_page - 1;
+        if ($target_page > 0)
+        {
+            $this->addOutput('<li class="page-item disabled">');
+        }
+        else
+        {
+            $this->addOutput('<li class="page-item">');
+        }
+        $this->addOutput('<a class="page-link" href="javascript:goto_page(' . $target_page . ');" aria-label="Previous"><i class="fa fa-angle-left" aria-hidden="true"></i></a></li>');
+        
+        // Create 9 pagination entries
+        if ($num_pages > $this->max_pages)
+        {
+            // Add a disabled entry indicating that there are more pages than can be displayed
+            $this->addOutput('<li class="page-item disabled"><a class="page-link" href="#"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a></li>');
+
+            $offset = $this->max_pages / 2;
+            $this->renderPageEntries($cur_page - $offset, $cur_page + $offset, $cur_page);
+            
+            // Add a disabled entry indicating that there are more pages than can be displayed
+            $this->addOutput('<li class="page-item disabled"><a class="page-link" href="#"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a></li>');
+        }
+        else
+        {
+            $this->renderPageEntries(1, $num_pages, $cur_page);
+        }
+
+        // GOTO next page
+        $target_page = $num_pages;
+        if ($cur_page == $target_page)
+        {
+            $this->addOutput('<li class="page-item disabled">');
+        }
+        else
+        {
+            $this->addOutput('<li class="page-item">');
+        }
+        $this->addOutput('<a class="page-link" href="javascript:goto_page(' . $target_page . ');" aria-label="Last"><i class="fa fa-angle-right" aria-hidden="true"></i></a></li>');
+
+        // GOTO last page
+        $target_page = $cur_page + 1;
+        if ($target_page < $num_pages)
+        {
+            $this->addOutput('<li class="page-item disabled">');
+        }
+        else
+        {
+            $this->addOutput('<li class="page-item">');
+        }
+        $this->addOutput('<a class="page-link" href="javascript:goto_page(' . $target_page . ');" aria-label="Last"><i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>');
+
+        $this->addOutput('</ul></nav></div></div>'); // card-body / card
+    }
+    
+    private function renderPageEntries($first_page_no, $last_page_no, $active_page_no)
+    {
+        $cur_page = $first_page_no;
+        while($cur_page <= $last_page_no)
+        {
+            if ($cur_page == $active_page_no)
+            {
+                $this->addOutput('<li class="page-item active"><a class="page-link" href="javascript:goto_page(' . $cur_page . ');">1</a></li>');
+            }
+            else
+            {
+                $this->addOutput('<li class="page-item"><a class="page-link" href="javascript:goto_page(' . $cur_page . ');">1</a></li>');
+            }
+            $cur_page += 1;
+        }
     }
     
     private function renderLine($line_no, $line)
@@ -49,6 +157,7 @@ class MethodSearchResultView
         
         // Column 1: toggle button that operates the accordion
         $this->addOutput('<div class="col-md-1 col-xl-1">');
+        // $this->addOutput('<span><button class="btn btn-sm btn-light collapsed" id="res_btn_' . $line_no . '" type="button" data-toggle="collapse" ');
         $this->addOutput('<button class="btn btn-sm btn-light" id="res_btn_' . $line_no . '" data-toggle="collapse" ');
         
         if ($line_no == 1)
@@ -175,39 +284,6 @@ class MethodSearchResultView
 
         $this->addOutput('</td></tr></tbody></table></div>'); // row (detail)
         $this->addOutput('</div></div></div>');  // card-body + collapse + card
-    }
-    
-    public function renderHtml()
-    {
-        $this->addOutput('<div class="accordion" id="mth_result_lines">');
-        
-        $line_no = 1;
-        foreach($this->res_lines as $line)
-        {
-            $this->renderLine($line_no, $line);
-            $line_no++;
-        }
-        
-        if ($this->num_remain > 0)
-        {
-            if ($this->num_remain == 1)
-            {
-                $this->addOutput('<div class="card"><div class="card-header" id="rest">');
-                $this->addOutput('1 weiterer Datensatz vorhanden &hellip;</div></div>');
-            }
-            else
-            {
-                $this->addOutput('<div class="card"><div class="card-header" id="rest">');
-                $this->addOutput($this->num_remain);
-                $this->addOutput(' weitere Datens&auml;tze vorhanden &hellip;</div></div>');
-            }
-        }
-        else
-        {
-            $this->addOutput('<div class="card"><div class="card-header" id="rest">');
-            $this->addOutput('Keine weiteren Datens&auml;tze vorhanden &hellip;</div></div>');
-        }
-        $this->addOutput('</div>');
     }
     
     public function outputHtml()

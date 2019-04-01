@@ -10,24 +10,28 @@
 //  ANY KIND, either express or implied. See the License for the specific language 
 //  governing permissions and limitations under the License.
 //----------------------------------------------------------------------------------------
-
 class MethodResultView
 {
     public $lines;
+    public $total_rows;
+    public $lines_per_page;
+    public $current_page;
     
     private $db_conn;
+
     private $select_stmt;
-    private $num_rows_db;
-    private $num_rows_view;
+    private $where_clause;
     private $stm_type;
+
+    private $cache_obj_id;
 
     public function __construct($db_cn)
     {
         $this->lines = array();
-        
         $this->db_conn = $db_cn;
+        $this->total_rows = $this->lines_per_page = $this->current_page = 0;
         $this->stm_type = null;
-        $this->num_rows_db = $this->num_rows_view = 0;
+        $this->cache_obj_id = '';
     }
     
     public function initSearchResultStmt()
@@ -42,7 +46,8 @@ class MethodResultView
             '       dnl_cnt, dnl_first_tm, dnl_last_tm, dnl_usr_id, ' .
             '       rtg_cnt, rtg_first_tm, rtg_last_tm, rtg_min_val, rtg_max_val, rtg_avg_val ' .
             'from   vi_mth_method_result where mth_id > 0 ';
-        $this->stm_type = 'SEARCH_RESULT';        
+        $this->stm_type = 'SEARCH_RESULT';
+        $this->where_clause = '';
     }
     
     public function initRatingListStmt($usr_id)
@@ -58,6 +63,7 @@ class MethodResultView
             '       rtg_cnt, rtg_first_tm, rtg_last_tm, rtg_min_val, rtg_max_val, rtg_avg_val ' .
             'from   vi_mth_method_rating where dnl_usr_id = ' . $usr_id . ' ';
         $this->stm_type = 'RATING_LIST';        
+        $this->where_clause = '';
     }
     
     public function InitAdminListStmt($owner_id)
@@ -73,26 +79,28 @@ class MethodResultView
             '       rtg_cnt, rtg_first_tm, rtg_last_tm, rtg_min_val, rtg_max_val, rtg_avg_val ' .
             'from   vi_mth_method_result where mth_owner_id = ' . $owner_id . ' ';
         $this->stm_type = 'ADMIN_LIST'; 
-    }
-    
-    public function getNumRemaining()
-    {
-        return $this->num_rows_db - $this->num_rows_db;
+        $this->where_clause = '';
     }
     
     private function compareLike($att_name, $att_value)
     {
-        $this->select_stmt = $this->select_stmt . " and " . $att_name . " like '%" . $att_value . "%' ";
+        $stm_part = " and " . $att_name . " like '%" . $att_value . "%' ";
+        $this->select_stmt = $this->select_stmt . $stm_part;
+        $this->where_clause = $this->where_clause . $stm_part;
     }
     
     private function compareStrEqual($att_name, $att_value)
     {
-        $this->select_stmt = $this->select_stmt . " and " . $att_name . " = '" . $att_value . "' ";
+        $stm_part = " and " . $att_name . " = '" . $att_value . "' ";
+        $this->select_stmt = $this->select_stmt . $stm_part;
+        $this->where_clause = $this->where_clause . $stm_part;
     }
     
     private function compareNumEqual($att_name, $att_value)
     {
-        $this->select_stmt = $this->select_stmt . " and " . $att_name . " = " . $att_value . " ";
+        $stm_part = " and " . $att_name . " = " . $att_value . " ";
+        $this->select_stmt = $this->select_stmt . $stm_part;
+        $this->where_clause = $this->where_clause . $stm_part;
     }
     
     private function compareArrayAll($att_name, $att_value)
@@ -108,22 +116,26 @@ class MethodResultView
     
     private function compareArrayAny($att_name, $att_value)
     {
-        $this->select_stmt = $this->select_stmt . " and ((1 = 1) ";
+        $stm_part = " and ((1 = 1) ";
         
         foreach($att_value as $att)
         {
             if (strlen(trim($att)) > 0)
             {
-                 $this->select_stmt = $this->select_stmt . " or (" . $att_name . " like '%" . $att . "'%) ";
+                 $stm_part = $stm_part . " or (" . $att_name . " like '%" . $att . "'%) ";
             }
         }
         
-         $this->select_stmt = $this->select_stmt . ") ";
+        $stm_part = $stm_part . ") ";
+        $this->select_stmt = $this->select_stmt . $stm_part;
+        $this->where_clause = $this->where_clause . $stm_part;
     }
     
     private function sortBy($att_name, $direction)
     {
-        $this->select_stmt = $this->select_stmt . " order by " . $att_name . " " . $direction . "; ";
+        $stm_part = " order by " . $att_name . " " . $direction;
+        $this->select_stmt = $this->select_stmt . $stm_part;
+        $this->where_clause = $this->where_clause . $stm_part;
     }
     
     public function compareMthName($mth_name)
@@ -201,10 +213,75 @@ class MethodResultView
         $this->sortBy('dnl_last_tm', 'desc');
     }
     
-    public function retrieveLines($max_lines = 0)
+    public function storeCache()
     {
-        $no_limit = $max_lines == 0;
-        $stm_mv1 = $this->db_conn->prepare($this->select_stmt);
+        $obj_id = '';
+        $obj_store_date = Helpers::dateTimeString(time());
+        $obj_exp_date = Helpers::dateTimeString(time() + 3600);
+
+        if ($this->cache_obj_id == '')
+        {
+            $obj_id = Helpers::randomString(32);
+            $cstm = "insert into ta_aux_cache( cch_obj_id, cch_obj_data, cch_store_date, cch_expiry_date ) values (?, ?, ?, ?);";
+            $stm_ch1 = $this->db_conn->prepare($cstm);
+            $stm_ch1->bind_param('ssss', $obj_id, $this->where_clause, $obj_store_date, $obj_exp_date);
+        }
+        else
+        {
+            $obj_id = $this->cache_obj_id;
+            $cstm = "update ta_aux_cache set cch_obj_data=?, cch_expiry_date=? where cch_obj_id=?;";
+            $stm_ch1 = $this->db_conn->prepare($cstm);
+            $stm_ch1->bind_param('sss', $this->where_clause, $obj_exp_date, $obj_id);
+        }
+        
+        $stm_ch1->execute();
+        $stm_ch1->close();
+        $this->cache_obj_id = $obj_id;
+    }
+    
+    public function getCacheId()
+    {
+        return $this->cache_obj_id;
+    }
+    
+    public function loadCache($cache_obj_id)
+    {
+        $cur_time = Helpers::dateTimeString(time());
+        $obj_data = '';
+        
+        $cstm = "select cch_obj_data from ta_aux_cache where cch_obj_id = ? and cch_expiry_date >= ?;";
+        $stm_ch2 = $this->db_conn->prepare($cstm);
+        $stm_ch2->bind_param('ss', $cache_obj_id, $cur_time);
+        if ($stm_ch2->execute())
+        {
+            $stm_ch2->bind_result($obj_data);
+            
+            if ($stm_ch2->fetch())
+            {
+                $this->where_clause = $obj_data;
+                $this->cache_obj_id = $cache_obj_id;
+                $this->select_stmt = $this->select_stmt . ' ' . $this->where_clause;
+            }
+        }
+        $stm_ch2->free_result();
+        $stm_ch2->close();
+    }
+    
+    public function retrieveLines($page_no, $lines_per_page)
+    {
+        // Retrieve the overall number of result lines created by the search statement
+        $full_stmt = $this->select_stmt . ';';
+        $stm_mv2 = $this->db_conn->prepare($full_stmt);
+        if ($stm_mv2->execute())
+        {
+            // Retrieve the total number of rows in the result
+            $this->total_rows = $stm_mv2->num_rows;
+        }
+        $stm_mv2->close();
+        
+        // Retrieve the lines for the requested page
+        $full_stmt = $this->select_stmt . ' limit ' . ($page_no - 1) * $lines_per_page . ',' . $lines_per_page . ';';
+        $stm_mv1 = $this->db_conn->prepare($full_stmt);
         if ($stm_mv1->execute())
         {
             $mth_id = -1;
@@ -221,7 +298,10 @@ class MethodResultView
             $mth_file_guid = $mth_file_name = '';
 
             $stm_mv1->store_result();
-            $this->num_rows_db = $stm_mv1->num_rows;
+            
+            // Set the pagination parameters:
+            $this->lines_per_page = $lines_per_page;
+            $this->current_page = $page_no;
             
             $stm_mv1->bind_result(
                 $mth_id, $mth_name, $mth_summary, $mth_subj, $mth_subj_txt, $mth_subj_area, $mth_subj_area_txt, 
@@ -233,7 +313,7 @@ class MethodResultView
                 $mth_rtg_cnt, $mth_rtg_first_tm, $mth_rtg_last_tm, $mth_rtg_min, $mth_rtg_max, $mth_rtg_avg );
             
             $cnt = 0;
-            while($stm_mv1->fetch() && (($cnt < $max_lines) || ($no_limit)))
+            while($stm_mv1->fetch())
             {
                 $mvl = new MethodViewLine();
                 
@@ -276,7 +356,6 @@ class MethodResultView
                 $cnt ++;
             }
             $stm_mv1->free_result();
-            $this->num_rows_view = $cnt;
         }
         
         $stm_mv1->close();
