@@ -392,11 +392,12 @@ else
         </script>
         <script type="text/javascript">
             /* global $ */
-            function goto_page(page_no) {
+            function goto_page(ch_obj_id, page_no) {
+                // alert('cch_obj_id=' + ch_obj_id + ' / page_no = ' + page_no);
                 $.post(
                     "/mbx/ctrl/mth_search_result_pg.php",
                     {
-                        cch_obj_id: $('#stm_cch').val(),
+                        ch_id: ch_obj_id,
                         pg_no: page_no
                     },
                     function(data, status) {

@@ -50,46 +50,60 @@ class MethodSearchResultView
     
     public function renderPagination()
     {
-        $num_pages = ($this->mth_view->total_rows / $this->mth_view->lines_per_page) + 1;
+        $num_pages = ceil($this->mth_view->total_rows / $this->mth_view->lines_per_page);
         $cur_page = $this->mth_view->current_page;
-        
+
         if ($num_pages == 1)
         {
             return;
         }
         
         $this->addOutput('<div class="card"><div class="card-body">');
-        $this->addOutput('<form id="frm_hidden"><input type="hidden" id="stmt_cch" name="stm_cch" value="' . $this->mth_view->getCacheId() . '"></form>');
-        $this->addOutput('<span class="badge badge-warning">' . $num_pages . '</span>');
+        
+        //$this->addOutput('<span class="badge badge-warning"> cur_page   ' . $cur_page . '</span>');
+        //$this->addOutput('<span class="badge badge-warning"> total_rows ' . $this->mth_view->total_rows . '</span>');
+        //$this->addOutput('<span class="badge badge-warning"> num_pages  ' . $num_pages . '</span>');
+        //$this->addOutput('<span class="badge badge-warning"> lines_ppg  ' . $this->mth_view->lines_per_page . '</span>');
+
+        //if ($num_pages == 1)
+        //{
+        //   $this->addOutput('</div>');
+        //   return;
+        //}
 
         $this->addOutput('<nav aria-label="ResultPagination">');
         $this->addOutput('<ul class="pagination justify-content-center">');
         
         // GOTO first page
         $target_page = 1;
+        $ref_page = '#';
         if ($cur_page == $target_page)
         {
             $this->addOutput('<li class="page-item disabled">');
+            $ref_page = '#';
         }
         else
         {
             $this->addOutput('<li class="page-item">');
+            $ref_page = 'javascript:goto_page(\'' . $this->mth_view->getCacheId() . '\',' . $target_page . ');';
         }
-        $this->addOutput('<a class="page-link" href="javascript:goto_page(' . $target_page . ');" aria-label="First"><i class="fa fa-angle-double-left" aria-hidden="true"></i></a></li>');
+        $this->addOutput('<a class="page-link" href="' . $ref_page . '" aria-label="First"><i class="fa fa-angle-double-left" aria-hidden="true"></i></a></li>');
 
         // GOTO previous page
         $target_page = $cur_page - 1;
-        if ($target_page > 0)
+        if ($target_page <= 0)
         {
             $this->addOutput('<li class="page-item disabled">');
+            $ref_page = '#';
         }
         else
         {
             $this->addOutput('<li class="page-item">');
+            $ref_page = 'javascript:goto_page(\'' . $this->mth_view->getCacheId() . '\',' . $target_page . ');';
         }
-        $this->addOutput('<a class="page-link" href="javascript:goto_page(' . $target_page . ');" aria-label="Previous"><i class="fa fa-angle-left" aria-hidden="true"></i></a></li>');
+        $this->addOutput('<a class="page-link" href="' . $ref_page . '" aria-label="Previous"><i class="fa fa-angle-left" aria-hidden="true"></i></a></li>');
         
-        // Create 9 pagination entries
+        // Create maximum pagination entries
         if ($num_pages > $this->max_pages)
         {
             // Add a disabled entry indicating that there are more pages than can be displayed
@@ -107,28 +121,32 @@ class MethodSearchResultView
         }
 
         // GOTO next page
-        $target_page = $num_pages;
-        if ($cur_page == $target_page)
+        $target_page =  $cur_page + 1;
+        if ($target_page > $num_pages)
         {
             $this->addOutput('<li class="page-item disabled">');
+            $ref_page = '#';
         }
         else
         {
             $this->addOutput('<li class="page-item">');
+            $ref_page = 'javascript:goto_page(\'' . $this->mth_view->getCacheId() . '\',' . $target_page . ');';
         }
-        $this->addOutput('<a class="page-link" href="javascript:goto_page(' . $target_page . ');" aria-label="Last"><i class="fa fa-angle-right" aria-hidden="true"></i></a></li>');
+        $this->addOutput('<a class="page-link" href="' . $ref_page . '" aria-label="Last"><i class="fa fa-angle-right" aria-hidden="true"></i></a></li>');
 
         // GOTO last page
-        $target_page = $cur_page + 1;
-        if ($target_page < $num_pages)
+        $target_page = $num_pages;
+        if ($cur_page >= $target_page)
         {
             $this->addOutput('<li class="page-item disabled">');
+            $ref_page = '#';
         }
         else
         {
             $this->addOutput('<li class="page-item">');
+            $ref_page = 'javascript:goto_page(\'' . $this->mth_view->getCacheId() . '\',' . $target_page . ');';
         }
-        $this->addOutput('<a class="page-link" href="javascript:goto_page(' . $target_page . ');" aria-label="Last"><i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>');
+        $this->addOutput('<a class="page-link" href="' . $ref_page . '" aria-label="Last"><i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>');
 
         $this->addOutput('</ul></nav></div></div>'); // card-body / card
     }
@@ -140,11 +158,11 @@ class MethodSearchResultView
         {
             if ($cur_page == $active_page_no)
             {
-                $this->addOutput('<li class="page-item active"><a class="page-link" href="javascript:goto_page(' . $cur_page . ');">1</a></li>');
+                $this->addOutput('<li class="page-item active"><a class="page-link" href="javascript:goto_page(\'' . $this->mth_view->getCacheId() . '\',' . $cur_page . ');">' . $cur_page . '</a></li>');
             }
             else
             {
-                $this->addOutput('<li class="page-item"><a class="page-link" href="javascript:goto_page(' . $cur_page . ');">1</a></li>');
+                $this->addOutput('<li class="page-item"><a class="page-link" href="javascript:goto_page(\'' . $this->mth_view->getCacheId() . '\',' . $cur_page . ');">' . $cur_page . '</a></li>');
             }
             $cur_page += 1;
         }

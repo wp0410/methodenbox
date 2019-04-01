@@ -219,24 +219,21 @@ class MethodResultView
         $obj_store_date = Helpers::dateTimeString(time());
         $obj_exp_date = Helpers::dateTimeString(time() + 3600);
 
-        if ($this->cache_obj_id == '')
-        {
-            $obj_id = Helpers::randomString(32);
-            $cstm = "insert into ta_aux_cache( cch_obj_id, cch_obj_data, cch_store_date, cch_expiry_date ) values (?, ?, ?, ?);";
-            $stm_ch1 = $this->db_conn->prepare($cstm);
-            $stm_ch1->bind_param('ssss', $obj_id, $this->where_clause, $obj_store_date, $obj_exp_date);
-        }
-        else
-        {
-            $obj_id = $this->cache_obj_id;
-            $cstm = "update ta_aux_cache set cch_obj_data=?, cch_expiry_date=? where cch_obj_id=?;";
-            $stm_ch1 = $this->db_conn->prepare($cstm);
-            $stm_ch1->bind_param('sss', $this->where_clause, $obj_exp_date, $obj_id);
-        }
-        
+        $obj_id = Helpers::randomString(32);
+        $cstm = "insert into ta_aux_cache( cch_obj_id, cch_obj_data, cch_store_date, cch_expiry_date ) values (?, ?, ?, ?);";
+        $stm_ch1 = $this->db_conn->prepare($cstm);
+        $stm_ch1->bind_param('ssss', $obj_id, $this->where_clause, $obj_store_date, $obj_exp_date);
         $stm_ch1->execute();
         $stm_ch1->close();
+
         $this->cache_obj_id = $obj_id;
+        
+        $obj_exp_date = Helpers::dateTimeString(time());
+        $cstm = "delete from ta_aux_cache where cch_expiry_date < ?;";
+        $stm_ch9 = $this->db_conn->prepare($cstm);
+        $stm_ch9->bind_param('s', $obj_exp_date);
+        $stm_ch9->execute();
+        $stm_ch9->close();
     }
     
     public function getCacheId()
@@ -244,27 +241,30 @@ class MethodResultView
         return $this->cache_obj_id;
     }
     
-    public function loadCache($cache_obj_id)
+    public function loadCache($cch_id)
     {
         $cur_time = Helpers::dateTimeString(time());
+        $obj_id = '';
         $obj_data = '';
         
-        $cstm = "select cch_obj_data from ta_aux_cache where cch_obj_id = ? and cch_expiry_date >= ?;";
-        $stm_ch2 = $this->db_conn->prepare($cstm);
-        $stm_ch2->bind_param('ss', $cache_obj_id, $cur_time);
-        if ($stm_ch2->execute())
+        $cstm = "select cch_obj_id, cch_obj_data from ta_aux_cache where cch_obj_id = ? and cch_expiry_date >= ?";
+
+        $stm_ch3 = $this->db_conn->prepare($cstm);
+        $stm_ch3->bind_param('ss', $cch_id, $cur_time);
+        if ($stm_ch3->execute())
         {
-            $stm_ch2->bind_result($obj_data);
-            
-            if ($stm_ch2->fetch())
+            $stm_ch3->bind_result($obj_id, $obj_data);
+                
+            if ($stm_ch3->fetch())
             {
+                $this->cache_obj_id = $obj_id;
                 $this->where_clause = $obj_data;
-                $this->cache_obj_id = $cache_obj_id;
                 $this->select_stmt = $this->select_stmt . ' ' . $this->where_clause;
             }
         }
-        $stm_ch2->free_result();
-        $stm_ch2->close();
+        
+        $stm_ch3->free_result();
+        $stm_ch3->close();
     }
     
     public function retrieveLines($page_no, $lines_per_page)
@@ -275,8 +275,10 @@ class MethodResultView
         if ($stm_mv2->execute())
         {
             // Retrieve the total number of rows in the result
+            $stm_mv2->store_result();
             $this->total_rows = $stm_mv2->num_rows;
         }
+        $stm_mv2->free_result();
         $stm_mv2->close();
         
         // Retrieve the lines for the requested page

@@ -26,16 +26,18 @@ $max_pages = GlobalParameter::$applicationConfig['mthPageNumPages'];
 $cur_page = 1;
 
 $res_view = new MethodResultView($db_conn);
+$res_from_cache = false;
 
 $res_view->initSearchResultStmt();
 $cur_usr_id = 0;
 
 if (! empty($_POST))
 {
-    if (! empty($_POST['cch_obj_id']))
+    if (! empty($_POST['ch_id']))
     {
         // We have a chached where clause: let's load it
-        $res_view->loadCache($_POST['cache_obj_id']);
+        $res_view->loadCache($_POST['ch_id']);
+        $res_from_cache = true;
         
         if (! empty($_POST['pg_no']))
         {
@@ -113,7 +115,11 @@ if (! empty($_POST))
 }
 
 $res_view->retrieveLines($cur_page, $lines_per_page);
-$res_view->storeCache();
+
+if (! $res_from_cache)
+{
+    $res_view->storeCache();
+}
 
 $mth_view = new MethodSearchResultView($cur_usr_id > 0, $res_view, $max_pages);
 $mth_view->renderHtml();
