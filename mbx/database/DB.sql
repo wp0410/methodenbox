@@ -135,6 +135,7 @@ create table ta_mth_method_download (
 
 create table ta_aux_cache (
     cch_obj_id          varchar(32) collate utf8_unicode_ci not null primary key,
+    cch_owner_id        int not null,
     cch_obj_data        varchar(4000) collate utf8_unicode_ci not null,
     cch_store_date      datetime not null,
     cch_expiry_date     datetime not null

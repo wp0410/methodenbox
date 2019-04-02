@@ -234,7 +234,8 @@ $res = new AppResult($_GET);
                                     <label class="input-group-btn">
                                         <span class="btn btn-outline-dark">
                                             Datei ausw&auml;hlen &hellip; 
-                                            <input type="file" style="display: none;" id="mth_file" name="mth_file" multiple accept=".zip, .gz, .tar, .7z, .rar, .tgz">
+                                            <input type="file" style="display: none;" id="mth_file" name="mth_file" 
+                                                   multiple accept="<?php echo GlobalParameter::$applicationConfig['mthUploadFileTypes'] ?>">
                                         </span>
                                     </label>
                                     <input type="text" class="form-control" id="mth_file_name", name="mth_file_name" aria-describedby="mth_file">
@@ -359,8 +360,8 @@ $res = new AppResult($_GET);
                         required: "Bitte best&auml;tigen Sie das Einverst&auml;ndnis der zus&auml;tzlichen AutorInnen"
                     },
                     mth_file_name: {
-                        required: "Bitte eine Archivdatei (ZIP, 7Z, RAR, GZ, TAR, TGZ) ausw&auml;hlen",
-                        remote: "Die Datei hat das falsche Format. Bitte eine Archivdatei (ZIP, 7Z, RAR, GZ, TAR, TGZ) ausw&auml;hlen"
+                        required: "Bitte eine Archivdatei (ZIP, GZ, TAR) ausw&auml;hlen",
+                        remote: "Die Datei hat das falsche Format. Bitte eine Archivdatei (ZIP, GZ, TAR) ausw&auml;hlen"
                     },
                     confirm_agb: {
                         required: "Bitte best&auml;tigen Sie die AGB"

@@ -74,6 +74,10 @@ if (! empty($_POST))
     {
         $res_view->compareMthSocForm($_POST['mth_soc']);
     }
+    if (! empty($_POST['mth_author']))
+    {
+        $res_view->compareMthAuthor($_POST['mth_author']);
+    }
     if (! empty($_POST['view_lines']))
     {
         $max_lines = $_POST['view_lines'];

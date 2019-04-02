@@ -63,7 +63,14 @@ class MethodAdminResultView
         $this->addOutput('<div class="col-md-2 col-xl-2">Bewertung: ');
         if ($rating < 2.2)
         {
-             $this->addOutput('<span class="badge badge-danger">');
+            if ($rating == 0)
+            {
+                $this->addOutput('<span class="badge badge-light">');
+            }
+            else
+            {
+                $this->addOutput('<span class="badge badge-danger">');
+            }
         }
         else
         {

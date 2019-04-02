@@ -52,6 +52,14 @@ class MethodSearchResultView
     {
         $num_pages = ceil($this->mth_view->total_rows / $this->mth_view->lines_per_page);
         $cur_page = $this->mth_view->current_page;
+        
+        if ($num_pages == 0)
+        {
+            $this->addOutput('<div class="card"><div class="card-body">');
+            $this->addOutput('<span><i class="fa fa-info-circle fa-2x" aria-hidden="true"></i>&nbsp;Keine Daten vorhanden ...</span>');
+            $this->addOutput('</div>');
+            return;
+        }
 
         if ($num_pages == 1)
         {

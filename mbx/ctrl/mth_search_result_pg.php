@@ -79,6 +79,10 @@ if (! empty($_POST))
         {
             $res_view->compareMthSocForm($_POST['mth_soc']);
         }
+        if (! empty($_POST['mth_author']))
+        {
+            $res_view->compareMthAuthor($_POST['mth_author']);
+        }
         if (! empty($_POST['view_lines']))
         {
             $max_lines = $_POST['view_lines'];
@@ -86,6 +90,7 @@ if (! empty($_POST))
         if (! empty($_POST['curr_usr_id']))
         {
             $cur_usr_id = $_POST['curr_usr_id'];
+            $res_view->usr_id = $cur_usr_id;
         }
         if (! empty($_POST['mth_res_sort']))
         {

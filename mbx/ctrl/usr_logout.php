@@ -14,6 +14,7 @@ include_once '../model/sql_connection.php';
 include_once '../model/usr_account.php';
 include_once '../model/usr_session.php';
 include_once '../model/app_warning.php';
+include_once '../model/aux_cache.php';
 
 set_private_warning_handler();
 
@@ -21,6 +22,7 @@ session_start();
 
 $db_conn = DatabaseConnection::get_connection();
 $usr_session = new UserSession($db_conn);
+$stm_cache = new StatementCache($db_conn);
 if (empty($_SESSION) || empty($_SESSION['user']))
 {
 }
@@ -31,6 +33,7 @@ else
     if ($res->isOK())
     {
         $usr_session->closeSession();
+        $stm_cache->clearCacheByOwner($usr_session->getUsrId());
     }
 }
 

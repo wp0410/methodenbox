@@ -163,17 +163,20 @@ class MethodResultView
     
     public function compareMthPhase($mth_phase)
     {
-        $this->compareArrayAll('mth_phase', $mth_phase);
+        // $this->compareArrayAll('mth_phase', $mth_phase);
+        $this->compareArrayAll('mth_phase', Helpers::stringToArray($mth_phase));
     }
     
     public function compareMthSocForm($mth_soc_form)
     {
-        $this->compareArrayAll('mth_soc_form', $mth_soc_form);
+        //$this->compareArrayAll('mth_soc_form', $mth_soc_form);
+        $this->compareArrayAll('mth_soc_form', Helpers::stringToArray($mth_soc_form));
     }
     
     public function compareMthAuthor($mth_authors)
     {
-        $this->compareArrayAny('mth_authors', $mth_authors);
+        // $this->compareArrayAny('mth_authors', $mth_authors);
+        $this->compareArrayAll('mth_authors', $mth_authors);
     }
     
     public function compareMthOwner($mth_owner_id)

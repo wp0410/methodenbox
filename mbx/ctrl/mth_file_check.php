@@ -25,8 +25,7 @@ else
     }
     else
     {
-        if (Helpers::stringEndsWith($mth_file, '.zip') || Helpers::stringEndsWith($mth_file, '.7z') || Helpers::stringEndsWith($mth_file, '.tar') ||
-            Helpers::stringEndsWith($mth_file, '.gz') || Helpers::stringEndsWith($mth_file, '.tgz') || Helpers::stringEndsWith($mth_file, '.rar'))
+        if (Helpers::stringEndsWith($mth_file, '.zip') || Helpers::stringEndsWith($mth_file, '.tar') || Helpers::stringEndsWith($mth_file, '.gz'))
         {
             echo 'true';
         }

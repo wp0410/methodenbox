@@ -177,7 +177,7 @@ else
                                     <div class="col-md-6 col-xl-6">
                                         <div class="form-group">
                                             <label for="mth_author">AutorIn</label>
-                                            <select class="form-control" id="mth_author" name="mth_author">
+                                            <select class="form-control" id="mth_author" name="mth_author" multiple size="5">
                                                 <option></option>
                                                 <?php
                                                     foreach(MethodSelectionFactory::getAuthors() as $auth)
@@ -309,6 +309,34 @@ else
             /* global $ */
             $(document).ready(function () {
                 $('#filter_apply').click(function () {
+                    var mphase = '';
+                    if (document.getElementById('mth_phase_E').checked) {
+                        mphase = 'E:';
+                    }
+                    if (document.getElementById('mth_phase_A').checked) {
+                        mphase = mphase + 'A:';
+                    }
+                    if (document.getElementById('mth_phase_I').checked) {
+                        mphase = mphase + 'I:';
+                    }
+                    if (document.getElementById('mth_phase_S').checked) {
+                        mphase = mphase + 'S:';
+                    }
+                    
+                    var msoc = '';
+                    if (document.getElementById('mth_soc_E').checked) {
+                        msoc = 'E:';
+                    }
+                    if (document.getElementById('mth_soc_G').checked) {
+                        msoc = msoc + 'G:';
+                    }
+                    if (document.getElementById('mth_soc_K').checked) {
+                        msoc = msoc + 'K:'
+                    }
+                    if (document.getElementById('mth_soc_P').checked) {
+                        msoc = msoc + 'P:';
+                    }
+                    
                     $.post(
                         "/mbx/ctrl/mth_search_result_pg.php",
                         {
@@ -317,8 +345,9 @@ else
                             mth_class: $('#mth_class').val(),
                             mth_prep_tm: $('#mth_prep_tm').val(),
                             mth_exec_tm: $('#mth_exec_tm').val(),
-                            mth_phase: $('#mth_phase').val(),
-                            mth_soc: $('#mth_soc').val(),
+                            mth_phase: mphase, //$('#mth_phase').val(),
+                            mth_soc: msoc, //$('#mth_soc').val(),
+                            mth_author: $('#mth_author').val(),
                             mth_name: $('#mth_name').val(),
                             mth_res_sort: $('#mth_res_sort').val(),
                             curr_usr_id: $('#curr_usr_id').val()
