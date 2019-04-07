@@ -48,7 +48,7 @@ class DatabaseConnection
             $db_port = 3306;
         }
         
-        if (GlobalParameter::$applicationConfig['deploymentZone'] == 'DEV')
+        if (GlobalParameter::$applicationConfig['deploymentZone'] == 'DEV_C9')
         {
             $db_host = getenv('IP');
             $db_username = getenv('C9_USER');
@@ -56,7 +56,16 @@ class DatabaseConnection
             $db_name = 'c9';
             $db_port = null;
         }
-    
+
+        if (GlobalParameter::$applicationConfig['deploymentZone'] == 'DEV')
+        {
+            $db_host = getenv('IP');
+            $db_username = 'mthbox';
+            $db_password = 'AcIw35926+MB';
+            $db_name = 'mthbox';
+            $db_port = 3306;
+        }
+        
         $db_conn = new mysqli($db_host, $db_username, $db_password, $db_name, $db_port);
         if ($db_conn->connect_error)
         {

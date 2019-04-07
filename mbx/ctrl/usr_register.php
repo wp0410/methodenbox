@@ -11,6 +11,7 @@
 //  governing permissions and limitations under the License.
 //----------------------------------------------------------------------------------------
 include_once '../model/aux_parameter.php';
+include_once '../model/aux_parameter_sec.php';
 include_once '../model/sql_connection.php';
 include_once '../model/usr_account.php';
 include_once '../model/aux_mailer.php';
@@ -26,8 +27,16 @@ $param_missing =
     empty($_POST['user_fst_name']) || 
     empty($_POST['user_lst_name']) ||
     empty($_POST['user_pwd']) || 
-    empty($_POST['user_pwd_conf']) ||
-    empty($_POST['g-recaptcha-response']);
+    empty($_POST['user_pwd_conf']);
+
+if (GlobalParameter::$applicationConfig['validateCaptcha'])
+{
+    $param_missing = $param_missing || empty($_POST['g-recaptcha-response']);
+}
+else
+{
+    $param_missing = $param_missing || empty($_POST['emul_captcha']);
+}
 
 if ($param_missing)
 {
@@ -37,13 +46,16 @@ if ($param_missing)
 }
 
 // Make sure that the recaptcha - result is validated by Google
-$google_secret = GlobalParameter::$captchaConfig[GlobalParameter::$applicationConfig['deploymentZone']]['secret'];
-$verify_req = 'https://www.google.com/recaptcha/api/siteverify?secret=' . $google_secret . '&response=' . $_POST['g-recaptcha-response'] . '&remoteip=' . $_SERVER['REMOTE_ADDR'];
-$captcha_res = file_get_contents($verify_req);
-if ($captcha_res.success == false)
+// Captcha Verification can be switched on and off
+if (GlobalParameter::$applicationConfig['validateCaptcha'])
 {
-    // We are being attacked by a bot
-    die('reCaptcha verification failed');
+    $google_secret = GlobalSecretParameter::$captchaConfig[GlobalParameter::$applicationConfig['deploymentZone']]['secret'];
+    $verify_req = 'https://www.google.com/recaptcha/api/siteverify?secret=' . $google_secret . '&response=' . $_POST['g-recaptcha-response'] . '&remoteip=' . $_SERVER['REMOTE_ADDR'];
+    $captcha_res = file_get_contents($verify_req);
+    if ($captcha_res.success == false)
+    {
+        die('reCaptcha verification failed');
+    }
 }
 
 $db_conn = DatabaseConnection::get_connection();
@@ -56,7 +68,9 @@ if (! $res->isOK())
 }
 
 $mailer = new MailjetMailer;
-$mailer->setSender(GlobalParameter::$applicationConfig['emailSender'], GlobalParameter::$applicationConfig['emailSenderFullName']);
+//$mailer->setSender(GlobalParameter::$applicationConfig['emailSender'], GlobalParameter::$applicationConfig['emailSenderFullName']);
+$mailer->setSender(GlobalSecretParameter::$mailJetConfig['emailSender'], GlobalSecretParameter::$mailJetConfig['emailSenderFullName']);
+
 $mailer->addRecipient($_POST['user_email']);
 $mailer->emailSubject = 'Ihre Registrierung bei der Methodenbox';
 $mailer->emailText =

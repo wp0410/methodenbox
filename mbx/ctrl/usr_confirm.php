@@ -11,6 +11,7 @@
 //  governing permissions and limitations under the License.
 //----------------------------------------------------------------------------------------
 include_once '../model/aux_parameter.php';
+include_once '../model/aux_parameter_sec.php';
 include_once '../model/aux_text.php';
 include_once '../model/sql_connection.php';
 include_once '../model/usr_account.php';
@@ -25,9 +26,17 @@ $param_missing =
     empty($_POST) || 
     empty($_POST['user_email']) || 
     empty($_POST['user_pwd']) || 
-    empty($_POST['user_challenge']) ||
-    empty($_POST['g-recaptcha-response']);
+    empty($_POST['user_challenge']);
 
+if (GlobalParameter::$applicationConfig['validateCaptcha'])
+{
+    $param_missing = $param_missing || empty($_POST['g-recaptcha-response']);
+}
+else
+{
+    $param_missing = $param_missing || empty($_POST['emul_captcha']);
+}
+    
 if ($param_missing)
 {
     $res = new AppResult(100);
@@ -36,13 +45,17 @@ if ($param_missing)
 }
 
 // Make sure that the recaptcha - result is validated by Google
-$google_secret = GlobalParameter::$captchaConfig[GlobalParameter::$applicationConfig['deploymentZone']]['secret'];
-$verify_req = 'https://www.google.com/recaptcha/api/siteverify?secret=' . $google_secret . '&response=' . $_POST['g-recaptcha-response'] . '&remoteip=' . $_SERVER['REMOTE_ADDR'];
-$captcha_res = file_get_contents($verify_req);
-if ($captcha_res.success == false)
+if (GlobalParameter::$applicationConfig['validateCaptcha'])
 {
-    // We are being attacked by a bot
-    die('reCaptcha verification failed');
+    $google_secret = GlobalSecretParameter::$captchaConfig[GlobalParameter::$applicationConfig['deploymentZone']]['secret'];
+    // $google_secret = GlobalParameter::$captchaConfig[GlobalParameter::$applicationConfig['deploymentZone']]['secret'];
+    $verify_req = 'https://www.google.com/recaptcha/api/siteverify?secret=' . $google_secret . '&response=' . $_POST['g-recaptcha-response'] . '&remoteip=' . $_SERVER['REMOTE_ADDR'];
+    $captcha_res = file_get_contents($verify_req);
+    if ($captcha_res.success == false)
+    {
+        // We are being attacked by a bot
+        die('reCaptcha verification failed');
+    }
 }
 
 $db_conn = DatabaseConnection::get_connection();

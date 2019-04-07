@@ -15,10 +15,10 @@ class Helpers
 {
     public static function randomString($length)
     {
-        $temp = str_pad(dechex(mt_rand(0, 0xffffffff)), 8, '0', STR_PAD_LEFT);
+        $temp = str_pad(dechex(mt_rand(0, 0x7fffffff)), 8, '0', STR_PAD_LEFT);
         while (strlen($temp) < $length)
         {
-            $temp = $temp . str_pad(dechex(mt_rand(0, 0xffffffff)), 8, '0', STR_PAD_LEFT);
+            $temp = $temp . str_pad(dechex(mt_rand(0, 0x7fffffff)), 8, '0', STR_PAD_LEFT);
         }
         
         return substr($temp, 0, $length);

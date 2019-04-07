@@ -11,6 +11,7 @@
 //  governing permissions and limitations under the License.
 //----------------------------------------------------------------------------------------
 include_once '../model/aux_parameter.php';
+include_once '../model/aux_parameter_sec.php';
 include_once '../view/frm_common.php';
 include_once '../model/app_warning.php';
 
@@ -70,7 +71,21 @@ session_start();
                     <div class="row form-row">
                         <div class="col col-sm-1 col-md-3 col-xl-3"></div>
                         <div class="col col-sm-5 col-md-3 col-xl-3">
-                            <div class="g-recaptcha" data-sitekey="<?php echo GlobalParameter::$captchaConfig[GlobalParameter::$applicationConfig['deploymentZone']]['sitekey']; ?>"></div>
+                        	<?php
+                        	if (GlobalParameter::$applicationConfig['validateCaptcha'])
+                        	{
+                        	    echo '<div class="g-recaptcha" data-sitekey="';
+                        	    echo GlobalSecretParameter::$captchaConfig[GlobalParameter::$applicationConfig['deploymentZone']]['sitekey'];
+                        	    echo '"></div>';
+                        	}
+                        	else 
+                        	{
+                        	    echo '<div class="form-check"><input class="form-check-input" type="checkbox" id="emul_captcha" name="emul_captcha" value="emul_captcha">';
+                        	    echo '<label class="form-check-label" for="emul_captcha">';
+                        	    echo 'Ich bin kein Roboter';
+                        	    echo '</label></div>';
+                        	}
+                        	?>
                         </div>
                         <div class="col col-sm-5 col-md-3 col-xl-3">
                             <span class="text-dark">Mit * gekennzeichnete Felder m&uuml;ssen eingegeben werden.</p>

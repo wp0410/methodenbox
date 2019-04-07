@@ -100,6 +100,7 @@ class UserAccount implements JsonSerializable
         $this->usr_login_date = '';
         $this->usr_fail_count = 0;
         $this->usr_status = 0;
+        $this->usr_challenge = Helpers::randomString(32);
         
         if ($usr_role_name == 'ADM')
         {
@@ -109,7 +110,6 @@ class UserAccount implements JsonSerializable
         {
             $this->usr_role = 0;
         }
-        $this->usr_challenge = Helpers::randomString(32);
         
         // Check for duplicates
         $usr_exists = 0;
