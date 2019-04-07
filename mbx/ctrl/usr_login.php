@@ -15,6 +15,7 @@ include_once '../model/sql_connection.php';
 include_once '../model/usr_account.php';
 include_once '../model/usr_session.php';
 include_once '../model/app_warning.php';
+include_once '../model/aux_logging.php';
 
 set_private_warning_handler();
 
@@ -37,6 +38,33 @@ $usr = new UserAccount($db_conn);
 $res = $usr->userLogin($_POST['user_email'], $_POST['user_pwd']);
 if (! $res->isOK())
 {
+    $log_detail = 'Remote IP: ';
+    if (empty($_SERVER['REMOTE_ADDR']))
+    {
+        $log_detail = $log_detail . 'Unknown IP address';
+    }
+    else 
+    {
+        $log_detail = $log_detail . $_SERVER['REMOTE_ADDR'];
+    }
+    if (empty($_SERVER['REMOTE_HOST']))
+    {
+        $log_detail = $log_detail . '(Unknown Host Name)';
+    }
+    else 
+    {
+        $log_detail = $log_detail . '(' . $_SERVER['REMOTE_HOST'] . ')';
+    }
+    
+    $tmp_pwd = '';
+    if (($res->code == 400) || ($res->code == 410))
+    {
+        $tmp_pwd = $_POST['user_pwd'];
+    }
+    
+    $logger = new SessionLog($db_conn);
+    $logger->logLoginAttempt($_POST['user_email'], $tmp_pwd, $res->code, $log_detail);
+    
     header('Location: ../view/usr_login.php?res_code=' . $res->code . '&res_text=' . $res->textUrlEncoded());
     exit;
 }

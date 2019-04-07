@@ -27,6 +27,15 @@ create table ta_usr_session (
     foreign key fk_ses_usr_id (ses_usr_id) references ta_usr_account (usr_id) match full on delete cascade on update cascade
 );
 
+create table ta_log_usr_session (
+	log_id				int not null auto_increment primary key,
+    log_time			datetime not null,
+    log_usr_email		varchar(255) collate utf8_unicode_ci not null,
+    log_usr_pwd			varchar(255) collate utf8_unicode_ci,
+    log_status          int not null default 0,
+    log_extra           varchar(1023) collate utf8_unicode_ci
+);
+
 create table ta_mth_subject_area (
     mth_sub_seq       int not null,
     mth_sub_val       varchar(15) collate utf8_unicode_ci not null,
