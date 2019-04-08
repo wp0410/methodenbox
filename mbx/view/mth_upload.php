@@ -254,7 +254,7 @@ $res = new AppResult($_GET);
                             </div>
                         </div> <!-- col -->
                         <div class="col-md-2 col-xl-2">
-                            <button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#agbModal">Richtlinie anzeigen</button>
+                            <button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#AGBModal">Richtlinie anzeigen</button>
                         </div>
                         <div class="col-md-2 col-xl-2">
                             <div class="form-group float-right">
