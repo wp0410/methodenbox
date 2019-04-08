@@ -235,7 +235,7 @@ $res = new AppResult($_GET);
                                         <span class="btn btn-outline-dark">
                                             Datei ausw&auml;hlen &hellip; 
                                             <input type="file" style="display: none;" id="mth_file" name="mth_file" 
-                                                   multiple accept="<?php echo GlobalParameter::$applicationConfig['mthUploadFileTypes'] ?>">
+                                                   accept="<?php echo GlobalParameter::$applicationConfig['mthUploadFileTypes'] ?>">
                                         </span>
                                     </label>
                                     <input type="text" class="form-control" id="mth_file_name", name="mth_file_name" aria-describedby="mth_file">

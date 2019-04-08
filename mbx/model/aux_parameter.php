@@ -14,7 +14,7 @@
 class GlobalParameter
 {
     public static $applicationConfig = array (
-        'appVersion'             => 'v1.2.5b(2019-04-08)',
+        'appVersion'             => 'v1.2.6b(2019-04-08)',
         'applicationTitle'       => 'Methodenbox',
         'userAccountFailLimit'   => 3,
         'userSessionLifetimeSec' => 3600,
@@ -29,6 +29,9 @@ class GlobalParameter
         'mthPageNumLines'        => 5,
         'mthPageNumPages'        => 9,
         
+        // Upload file types
+        'mthUploadFileTypes'     => '.zip, .tar, .gz',
+        
         'logDestination'         => '/php_warning.log',
         'doSendEmail'            => false,
         'validateCaptcha'        => false,
@@ -37,7 +40,9 @@ class GlobalParameter
     );
         
     public static $validMimeTypes = array (
-        'application/zip' => '.zip'
+        'application/zip' => '.zip',
+        'application/x-tar' => '.tar',
+        'application/gzip' => '.gz'
     );
 }
 ?>
