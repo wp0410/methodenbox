@@ -31,8 +31,8 @@ $res = new AppResult($_GET);
         <script src='https://www.google.com/recaptcha/api.js' async defer></script>
     </head>
     <body>
-        <?php FormElements::topNavigationBar('USR.REG', 0, 0); ?>
-        <?php FormElements::bottomNavigationBar('USR.REG', 0, 0); ?>
+        <?php FormElements::topNavigationBar('USR.REG', 0); ?>
+        <?php FormElements::bottomNavigationBar('USR.REG'); ?>
         
         <div class="container-fluid">
             <div class="row row-fluid"><div class="col"><br></div></div>

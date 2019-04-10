@@ -1,3 +1,8 @@
+-- 2019-04-07: 
+--    Added table ta_log_usr_session (log for user login attempts);
+-- 2019-04-11: 
+--    Changed table ta_usr_session (column ses_permissions);
+--    Added table ta_usr_permissions (permissions for a user account);
 
 create table ta_usr_account (
     usr_id            int not null auto_increment primary key,
@@ -15,6 +20,14 @@ create table ta_usr_account (
     usr_challenge     varchar(32) collate utf8_unicode_ci
 );
 
+create table ta_usr_permissions (
+	per_id            int not null auto_increment primary key,
+	per_usr_id        int not null
+	per_permission    varchar(15) collate utf8_unicode_ci not null,
+
+	foreign key fk_per_usr_id (per_usr_id) references ta_usr_account (usr_id) match full on delete cascade on update cascade
+);
+
 create table ta_usr_session (
     ses_id            int not null auto_increment primary key,
     ses_start_time    datetime not null,
@@ -23,7 +36,8 @@ create table ta_usr_session (
     ses_usr_id        int not null,
     ses_usr_grant     int not null,
     ses_salt          char(16) collate utf8_unicode_ci not null,
-    
+	ses_permissions   varchar(255) collate utf8_unicode_ci,
+
     foreign key fk_ses_usr_id (ses_usr_id) references ta_usr_account (usr_id) match full on delete cascade on update cascade
 );
 

@@ -56,8 +56,8 @@ if (! $res->isOK())
         <?php FormElements::styleSheetRefs(); ?>
     </head>
     <body>
-        <?php FormElements::topNavigationBar('MTH.ADM', $usr_session->isAuthenticated(), $usr_session->getRole()); ?>
-        <?php FormElements::bottomNavigationBar('MTH.ADM', $usr_session->isAuthenticated(), $usr_session->getRole()); ?>
+        <?php FormElements::topNavigationBar('MTH.ADM', $usr_session->isAuthenticated(), $usr_session->getPermissions()); ?>
+        <?php FormElements::bottomNavigationBar('MTH.ADM'); ?>
         <div class="container-fluid">
             <div class="row row-fluid"><br></div>
             <div class="row row-fluid">

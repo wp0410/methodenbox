@@ -40,16 +40,16 @@ class FormElements
         echo '<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>';
     }
     
-    public static function topNavigationBar($current_form_id, $usr_authenticated, $usr_role)
+    public static function topNavigationBar($current_form_id, $usr_authenticated, $usr_permissions = '')
     {
         // Sub Menu Configuration: client user is authenticated
         $sub_menu_auth_1 = array(
             'AUX.ERR'  => array( 'MTH.SRCH'=>0, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>0, 'USR.CONF'=>0, 'USR.IN'=>0, 'USR.OUT'=>0 ),
             'AUX.HLP'  => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>1, 'MTH.RATE'=>1, 'MTH.ADM'=>1, 'USR.REG'=>0, 'USR.CONF'=>0, 'USR.IN'=>0, 'USR.OUT'=>1 ),
-            'MTH.SRCH' => array( 'MTH.SRCH'=>0, 'MTH.NEW'=>1, 'MTH.RATE'=>1, 'MTH.ADM'=>1, 'USR.REG'=>0, 'USR.CONF'=>0, 'USR.IN'=>0, 'USR.OUT'=>1 ),
+            'MTH.SRCH' => array( 'MTH.SRCH'=>0, 'MTH.NEW'=>2, 'MTH.RATE'=>1, 'MTH.ADM'=>1, 'USR.REG'=>0, 'USR.CONF'=>0, 'USR.IN'=>0, 'USR.OUT'=>1 ),
             'MTH.NEW'  => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>0, 'MTH.RATE'=>1, 'MTH.ADM'=>1, 'USR.REG'=>0, 'USR.CONF'=>0, 'USR.IN'=>0, 'USR.OUT'=>1 ),
-            'MTH.RATE' => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>1, 'MTH.RATE'=>0, 'MTH.ADM'=>1, 'USR.REG'=>0, 'USR.CONF'=>0, 'USR.IN'=>0, 'USR.OUT'=>1 ),
-            'MTH.ADM'  => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>1, 'MTH.RATE'=>1, 'MTH.ADM'=>0, 'USR.REG'=>0, 'USR.CONF'=>0, 'USR.IN'=>0, 'USR.OUT'=>1 ),
+            'MTH.RATE' => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>2, 'MTH.RATE'=>0, 'MTH.ADM'=>1, 'USR.REG'=>0, 'USR.CONF'=>0, 'USR.IN'=>0, 'USR.OUT'=>1 ),
+            'MTH.ADM'  => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>2, 'MTH.RATE'=>1, 'MTH.ADM'=>0, 'USR.REG'=>0, 'USR.CONF'=>0, 'USR.IN'=>0, 'USR.OUT'=>1 ),
             'USR.REG'  => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>0, 'USR.CONF'=>1, 'USR.IN'=>1, 'USR.OUT'=>0 ),
             'USR.CONF' => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>1, 'USR.CONF'=>0, 'USR.IN'=>1, 'USR.OUT'=>0 ),
             'USR.IN'   => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>1, 'USR.CONF'=>1, 'USR.IN'=>0, 'USR.OUT'=>0 ),
@@ -108,15 +108,29 @@ class FormElements
                 $link_id = $sub_menu_auth_0[$current_form_id][$sub_item];
                 $link_type = '';
             }
-            if ($link_id == 0)
-            {
-                $link_ref = '#';
-                $link_type = ' disabled';
-            }
-            else
-            {
-                $link_ref = $sub_menu_config[$sub_item]['LINK'];
-            }
+			
+			switch($link_id)
+			{
+				case 0:
+					$link_ref = '#';
+					$link_type = ' disabled';
+					break;
+				case 2:
+					if (strpos($usr_permissions, $sub_item) === false)
+					{
+						$link_ref = '#';
+						$link_type = ' disabled';
+					}
+					else
+					{
+						$link_ref = $sub_menu_config[$sub_item]['LINK'];
+ 					}
+					break;
+				default:
+					$link_ref = $sub_menu_config[$sub_item]['LINK'];
+					break;
+			}
+			
             echo '<a class="dropdown-item' . $link_type . '" href="' . $link_ref . '">' . $sub_menu_config[$sub_item]['TEXT'] . '</a>';
         }
         echo '</div></li>';
@@ -162,7 +176,7 @@ class FormElements
         echo '</div></nav>';
     }
     
-    public static function bottomNavigationBar($current_form_id, $usr_authenticated, $usr_role)
+    public static function bottomNavigationBar($current_form_id)
     {
         echo '<nav class="navbar fixed-bottom navbar-expand-lg navbar-primary bg-light">';
         echo '<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#bottomNavbar" aria-controls="bottomNavbar" aria-expanded="false" aria-label="Toggle navigation">';

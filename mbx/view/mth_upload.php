@@ -62,8 +62,8 @@ $res = new AppResult($_GET);
         <?php FormElements::styleSheetRefs(); ?>
     </head>
     <body>
-        <?php FormElements::topNavigationBar('MTH.NEW', $usr_session->isAuthenticated(), $usr_session->getRole()); ?>
-        <?php FormElements::bottomNavigationBar('MTH.NEW', $usr_session->isAuthenticated(), $usr_session->getRole()); ?>
+        <?php FormElements::topNavigationBar('MTH.NEW', $usr_session->isAuthenticated(), $usr_session->getPermissions()); ?>
+        <?php FormElements::bottomNavigationBar('MTH.NEW'); ?>
 
         <div class="container-fluid">
            <div class="row row-fluid"><br></div>

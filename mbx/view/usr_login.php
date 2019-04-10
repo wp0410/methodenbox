@@ -28,8 +28,8 @@ $res = new AppResult($_GET);
         <?php FormElements::styleSheetRefs(); ?>
     </head>
     <body>
-        <?php FormElements::topNavigationBar('USR.IN', 0, 0); ?>
-        <?php FormElements::bottomNavigationBar('USR.IN', 0, 0); ?>
+        <?php FormElements::topNavigationBar('USR.IN', 0); ?>
+        <?php FormElements::bottomNavigationBar('USR.IN'); ?>
         
         <div class="container-fluid">
             <div class="row row-fluid"><div class="col"><br></div></div>

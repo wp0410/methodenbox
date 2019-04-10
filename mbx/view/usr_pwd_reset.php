@@ -28,8 +28,8 @@ session_start();
         <script src='https://www.google.com/recaptcha/api.js'></script>
     </head>
     <body>
-        <?php FormElements::topNavigationBar('USR.PWD', 0, 0); ?>
-        <?php FormElements::bottomNavigationBar('USR.PWD', 0, 0); ?>
+        <?php FormElements::topNavigationBar('USR.PWD', 0); ?>
+        <?php FormElements::bottomNavigationBar('USR.PWD'); ?>
 
         <div class="container-fluid">
             <div class="row row-fluid"><div class="col"><br></div></div>

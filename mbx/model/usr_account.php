@@ -29,6 +29,7 @@ class UserAccount implements JsonSerializable
     private $usr_status;
     private $usr_role;
     private $usr_challenge;
+	private $usr_permissions;
     
     private $db_conn;
 
@@ -41,6 +42,7 @@ class UserAccount implements JsonSerializable
         $this->usr_register_date = $this->usr_confirm_date = $this->usr_login_date = '';
         $this->usr_pwd = $this->usr_salt = $this->usr_challenge = '';
         $this->usr_status = $this->usr_role = $this->usr_fail_count = 0;
+		$this->usr_permissions = '';
     }
     
     public function jsonSerialize()
@@ -55,7 +57,8 @@ class UserAccount implements JsonSerializable
             'usr_login_date'    => $this->usr_login_date,
             'usr_login_invalid' => $this->usr_fail_count,
             'usr_status'        => $this->usr_status,
-            'usr_role'          => $this->usr_role
+            'usr_role'          => $this->usr_role,
+			'usr_permissions'   => $this->usr_permissions
         );
     }
     
@@ -73,6 +76,11 @@ class UserAccount implements JsonSerializable
     {
         return $this->usr_role;
     }
+	
+	public function getPermissions()
+	{
+		return $this->usr_permissions;
+	}
     
     private function hashPassword($password, $salt)
     {
@@ -102,7 +110,7 @@ class UserAccount implements JsonSerializable
         $this->usr_status = 0;
         $this->usr_challenge = Helpers::randomString(32);
         
-        if ($usr_role_name == 'ADM')
+        if ($usr_role_name == 'ADMIN')
         {
             $this->usr_role = 1;
         }
@@ -144,7 +152,32 @@ class UserAccount implements JsonSerializable
             return new AppResult(402);
         }
         $this->usr_id = $stm_u2->insert_id;
-        $stm_u2->close();
+        $stm_u2->close
+		
+		if ($usr_role_name == 'CLIENT')
+		{
+			return new AppResult(0);
+		}
+		
+		$sql_stmt = 'insert into ta_usr_permissions( per_usr_id, per_permission ) values ( ?, ? );';
+		$stm_u9 = $this->db_conn->prepare($sql_stmt);
+		$permission = 'MTH.NEW';
+		$stm_u9->bind_param('is', $this->usr_id, $permission);
+		if (! $stm_u9->execute())
+		{
+			$stm_u9->close();
+			return new AppResult(402);
+		}
+		
+		if ($usr_role_name == 'ADMIN')
+		{
+			$permission = 'ADM.USR';
+			if (! $stm_u9->execute())
+			{
+				$stm_u9->close();
+				return new AppResult(402);
+			}
+		}
         
         return new AppResult(0);
     }
@@ -185,54 +218,47 @@ class UserAccount implements JsonSerializable
         
         return new AppResult(0);
     }
-    
-    public function checkByEmail($usr_email)
-    {
-        $usr_exists = 0;
-        
+	
+	private function findUserIdByEmail($usr_email)
+	{
+		$usr_id = -1;
+		
         $sql_stmt =
-            'select count(1) ' .
+            'select usr_id ' .
             'from   ta_usr_account ' .
             'where  usr_email = ?;';
         $stm_u7 = $this->db_conn->prepare($sql_stmt);
         $stm_u7->bind_param('s', $usr_email);
         if ($stm_u7->execute())
         {
-            $stm_u7->bind_result($usr_exists);
-            $stm_u7->fetch();
+			$tmp_usr_id = -1;
+            $stm_u7->bind_result($tmp_usr_id);
+            if ($stm_u7->fetch() === true)
+			{
+				$usr_id = $tmp_usr_id;
+			}
             $stm_u7->close();
         }
-        
-        return ($usr_exists > 0);
+		
+		return $usr_id;
+	}
+    
+    public function checkByEmail($usr_email)
+    {
+		return ($this->findUserIdByEmail($usr_email) > 0);
     }
     
     public function loadByEmail($usr_email)
     {
-        $sql_stmt = 
-            'select usr_id, usr_fst_name, usr_lst_name, usr_email, usr_pwd, usr_salt, usr_register_date, usr_confirm_date, usr_login_date, usr_fail_count, ' .
-            '       usr_status, usr_role, usr_challenge ' .
-            'from   ta_usr_account ' .
-            'where  usr_email = ?;';
-        $stm_u6 = $this->db_conn->prepare($sql_stmt);
-        $stm_u6->bind_param('s', $usr_email);
-        if ($stm_u6->execute())
-        {
-            $stm_u6->bind_result($this->usr_id, $this->usr_fst_name, $this->usr_lst_name, $this->usr_email, $this->usr_pwd, $this->usr_salt, $this->usr_register_date,
-                                 $this->usr_confirm_date, $this->usr_login_date, $this->usr_fail_count, $this->usr_status, $this->usr_role, $this->usr_challenge);
-            $sql_res = $stm_u6->fetch();
-            $stm_u6->free_result();
-            $stm_u6->close();
-            if (! $sql_res)
-            {
-                return new AppResult(403);         
-            }
-        }
-        else
-        {
-            return new AppResult(404);
-        }
-        
-        return new AppResult(0);
+		$usr_id = checkByEmail($usr_email);
+		if ($usr_id > 0)
+		{
+			return $this->loadById($usr_id);
+		}
+		else
+		{
+			return new AppResult(403);         
+		}
     }
 
     public function loadById($usr_id)
@@ -246,8 +272,9 @@ class UserAccount implements JsonSerializable
         $stm_u3->bind_param('i', $usr_id);
         if ($stm_u3->execute())
         {
-            $stm_u3->bind_result($this->usr_id, $this->usr_fst_name, $this->usr_lst_name, $this->usr_email, $this->usr_pwd, $this->usr_salt, $this->usr_register_date,
-                                 $this->usr_confirm_date, $this->usr_login_date, $this->usr_fail_count, $this->usr_status, $this->usr_role, $this->usr_challenge);
+            $stm_u3->bind_result(
+				$this->usr_id, $this->usr_fst_name, $this->usr_lst_name, $this->usr_email, $this->usr_pwd, $this->usr_salt, $this->usr_register_date,
+                $this->usr_confirm_date, $this->usr_login_date, $this->usr_fail_count, $this->usr_status, $this->usr_role, $this->usr_challenge);
                                  
             $sql_res = $stm_u3->fetch();
             $stm_u3->free_result();
@@ -261,6 +288,21 @@ class UserAccount implements JsonSerializable
         {
             return new AppResult(404);
         }
+		
+		$sql_stmt = 'select per_permission from ta_usr_permissions where per_usr_id = ?;';
+		$stm_u8 = $this->db_conn->prepare($sql_stmt);
+		$stm_u8->bind_param('i', $usr_id);
+		if ($stm_u8->execute())
+		{
+			$this->usr_permissions = '';
+			$tmp_perm = '';
+			$stm_u8->bind_result($tmp_perm);
+			while($stm_u8->fetch() === true)
+			{
+				$this->usr_permissions = $this->usr_permissions . ':' . $tmp_perm;
+			}
+			$stm_u8->close();
+		}
         
         return new AppResult(0);
     }

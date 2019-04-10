@@ -26,8 +26,8 @@ session_start();
         <?php FormElements::styleSheetRefs(); ?>
     </head>
     <body>
-        <?php FormElements::topNavigationBar('AUX.HLP', 0, 0); ?>
-        <?php FormElements::bottomNavigationBar('AUX.HLP', 0, 0); ?>
+        <?php FormElements::topNavigationBar('AUX.HLP', 0); ?>
+        <?php FormElements::bottomNavigationBar('AUX.HLP', 0); ?>
         
         <div class="container-fluid">
             <div class="row row-fluid">

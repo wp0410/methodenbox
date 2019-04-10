@@ -18,12 +18,14 @@ include_once 'app_result.php';
 class UserSession implements JsonSerializable
 {
     private $ses_id;
+    public $ses_usr_id;
     private $ses_start_time;
     private $ses_end_time;
     private $ses_last_change;
-    public $ses_usr_id;
     private $ses_usr_grant;
     private $ses_salt;
+	private $ses_permissions;
+	
     private $db_conn;
 
     public function __construct($db_cn)
@@ -37,6 +39,7 @@ class UserSession implements JsonSerializable
         $this->ses_usr_id = -1;
         $this->ses_usr_grant = -1;
         $this->ses_salt = '';
+		$this->ses_permissions = '';
     }
 
     public function jsonSerialize()
@@ -48,7 +51,8 @@ class UserSession implements JsonSerializable
             'ses_last_change' => $this->ses_last_change,
             'ses_usr_id'      => $this->ses_usr_id,
             'ses_usr_grant'   => $this->ses_usr_grant,
-            'ses_salt'        => $this->ses_salt
+            'ses_salt'        => $this->ses_salt,
+			'ses_permissions' => $this->ses_permissions
         );
     }
     
@@ -62,7 +66,7 @@ class UserSession implements JsonSerializable
         return $this->ses_usr_id;
     }
     
-    public function startSession($usr_id, $usr_grant)
+    public function startSession($usr_id, $usr_grant, $usr_perm = '')
     {
         $res = '';
         
@@ -78,12 +82,13 @@ class UserSession implements JsonSerializable
         $this->ses_usr_id = $usr_id;
         $this->ses_usr_grant = $usr_grant;
         $this->ses_salt = Helpers::randomString(16);
+		$this->ses_permissions = $usr_perm;
 
         $sql_stmt =
-            'insert into ta_usr_session( ses_start_time, ses_end_time, ses_last_change, ses_usr_id, ses_usr_grant, ses_salt ) ' .
-            'values ( ?, ?, ?, ?, ?, ? );';
+            'insert into ta_usr_session( ses_start_time, ses_end_time, ses_last_change, ses_usr_id, ses_usr_grant, ses_salt, ses_permissions ) ' .
+            'values ( ?, ?, ?, ?, ?, ?, ? );';
         $stm_se1 = $this->db_conn->prepare($sql_stmt);
-        $stm_se1->bind_param('sssiis', $this->ses_start_time, $this->ses_end_time, $this->ses_last_change, $this->ses_usr_id, $this->ses_usr_grant, $this->ses_salt);
+        $stm_se1->bind_param('sssiiss', $this->ses_start_time, $this->ses_end_time, $this->ses_last_change, $this->ses_usr_id, $this->ses_usr_grant, $this->ses_salt, $this->ses_permissions);
         if (! $stm_se1->execute())
         {
             $res = new AppResult(501);
@@ -101,7 +106,7 @@ class UserSession implements JsonSerializable
     private function loadSession($ses_id)
     {
         $sql_stmt =
-            'select ses_id, ses_start_time, ses_end_time, ses_last_change, ses_usr_id, ses_usr_grant, ses_salt ' .
+            'select ses_id, ses_start_time, ses_end_time, ses_last_change, ses_usr_id, ses_usr_grant, ses_salt, ses_permissions ' .
             'from   ta_usr_session ' .
             'where  ses_id = ?;';
         $stm_se5 = $this->db_conn->prepare($sql_stmt);
@@ -110,7 +115,7 @@ class UserSession implements JsonSerializable
         {
             $stm_se5->bind_result(
                 $this->ses_id, $this->ses_start_time, $this->ses_end_time, $this->ses_last_change, $this->ses_usr_id, 
-                $this->ses_usr_grant, $this->ses_salt);
+                $this->ses_usr_grant, $this->ses_salt, $this->ses_permissions);
         
             $sql_res = $stm_se5->fetch();
             $stm_se5->free_result();
@@ -226,6 +231,22 @@ class UserSession implements JsonSerializable
             return $this->ses_usr_grant;
         }
     }
+	
+	public function checkPermission($permission_tag)
+	{
+		if (strpos($this->ses_permissions, $permission_tag) === false)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
+	
+	public function getPermissions()
+	{
+		return $this->ses_permissions;
+	}
 }
-
 ?>
