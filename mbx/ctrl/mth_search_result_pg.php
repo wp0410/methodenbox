@@ -29,7 +29,7 @@ $res_view = new MethodResultView($db_conn);
 $res_from_cache = false;
 
 $res_view->initSearchResultStmt();
-$cur_usr_id = 0;
+$res_view->usr_id = 0;
 
 if (! empty($_POST))
 {
@@ -89,8 +89,7 @@ if (! empty($_POST))
         }
         if (! empty($_POST['curr_usr_id']))
         {
-            $cur_usr_id = $_POST['curr_usr_id'];
-            $res_view->usr_id = $cur_usr_id;
+            $res_view->usr_id = $_POST['curr_usr_id'];
         }
         if (! empty($_POST['mth_res_sort']))
         {
@@ -125,8 +124,7 @@ if (! $res_from_cache)
 {
     $res_view->storeCache();
 }
-
-$mth_view = new MethodSearchResultView($cur_usr_id > 0, $res_view, $max_pages);
+$mth_view = new MethodSearchResultView($res_view, $max_pages);
 $mth_view->renderHtml();
 $mth_view->outputHtml();
 ?>

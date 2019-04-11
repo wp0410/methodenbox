@@ -19,11 +19,11 @@ class MethodSearchViewBase
     protected $mth_view;
     protected $max_pages;
     
-    public function __construct($usr_auth, $mth_view, $max_pages)
+    public function __construct($mth_view, $max_pages)
     {
         $this->mth_view = $mth_view;
         $this->output = '';
-        $this->usr_authenticated = $usr_auth;
+        $this->usr_authenticated = ($mth_view->usr_id > 0);
         $this->max_pages = $max_pages;
     }
     protected function addOutput($text)

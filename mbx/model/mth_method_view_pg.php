@@ -65,12 +65,12 @@ class MethodResultView
             '       file_guid, file_name, ' .
             '       dnl_cnt, dnl_first_tm, dnl_last_tm, dnl_usr_id, ' .
             '       rtg_cnt, rtg_first_tm, rtg_last_tm, rtg_min_val, rtg_max_val, rtg_avg_val ' .
-            'from   vi_mth_method_rating where dnl_usr_id = ' . $usr_id . ' ';
+            'from   vi_mth_method_rating where mth_id > 0 ';
         $this->stm_type = 'RATING_LIST';        
         $this->where_clause = '';
     }
     
-    public function InitAdminListStmt($owner_id)
+    public function InitAdminListStmt()
     {
         $this->select_stmt = 
             'select mth_id, mth_name, mth_summary, mth_subject, mth_subject_text, ' . 
@@ -81,7 +81,7 @@ class MethodResultView
             '       file_guid, file_name, ' .
             '       dnl_cnt, dnl_first_tm, dnl_last_tm, dnl_usr_id, ' .
             '       rtg_cnt, rtg_first_tm, rtg_last_tm, rtg_min_val, rtg_max_val, rtg_avg_val ' .
-            'from   vi_mth_method_result where mth_owner_id = ' . $owner_id . ' ';
+            'from   vi_mth_method_result where mth_id > 0 ';
         $this->stm_type = 'ADMIN_LIST'; 
         $this->where_clause = '';
     }
@@ -197,6 +197,11 @@ class MethodResultView
     {
         $this->compareNumEqual('mth_owner_id', $mth_owner_id);
     }
+	
+	public function compareDnlUserId($dnl_usr_id)
+	{
+		$this->compareNumEqual('dnl_usr_id', $dnl_usr_id);
+	}
     
     public function sortByRating()
     {   
@@ -235,6 +240,7 @@ class MethodResultView
         $ch_stm->loadCache($cch_id);
         
         $this->cache_obj_id = $ch_stm->cch_obj_id;
+		$this->usr_id = $ch_stm->cch_owner_id;
         $this->where_clause = $ch_stm->cch_sql_stmt;
         $this->select_stmt = $this->select_stmt . ' ' . $this->where_clause;
     }

@@ -27,23 +27,18 @@ $max_pages = GlobalParameter::$applicationConfig['mthPageNumPages'];
 $cur_page = 1;
 
 $res_view = new MethodResultView($db_conn);
+$res_view->initRatingListStmt();
 $res_from_cache = false;
 
-$cur_usr_id = 0;
-if (empty($_POST) || empty($_POST['curr_usr_id']))
+// Mandatory Parameters: we need either the "current user identifier" or the identifier of a cached statement
+$param_missing = empty($_POST) || (empty($_POST['curr_usr_id']) && empty($_POST['ch_id']));
+if (param_missing)
 {
     $res = new AppResult(406);
     header('Location: ../view/aux_error.php?res_code=' . $res->code . '&res_text=' . $res->textUrlEncoded());
     exit;
 }
 else
-{
-    $cur_usr_id = $_POST['curr_usr_id'];  
-}
-
-$res_view->initRatingListStmt($cur_usr_id);
-
-if (! empty($_POST))
 {
     if (! empty($_POST['ch_id']))
     {
@@ -58,6 +53,9 @@ if (! empty($_POST))
     }
 	else
 	{
+		$res_view->usr_id = $_POST['curr_usr_id']; 
+		$res_view->compareDnlUserId($res_view->usr_id);
+		
 		if (! empty($_POST['mth_name']))
 		{
 			$res_view->compareMthName($_POST['mth_name']);
@@ -107,7 +105,7 @@ if (! $res_from_cache)
 {
     $res_view->storeCache();
 }
-$mth_view = new MethodSearchRatingView($cur_usr_id > 0, $res_view, $max_pages);
+$mth_view = new MethodSearchRatingView($res_view, $max_pages);
 $mth_view->renderHtml();
 $mth_view->outputHtml();
 ?>
