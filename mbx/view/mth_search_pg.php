@@ -1,6 +1,6 @@
 <?php
 //---------------------------------------------------------------------------------------
-//  Copyright (c) 2018 Walter Pachlinger (walter.pachlinger@gmx.at)
+//  Copyright (c) 2018, 2019 Walter Pachlinger (walter.pachlinger@gmail.com)
 //    
 //  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this 
 //  file except in compliance with the License. You may obtain a copy of the License at
@@ -21,26 +21,24 @@ set_private_warning_handler();
 session_start();
 $db_conn = DatabaseConnection::get_connection();
 $usr_session = new UserSession($db_conn);
-$current_usr_id = -1;
-if (empty($_SESSION) || empty($_SESSION['user']))
-{
-    $current_usr_id = -1;
-}
-else
+if (! empty($_SESSION) && ! empty($_SESSION['user']))
 {
     $res = $usr_session->validateSession($_SESSION['user']);
     
     if (! $res->isOK())
     {
+		$usr_session->closeSession();
         session_destroy();
+		header('Location: ../view/aux_error.php?res_code=' . $res->code . '&res_text=' . $res->textUrlEncoded());
+		exit;
     }
     else
     {
-        $_SESSION['user'] = array('sid' => $usr_session->getId(), 'uid' => $usr_session->getUsrId(), 'hash' => $usr_session->getSessionHash());
-        $current_usr_id = $usr_session->getUsrId();
+		$_SESSION['user'] = $usr_session->getSessionDescriptor();
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="de">
     <head>
@@ -57,7 +55,6 @@ else
            <div class="row row-fluid">
                 <div class="col-md-12 col-xl-12">
                     <div class="alert alert-primary" role="alert"><center><h4>Methode Suchen</h4></center></div>
-                    <!-- ?php if ($res->code != 0) { FormElements::showAlert($res->style, 'col-md-12 col-xl-12', $res->text); } ? -->
                 </div>
             </div>
             <div class="row row-fluid"></div>
@@ -69,7 +66,15 @@ else
                                 <div class="col col-md-4 col-xl-4">
                                     <span class="input-group-text">Ergebnis der Filterung</span>
                                 </div>
-                                <div class="col col-md-3 col-xl-3"></div>
+                                <div class="col col-md-3 col-xl-3">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label class="input-group-text" for="res_lines_per_page">Eintr&auml;ge pro Seite</label>
+										</div>
+										<input type="number" id="res_lines_per_page" name="res_lines_per_page" 
+											value="<?php echo GlobalParameter::$applicationConfig['mthPageNumLines']; ?>" min="3" max="10" step="1" />
+									</div>
+								</div>
                                 <div class="col col-md-5 col-xl-5">
                                     <div class="input-group">
                                         <div class="input-group-prepend">
@@ -85,7 +90,6 @@ else
                             </div>
                         </div>
                         <div class="card-body" id="mth_result">
-                            <!-- <div class="accordion" id="mth_result"></div> -->
                         </div>
                     </div>
                 </div> <!-- col-md-8 col-xl-8 -->
@@ -253,7 +257,7 @@ else
                                     </div> <!-- col -->
                                 </div> <!-- form-row -->
                                 <div class="form-group">
-                                    <input type="hidden" id="curr_usr_id" name="curr_usr_id" value=" <?php echo $current_usr_id; ?> ">
+                                    <input type="hidden" id="curr_usr_id" name="curr_usr_id" value=" <?php echo $usr_session->getUsrId(); ?> ">
                                 </div>
                             </form>
 

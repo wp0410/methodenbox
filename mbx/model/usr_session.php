@@ -1,6 +1,6 @@
 <?php
 //---------------------------------------------------------------------------------------
-//  Copyright (c) 2018 Walter Pachlinger (walter.pachlinger@gmx.at)
+//  Copyright (c) 2018, 2019 Walter Pachlinger (walter.pachlinger@gmail.com)
 //    
 //  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this 
 //  file except in compliance with the License. You may obtain a copy of the License at
@@ -18,7 +18,7 @@ include_once 'app_result.php';
 class UserSession implements JsonSerializable
 {
     private $ses_id;
-    public $ses_usr_id;
+    public  $ses_usr_id;
     private $ses_start_time;
     private $ses_end_time;
     private $ses_last_change;
@@ -36,7 +36,7 @@ class UserSession implements JsonSerializable
         $this->ses_start_time = '';
         $this->ses_end_time = '';
         $this->ses_last_change = '';
-        $this->ses_usr_id = -1;
+        $this->ses_usr_id = -1;				// Important note: do not change this. For un-initialized sessions, ses_usr_id must be -1 !
         $this->ses_usr_grant = -1;
         $this->ses_salt = '';
 		$this->ses_permissions = '';
@@ -65,6 +65,11 @@ class UserSession implements JsonSerializable
     {
         return $this->ses_usr_id;
     }
+
+	public function getSessionDescriptor()
+	{
+		return array('sid' => $this->getId(), 'uid' => $this->getUsrId(), 'hash' => $this->getSessionHash());
+	}
     
     public function startSession($usr_id, $usr_grant, $usr_perm = '')
     {

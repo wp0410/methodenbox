@@ -37,12 +37,14 @@ else
         }
         else
         {
-            $_SESSION['user'] = array('sid' => $usr_session->getId(), 'uid' => $usr_session->getUsrId(), 'hash' => $usr_session->getSessionHash());
+            $_SESSION['user'] = $usr_session->getSessionDescriptor();
         }
     }
 }
 if (! $res->isOK())
 {
+	$usr_session->closeSession();
+    session_destroy();
     header('Location: ../view/aux_error.php?res_code=' . $res->code . '&res_text=' . $res->textUrlEncoded());
     exit;
 }

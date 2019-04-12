@@ -21,6 +21,7 @@ set_private_warning_handler();
 session_start();
 $db_conn = DatabaseConnection::get_connection();
 $usr_session = new UserSession($db_conn);
+
 if (empty($_SESSION) || empty($_SESSION['user']))
 {
     $res = new AppResult(405);
@@ -37,12 +38,14 @@ else
         }
         else
         {
-            $_SESSION['user'] = array('sid' => $usr_session->getId(), 'uid' => $usr_session->getUsrId(), 'hash' => $usr_session->getSessionHash());
+            $_SESSION['user'] = $usr_session->getSessionDescriptor();
         }
     }
 }
 if (! $res->isOK())
 {
+	$usr_session->closeSession();
+    session_destroy();
     header('Location: ../view/aux_error.php?res_code=' . $res->code . '&res_text=' . $res->textUrlEncoded());
     exit;
 }
@@ -419,8 +422,8 @@ if (! $res->isOK())
                             mth_class: $('#mth_class').val(),
                             mth_prep_tm: $('#mth_prep_tm').val(),
                             mth_exec_tm: $('#mth_exec_tm').val(),
-                            mth_phase: mphase, //$('#mth_phase').val(),
-                            mth_soc: msoc, //$('#mth_soc').val(),
+                            mth_phase: mphase, 
+                            mth_soc: msoc, 
                             mth_author: $('#mth_author').val(),
                             mth_name: $('#mth_name').val(),
                             curr_usr_id: $('#curr_usr_id').val()
