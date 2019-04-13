@@ -152,32 +152,31 @@ class UserAccount implements JsonSerializable
             return new AppResult(402);
         }
         $this->usr_id = $stm_u2->insert_id;
-        $stm_u2->close
+        $stm_u2->close();
 		
 		if ($usr_role_name == 'CLIENT')
 		{
 			return new AppResult(0);
 		}
 		
-		$sql_stmt = 'insert into ta_usr_permissions( per_usr_id, per_permission ) values ( ?, ? );';
-		$stm_u9 = $this->db_conn->prepare($sql_stmt);
-		$permission = 'MTH.NEW';
-		$stm_u9->bind_param('is', $this->usr_id, $permission);
-		if (! $stm_u9->execute())
-		{
-			$stm_u9->close();
-			return new AppResult(402);
-		}
-		
+		$all_permissions = array('MTH.NEW', 'MTH.ADM'); // Permissions for role "UPLOAD"
 		if ($usr_role_name == 'ADMIN')
 		{
-			$permission = 'ADM.USR';
-			if (! $stm_u9->execute())
-			{
-				$stm_u9->close();
-				return new AppResult(402);
-			}
+		    $all_permissions[] = 'ADM.USR'; // User Administration (PLACE HOLDER!)
 		}
+		
+		$sql_stmt = 'insert into ta_usr_permissions( per_usr_id, per_permission ) values ( ?, ? );';
+		$stm_u9 = $this->db_conn->prepare($sql_stmt);
+		foreach ($all_permissions as $permission)
+		{
+		    $stm_u9->bind_param('is', $this->usr_id, $permission);
+		    if (! $stm_u9->execute())
+		    {
+		        $stm_u9->close();
+		        return new AppResult(402);
+		    }
+		}
+		$stm_u9->close();
         
         return new AppResult(0);
     }
@@ -219,7 +218,7 @@ class UserAccount implements JsonSerializable
         return new AppResult(0);
     }
 	
-	private function findUserIdByEmail($usr_email)
+	private function findUserIdByEmail($usr_email): int
 	{
 		$usr_id = -1;
 		
@@ -250,7 +249,7 @@ class UserAccount implements JsonSerializable
     
     public function loadByEmail($usr_email)
     {
-		$usr_id = checkByEmail($usr_email);
+        $usr_id = $this->findUserIdByEmail($usr_email);
 		if ($usr_id > 0)
 		{
 			return $this->loadById($usr_id);

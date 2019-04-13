@@ -36,7 +36,8 @@ class GlobalResultText
 
             // Info Messages
             'E_901' => 'Sie werden in K&uuml;rze ein E-Mail and die angegebene E-Mail Adresse erhalten. Bitte folgen Sie den Anweisungen in dieser E-Mail, um die Registrierung abzuschlie&szlig;en',
-            'E_902' => 'Sie werden in K&uuml;rze ein E-Mail and die angegebene E-Mail Adresse erhalten. Bitte folgen Sie den Anweisungen in dieser E-Mail, um die Änderung des Passworts abzuschlie&szlig;en',
+            'E_902' => 'Sie werden in K&uuml;rze ein E-Mail and die angegebene E-Mail Adresse erhalten. Bitte folgen Sie den Anweisungen in dieser E-Mail, um die &Auml;nderung des Passworts abzuschlie&szlig;en',
+            'E_910' => 'Die Unterrichtsmethode "[%M]" wurde erfolgreich hochgeladen.',
             
             // End of Array
             'E_999' => 'VOID'

@@ -45,10 +45,10 @@ class FormElements
         // Sub Menu Configuration: client user is authenticated
         $sub_menu_auth_1 = array(
             'AUX.ERR'  => array( 'MTH.SRCH'=>0, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>0, 'USR.CONF'=>0, 'USR.IN'=>0, 'USR.OUT'=>0 ),
-            'AUX.HLP'  => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>1, 'MTH.RATE'=>1, 'MTH.ADM'=>1, 'USR.REG'=>0, 'USR.CONF'=>0, 'USR.IN'=>0, 'USR.OUT'=>1 ),
-            'MTH.SRCH' => array( 'MTH.SRCH'=>0, 'MTH.NEW'=>2, 'MTH.RATE'=>1, 'MTH.ADM'=>1, 'USR.REG'=>0, 'USR.CONF'=>0, 'USR.IN'=>0, 'USR.OUT'=>1 ),
-            'MTH.NEW'  => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>0, 'MTH.RATE'=>1, 'MTH.ADM'=>1, 'USR.REG'=>0, 'USR.CONF'=>0, 'USR.IN'=>0, 'USR.OUT'=>1 ),
-            'MTH.RATE' => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>2, 'MTH.RATE'=>0, 'MTH.ADM'=>1, 'USR.REG'=>0, 'USR.CONF'=>0, 'USR.IN'=>0, 'USR.OUT'=>1 ),
+            'AUX.HLP'  => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>2, 'MTH.RATE'=>1, 'MTH.ADM'=>2, 'USR.REG'=>0, 'USR.CONF'=>0, 'USR.IN'=>0, 'USR.OUT'=>1 ),
+            'MTH.SRCH' => array( 'MTH.SRCH'=>0, 'MTH.NEW'=>2, 'MTH.RATE'=>1, 'MTH.ADM'=>2, 'USR.REG'=>0, 'USR.CONF'=>0, 'USR.IN'=>0, 'USR.OUT'=>1 ),
+            'MTH.NEW'  => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>0, 'MTH.RATE'=>1, 'MTH.ADM'=>2, 'USR.REG'=>0, 'USR.CONF'=>0, 'USR.IN'=>0, 'USR.OUT'=>1 ),
+            'MTH.RATE' => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>2, 'MTH.RATE'=>0, 'MTH.ADM'=>2, 'USR.REG'=>0, 'USR.CONF'=>0, 'USR.IN'=>0, 'USR.OUT'=>1 ),
             'MTH.ADM'  => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>2, 'MTH.RATE'=>1, 'MTH.ADM'=>0, 'USR.REG'=>0, 'USR.CONF'=>0, 'USR.IN'=>0, 'USR.OUT'=>1 ),
             'USR.REG'  => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>0, 'USR.CONF'=>1, 'USR.IN'=>1, 'USR.OUT'=>0 ),
             'USR.CONF' => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>1, 'USR.CONF'=>0, 'USR.IN'=>1, 'USR.OUT'=>0 ),
@@ -229,6 +229,25 @@ class FormElements
         echo '         </div>';
         echo '         <div class="modal-body">Hier sollte der Text f&uuml;r die Allgemeinen Gesch&auml;ftsbedingungen stehen ...</div>';
         echo '         <div class="modal-footer"><button type="button" class="btn btn-light" data-dismiss="modal">Schlie&szlig;en</button></div>';
+        echo '      </div>';
+        echo '   </div>';
+        echo '</div>';
+    }
+    
+    public static function feedbackModal($app_result)
+    {
+        echo '<div class="modal fade" id="upFbModal" name="FeedbackMd" aria-labelled-by="FeedbackMdTitle" aria-hidden="true">';
+        echo '   <div class="modal-dialog modal-dialog-centered" role="document">';
+        echo '      <div class="modal-content">';
+        echo '         <div class="modal-header">';
+        echo '            <h5 class="modal-title" id="FeedbackMdTitle">Hinweis</h5>';
+        echo '            <button type="button" class="close" data-dismiss="modal" aria-label="Schlie&szlig;en"><span aria-hidden="true">&times;</span></button>';
+        echo '         </div>';
+        echo '         <div class="modal-body">';
+        echo '            <div class = "alert alert-' . $app_result->style() . '" role="alert">' . $app_result->text . '</div>';
+        echo           '</div>';
+        echo '         <div class="modal-footer">';
+        echo '         </div>';
         echo '      </div>';
         echo '   </div>';
         echo '</div>';

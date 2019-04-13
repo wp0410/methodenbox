@@ -71,7 +71,7 @@ if (! empty($_SESSION) && ! empty($_SESSION['user']))
 										<div class="input-group-prepend">
 											<label class="input-group-text" for="res_lines_per_page">Eintr&auml;ge pro Seite</label>
 										</div>
-										<input type="number" id="res_lines_per_page" name="res_lines_per_page" 
+										<input type="number" id="res_lines_per_page" name="res_lines_per_page" style="text-align:center"
 											value="<?php echo GlobalParameter::$applicationConfig['mthPageNumLines']; ?>" min="3" max="10" step="1" />
 									</div>
 								</div>

@@ -56,17 +56,17 @@ class UserSession implements JsonSerializable
         );
     }
     
-    public function getId()
+    public function getId(): string
     {
         return $this->ses_id;
     }
     
-    public function getUsrId()
+    public function getUsrId(): int
     {
         return $this->ses_usr_id;
     }
 
-	public function getSessionDescriptor()
+	public function getSessionDescriptor(): array
 	{
 		return array('sid' => $this->getId(), 'uid' => $this->getUsrId(), 'hash' => $this->getSessionHash());
 	}

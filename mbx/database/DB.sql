@@ -22,7 +22,7 @@ create table ta_usr_account (
 
 create table ta_usr_permissions (
 	per_id            int not null auto_increment primary key,
-	per_usr_id        int not null
+	per_usr_id        int not null,
 	per_permission    varchar(15) collate utf8_unicode_ci not null,
 
 	foreign key fk_per_usr_id (per_usr_id) references ta_usr_account (usr_id) match full on delete cascade on update cascade

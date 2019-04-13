@@ -39,7 +39,7 @@ else
         }
         else
         {
-            $_SESSION['user'] = array('sid' => $usr_session->getId(), 'uid' => $usr_session->getUsrId(), 'hash' => $usr_session->getSessionHash());
+            $_SESSION['user'] = $usr_session->getSessionDescriptor(); 
         }
     }
 }
@@ -271,7 +271,9 @@ $res = new AppResult($_GET);
                     </div> <!-- row -->
                 </div> <!-- controls -->
             </form>
-        </div> <!-- container-fluid -->
+         </div> <!-- container-fluid -->
+         
+         <?php FormElements::feedbackModal('Das ist ein Test') ?>
         
         <?php FormElements::scriptRefs(); ?>
         <script type="text/javascript">
@@ -380,7 +382,8 @@ $res = new AppResult($_GET);
                             mth_subj: $("#mth_subject").val() 
                         }, 
                         function(data, status) {
-                            $("#mth_area").html(data.replace('<option></option>',''));
+                            $("#mth_area").html(data);
+                            // $("#mth_area").html(data.replace('<option></option>',''));
                         }
                     )
                 })
