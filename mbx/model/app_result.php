@@ -68,7 +68,14 @@ class AppResult
         }
         else
         {
-            return 'info';
+            if ($this->code > 950)
+            {
+                return 'success';
+            }
+            else
+            {
+                return 'info';
+            }
         }
     }
     

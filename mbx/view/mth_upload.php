@@ -74,7 +74,13 @@ $res = new AppResult($_GET);
                 </div>
             </div>
             
-            <?php if ($res->code != 0) { FormElements::showAlert($res->style(), 'col-md-8 col-xl-8', $res->text, 'col col-md-2 col-xl-2'); } ?>
+            <?php 
+                // if ($res->code != 0) { FormElements::showAlert($res->style(), 'col-md-8 col-xl-8', $res->text, 'col col-md-2 col-xl-2'); }
+                if (! $res->isOK())
+                {
+                    FormElements::feedbackModal($res);
+                }
+            ?>
             
             <form id="mth_upload" enctype="multipart/form-data" method="post" action="../ctrl/mth_upload.php">
                 <div class="controls">
@@ -271,11 +277,10 @@ $res = new AppResult($_GET);
                     </div> <!-- row -->
                 </div> <!-- controls -->
             </form>
-         </div> <!-- container-fluid -->
-         
-         <?php FormElements::feedbackModal('Das ist ein Test') ?>
+        </div> <!-- container-fluid -->
         
         <?php FormElements::scriptRefs(); ?>
+        <?php if (!$res->isOK()) { FormElements::launchFeedback(); } ?>
         <script type="text/javascript">
             /* global $ */
             $('#mth_upload').validate({

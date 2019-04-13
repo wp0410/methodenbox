@@ -236,21 +236,38 @@ class FormElements
     
     public static function feedbackModal($app_result)
     {
-        echo '<div class="modal fade" id="upFbModal" name="FeedbackMd" aria-labelled-by="FeedbackMdTitle" aria-hidden="true">';
+        echo '<div class="modal fade" id="FeedbackMd" name="FeedbackMd" aria-labelled-by="FeedbackMdTitle" aria-hidden="true">';
         echo '   <div class="modal-dialog modal-dialog-centered" role="document">';
         echo '      <div class="modal-content">';
         echo '         <div class="modal-header">';
-        echo '            <h5 class="modal-title" id="FeedbackMdTitle">Hinweis</h5>';
+        echo '            <h5 class="modal-title" id="FeedbackMdTitle"><span><i class="fa fa-exclamation" aria-hidden="true"></i>&nbsp;&nbsp;';
+        if ($app_result->style() == 'danger')
+        {
+            echo 'Fehler';
+        }
+        else 
+        {
+            echo 'Hinweis';
+        }
+        echo '            </span></h5>';
         echo '            <button type="button" class="close" data-dismiss="modal" aria-label="Schlie&szlig;en"><span aria-hidden="true">&times;</span></button>';
         echo '         </div>';
         echo '         <div class="modal-body">';
-        echo '            <div class = "alert alert-' . $app_result->style() . '" role="alert">' . $app_result->text . '</div>';
+        echo '            <div class = "alert alert-' . $app_result->style() . '" role="alert"><h5>' . $app_result->text . '</h5></div>';
         echo           '</div>';
         echo '         <div class="modal-footer">';
+        echo '            <button type="button" class="btn btn-light" data-dismiss="modal">Schlie&szlig;en</button>';
         echo '         </div>';
         echo '      </div>';
         echo '   </div>';
         echo '</div>';
+    }
+    
+    public static function launchFeedback()
+    {
+        echo '<script type="text/javascript"> /* global $ */';
+        echo '$(window).on(\'load\',function(){ $(\'#FeedbackMd\').modal(\'show\'); });';
+        echo '</script>';
     }
     
     public static function showAlert($alert_type, $col_format, $alert_text, $col_intend = null)

@@ -96,12 +96,12 @@ $res = $mth_file->saveFile($mth->getId(), $_FILES['mth_file']);
 if (! $res->isOK())
 {
     $mth->deleteMethod();
-    header('Location: ../view/mth_upload.php?res_code=' . $res->code . '&res_text=' . $res->textUrlEncoded());
-    exit;
 }
 else
 {
-    header('Location: ../view/mth_upload.php' );
-    exit;
+    $res = new AppResult(951);
+    $res->text = str_replace('[%M]', $mth->mth_name, $res->text);
 }
+header('Location: ../view/mth_upload.php?res_code=' . $res->code . '&res_text=' . $res->textUrlEncoded());
+exit;
 ?>
