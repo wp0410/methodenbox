@@ -54,7 +54,7 @@ class MethodResultView
         $this->where_clause = '';
     }
     
-    public function initRatingListStmt($usr_id)
+    public function initRatingListStmt()
     {
         $this->select_stmt = 
             'select mth_id, mth_name, mth_summary, mth_subject, mth_subject_text, ' . 
@@ -226,6 +226,7 @@ class MethodResultView
     public function storeCache()
     {
         $ch_stm = new StatementCache($this->db_conn);
+        $ch_stm->cch_lines_pp = $this->lines_per_page;
         $this->cache_obj_id = $ch_stm->storeCache($this->usr_id, $this->where_clause);
     }
     
@@ -237,15 +238,16 @@ class MethodResultView
     public function loadCache($cch_id)
     {
         $ch_stm = new StatementCache($this->db_conn);
-        $ch_stm->loadCache($cch_id);
+        $ch_stm->retrieveCache($cch_id);
         
         $this->cache_obj_id = $ch_stm->cch_obj_id;
 		$this->usr_id = $ch_stm->cch_owner_id;
         $this->where_clause = $ch_stm->cch_sql_stmt;
         $this->select_stmt = $this->select_stmt . ' ' . $this->where_clause;
+        $this->lines_per_page = $ch_stm->cch_lines_pp;
     }
     
-    public function retrieveLines($page_no, $lines_per_page)
+    public function retrieveLines($page_no)
     {
         // Retrieve the overall number of result lines created by the search statement
         $full_stmt = $this->select_stmt . ';';
@@ -260,7 +262,7 @@ class MethodResultView
         $stm_mv2->close();
         
         // Retrieve the lines for the requested page
-        $full_stmt = $this->select_stmt . ' limit ' . ($page_no - 1) * $lines_per_page . ',' . $lines_per_page . ';';
+        $full_stmt = $this->select_stmt . ' limit ' . ($page_no - 1) * $this->lines_per_page . ',' . $this->lines_per_page . ';';
         $stm_mv1 = $this->db_conn->prepare($full_stmt);
         if ($stm_mv1->execute())
         {
@@ -280,7 +282,6 @@ class MethodResultView
             $stm_mv1->store_result();
             
             // Set the pagination parameters:
-            $this->lines_per_page = $lines_per_page;
             $this->current_page = $page_no;
             
             $stm_mv1->bind_result(

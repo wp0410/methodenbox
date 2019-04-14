@@ -17,6 +17,7 @@ class StatementCache
     public $cch_owner_id;
     public $cch_sql_stmt;
     public $cch_obj_id;
+    public $cch_lines_pp;
     public $cch_store_date;
     public $cch_expiry_date;
     
@@ -24,6 +25,7 @@ class StatementCache
     {
         $this->db_conn = $db_cn;
         $this->cch_owner_id = 0;
+        $this->cch_lines_pp = GlobalParameter::$applicationConfig['mthPageNumLines'];
         $this->cch_sql_stmt = null;
         $this->cch_obj_id = null;
         $this->cch_store_date = null;
@@ -47,9 +49,9 @@ class StatementCache
         $this->cch_expiry_date = Helpers::dateTimeString(time() + 3600);
         $obj_id = Helpers::randomString(32);
 
-        $cstm = "insert into ta_aux_cache( cch_obj_id, cch_owner_id, cch_obj_data, cch_store_date, cch_expiry_date ) values ( ?, ?, ?, ?, ? );";
+        $cstm = "insert into ta_aux_cache( cch_obj_id, cch_owner_id, cch_obj_data, cch_lines_pp, cch_store_date, cch_expiry_date ) values ( ?, ?, ?, ?, ?, ? );";
         $stm_ch1 = $this->db_conn->prepare($cstm);
-        $stm_ch1->bind_param('sisss', $obj_id, $this->cch_owner_id, $this->cch_sql_stmt, $this->cch_store_date, $this->cch_expiry_date);
+        $stm_ch1->bind_param('sisiss', $obj_id, $this->cch_owner_id, $this->cch_sql_stmt, $this->cch_lines_pp, $this->cch_store_date, $this->cch_expiry_date);
         $stm_ch1->execute();
         $stm_ch1->close();
 
@@ -70,16 +72,17 @@ class StatementCache
         $this->cch_obj_id = null;
         $this->cch_store_date = null;
         $this->cch_expiry_date = null;
+        $this->cch_lines_pp = null;
         
         $cur_time = Helpers::dateTimeString(time());
 
-        $cstm = "select cch_obj_id, cch_owner_id, cch_obj_data, cch_store_date, cch_expiry_date from ta_aux_cache where cch_obj_id = ? and cch_expiry_date >= ?";
+        $cstm = "select cch_obj_id, cch_owner_id, cch_obj_data, cch_lines_pp, cch_store_date, cch_expiry_date from ta_aux_cache where cch_obj_id = ? and cch_expiry_date >= ?";
 
         $stm_ch3 = $this->db_conn->prepare($cstm);
         $stm_ch3->bind_param('ss', $co_obj_id, $cur_time);
         if ($stm_ch3->execute())
         {
-            $stm_ch3->bind_result($this->cch_obj_id, $this->cch_owner_id, $this->cch_sql_stmt, $this->cch_store_date, $this->cch_expiry_date);
+            $stm_ch3->bind_result($this->cch_obj_id, $this->cch_owner_id, $this->cch_sql_stmt, $this->cch_lines_pp, $this->cch_store_date, $this->cch_expiry_date);
             $stm_ch3->fetch();
         }
         

@@ -1,6 +1,6 @@
 <?php
 //---------------------------------------------------------------------------------------
-//  Copyright (c) 2018 Walter Pachlinger (walter.pachlinger@gmx.at)
+//  Copyright (c) 2018, 2019 Walter Pachlinger (walter.pachlinger@gmail.com)
 //    
 //  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this 
 //  file except in compliance with the License. You may obtain a copy of the License at
@@ -76,9 +76,10 @@ $res = new AppResult($_GET);
             
             <?php 
                 // if ($res->code != 0) { FormElements::showAlert($res->style(), 'col-md-8 col-xl-8', $res->text, 'col col-md-2 col-xl-2'); }
+                // $res = new AppResult(951);
                 if (! $res->isOK())
                 {
-                    FormElements::feedbackModal($res);
+                    FormElements::feedbackModal($res, 'Weitere Methoden anlegen', array('LABEL' => 'Zur Methoden&uuml;bersicht', 'LINK' => '../view/mth_search_pg.php'));
                 }
             ?>
             
@@ -236,6 +237,7 @@ $res = new AppResult($_GET);
                     <div class="row form-row"><div class="col col-md-2 col-xl-2"></div>
                         <div class="col-md-8 col-xl-8">
                             <div class="form-group">
+                            	<input type="hidden" name="MAX_FILE_SIZE" value="4194304" />
                                 <div class="input-group">
                                     <label class="input-group-btn">
                                         <span class="btn btn-outline-dark">

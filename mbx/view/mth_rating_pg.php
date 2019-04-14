@@ -79,8 +79,15 @@ if (! $res->isOK())
                                 <div class="col col-md-4 col-xl-4">
                                     <span class="input-group-text">Offene Bewertungen</span>
                                 </div>
-                                <!-- <div class="col col-md-5 col-xl-5"></div> -->
-                                <!-- <div class="col col-md-5 col-xl-5"></div> -->
+                                <div class="col col-md-3 col-xl-3">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label class="input-group-text" for="res_lines_per_page">Eintr&auml;ge pro Seite</label>
+										</div>
+										<input type="number" id="res_lpp" name="res_lpp" style="text-align:center"
+											value="<?php echo GlobalParameter::$applicationConfig['mthPageNumLines']; ?>" min="3" max="10" step="1" />
+									</div>
+                                </div>
                             </div>
                         </div>
                         <div class="card-body" id="mth_result">
@@ -426,7 +433,8 @@ if (! $res->isOK())
                             mth_soc: msoc, 
                             mth_author: $('#mth_author').val(),
                             mth_name: $('#mth_name').val(),
-                            curr_usr_id: $('#curr_usr_id').val()
+                            curr_usr_id: $('#curr_usr_id').val(),
+                            lines_per_pg: $('#res_lpp').val()
                         },
                         function(data, status) {
                             $('#mth_result').html(data);

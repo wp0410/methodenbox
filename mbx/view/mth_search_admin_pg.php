@@ -1,6 +1,6 @@
 <?php
 //---------------------------------------------------------------------------------------
-//  Copyright (c) 2018 Walter Pachlinger (walter.pachlinger@gmx.at)
+//  Copyright (c) 2018, 2019 Walter Pachlinger (walter.pachlinger@gmail.com)
 //    
 //  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this 
 //  file except in compliance with the License. You may obtain a copy of the License at
@@ -10,11 +10,12 @@
 //  ANY KIND, either express or implied. See the License for the specific language 
 //  governing permissions and limitations under the License.
 //----------------------------------------------------------------------------------------
-include_once '../model/mth_method_view.php';
+include_once '../model/mth_method_view_pg.php';
+include_once '../view/mth_result_base_pg.php';
 
 class MethodAdminResultView extends MethodSearchViewBase
 {
-    private function renderLine($line_no, $line)
+    protected function renderLine($line_no, $line)
     {
         $this->addOutput('<div class="card"><div class="card-header" id="res_line_' . $line_no . '">');
         $this->addOutput('<div class="row">');
@@ -91,13 +92,19 @@ class MethodAdminResultView extends MethodSearchViewBase
         $this->addOutput('<th scope="col" class="table-secondary">AutorIn</th></tr>');
 
         // Table row 3: field values (subject, subject area, preparation time, execution time, age group, main author)
-        $this->addOutput('<tr><td><span>' . htmlentities($line->mth_subject_txt) . '</span></td>');
-        $this->addOutput('<td><span>' . htmlentities($line->mth_subj_area_txt) . '</span></td>');
-        $this->addOutput('<td><span>' . htmlentities($line->mth_prep_tm_txt) . '</span></td>');
-        $this->addOutput('<td><span>' . htmlentities($line->mth_exec_tm_txt) . '</span></td>');
-        $this->addOutput('<td><span>' . htmlentities($line->mth_age_grp_txt) . '</span></td>');
-         $this->addOutput('<td><span>' . htmlentities($line->mth_authors_arr[0]) . '</span></td></tr>');
-
+//         $this->addOutput('<tr><td><span>' . htmlentities($line->mth_subject_txt) . '</span></td>');
+//         $this->addOutput('<td><span>' . htmlentities($line->mth_subj_area_txt) . '</span></td>');
+//         $this->addOutput('<td><span>' . htmlentities($line->mth_prep_tm_txt) . '</span></td>');
+//         $this->addOutput('<td><span>' . htmlentities($line->mth_exec_tm_txt) . '</span></td>');
+//         $this->addOutput('<td><span>' . htmlentities($line->mth_age_grp_txt) . '</span></td>');
+//         $this->addOutput('<td><span>' . htmlentities($line->mth_authors_arr[0]) . '</span></td></tr>');
+        $this->addOutput('<tr><td><span>' . $line->mth_subject_txt . '</span></td>');
+        $this->addOutput('<td><span>' . $line->mth_subj_area_txt . '</span></td>');
+        $this->addOutput('<td><span>' . $line->mth_prep_tm_txt . '</span></td>');
+        $this->addOutput('<td><span>' . $line->mth_exec_tm_txt . '</span></td>');
+        $this->addOutput('<td><span>' . $line->mth_age_grp_txt . '</span></td>');
+        $this->addOutput('<td><span>' . $line->mth_authors_arr[0] . '</span></td></tr>');
+        
         // Table row 4: field values (social form, phase) + download button
         $this->addOutput('<tr><td colspan="2">');
         $phase_txt = array('E' => 'Einstieg', 'I' => 'Information', 'S' => 'Sicherung', 'A' => 'Aktivierung');

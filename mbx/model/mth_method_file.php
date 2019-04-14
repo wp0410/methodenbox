@@ -101,6 +101,7 @@ class TeachingMethodFile
         {
             // File upload failed
             $result = new AppResult(652);
+            $result->text = $result->text . ' [ERROR = ' . $files_elem['error'] . ']';
         }
         
         if (! $result->isOK())

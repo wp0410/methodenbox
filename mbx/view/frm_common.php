@@ -74,8 +74,8 @@ class FormElements
         $sub_menu_config = array(
             'MTH.SRCH' => array('TEXT' => 'Suchen', 'LINK' => '../view/mth_search_pg.php'), 
             'MTH.NEW'  => array('TEXT' => 'Anlegen', 'LINK' => '../view/mth_upload.php'), 
-            'MTH.RATE' => array('TEXT' => 'Bewerten', 'LINK' => '../view/mth_rating.php'), 
-            'MTH.ADM'  => array('TEXT' => 'Verwalten', 'LINK' => '../view/mth_admin.php'), 
+            'MTH.RATE' => array('TEXT' => 'Bewerten', 'LINK' => '../view/mth_rating_pg.php'), 
+            'MTH.ADM'  => array('TEXT' => 'Verwalten', 'LINK' => '../view/mth_admin_pg.php'), 
             'USR.REG'  => array('TEXT' => 'Registrieren', 'LINK' => '../view/usr_register.php'), 
             'USR.CONF' => array('TEXT' => 'Registrierung Best&auml;tigen', 'LINK' => '../view/usr_confirm.php'), 
             'USR.IN'   => array('TEXT' => 'Anmelden', 'LINK' => '../view/usr_login.php'), 
@@ -234,7 +234,7 @@ class FormElements
         echo '</div>';
     }
     
-    public static function feedbackModal($app_result)
+    public static function feedbackModal($app_result, $close_btn_label, $alt_btn = null)
     {
         echo '<div class="modal fade" id="FeedbackMd" name="FeedbackMd" aria-labelled-by="FeedbackMdTitle" aria-hidden="true">';
         echo '   <div class="modal-dialog modal-dialog-centered" role="document">';
@@ -256,7 +256,11 @@ class FormElements
         echo '            <div class = "alert alert-' . $app_result->style() . '" role="alert"><h5>' . $app_result->text . '</h5></div>';
         echo           '</div>';
         echo '         <div class="modal-footer">';
-        echo '            <button type="button" class="btn btn-light" data-dismiss="modal">Schlie&szlig;en</button>';
+        echo '            <button type="button" class="btn btn-light" data-dismiss="modal">' . $close_btn_label . '</button>';
+        if (! empty($alt_btn) && ! empty($alt_btn['LABEL']) && ! empty($alt_btn['LINK']))
+        {
+            echo '        <a class="btn btn-primary" href="' . $alt_btn['LINK'] . '" role="button">' . $alt_btn['LABEL'] . '</a>';
+        }
         echo '         </div>';
         echo '      </div>';
         echo '   </div>';

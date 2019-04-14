@@ -1,6 +1,6 @@
 <?php
 //---------------------------------------------------------------------------------------
-//  Copyright (c) 2018 Walter Pachlinger (walter.pachlinger@gmx.at)
+//  Copyright (c) 2018, 2019 Walter Pachlinger (walter.pachlinger@gmail.com)
 //    
 //  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this 
 //  file except in compliance with the License. You may obtain a copy of the License at
@@ -76,7 +76,15 @@ if (! $res->isOK())
                                 <div class="col col-md-4 col-xl-4">
                                     <span class="input-group-text">Vorhandene Methoden</span>
                                 </div>
-                                <div class="col col-md-3 col-xl-3"></div>
+                                <div class="col col-md-3 col-xl-3">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label class="input-group-text" for="res_lines_per_page">Eintr&auml;ge pro Seite</label>
+										</div>
+										<input type="number" id="res_lpp" name="res_lpp" style="text-align:center"
+											value="<?php echo GlobalParameter::$applicationConfig['mthPageNumLines']; ?>" min="3" max="10" step="1" />
+									</div>
+                                </div>
                                 <div class="col col-md-5 col-xl-5">
                                     <div class="input-group">
                                         <div class="input-group-prepend">
@@ -297,7 +305,8 @@ if (! $res->isOK())
                             mth_class: $('#mth_class').val(),
                             mth_name: $('#mth_name').val(),
                             mth_res_sort: $('#mth_res_sort').val(),
-                            curr_usr_id: $('#curr_usr_id').val()
+                            curr_usr_id: $('#curr_usr_id').val(),
+                            lines_per_pg: $('#res_lpp').val()
                         },
                         function(data, status) {
                             $('#mth_result').html(data);

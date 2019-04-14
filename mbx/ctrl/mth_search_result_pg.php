@@ -1,6 +1,6 @@
 <?php
 //---------------------------------------------------------------------------------------
-//  Copyright (c) 2018 Walter Pachlinger (walter.pachlinger@gmx.at)
+//  Copyright (c) 2018, 2019 Walter Pachlinger (walter.pachlinger@gmail.com)
 //    
 //  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this 
 //  file except in compliance with the License. You may obtain a copy of the License at
@@ -21,11 +21,11 @@ set_private_warning_handler();
 
 session_start();
 $db_conn = DatabaseConnection::get_connection();
-$lines_per_page = GlobalParameter::$applicationConfig['mthPageNumLines'];
 $max_pages = GlobalParameter::$applicationConfig['mthPageNumPages'];
 $cur_page = 1;
 
 $res_view = new MethodResultView($db_conn);
+$res_view->lines_per_page = GlobalParameter::$applicationConfig['mthPageNumLines'];
 $res_from_cache = false;
 
 $res_view->initSearchResultStmt();
@@ -115,10 +115,15 @@ if (! empty($_POST))
                 $res_view->sortByRating();
                 break;
         }
+        
+        if (! empty($_POST['lines_per_pg']))
+        {
+            $res_view->lines_per_page = $_POST['lines_per_pg'];
+        }
     }
 }
 
-$res_view->retrieveLines($cur_page, $lines_per_page);
+$res_view->retrieveLines($cur_page);
 
 if (! $res_from_cache)
 {

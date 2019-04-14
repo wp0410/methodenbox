@@ -22,12 +22,12 @@ set_private_warning_handler();
 
 session_start();
 $db_conn = DatabaseConnection::get_connection();
-$lines_per_page = GlobalParameter::$applicationConfig['mthPageNumLines'];
 $max_pages = GlobalParameter::$applicationConfig['mthPageNumPages'];
 $cur_page = 1;
 
 $res_view = new MethodResultView($db_conn);
 $res_view->InitAdminListStmt();
+$res_view->lines_per_page = GlobalParameter::$applicationConfig['mthPageNumLines'];
 $res_from_cache = false;
 
 $param_missing = 
@@ -39,7 +39,7 @@ $param_missing =
 		)
 	);
 
-if (param_missing)
+if ($param_missing)
 {
     $res = new AppResult(406);
     header('Location: ../view/aux_error.php?res_code=' . $res->code . '&res_text=' . $res->textUrlEncoded());
@@ -111,9 +111,14 @@ else
             $res_view->sortByRating();
             break;
     }
+
+    if (! empty($_POST['lines_per_pg']))
+    {
+        $res_view->lines_per_page = $_POST['lines_per_pg'];
+    }
 }
 
-$res_view->retrieveLines($cur_page, $lines_per_page);
+$res_view->retrieveLines($cur_page);
 
 if (! $res_from_cache)
 {

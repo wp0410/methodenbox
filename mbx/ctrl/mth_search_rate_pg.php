@@ -1,6 +1,6 @@
 <?php
 //---------------------------------------------------------------------------------------
-//  Copyright (c) 2018 Walter Pachlinger (walter.pachlinger@gmx.at)
+//  Copyright (c) 2018, 2019 Walter Pachlinger (walter.pachlinger@gmail.com)
 //    
 //  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this 
 //  file except in compliance with the License. You may obtain a copy of the License at
@@ -22,17 +22,17 @@ set_private_warning_handler();
 
 session_start();
 $db_conn = DatabaseConnection::get_connection();
-$lines_per_page = GlobalParameter::$applicationConfig['mthPageNumLines'];
 $max_pages = GlobalParameter::$applicationConfig['mthPageNumPages'];
 $cur_page = 1;
 
 $res_view = new MethodResultView($db_conn);
 $res_view->initRatingListStmt();
+$res_view->lines_per_page = GlobalParameter::$applicationConfig['mthPageNumLines'];
 $res_from_cache = false;
 
 // Mandatory Parameters: we need either the "current user identifier" or the identifier of a cached statement
 $param_missing = empty($_POST) || (empty($_POST['curr_usr_id']) && empty($_POST['ch_id']));
-if (param_missing)
+if ($param_missing)
 {
     $res = new AppResult(406);
     header('Location: ../view/aux_error.php?res_code=' . $res->code . '&res_text=' . $res->textUrlEncoded());
@@ -92,14 +92,14 @@ else
 		{
 			$res_view->compareMthAuthor($_POST['mth_author']);
 		}
-		if (! empty($_POST['view_lines']))
+		if (! empty($_POST['lines_per_pg']))
 		{
-			$max_lines = $_POST['view_lines'];
+		    $res_view->lines_per_page = $_POST['lines_per_pg'];
 		}
 	}
 }
 
-$res_view->retrieveLines($cur_page, $lines_per_page);
+$res_view->retrieveLines($cur_page);
 
 if (! $res_from_cache)
 {

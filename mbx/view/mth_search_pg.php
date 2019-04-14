@@ -71,7 +71,7 @@ if (! empty($_SESSION) && ! empty($_SESSION['user']))
 										<div class="input-group-prepend">
 											<label class="input-group-text" for="res_lines_per_page">Eintr&auml;ge pro Seite</label>
 										</div>
-										<input type="number" id="res_lines_per_page" name="res_lines_per_page" style="text-align:center"
+										<input type="number" id="res_lpp" name="res_lpp" style="text-align:center"
 											value="<?php echo GlobalParameter::$applicationConfig['mthPageNumLines']; ?>" min="3" max="10" step="1" />
 									</div>
 								</div>
@@ -354,7 +354,8 @@ if (! empty($_SESSION) && ! empty($_SESSION['user']))
                             mth_author: $('#mth_author').val(),
                             mth_name: $('#mth_name').val(),
                             mth_res_sort: $('#mth_res_sort').val(),
-                            curr_usr_id: $('#curr_usr_id').val()
+                            curr_usr_id: $('#curr_usr_id').val(),
+                            lines_per_pg: $('#res_lpp').val()
                         },
                         function(data, status) {
                             $('#mth_result').html(data);
