@@ -55,6 +55,7 @@ else
 	{
 		$res_view->usr_id = $_POST['curr_usr_id']; 
 		$res_view->compareDnlUserId($res_view->usr_id);
+		$res_view->excludeCurrentUser($res_view->usr_id);
 		
 		if (! empty($_POST['mth_name']))
 		{

@@ -194,6 +194,9 @@ if (! $res->isOK())
                                         <input type="submit" class="btn btn-primary btn-send" id="btn_apply" name="btn_apply" value="Filter anwenden ...">
                                     </div>
                                 </div>
+                                <div class="col">
+                                	<a class="btn btn-secondary float-right" href="<?php echo $_SERVER['PHP_SELF']; ?>" role="button">Filter zur&uuml;cksetzen</a>
+                                </div>
                             </div>
                         </div> <!-- card-body -->
                     </div>
@@ -240,6 +243,10 @@ if (! $res->isOK())
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle" aria-hidden="true"></i></span></button>
                     </div> <!-- modal-header -->
                     <div class="modal-body" id="mth_upload_body">
+                    	<div class="alert alert-warning" role="alert"><h5>
+                    		Warnung: durch das Hochladen einer neuen Datei wird die aktuelle ZIP-Datei der Methode ersetzt. 
+                    		Der Vorgang kann nicht r&uuml;ckg&auml;ngig gemacht werden.</h5>
+                    	</div>
                         
                         <form id="mth_upload" enctype="multipart/form-data" method="post" action="/mbx/ctrl/mth_update_file.php">
                             <div class="row form-row">
@@ -293,26 +300,34 @@ if (! $res->isOK())
         </script>
         <script type="text/javascript">
             /* global $ */
+            function load_contents() {
+                $.post(
+                    "/mbx/ctrl/mth_search_admin_pg.php",
+                    {
+                        mth_ownership: $('#mth_ownership').val(),
+                        mth_owner: $('#mth_owner').val(),
+                        mth_subject: $('#mth_subject').val(),
+                        mth_area: $('#mth_area').val(),
+                        mth_class: $('#mth_class').val(),
+                        mth_name: $('#mth_name').val(),
+                        mth_res_sort: $('#mth_res_sort').val(),
+                        curr_usr_id: $('#curr_usr_id').val(),
+                        lines_per_pg: $('#res_lpp').val()
+                    },
+                    function(data, status) {
+                        $('#mth_result').html(data);
+                    }
+                );
+            }
+            
             $(document).ready(function () {
                 $('#btn_apply').click(function () {
-                    $.post(
-                        "/mbx/ctrl/mth_search_admin_pg.php",
-                        {
-                            mth_ownership: $('#mth_ownership').val(),
-                            mth_owner: $('#mth_owner').val(),
-                            mth_subject: $('#mth_subject').val(),
-                            mth_area: $('#mth_area').val(),
-                            mth_class: $('#mth_class').val(),
-                            mth_name: $('#mth_name').val(),
-                            mth_res_sort: $('#mth_res_sort').val(),
-                            curr_usr_id: $('#curr_usr_id').val(),
-                            lines_per_pg: $('#res_lpp').val()
-                        },
-                        function(data, status) {
-                            $('#mth_result').html(data);
-                        }
-                    );
+                    load_contents();
                 });
+            });
+
+            $(window).on('load', function() {
+                load_contents();
             });
         </script>
         <script type="text/javascript">

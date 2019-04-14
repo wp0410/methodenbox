@@ -268,6 +268,9 @@ if (! empty($_SESSION) && ! empty($_SESSION['user']))
                                         <input type="submit" class="btn btn-primary btn-send" value="Filter anwenden ...">
                                     </div>
                                 </div>
+                                <div class="col">
+                                	<a class="btn btn-secondary float-right" href="<?php echo $_SERVER['PHP_SELF']; ?>" role="button">Filter zur&uuml;cksetzen</a>
+                                </div>
                             </div>
                         </div> <!-- card-body -->
                     </div> <!-- card -->
@@ -311,57 +314,65 @@ if (! empty($_SESSION) && ! empty($_SESSION['user']))
         </script>
         <script type="text/javascript">
             /* global $ */
+            function load_contents() {
+                var mphase = '';
+                if (document.getElementById('mth_phase_E').checked) {
+                    mphase = 'E:';
+                }
+                if (document.getElementById('mth_phase_A').checked) {
+                    mphase = mphase + 'A:';
+                }
+                if (document.getElementById('mth_phase_I').checked) {
+                    mphase = mphase + 'I:';
+                }
+                if (document.getElementById('mth_phase_S').checked) {
+                    mphase = mphase + 'S:';
+                }
+                
+                var msoc = '';
+                if (document.getElementById('mth_soc_E').checked) {
+                    msoc = 'E:';
+                }
+                if (document.getElementById('mth_soc_G').checked) {
+                    msoc = msoc + 'G:';
+                }
+                if (document.getElementById('mth_soc_K').checked) {
+                    msoc = msoc + 'K:'
+                }
+                if (document.getElementById('mth_soc_P').checked) {
+                    msoc = msoc + 'P:';
+                }
+                
+                $.post(
+                    "/mbx/ctrl/mth_search_result_pg.php",
+                    {
+                        mth_subject: $('#mth_subject').val(),
+                        mth_area: $('#mth_area').val(),
+                        mth_class: $('#mth_class').val(),
+                        mth_prep_tm: $('#mth_prep_tm').val(),
+                        mth_exec_tm: $('#mth_exec_tm').val(),
+                        mth_phase: mphase, //$('#mth_phase').val(),
+                        mth_soc: msoc, //$('#mth_soc').val(),
+                        mth_author: $('#mth_author').val(),
+                        mth_name: $('#mth_name').val(),
+                        mth_res_sort: $('#mth_res_sort').val(),
+                        curr_usr_id: $('#curr_usr_id').val(),
+                        lines_per_pg: $('#res_lpp').val()
+                    },
+                    function(data, status) {
+                        $('#mth_result').html(data);
+                    }
+                );
+            }
+            
             $(document).ready(function () {
                 $('#filter_apply').click(function () {
-                    var mphase = '';
-                    if (document.getElementById('mth_phase_E').checked) {
-                        mphase = 'E:';
-                    }
-                    if (document.getElementById('mth_phase_A').checked) {
-                        mphase = mphase + 'A:';
-                    }
-                    if (document.getElementById('mth_phase_I').checked) {
-                        mphase = mphase + 'I:';
-                    }
-                    if (document.getElementById('mth_phase_S').checked) {
-                        mphase = mphase + 'S:';
-                    }
-                    
-                    var msoc = '';
-                    if (document.getElementById('mth_soc_E').checked) {
-                        msoc = 'E:';
-                    }
-                    if (document.getElementById('mth_soc_G').checked) {
-                        msoc = msoc + 'G:';
-                    }
-                    if (document.getElementById('mth_soc_K').checked) {
-                        msoc = msoc + 'K:'
-                    }
-                    if (document.getElementById('mth_soc_P').checked) {
-                        msoc = msoc + 'P:';
-                    }
-                    
-                    $.post(
-                        "/mbx/ctrl/mth_search_result_pg.php",
-                        {
-                            mth_subject: $('#mth_subject').val(),
-                            mth_area: $('#mth_area').val(),
-                            mth_class: $('#mth_class').val(),
-                            mth_prep_tm: $('#mth_prep_tm').val(),
-                            mth_exec_tm: $('#mth_exec_tm').val(),
-                            mth_phase: mphase, //$('#mth_phase').val(),
-                            mth_soc: msoc, //$('#mth_soc').val(),
-                            mth_author: $('#mth_author').val(),
-                            mth_name: $('#mth_name').val(),
-                            mth_res_sort: $('#mth_res_sort').val(),
-                            curr_usr_id: $('#curr_usr_id').val(),
-                            lines_per_pg: $('#res_lpp').val()
-                        },
-                        function(data, status) {
-                            $('#mth_result').html(data);
-                        }
-                    );
+                    load_contents();
                 });
+            });
+
+            $(window).on('load', function() {
+                load_contents();
             });
         </script>
         <script type="text/javascript">

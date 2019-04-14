@@ -107,6 +107,13 @@ class MethodResultView
         $this->where_clause = $this->where_clause . $stm_part;
     }
     
+    private function compareNumGen($att_name, $att_value, $operator)
+    {
+        $stm_part = " and " . $att_name . " " . $operator . " " . $att_value . " ";
+        $this->select_stmt = $this->select_stmt . $stm_part;
+        $this->where_clause = $this->where_clause . $stm_part;
+    }
+    
     private function compareArrayAll($att_name, $att_value)
     {
         foreach($att_value as $att)
@@ -201,6 +208,12 @@ class MethodResultView
 	public function compareDnlUserId($dnl_usr_id)
 	{
 		$this->compareNumEqual('dnl_usr_id', $dnl_usr_id);
+	}
+	
+	public function excludeCurrentUser($usr_id)
+	{
+	    $this->compareNumGen('mth_owner_id', $usr_id, '!=');
+	    // $this->compareNumGen('dnl_usr_id', $usr_id, '!=');
 	}
     
     public function sortByRating()
