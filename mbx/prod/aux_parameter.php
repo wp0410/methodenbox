@@ -18,8 +18,7 @@ class GlobalParameter
         'applicationTitle'       => 'Methodenbox',
         'userAccountFailLimit'   => 3,
         'userSessionLifetimeSec' => 3600,
-        'deploymentZone'         => 'DEV',
-        // 'deploymentZone'         => 'DEMO',
+        'deploymentZone'         => 'DEMO',
         'mthResultNumLines'      => 5,
         'mthRatingNumLines'      => 5,
         'mthAdminNumLines'       => 5,
@@ -35,8 +34,7 @@ class GlobalParameter
         
         'logDestination'         => '/php_warning.log',
         'doSendEmail'            => false,
-        'validateCaptcha'        => false,
-        // 'validateCaptcha'        => true,
+        'validateCaptcha'        => true,
         
         'void'                   => ''
     );

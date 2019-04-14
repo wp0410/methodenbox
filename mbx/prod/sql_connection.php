@@ -61,7 +61,7 @@ class DatabaseConnection
         {
             $db_host = getenv('IP');
             $db_username = 'mthbox';
-            $db_password = 'AcIw35926+MB';
+            $db_password = '';
             $db_name = 'mthbox';
             $db_port = 3306;
         }
