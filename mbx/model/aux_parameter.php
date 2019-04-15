@@ -26,9 +26,13 @@ class GlobalParameter
         'rtgListNumLines'        => 15,
         'rtgListMaxAgeDays'      => 90,
         
-        // Paging parameters
+        // Paging parameters: Methoden
         'mthPageNumLines'        => 5,
         'mthPageNumPages'        => 9,
+        
+        // Paging parameters: Administration
+        'admPageNumLines'        => 10,
+        'admPageNumPages'        => 9,
         
         // Upload file types
         'mthUploadFileTypes'     => '.zip, .tar, .gz',

@@ -25,6 +25,7 @@ class GlobalResultText
             'E_404' => 'E_404 Fehler beim Zugriff auf die Benutzer Registrierung in der Datenbank',
             'E_405' => 'E_405 Die Benutzersitzung ist ung&uuml;ltig.',
             'E_406' => 'E_406 Die Identifizierung und Authentifizierung ist fehlgeschlagen',
+            'E_407' => 'E_407 Sie sind nicht berechtigt, die gew&uuml;nschte Funktion auszuf&uuml;hren. Bitte kontaktieren Sie einen Administrator',
             'E_410' => 'E_410 Benutzer Anmeldung fehlgeschlagen (Ung&uuml;ltiges Benutzerkonto oder falsches Passwort)',
             'E_411' => 'E_411 Benutzer Anmeldung fehlgeschlagen (die Registrierung ist noch nicht best&auml;tigt)',
             'E_412' => 'E_412 Benutzer Anmeldung fehlgeschlagen (das Benutzerkonto ist gesperrt). Bitte kontaktieren Sie einen Administrator',
