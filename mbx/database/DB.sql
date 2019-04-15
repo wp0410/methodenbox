@@ -1,8 +1,14 @@
--- 2019-04-07: 
---    Added table ta_log_usr_session (log for user login attempts);
--- 2019-04-11: 
---    Changed table ta_usr_session (column ses_permissions);
---    Added table ta_usr_permissions (permissions for a user account);
+-----------------------------------------------------------------------------------------
+--  Copyright (c) 2018, 2019 Walter Pachlinger (walter.pachlinger@gmail.com)
+--    
+--  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this 
+--  file except in compliance with the License. You may obtain a copy of the License at
+--      http://www.apache.org/licenses/LICENSE-2.0
+--  Unless required by applicable law or agreed to in writing, software distributed under 
+--  the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF 
+--  ANY KIND, either express or implied. See the License for the specific language 
+--  governing permissions and limitations under the License.
+------------------------------------------------------------------------------------------
 
 create table ta_usr_account (
     usr_id            int not null auto_increment primary key,

@@ -1,6 +1,6 @@
 <?php
 //---------------------------------------------------------------------------------------
-//  Copyright (c) 2018 Walter Pachlinger (walter.pachlinger@gmx.at)
+//  Copyright (c) 2018, 2019 Walter Pachlinger (walter.pachlinger@gmail.com)
 //    
 //  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this 
 //  file except in compliance with the License. You may obtain a copy of the License at
@@ -22,11 +22,19 @@ class FormElements
                 'href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" ' . 
                 'integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">';
         */
-        // echo '<link rel="stylesheet" href="/mbx/css/superhero.bootstrap.min.css">';
-        // echo '<link rel="stylesheet" href="/mbx/css/materia.bootstrap.min.css">';
-        // echo '<link rel="stylesheet" href="/mbx/css/united.bootstrap.min.css">';
-        echo '<link rel="stylesheet" href="/mbx/css/lumen.bootstrap.min.css">';
+
+        // Bootswatch themes including bootstrap: default theme is "lumen"
         // echo '<link rel="stylesheet" href="/mbx/css/flatly.bootstrap.min.css">';
+        echo '<link rel="stylesheet" href="/mbx/css/lumen.bootstrap.min.css">';
+        // echo '<link rel="stylesheet" href="/mbx/css/materia.bootstrap.min.css">';
+        // echo '<link rel="stylesheet" href="/mbx/css/pulse.bootstrap.min.css">';
+        // echo '<link rel="stylesheet" href="/mbx/css/sandstone.bootstrap.min.css">';
+        // echo '<link rel="stylesheet" href="/mbx/css/simplex.bootstrap.min.css">';
+        // echo '<link rel="stylesheet" href="/mbx/css/slate.bootstrap.min.css">';
+        // echo '<link rel="stylesheet" href="/mbx/css/solar.bootstrap.min.css">';
+        // echo '<link rel="stylesheet" href="/mbx/css/superhero.bootstrap.min.css">';
+        // echo '<link rel="stylesheet" href="/mbx/css/united.bootstrap.min.css">';
+        // echo '<link rel="stylesheet" href="/mbx/css/yeti.bootstrap.min.css">';
         echo '<link rel="stylesheet" href="/mbx/css/mbx.css">';
         echo '<link rel="stylesheet" href="/mbx/font-awesome-4.7.0/css/font-awesome.min.css">';
     }
