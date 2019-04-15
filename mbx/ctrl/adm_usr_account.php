@@ -15,6 +15,8 @@ include_once '../model/app_result.php';
 include_once '../model/aux_helpers.php';
 include_once '../model/app_result.php';
 include_once '../model/usr_account_view.php';
+include_once '../model/app_warning.php';
+include_once '../view/adm_usr_account_view.php';
 
 set_private_warning_handler();
 
@@ -55,4 +57,14 @@ else
         $res_view->lines_per_page = $_POST['lines_per_pg'];
     }
 }
+
+$res_view->retrieveLines($cur_page);
+if (! $res_from_cache)
+{
+    $res_view->storeCache();
+}
+
+$adm_view = new UserAccountAdminResult($res_view, $max_pages);
+$adm_view->renderHtml();
+$adm_view->outputHtml();
 ?>

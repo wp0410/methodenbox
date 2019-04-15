@@ -10,20 +10,18 @@
 //  ANY KIND, either express or implied. See the License for the specific language 
 //  governing permissions and limitations under the License.
 //----------------------------------------------------------------------------------------
-include_once '../model/mth_method_view_pg.php';
+include_once '../model/usr_account_view.php';
 
-class MethodSearchViewBase
+class UserAccountAdminResult
 {
     protected $output;
-    protected $usr_authenticated;
-    protected $mth_view;
+    protected $usr_view;
     protected $max_pages;
     
-    public function __construct($mth_view, $max_pages)
+    public function __construct($usr_view, $max_pages)
     {
-        $this->mth_view = $mth_view;
+        $this->usr_view = $usr_view;
         $this->output = '';
-        $this->usr_authenticated = ($mth_view->usr_id > 0);
         $this->max_pages = $max_pages;
     }
     
@@ -36,18 +34,60 @@ class MethodSearchViewBase
     {
         $this->renderPagination();
         
-        $this->addOutput('<div class="accordion" id="mth_result_lines">');
+        $this->addOutput('<table class="table"><thead class="thead-light"><tr>');
+        $this->addOutput('<th scope="col">ID</th>');
+        $this->addOutput('<th scope="col">Name</th>');
+        $this->addOutput('<th scope="col">E-Mail Adresse</th>');
+        $this->addOutput('<th scope="col">Registriert am</th>');
+        $this->addOutput('<th scope="col">Letzte Anmeldung</th>');
+        $this->addOutput('<th scope="col">Status</th>');
+        $this->addOutput('<th scope="col">Berechtigungen</th>');
+        $this->addOutput('</tr></thead><tbody>');
         
         $line_no = 1;
-        foreach($this->mth_view->lines as $line)
+        foreach($this->usr_view->lines as $line)
         {
             $this->renderLine($line_no, $line);
             $line_no++;
         }
         
-        $this->addOutput('</div>');
+        $this->addOutput('</tbody></table>');
     }
     
+    protected function renderLine($line_no, $line)
+    {
+        $this->addOutput('<tr><td>' . $line->usr_id . '</td><td>' . $line->usr_fst_name . ' ' . $line->usr_lst_name . '</td><td>' . $line->usr_email . '</td>');
+        $this->addOutput('<td>' . substr($line->usr_reg_date,0,10) . '</td><td>' . substr($line->usr_login_date,0,10) . '</td><td>');
+        switch($line->usr_status)
+        {
+            case 0:
+                $this->addOutput('NEU');
+                break;
+            case 1:
+                $this->addOutput('AKTIV');
+                break;
+            case 2:
+                $this->addOutput('GESPERRT');
+                break;
+        }
+        $this->addOutput('</td><td>');
+        
+        if ($line->role_client > 0)
+        {
+            $this->addOutput('<i class="fa fa-user-o fa-2x" aria-hidden="true"></i>&nbsp;&nbsp;');
+        }
+        if ($line->role_upload > 0)
+        {
+            $this->addOutput('<i class="fa fa-cloud-upload fa-2x" aria-hidden="true"></i>&nbsp;&nbsp;');
+        }
+        if ($line->role_admin > 0)
+        {
+            $this->addOutput('<i class="fa fa-cog fa-2x" aria-hidden="true"></i>&nbsp;&nbsp;');
+        }
+        
+        $this->addOutput('</td></tr>');
+    }
+
     protected function renderPageEntries($first_page_no, $last_page_no, $active_page_no)
     {
         $cur_page = $first_page_no;
@@ -55,29 +95,28 @@ class MethodSearchViewBase
         {
             if ($cur_page == $active_page_no)
             {
-                $this->addOutput('<li class="page-item active"><a class="page-link" href="javascript:goto_page(\'' . $this->mth_view->getCacheId() . '\',' . $cur_page . ');">' . $cur_page . '</a></li>');
+                $this->addOutput('<li class="page-item active"><a class="page-link" href="javascript:goto_page(\'' . $this->usr_view->getCacheId() . '\',' . $cur_page . ');">' . $cur_page . '</a></li>');
             }
             else
             {
-                $this->addOutput('<li class="page-item"><a class="page-link" href="javascript:goto_page(\'' . $this->mth_view->getCacheId() . '\',' . $cur_page . ');">' . $cur_page . '</a></li>');
+                $this->addOutput('<li class="page-item"><a class="page-link" href="javascript:goto_page(\'' . $this->usr_view->getCacheId() . '\',' . $cur_page . ');">' . $cur_page . '</a></li>');
             }
             $cur_page += 1;
         }
     }
-    
     protected function renderPagination()
     {
-        $num_pages = ceil($this->mth_view->total_rows / $this->mth_view->lines_per_page);
-        $cur_page = $this->mth_view->current_page;
+        $num_pages = ceil($this->usr_view->total_rows / $this->usr_view->lines_per_page);
+        $cur_page = $this->usr_view->current_page;
         
         if ($num_pages == 0)
         {
             $this->addOutput('<div class="card"><div class="card-body">');
-            $this->addOutput('<span><i class="fa fa-info-circle fa-2x" aria-hidden="true"></i>&nbsp;Keine Daten vorhanden ...</span>');
+            $this->addOutput('<span><i class="fa fa-info-circle fa-2x" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Keine Daten vorhanden ...</span>');
             $this->addOutput('</div>');
             return;
         }
-
+        
         if ($num_pages == 1)
         {
             return;
@@ -99,10 +138,10 @@ class MethodSearchViewBase
         else
         {
             $this->addOutput('<li class="page-item">');
-            $ref_page = 'javascript:goto_page(\'' . $this->mth_view->getCacheId() . '\',' . $target_page . ');';
+            $ref_page = 'javascript:goto_page(\'' . $this->usr_view->getCacheId() . '\',' . $target_page . ');';
         }
         $this->addOutput('<a class="page-link" href="' . $ref_page . '" aria-label="First"><i class="fa fa-angle-double-left" aria-hidden="true"></i></a></li>');
-
+        
         // GOTO previous page
         $target_page = $cur_page - 1;
         if ($target_page <= 0)
@@ -113,7 +152,7 @@ class MethodSearchViewBase
         else
         {
             $this->addOutput('<li class="page-item">');
-            $ref_page = 'javascript:goto_page(\'' . $this->mth_view->getCacheId() . '\',' . $target_page . ');';
+            $ref_page = 'javascript:goto_page(\'' . $this->usr_view->getCacheId() . '\',' . $target_page . ');';
         }
         $this->addOutput('<a class="page-link" href="' . $ref_page . '" aria-label="Previous"><i class="fa fa-angle-left" aria-hidden="true"></i></a></li>');
         
@@ -122,7 +161,7 @@ class MethodSearchViewBase
         {
             // Add a disabled entry indicating that there are more pages than can be displayed
             $this->addOutput('<li class="page-item disabled"><a class="page-link" href="#"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a></li>');
-
+            
             $offset = $this->max_pages / 2;
             $this->renderPageEntries($cur_page - $offset, $cur_page + $offset, $cur_page);
             
@@ -133,7 +172,7 @@ class MethodSearchViewBase
         {
             $this->renderPageEntries(1, $num_pages, $cur_page);
         }
-
+        
         // GOTO next page
         $target_page =  $cur_page + 1;
         if ($target_page > $num_pages)
@@ -144,10 +183,10 @@ class MethodSearchViewBase
         else
         {
             $this->addOutput('<li class="page-item">');
-            $ref_page = 'javascript:goto_page(\'' . $this->mth_view->getCacheId() . '\',' . $target_page . ');';
+            $ref_page = 'javascript:goto_page(\'' . $this->usr_view->getCacheId() . '\',' . $target_page . ');';
         }
         $this->addOutput('<a class="page-link" href="' . $ref_page . '" aria-label="Last"><i class="fa fa-angle-right" aria-hidden="true"></i></a></li>');
-
+        
         // GOTO last page
         $target_page = $num_pages;
         if ($cur_page >= $target_page)
@@ -158,16 +197,20 @@ class MethodSearchViewBase
         else
         {
             $this->addOutput('<li class="page-item">');
-            $ref_page = 'javascript:goto_page(\'' . $this->mth_view->getCacheId() . '\',' . $target_page . ');';
+            $ref_page = 'javascript:goto_page(\'' . $this->usr_view->getCacheId() . '\',' . $target_page . ');';
         }
         $this->addOutput('<a class="page-link" href="' . $ref_page . '" aria-label="Last"><i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>');
-
+        
         $this->addOutput('</ul></nav></div></div>'); // card-body / card
     }
-	
+    
     public function outputHtml()
     {
         echo $this->output;
     }
+    
+    
 }
+
+
 ?>

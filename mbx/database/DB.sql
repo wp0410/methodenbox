@@ -259,3 +259,24 @@ select mth_id, mth_name, mth_summary, mth_subject, mth_subject_text,
        dnl_cnt, dnl_first_tm, dnl_last_tm, dnl_usr_id, 
        rtg_cnt, rtg_first_tm, rtg_last_tm, rtg_min_val, rtg_max_val, rtg_avg_val
 from   vi_mth_method_result where mth_id > 0 ;
+
+create or replace view vi_usr_roles as
+select usr_id, max(per_role_client) as per_role_client, max(per_role_upload) as per_role_upload, max(per_role_admin) as per_role_admin
+from (
+	select usr_id, 1 per_role_client, 0 per_role_upload, 0 per_role_admin
+	from   ta_usr_account
+	union all
+	select usr.usr_id, 0 per_role_client, 1 per_role_upload, 0 per_role_admin
+	from   ta_usr_account usr
+		inner join ta_usr_permissions usp on usp.per_usr_id = usr.usr_id
+	where  usp.per_permission in ('MTH.NEW','MTH.ADM')
+	group by usr.usr_id having count(1) = 2
+	union all
+	select usr.usr_id, 0 per_role_client, 0 per_role_upload, 1 per_role_admin
+	from   ta_usr_account usr
+		inner join ta_usr_permissions usp on usp.per_usr_id = usr.usr_id
+	where  usp.per_permission in ('ADM.USR')
+	group by usr.usr_id having count(1) = 1
+) tab1 group by tab1.usr_id;
+
+
