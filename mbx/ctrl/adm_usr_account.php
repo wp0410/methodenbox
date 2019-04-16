@@ -13,7 +13,6 @@
 include_once '../model/sql_connection.php';
 include_once '../model/app_result.php';
 include_once '../model/aux_helpers.php';
-include_once '../model/app_result.php';
 include_once '../model/usr_account_view.php';
 include_once '../model/app_warning.php';
 include_once '../view/adm_usr_account_view.php';

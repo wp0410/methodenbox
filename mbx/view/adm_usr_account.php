@@ -104,6 +104,23 @@ if (! $res->isOK())
 				</div>            	
             </div>
         </div>
+        
+        <div class="modal fade" id="usrDeleteModal" role="dialog" aria-labelledby="usrDeleteLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="usrDeleteLabel">Benutzerkonto l&ouml;schen</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle" aria-hidden="true"></i></span></button>
+                    </div> <!-- modal-header -->
+                    <div class="modal-body" id="usrDeleteBody">
+                    	<div id="usrDeleteMessage" name="usrDeleteMessage"></div>
+                    </div> <!-- modal-body -->
+                    <div class="modal-footer" id="usrDeleteFooter">
+                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Schlie&szlig;en</button>
+                    </div>
+                </div> <!-- modal-content -->
+            </div> <!-- modal-dialog -->
+        </div> <!-- modal -->
 
         <?php FormElements::scriptRefs(); ?>
         <script type="text/javascript">
@@ -124,6 +141,62 @@ if (! $res->isOK())
             $(window).on('load', function() {
                 load_contents();
             });
+        </script>
+        <script type="text/javascript">
+            /* global $ */
+            function goto_page(ch_obj_id, page_no) {
+                // alert('cch_obj_id=' + ch_obj_id + ' / page_no = ' + page_no);
+                $.post(
+                    "/mbx/ctrl/adm_usr_account.php",
+                    {
+                        ch_id: ch_obj_id,
+                        pg_no: page_no
+                    },
+                    function(data, status) {
+                        $('#mth_result').html(data);
+                    }
+                );
+            }
+        </script>
+        <script type="text/javascript">
+            /* global $ */
+            $('#usrDeleteModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                var usr_id = button.data('usrid');
+                var curr_usr_id = button.data('currid');
+                var usr_name = button.data('usrname');
+                var modal = $(this);
+                // modal.find('.modal-title').text('Benutzerkonto löschen');
+                
+                $('#usrDeleteMessage').html(
+					'<div class="alert alert-warning" role="alert">' +
+					'<h5>Sind Sie sicher, dass Sie das Benutzerkonto f&uuml;r "' + usr_name + '" l&ouml;schen wollen? ' +
+					'Die Aktion kann nicht r&uuml;ckg&auml;ngig gemacht werden!</h5></div>');
+                
+                modal.find('.modal-footer').html(
+                        '<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Nein, Schlie&szlig;en</button>' +
+                        '<button type="button" class="btn btn-primary btn-sm" onclick="usrAccountDelete(' + usr_id + ')">Ja, Benutzerkonto L&ouml;schen</button>' );
+                // $('#mth_upload_success').html('<div></div>');
+            }); 
+
+            $('#usrDeleteModal').on('hidden.bs.modal', function(event) {
+                load_contents();
+            });
+			
+			function usrAccountDelete(usr_id) {
+				$.post(
+					"/mbx/ctrl/adm_usr_action.php",
+					{
+						usr_id: usr_id,
+						adm_action: 'USR_DEL'
+					},
+					function(data,status) {
+						$('#usrDeleteMessage').html(data);
+					}
+				);
+				$('#usrDeleteFooter').html(	
+	                '<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Schlie&szlig;en</button>');
+			}
         </script>
      </body>
  </html>   

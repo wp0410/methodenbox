@@ -42,6 +42,7 @@ class UserAccountAdminResult
         $this->addOutput('<th scope="col">Letzte Anmeldung</th>');
         $this->addOutput('<th scope="col">Status</th>');
         $this->addOutput('<th scope="col">Berechtigungen</th>');
+        $this->addOutput('<th scope="col" colspan="2">Aktionen</th>');
         $this->addOutput('</tr></thead><tbody>');
         
         $line_no = 1;
@@ -57,7 +58,7 @@ class UserAccountAdminResult
     protected function renderLine($line_no, $line)
     {
         $this->addOutput('<tr><td>' . $line->usr_id . '</td><td>' . $line->usr_fst_name . ' ' . $line->usr_lst_name . '</td><td>' . $line->usr_email . '</td>');
-        $this->addOutput('<td>' . substr($line->usr_reg_date,0,10) . '</td><td>' . substr($line->usr_login_date,0,10) . '</td><td>');
+        $this->addOutput('<td>' . substr($line->usr_reg_date,0,10) . '</td><td>' . substr($line->usr_login_date,0,16) . '</td><td>');
         switch($line->usr_status)
         {
             case 0:
@@ -84,6 +85,36 @@ class UserAccountAdminResult
         {
             $this->addOutput('<i class="fa fa-cog fa-2x" aria-hidden="true"></i>&nbsp;&nbsp;');
         }
+        $this->addOutput('</td><td>');
+        
+        // Administrator actions
+        switch ($line->usr_status)
+        {
+            case 0:
+                // Unconfirmed user accounts can be deleted after one week:
+                $min_age = Helpers::dateTimeString(time() - 7 * 86400);
+                if ($line->usr_reg_date < $min_age)
+                {
+                    $this->addOutput('<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#usrDeleteModal" ');
+                    $this->addOutput('id="usr_del_' . $line->usr_id . '" data-usrid="' . $line->usr_id . '" data-currid="' . $this->usr_view->usr_id  . '" ');
+                    $this->addOutput('data-usrname="' . $line->usr_fst_name . ' ' . $line->usr_lst_name . '(' . $line->usr_email . ')" >');
+                    $this->addOutput('L&ouml;schen</button>');
+                }
+                break;
+            case 1:
+                // Active user accounts can be locked:
+                $this->addOutput('<button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#usrLockModal">Sperren</button>');
+                break;
+            case 2:
+                // Locked user accounts can be unlocked:
+                $this->addOutput('<button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#usrUnlockModal">Sperre aufheben</button>');
+                break;
+        }
+        
+        // Change permissions
+        $this->addOutput('</td><td>');
+        $this->addOutput('<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#usrPermissionsModal">Berechtigungen</button>');
+        
         
         $this->addOutput('</td></tr>');
     }

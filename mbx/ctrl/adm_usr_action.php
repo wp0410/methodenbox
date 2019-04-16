@@ -12,9 +12,10 @@
 //----------------------------------------------------------------------------------------
 include_once '../model/sql_connection.php';
 include_once '../model/app_result.php';
-include_once '../model/usr_session.php';
-include_once '../model/mth_method.php';
+include_once '../model/aux_helpers.php';
 include_once '../model/app_warning.php';
+include_once '../model/usr_account.php';
+include_once '../model/usr_session.php';
 
 set_private_warning_handler();
 
@@ -31,7 +32,7 @@ else
     
     if ($res->isOK())
     {
-        if (! $usr_session->isAuthenticated())
+        if (! $usr_session->isAuthenticated() || ! $usr_session->checkPermission('ADM.USR'))
         {
             $res = new AppResult(406);
         }
@@ -48,19 +49,32 @@ if (! $res->isOK())
     exit;
 }
 
-if (empty($_POST) || empty($_POST['mth_id']))
+if (empty($_POST) || empty($_POST['adm_action']) || (
+        ($_POST['adm_action'] == 'USR_DEL') && empty($_POST['usr_id']))
+   )
 {
     $res = new AppResult(100);
 }
-else
+else 
 {
-    $mth = new TeachingMethod($db_conn, $usr_session->getUsrId());
-    $res = $mth->deleteMethod($_POST['mth_id']);
+    $success_msg = '';
+    switch($_POST['adm_action'])
+    {
+        case 'USR_DEL':
+            $usr_acc = new UserAccount($db_conn);
+            $res = $usr_acc->loadById($_POST['usr_id']);
+            if ($res->isOK())
+            {
+                $res = $usr_acc->deleteUserAccount();
+                $success_msg = 'Das Benutzerkonto wurde erfolgreich gel&ouml;scht.';
+            }
+            break;
+    }
 }
 
 if ($res->isOK())
 {
-    echo '<div class="alert alert-info" role="alert"><h5 class="del_confirm">Die Unterrichtsmethode wurde erfolgreich gel&ouml;scht</h5></div>';
+    echo '<div class="alert alert-info" role="alert"><h5 class="action_confirm">' . $success_msg . '</h5></div>';
 }
 else
 {

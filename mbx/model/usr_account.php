@@ -217,6 +217,23 @@ class UserAccount implements JsonSerializable
         
         return new AppResult(0);
     }
+    
+    public function deleteUserAccount()
+    {
+        $sql_stmt = 'delete from ta_usr_permissions where per_usr_id=?;';
+        $stm_uad1 = $this->db_conn->prepare($sql_stmt);
+        $stm_uad1->bind_param('i', $this->usr_id);
+        $stm_uad1->execute();
+        $stm_uad1->close();
+        
+        $sql_stmt = 'delete from ta_usr_account where usr_id=?;';
+        $stm_uad2 = $this->db_conn->prepare($sql_stmt);
+        $stm_uad2->bind_param('i', $this->usr_id);
+        $stm_uad2->execute();
+        $stm_uad2->close();
+        
+        return new AppResult(0);
+    }
 	
 	private function findUserIdByEmail($usr_email): int
 	{
