@@ -197,31 +197,20 @@ if (! $res->isOK())
                 var modal = $(this);
       			modal.find('.modal-title').text('Berechtigungen: Benutzerkonto ' + usr_name);  
 
-      			if (usr_permits == 'NONE') {
-          			$('#usrPermissionBody').html(
-          	      		'<div class="card"><div class="card-header">Berechtigungen ausw&auml;hlen</div><div class="card-body"> ' +
-          	      		'<div class="form-check">' + 
-          	      		'<input class="form-check-input" type="checkbox" id="perm_add_client" name="perm[]" value="+C">' +
-          	      		'<label class="form-check-label" for="perm_add_client"><span><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;<i class="fa fa-user-o" aria-hidden="true"></i>&nbsp;&nbsp;Herunterladen von Methoden</span></label></div>' +
-          	      		'<div class="form-check">' + 
-          	      		'<input class="form-check-input" type="checkbox" id="perm_add_upload" name="perm[]" value="+U">' +
-          	      		'<label class="form-check-label" for="perm_add_upload"><span><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;<i class="fa fa-cloud-upload" aria-hidden="true"></i>&nbsp;&nbsp;Hochladen von Methoden</span></label></div>' +
-          	      		'<div class="form-check">' + 
-          	      		'<input class="form-check-input" type="checkbox" id="perm_add_admin" name="perm[]" value="+A">' +
-          	      		'<label class="form-check-label" for="perm_add_admin"><span><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;<i class="fa fa-cog" aria-hidden="true"></i>&nbsp;&nbsp;Administration</span></label></div>' +          	      		
-          	      		'</div></div>' );
-      			}
-      			if (usr_permits == 'CLIENT') {
-          			$('#usrPermissionBody').html(
-          	      		'<div class="card"><div class="card-header">Berechtigungen ausw&auml;hlen</div><div class="card-body"> ' +
-          	      		'<div class="form-check">' + 
-          	      		'<input class="form-check-input" type="checkbox" id="perm_add_upload" name="perm[]" value="+U">' +
-          	      		'<label class="form-check-label" for="perm_add_upload"><span><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;<i class="fa fa-cloud-upload" aria-hidden="true"></i>&nbsp;&nbsp;Hochladen von Methoden</span></label></div>' +
-          	      		'<div class="form-check">' + 
-          	      		'<input class="form-check-input" type="checkbox" id="perm_add_admin" name="perm[]" value="+A">' +
-          	      		'<label class="form-check-label" for="perm_add_admin"><span><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;<i class="fa fa-cog" aria-hidden="true"></i>&nbsp;&nbsp;Administration</span></label></div>' +          	      		
-          	      		'</div></div>' );
-      			}
+      			$.post(
+      	      		"/mbx/view/adm_usr_permission.php",
+      	      		{
+          	      		usr_id: usr_id,
+          	      		usr_role: usr_permits
+      	      		},
+      	      		function(data, status) {
+          	      		$('#usrPermissionBody').html(data);
+      	      		}
+      	      	);
+
+      			modal.find('.modal-footer').html(
+                        '<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Schlie&szlig;en</button>' +
+                        '<button type="button" class="btn btn-primary btn-sm" onclick="xxxxx(' + usr_id + ')">Berechtigungen speichern</button>' );
         	});
 
         	$('#usrPermissionModal').on('hidden.bs.modal', function(event) {
