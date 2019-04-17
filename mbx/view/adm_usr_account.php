@@ -116,7 +116,37 @@ if (! $res->isOK())
                     	<div id="usrDeleteMessage" name="usrDeleteMessage"></div>
                     </div> <!-- modal-body -->
                     <div class="modal-footer" id="usrDeleteFooter">
-                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Schlie&szlig;en</button>
+                    </div>
+                </div> <!-- modal-content -->
+            </div> <!-- modal-dialog -->
+        </div> <!-- modal -->
+
+        <div class="modal fade" id="usrModifyModal" role="dialog" aria-labelledby="usrModifyLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="usrModifyLabel"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle" aria-hidden="true"></i></span></button>
+                    </div> <!-- modal-header -->
+                    <div class="modal-body" id="usrModifyBody">
+                    	<div id="usrModifyMessage" name="usrModifyMessage"></div>
+                    </div> <!-- modal-body -->
+                    <div class="modal-footer" id="usrModifyFooter">
+                    </div>
+                </div> <!-- modal-content -->
+            </div> <!-- modal-dialog -->
+        </div> <!-- modal -->
+
+        <div class="modal fade" id="usrPermissionModal" role="dialog" aria-labelledby="usrPermissionLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="usrPermissionLabel"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle" aria-hidden="true"></i></span></button>
+                    </div> <!-- modal-header -->
+                    <div class="modal-body" id="usrPermissionBody">
+                    </div> <!-- modal-body -->
+                    <div class="modal-footer" id="usrPermissionFooter">
                     </div>
                 </div> <!-- modal-content -->
             </div> <!-- modal-dialog -->
@@ -141,9 +171,7 @@ if (! $res->isOK())
             $(window).on('load', function() {
                 load_contents();
             });
-        </script>
-        <script type="text/javascript">
-            /* global $ */
+
             function goto_page(ch_obj_id, page_no) {
                 // alert('cch_obj_id=' + ch_obj_id + ' / page_no = ' + page_no);
                 $.post(
@@ -157,6 +185,48 @@ if (! $res->isOK())
                     }
                 );
             }
+        </script>
+        <script type="text/javascript">
+        	/* global $ */
+        	$('#usrPermissionModal').on('show.bs.modal', function(event) {
+                var button = $(event.relatedTarget);
+                var usr_id = button.data('usrid');
+                var curr_usr_id = button.data('currid');
+                var usr_name = button.data('usrname');
+                var usr_permits = button.data('permits');
+                var modal = $(this);
+      			modal.find('.modal-title').text('Berechtigungen: Benutzerkonto ' + usr_name);  
+
+      			if (usr_permits == 'NONE') {
+          			$('#usrPermissionBody').html(
+          	      		'<div class="card"><div class="card-header">Berechtigungen ausw&auml;hlen</div><div class="card-body"> ' +
+          	      		'<div class="form-check">' + 
+          	      		'<input class="form-check-input" type="checkbox" id="perm_add_client" name="perm[]" value="+C">' +
+          	      		'<label class="form-check-label" for="perm_add_client"><span><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;<i class="fa fa-user-o" aria-hidden="true"></i>&nbsp;&nbsp;Herunterladen von Methoden</span></label></div>' +
+          	      		'<div class="form-check">' + 
+          	      		'<input class="form-check-input" type="checkbox" id="perm_add_upload" name="perm[]" value="+U">' +
+          	      		'<label class="form-check-label" for="perm_add_upload"><span><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;<i class="fa fa-cloud-upload" aria-hidden="true"></i>&nbsp;&nbsp;Hochladen von Methoden</span></label></div>' +
+          	      		'<div class="form-check">' + 
+          	      		'<input class="form-check-input" type="checkbox" id="perm_add_admin" name="perm[]" value="+A">' +
+          	      		'<label class="form-check-label" for="perm_add_admin"><span><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;<i class="fa fa-cog" aria-hidden="true"></i>&nbsp;&nbsp;Administration</span></label></div>' +          	      		
+          	      		'</div></div>' );
+      			}
+      			if (usr_permits == 'CLIENT') {
+          			$('#usrPermissionBody').html(
+          	      		'<div class="card"><div class="card-header">Berechtigungen ausw&auml;hlen</div><div class="card-body"> ' +
+          	      		'<div class="form-check">' + 
+          	      		'<input class="form-check-input" type="checkbox" id="perm_add_upload" name="perm[]" value="+U">' +
+          	      		'<label class="form-check-label" for="perm_add_upload"><span><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;<i class="fa fa-cloud-upload" aria-hidden="true"></i>&nbsp;&nbsp;Hochladen von Methoden</span></label></div>' +
+          	      		'<div class="form-check">' + 
+          	      		'<input class="form-check-input" type="checkbox" id="perm_add_admin" name="perm[]" value="+A">' +
+          	      		'<label class="form-check-label" for="perm_add_admin"><span><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;<i class="fa fa-cog" aria-hidden="true"></i>&nbsp;&nbsp;Administration</span></label></div>' +          	      		
+          	      		'</div></div>' );
+      			}
+        	});
+
+        	$('#usrPermissionModal').on('hidden.bs.modal', function(event) {
+            	load_contents();
+        	});
         </script>
         <script type="text/javascript">
             /* global $ */
@@ -195,6 +265,55 @@ if (! $res->isOK())
 					}
 				);
 				$('#usrDeleteFooter').html(	
+	                '<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Schlie&szlig;en</button>');
+			}
+        </script>
+        <script type="text/javascript">
+			/* global $ */
+			$('#usrModifyModal').on('show.bs.modal', function(event) {
+                var button = $(event.relatedTarget);
+                var usr_id = button.data('usrid');
+                var curr_usr_id = button.data('currid');
+                var usr_name = button.data('usrname');
+                var usr_action = button.data('fn');
+                var modal = $(this);
+                var act_text = 'sperren';
+
+                if (usr_action == 'USR_LCK') {
+                	modal.find('.modal-title').text('Benutzerkonto sperren');
+                }
+                else {
+                    modal.find('.modal-title').text('Benutzerkonto entsperren');
+                    act_text = 'entsperren';
+                }
+                
+                $('#usrModifyMessage').html(
+					'<div class="alert alert-warning" role="alert">' +
+					'<h5>Sind Sie sicher, dass Sie das Benutzerkonto f&uuml;r "' + usr_name + '" ' + act_text + ' wollen? ' +
+					'</h5></div>');
+                
+                modal.find('.modal-footer').html(
+                        '<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Nein, Schlie&szlig;en</button>' +
+                        '<button type="button" class="btn btn-primary btn-sm" onclick="usrAccountModify(' + usr_id + ',&quot;' + usr_action + '&quot;)">Ja, Benutzerkonto ' + 
+                        act_text + '</button>' );
+			});
+
+			$('#usrModifyModal').on('hidden.bs.modal', function(event) {
+				load_contents();
+			});
+
+			function usrAccountModify(usr_id, usr_action) {
+				$.post(
+					"/mbx/ctrl/adm_usr_action.php",
+					{
+						usr_id: usr_id,
+						adm_action: usr_action
+					},
+					function(data,status) {
+						$('#usrModifyMessage').html(data);
+					}
+				);
+				$('#usrModifyFooter').html(
 	                '<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Schlie&szlig;en</button>');
 			}
         </script>

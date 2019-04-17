@@ -344,6 +344,18 @@ class UserAccount implements JsonSerializable
         $stm_u4->execute();
         $stm_u4->close();
     }
+    
+    public function lockUserAccount()
+    {
+        $this->usr_status = 2;
+        $this->updateStatus();
+    }
+    
+    public function unlockUserAccount()
+    {
+        $this->usr_status = 1;
+        $this->updateStatus();
+    }
 
     public function userLogin($email_addr, $password)
     {

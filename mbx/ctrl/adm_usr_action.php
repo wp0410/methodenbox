@@ -49,26 +49,32 @@ if (! $res->isOK())
     exit;
 }
 
-if (empty($_POST) || empty($_POST['adm_action']) || (
-        ($_POST['adm_action'] == 'USR_DEL') && empty($_POST['usr_id']))
-   )
+if (empty($_POST) || empty($_POST['adm_action']) || empty($_POST['usr_id']))
 {
     $res = new AppResult(100);
 }
 else 
 {
     $success_msg = '';
-    switch($_POST['adm_action'])
+    $usr_acc = new UserAccount($db_conn);
+    $res = $usr_acc->loadById($_POST['usr_id']);
+    if ($res->isOK())
     {
-        case 'USR_DEL':
-            $usr_acc = new UserAccount($db_conn);
-            $res = $usr_acc->loadById($_POST['usr_id']);
-            if ($res->isOK())
-            {
+        switch($_POST['adm_action'])
+        {
+            case 'USR_DEL':
                 $res = $usr_acc->deleteUserAccount();
                 $success_msg = 'Das Benutzerkonto wurde erfolgreich gel&ouml;scht.';
-            }
-            break;
+                break;
+            case 'USR_LCK':
+                $usr_acc->lockUserAccount();
+                $success_msg = 'Das Benutzerkonto wurde erfolgreich gesperrt.';
+                break;
+            case 'USR_UNL':
+                $usr_acc->unlockUserAccount();
+                $success_msg = 'Das Benutzerkonto wurde erfolgreich entsperrt.';
+                break;
+        }
     }
 }
 

@@ -103,18 +103,49 @@ class UserAccountAdminResult
                 break;
             case 1:
                 // Active user accounts can be locked:
-                $this->addOutput('<button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#usrLockModal">Sperren</button>');
+                $this->addOutput('<button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#usrModifyModal" ');
+                $this->addOutput('id="usr_lock_' . $line->usr_id . '" data-usrid="' . $line->usr_id . '" data-currid="' . $this->usr_view->usr_id . '" ');
+                $this->addOutput('data-usrname="' . $line->usr_fst_name . ' ' . $line->usr_lst_name . '(' . $line->usr_email . ')" data-fn="USR_LCK" >');
+                $this->addOutput('Sperren</button>');
                 break;
             case 2:
                 // Locked user accounts can be unlocked:
-                $this->addOutput('<button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#usrUnlockModal">Sperre aufheben</button>');
+                $this->addOutput('<button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#usrModifyModal" ');
+                $this->addOutput('id="usr_lock_' . $line->usr_id . '" data-usrid="' . $line->usr_id . '" data-currid="' . $this->usr_view->usr_id . '" ');
+                $this->addOutput('data-usrname="' . $line->usr_fst_name . ' ' . $line->usr_lst_name . '(' . $line->usr_email . ')" data-fn="USR_UNL" >');
+                $this->addOutput('Sperre aufheben</button>');
                 break;
         }
         
         // Change permissions
         $this->addOutput('</td><td>');
-        $this->addOutput('<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#usrPermissionsModal">Berechtigungen</button>');
-        
+        $this->addOutput('<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#usrPermissionModal" ');
+        $this->addOutput('id="usr_perm_' . $line->usr_id . '"' . 'data-usrid="' . $line->usr_id . '" data-currid="' . $this->usr_view->usr_id . '" ');
+        $this->addOutput('data-usrname="' . $line->usr_fst_name . ' ' . $line->usr_lst_name . '(' . $line->usr_email . ')" ');
+        $this->addOutput('data-permits="');
+        if ($line->role_admin > 0)
+        {
+            $this->addOutput('ADMIN');
+        }
+        else 
+        {
+            if ($line->role_upload > 0)
+            {
+                $this->addOutput('UPLOAD');
+            }
+            else 
+            {
+                if ($line->role_client > 0)
+                {
+                    $this->addOutput('CLIENT');
+                }
+                else 
+                {
+                    $this->addOutput('NONE');
+                }
+            }
+        }
+        $this->addOutput('">Berechtigungen</button>');
         
         $this->addOutput('</td></tr>');
     }
