@@ -144,7 +144,7 @@ class MethodResultView
     
     private function sortBy($att_name, $direction)
     {
-        $stm_part = " order by " . $att_name . " " . $direction;
+        $stm_part = " order by " . $att_name . " " . $direction . ", mth_id DESC ";
         $this->select_stmt = $this->select_stmt . $stm_part;
         $this->where_clause = $this->where_clause . $stm_part;
     }
