@@ -20,9 +20,10 @@ if (! empty($_POST) && ! empty($_POST['usr_role']))
     $current_role = $_POST['usr_role'];
     
     echo '<div class="row form-row">';
+    echo '   <div class="col col-md-3 col-xl-3"><br></div>';
     echo '   <div class="col col-md-6 col-xl-6">';
     echo '      <div class="card">';
-    echo '         <div class="card-header">Berechtigungen Erteilen</div>';
+    echo '         <div class="card-header"><h5>Berechtigungen Erteilen</h5></div>';
     echo '         <div class="card-body">';
 
     if ($current_role == 'NONE')
@@ -42,8 +43,8 @@ if (! empty($_POST) && ! empty($_POST['usr_role']))
         echo '        </div>'; // form-check
 
         echo '        <div class="form-check">';
-        echo '           <input class="form-check-input" type="radio" name="perm_add[]" id="add_clt_adm" value="ADD.CLT.UPL.ADM">';
-        echo '           <label class="form-check-label" for="add_clt_adm">';
+        echo '           <input class="form-check-input" type="radio" name="perm_add[]" id="add_clt_upl_adm" value="ADD.CLT.UPL.ADM">';
+        echo '           <label class="form-check-label" for="add_clt_upl_adm">';
         echo '              <span><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;<i class="fa fa-cog" aria-hidden="true"></i>&nbsp;&nbsp;(Administration)</span>';
         echo '           </label>';
         echo '        </div>'; // form-check
@@ -117,16 +118,6 @@ if (! empty($_POST) && ! empty($_POST['usr_role']))
         echo '           </label>';
         echo '        </div>'; // form-check
     }
-    
-    echo '      </div></div>'; // card body + card
-    echo '   </div>';   // col
-
-    echo '   <div class="col col-md-6 col-xl-6">';
-    echo '      <div class="card">';
-    echo '         <div class="card-header">Berechtigungen Entziehen</div>';
-    echo '         <div class="card-body">';
-    
-    
     
     echo '      </div></div>'; // card body + card
     echo '   </div>';   // col

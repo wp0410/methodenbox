@@ -137,16 +137,16 @@ if (! $res->isOK())
             </div> <!-- modal-dialog -->
         </div> <!-- modal -->
 
-        <div class="modal fade" id="usrPermissionModal" role="dialog" aria-labelledby="usrPermissionLabel" aria-hidden="true">
+        <div class="modal fade" id="usrPermissionAddModal" role="dialog" aria-labelledby="usrPermissionAddLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="usrPermissionLabel"></h5>
+                        <h5 class="modal-title" id="usrPermissionAddLabel"></h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle" aria-hidden="true"></i></span></button>
                     </div> <!-- modal-header -->
-                    <div class="modal-body" id="usrPermissionBody">
+                    <div class="modal-body" id="usrPermissionAddBody">
                     </div> <!-- modal-body -->
-                    <div class="modal-footer" id="usrPermissionFooter">
+                    <div class="modal-footer" id="usrPermissionAddFooter">
                     </div>
                 </div> <!-- modal-content -->
             </div> <!-- modal-dialog -->
@@ -188,23 +188,23 @@ if (! $res->isOK())
         </script>
         <script type="text/javascript">
         	/* global $ */
-        	$('#usrPermissionModal').on('show.bs.modal', function(event) {
+        	$('#usrPermissionAddModal').on('show.bs.modal', function(event) {
                 var button = $(event.relatedTarget);
                 var usr_id = button.data('usrid');
                 var curr_usr_id = button.data('currid');
                 var usr_name = button.data('usrname');
                 var usr_permits = button.data('permits');
                 var modal = $(this);
-      			modal.find('.modal-title').text('Berechtigungen: Benutzerkonto ' + usr_name);  
+      			modal.find('.modal-title').text('Berechtigungen Erteilen: Benutzerkonto ' + usr_name);  
 
       			$.post(
-      	      		"/mbx/view/adm_usr_permission.php",
+      	      		"/mbx/view/adm_usr_permission_add.php",
       	      		{
           	      		usr_id: usr_id,
           	      		usr_role: usr_permits
       	      		},
       	      		function(data, status) {
-          	      		$('#usrPermissionBody').html(data);
+          	      		$('#usrPermissionAddBody').html(data);
       	      		}
       	      	);
 
