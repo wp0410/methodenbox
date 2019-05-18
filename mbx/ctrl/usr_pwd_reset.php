@@ -46,7 +46,6 @@ if ($param_missing || ($_POST['reset_pwd_1'] != $_POST['reset_pwd_2']))
 // Make sure that the recaptcha - result is validated by Google
 if (GlobalParameter::$applicationConfig['validateCaptcha'])
 {
-    // $google_secret = GlobalParameter::$captchaConfig[GlobalParameter::$applicationConfig['deploymentZone']]['secret'];
     $google_secret = GlobalSecretParameter::$captchaConfig[GlobalParameter::$applicationConfig['deploymentZone']]['secret'];
     $verify_req = 'https://www.google.com/recaptcha/api/siteverify?secret=' . $google_secret . '&response=' . $_POST['g-recaptcha-response'] . '&remoteip=' . $_SERVER['REMOTE_ADDR'];
     $captcha_res = file_get_contents($verify_req);
@@ -83,7 +82,7 @@ $mailer->emailText =
     "   1. Maske \"Registrierung Abschließen\" öffnen;\n" .
     "   2. Ihre E-Mail Adresse und Ihr neues Passwort eingeben;\n" .
     "   3. In das Feld \"Registrierungscode\" folgenden Text eingeben (Copy+Paste):\n" .
-    "      " . $new_usr->getChallenge() . "\n" .
+    "      " . $usr_acc->getChallenge() . "\n" .
     "\n" .
     "--\n" .
     "Ihr Methodenbox Team\n";
@@ -96,7 +95,7 @@ $mailer->emailHtml =
     '<ul><li>Maske &quot;Registrierung Abschlie&szlig;en&quot; &ouml;ffnen;</li>' .
     '<li>Ihre E-Mail Adresse und Ihr neues Passwort eingeben;</li>' .
     '<li>In das Feld &quot;Registrierungscode&quot; folgenden Text eingeben (Copy+Paste)</li><ul>' .
-    '<li>' . $new_usr->getChallenge() . '</li></ul></ul>' .
+    '<li>' . $usr_acc->getChallenge() . '</li></ul></ul>' .
     '<p></p>' .
     '<p>--</p>' .
     '<p>Ihr Methodenbox Team</p></body></html>';

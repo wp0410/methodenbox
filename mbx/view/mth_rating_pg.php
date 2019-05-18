@@ -60,7 +60,7 @@ if (! $res->isOK())
     </head>
     <body>
         <?php FormElements::topNavigationBar('MTH.RATE', $usr_session->isAuthenticated(), $usr_session->getPermissions()); ?>
-        <?php FormElements::bottomNavigationBar('MTH.RATE'); ?>
+        <!-- php FormElements::bottomNavigationBar('MTH.RATE'); ? -->
         
         <div class="container-fluid">
            <div class="row row-fluid"><br></div>
@@ -102,6 +102,14 @@ if (! $res->isOK())
                         </div>
                         <div class="card-body">
                             <form id="mth_search" method="post" action="#" role="form">
+                                <div class="row form-row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="mth_name">Name der Methode</label>
+                                            <input id="mth_name" type="text" name="mth_name" class="form-control" placeholder="Name">
+                                        </div> <!-- form-group -->
+                                    </div> <!-- col -->
+                                </div> <!-- form-row -->
                                 <div class="row form-row">
                                     <div class="col-md-6 col-xl-6">
                                         <div class="form-group">
@@ -182,7 +190,7 @@ if (! $res->isOK())
                                     <div class="col-md-6 col-xl-6">
                                         <div class="form-group">
                                             <label for="mth_author">AutorIn</label>
-                                            <select class="form-control" id="mth_author" name="mth_author" multiple size="5">
+                                            <select class="form-control" id="mth_author" name="mth_author" multiple size="3">
                                                 <option></option>
                                                 <?php
                                                     foreach(MethodSelectionFactory::getAuthors() as $auth)
@@ -249,20 +257,12 @@ if (! $res->isOK())
                                     </div> <!-- col -->
                                 </div> <!-- form-row -->
                                 
-                                <div class="row form-row">
-                                    <div class="col">
-                                        <div class="form-group">
-                                            <label for="mth_name">Name der Methode</label>
-                                            <input id="mth_name" type="text" name="mth_name" class="form-control" placeholder="Name">
-                                        </div> <!-- form-group -->
-                                    </div> <!-- col -->
-                                </div> <!-- form-row -->
                                 <div class="form-group">
                                     <input type="hidden" id="curr_usr_id" name="curr_usr_id" value=" <?php echo $usr_session->getUsrId(); ?> ">
                                 </div>
                             </form>
 
-                            <div class="row form-row"><div class="col"><br></div></div>
+                            <!--   div class="row form-row"><div class="col"><br></div></div -->
                             <div class="row form-row">
                                 <div class="col">
                                     <div class="form-group" id="filter_apply">
@@ -446,6 +446,9 @@ if (! $res->isOK())
             
             $(document).ready(function () {
                 $('#filter_apply').click(function () {
+                    load_contents();
+                });
+                $('#res_lpp').change(function() {
                     load_contents();
                 });
             });

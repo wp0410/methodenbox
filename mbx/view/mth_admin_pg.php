@@ -113,30 +113,6 @@ if (! $res->isOK())
                                 <div class="row form-row">
                                     <div class="col col-md-6 col-xl-6">
                                         <div class="form-group">
-                                            <select class="form-control" id="mth_ownership" name="mth_ownership">
-                                                <option value="M">Meine Methoden</option>
-                                                <?php
-                                                    $owner_count = count(MethodSelectionFactory::getOwners($usr_session->getUsrId()));
-                                                    if (($usr_session->getRole() > 0) && ($owner_count > 0))
-                                                    {
-                                                        echo '<option value="O">Methoden eines anderen Benutzers: </option>';
-                                                    }
-                                                ?>
-                                            </select>
-                                        </div>
-                                    </div> <!-- col col-md-6 col-xl-6 -->
-                                    <?php
-                                        if (($usr_session->getRole() > 0) && ($owner_count > 0))
-                                        {
-                                            echo '<div class="col col-md-6 col-xl-6"><div class="form-group"><select class="form-control" id="mth_owner" name="mth_owner">';
-                                            echo '<option></option>';
-                                            echo '</select></div></div>';
-                                        }
-                                    ?>
-                                </div> <!-- row form-row -->
-                                <div class="row form-row">
-                                    <div class="col col-md-6 col-xl-6">
-                                        <div class="form-group">
                                             <label for="mth_subject">Unterrichtsfach</label>
                                             <select class="form-control" id="mth_subject" name="mth_subject">
                                                 <option></option>
@@ -304,7 +280,7 @@ if (! $res->isOK())
                 $.post(
                     "/mbx/ctrl/mth_search_admin_pg.php",
                     {
-                        mth_ownership: $('#mth_ownership').val(),
+                        mth_ownership: 'M', // $('#mth_ownership').val(),
                         mth_owner: $('#mth_owner').val(),
                         mth_subject: $('#mth_subject').val(),
                         mth_area: $('#mth_area').val(),
@@ -322,6 +298,12 @@ if (! $res->isOK())
             
             $(document).ready(function () {
                 $('#btn_apply').click(function () {
+                    load_contents();
+                });
+                $('#res_lpp').change(function () {
+                    load_contents();
+                });
+                $('#mth_res_sort').change(function () {
                     load_contents();
                 });
             });

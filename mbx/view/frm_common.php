@@ -15,14 +15,6 @@ class FormElements
 {
     public static function styleSheetRefs()
     {
-        /*
-        echo 
-            '<link ' .
-                'rel="stylesheet" ' . 
-                'href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" ' . 
-                'integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">';
-        */
-
         // Bootswatch themes including bootstrap: default theme is "lumen"
         // echo '<link rel="stylesheet" href="/mbx/css/flatly.bootstrap.min.css">';
         echo '<link rel="stylesheet" href="/mbx/css/lumen.bootstrap.min.css">';
@@ -95,7 +87,14 @@ class FormElements
         );
 
         echo '<nav class="navbar navbar-expand-lg navbar-primary bg-light">';
-        echo '<a class="navbar-brand" href="#">' . GlobalParameter::$applicationConfig['applicationTitle'] . '</a>';
+        if ($current_form_id == 'MTH.SRCH')
+        {
+            echo '<a class="navbar-brand" href="#">' . GlobalParameter::$applicationConfig['applicationTitle'] . '</a>';
+        }
+        else
+        {
+            echo '<a class="navbar-brand" href="' . $sub_menu_config['MTH.SRCH']['LINK'] . '">' . GlobalParameter::$applicationConfig['applicationTitle'] . '</a>';
+        }
         echo '<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#topNavbar" aria-controls="topNavbar" aria-expanded="false" aria-label="Toggle navigation">';
         echo '<span class="navbar-toggler-icon"></span></button>';
         
