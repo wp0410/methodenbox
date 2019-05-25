@@ -122,14 +122,40 @@ class MethodSearchViewBase
         // Create maximum pagination entries
         if ($num_pages > $this->max_pages)
         {
-            // Add a disabled entry indicating that there are more pages than can be displayed
-            $this->addOutput('<li class="page-item disabled"><a class="page-link" href="#"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a></li>');
-
-            $offset = $this->max_pages / 2;
-            $this->renderPageEntries($cur_page - $offset, $cur_page + $offset, $cur_page);
+            $offset = floor($this->max_pages / 2);
             
-            // Add a disabled entry indicating that there are more pages than can be displayed
-            $this->addOutput('<li class="page-item disabled"><a class="page-link" href="#"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a></li>');
+            if (($cur_page - $offset) < 1)
+            {
+                $first_page = 1;
+                $last_page = $this->max_pages;
+            }
+            else 
+            {
+                if (($cur_page + $offset) < $num_pages)
+                {
+                    $first_page = $cur_page - $offset;
+                    $last_page = $cur_page + $offset;
+                }
+                else 
+                {
+                    $first_page = $num_pages - $this->max_pages;
+                    $last_page = $num_pages;
+                }
+            }
+            
+            if ($first_page > 1)
+            {
+                // Add a disabled entry indicating that there are more pages than can be displayed
+                $this->addOutput('<li class="page-item disabled"><a class="page-link" href="#"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a></li>');
+            }
+            
+            $this->renderPageEntries($first_page, $last_page, $cur_page);
+            
+            if ($last_page < $num_pages)
+            {
+                // Add a disabled entry indicating that there are more pages than can be displayed
+                $this->addOutput('<li class="page-item disabled"><a class="page-link" href="#"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a></li>');
+            }
         }
         else
         {
