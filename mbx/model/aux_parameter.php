@@ -14,7 +14,7 @@
 class GlobalParameter
 {
     public static $applicationConfig = array (
-        'appVersion'             => 'v1.2.22b (2019-05-18)',
+        'appVersion'             => 'v1.2.23b (2019-05-25)',
         'applicationTitle'       => 'Methodenbox',
         'userAccountFailLimit'   => 3,
         'userSessionLifetimeSec' => 3600,

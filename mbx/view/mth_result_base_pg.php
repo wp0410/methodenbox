@@ -85,6 +85,8 @@ class MethodSearchViewBase
         
         $this->addOutput('<div class="card"><div class="card-body">');
         
+        $this->addOutput('<div class="row"><div class="col col-md-10 col-xl-10>');
+        
         $this->addOutput('<nav aria-label="ResultPagination">');
         $this->addOutput('<ul class="pagination justify-content-center">');
         
@@ -161,8 +163,13 @@ class MethodSearchViewBase
             $ref_page = 'javascript:goto_page(\'' . $this->mth_view->getCacheId() . '\',' . $target_page . ');';
         }
         $this->addOutput('<a class="page-link" href="' . $ref_page . '" aria-label="Last"><i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>');
-
-        $this->addOutput('</ul></nav></div></div>'); // card-body / card
+        $this->addOutput('</ul></nav>');
+        
+        $this->addOutput('</div><div class="col col-md-2 col-xl-2">');
+        $this->addOutput('<h5>Treffer:&nbsp<span class="badge badge-primary">' . $this->mth_view->total_rows . '</span></h5>');
+        
+        $this->addOutput('</div></div>'); // col / row
+        $this->addOutput('</div></div>'); // card-body / card
     }
 	
     public function outputHtml()
