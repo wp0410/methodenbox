@@ -29,6 +29,7 @@ class FormElements
         // echo '<link rel="stylesheet" href="/mbx/css/yeti.bootstrap.min.css">';
         echo '<link rel="stylesheet" href="/mbx/css/mbx.css">';
         echo '<link rel="stylesheet" href="/mbx/font-awesome-4.7.0/css/font-awesome.min.css">';
+		echo '<link rel="stylesheet" href="/mbx/css/parsley.css">';
     }
     
     public static function scriptRefs()
@@ -37,7 +38,8 @@ class FormElements
         echo '<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>';
         echo '<script src="https://unpkg.com/tooltip.js/dist/umd/tooltip.min.js"></script>';
         echo '<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>';
-        echo '<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>';
+        // echo '<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>';
+		echo '<script src="/mbx/js/parsley.min.js"></script>';
     }
     
     public static function topNavigationBar($current_form_id, $usr_authenticated, $usr_permissions = '')

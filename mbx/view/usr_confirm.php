@@ -50,14 +50,17 @@ $res = new AppResult($_GET);
             } 
             ?>
 
-            <form id="usr_confirm" method="post" action="../ctrl/usr_confirm.php">
+            <form id="usr_confirm" method="post" action="../ctrl/usr_confirm.php" data-parsley-validate="">
                 <div class="controls">
                     <div class="row form-row">
                         <div class="col col-sm-1 col-md-3 col-xl-3"></div>
                         <div class="col col-sm-5 col-md-3 col-xl-3">
                             <div class="form-group" id="login_email">
                                 <label for="user_email">E-Mail Adresse *</label>
-                                <input id="user_email" type="email" name="user_email" class="form-control" placeholder="E-Mail Adresse">
+                                <input id="user_email" type="email" name="user_email" class="form-control" placeholder="E-Mail Adresse"
+                                	data-parsley-required="" data-parsley-required-message="Die E-Mail Adresse muss eingegeben werden"
+                                	data-parsley-type-message="Keine g&uuml;ltige E-Mail Adresse"
+                                >
                             </div>
                         </div>
 
@@ -67,7 +70,9 @@ $res = new AppResult($_GET);
                         <div class="col col-sm-5 col-md-3 col-xl-3">
                             <div class="form-group" id="login_pwd">
                                 <label for="user_pwd">Passwort *</label>
-                                <input id="user_pwd" type="password" name="user_pwd" class="form-control" placeholder="Passwort">
+                                <input id="user_pwd" type="password" name="user_pwd" class="form-control" placeholder="Passwort"
+                                	data-parsley-required="" data-parsley-required-message="Das Passwort muss angegeben werden"
+                                >
                             </div>
                         </div>
                     </div>
@@ -77,7 +82,11 @@ $res = new AppResult($_GET);
                         <div class="col col-sm-10 col-md-6 col-xl-6">
                             <div class="form-group">
                                 <label for="user_challenge">Registrierungscode *</label>
-                                <input id="user_challenge" type="text" name="user_challenge" class="form-control" placeholder="Registrierungscode">
+                                <input id="user_challenge" type="text" name="user_challenge" class="form-control" placeholder="Registrierungscode"
+                                	data-parsley-required="" data-parsley-required-message="Der Registrierungscode muss angegeben werden"
+                                	data-parsley-minlength="32" data-parsley-minlength-message="Bitte 32 Zeichen f&uuml;r den Registrierungscode eingeben"
+                                	data-parsley-maxlength="32" data-parsley-maxlength-message="Bitte 32 Zeichen f&uuml;r den Registrierungscode eingeben"
+                                >
                             </div>
                         </div>
                     </div>
@@ -121,37 +130,5 @@ $res = new AppResult($_GET);
         </div>
         
         <?php FormElements::scriptRefs(); ?>
-        <script type="text/javascript">
-            /* global $ */
-            $('#usr_confirm').validate({
-                rules: {
-                    user_email: {
-                        required: true
-                    },
-                    user_pwd: {
-                        required: true
-                    },
-                    user_challenge: {
-                        required: true,
-                        minlength: 32,
-                        maxlength: 32
-                    }
-                },
-                messages: {
-                    user_email: {
-                        email: "Keine g&uuml;ltige E-Mail Adresse",
-                        required: "Die E-Mail Adresse muss eingegeben werden"
-                    },
-                    user_pwd: {
-                        required: "Das Passwort muss angegeben werden"
-                    },
-                    user_challenge: {
-                        required: "Der Registrierungscode muss angegeben werden",
-                        minlength: "Bitte 32 Zeichen f&uuml;r den Registrierungscode eingeben",
-                        maxlength: "Bitte 32 Zeichen f&uuml;r den Registrierungscode eingeben"
-                    }
-                }
-            })
-        </script>
     </body>
  </html>   

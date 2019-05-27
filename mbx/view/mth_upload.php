@@ -196,19 +196,19 @@ $res = new AppResult($_GET);
                             <div class="card">
                                 <div class="card-body">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="mth_soc_E" name="mth_soc[]" value="E">
+                                        <input class="form-check-input soc_f_grp" type="checkbox" id="mth_soc_E" name="mth_soc[]" value="E">
                                         <label class="form-check-label" for="mth_soc_E">Einzelarbeit</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="mth_soc_P" name="mth_soc[]" value="P">
+                                        <input class="form-check-input soc_f_grp" type="checkbox" id="mth_soc_P" name="mth_soc[]" value="P">
                                         <label class="form-check-label" for="mth_soc_P">Partnerarbeit</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="mth_soc_G" name="mth_soc[]" value="G">
+                                        <input class="form-check-input soc_f_grp" type="checkbox" id="mth_soc_G" name="mth_soc[]" value="G">
                                         <label class="form-check-label" for="mth_soc_G">Gruppenarbeit</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="mth_soc_K" name="mth_soc[]" value="K">
+                                        <input class="form-check-input soc_f_grp" type="checkbox" id="mth_soc_K" name="mth_soc[]" value="K">
                                         <label class="form-check-label" for="mth_soc_K">Klassenplenum</label>
                                     </div>
                                 </div>
@@ -310,12 +310,6 @@ $res = new AppResult($_GET);
                     mth_age_grp: {
                         required: true
                     },
-                    mth_soc: {
-                        required: true
-                    },
-                    mth_phase: {
-                        required: true
-                    },
                     mth_add_author: {
                         maxlength: 120
                     },
@@ -328,9 +322,7 @@ $res = new AppResult($_GET);
                         required: true,
                         remote: "../ctrl/mth_file_check.php"
                     },
-                    confirm_agb: {
-                        required: true
-                    }
+                    confirm_agb: "required"
                 },
                 messages: {
                     mth_name: {
@@ -356,12 +348,6 @@ $res = new AppResult($_GET);
                     mth_age_grp: {
                         required: "Bitte w&auml;hlen Sie einen Jahrgang aus"
                     },
-                    mth_soc: {
-                        required: "Bitte w&auml;hlen Sie mindestens eine Sozialform aus"
-                    },
-                    mth_phase: {
-                        required: "Bitte w&auml;hlen Sie mindestens eine Unterrichtsphase aus"
-                    },
                     mth_add_author: {
                         maxlength: "F&uuml;r die zus&auml;tzlichen AutorInnen sind h&ouml;chstens 120 Zeichen vorgesehen"
                     },
@@ -372,9 +358,7 @@ $res = new AppResult($_GET);
                         required: "Bitte eine Archivdatei (ZIP, GZ, TAR) ausw&auml;hlen",
                         remote: "Die Datei hat das falsche Format. Bitte eine Archivdatei (ZIP, GZ, TAR) ausw&auml;hlen"
                     },
-                    confirm_agb: {
-                        required: "Bitte best&auml;tigen Sie die AGB"
-                    }
+                    confirm_agb: "Bitte best&auml;tigen Sie die AGB"
                 }
             })
         </script>

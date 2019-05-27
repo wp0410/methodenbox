@@ -17,6 +17,7 @@ include_once '../model/usr_account.php';
 if (empty($_GET))
 {
    echo 'true';
+   http_response_code(400);
 }
 else
 {
@@ -27,6 +28,7 @@ else
         if (($usr_email == null) || (strlen($usr_email) == 0))
         {
             echo 'false';
+            http_response_code(400);
         }
         else
         {
@@ -35,6 +37,7 @@ else
             if ($usr->checkByEmail($usr_email))
             {
                 echo 'false';
+                http_response_code(400);
             }
             else
             {
@@ -57,12 +60,33 @@ else
             }
             else
             {
+                http_response_code(400);
                 echo 'false';
             }
         }
         else
         {
-            echo 'true';
+            if (! empty($_GET['reset_pwd_1']))
+            {
+                $user_pwd = $_GET['reset_pwd_1'];
+                $lower = preg_match('/[a-z]/', $user_pwd);
+                $upper = preg_match('/[A-Z]/', $user_pwd);
+                $digit = preg_match('/[0-9]/', $user_pwd);
+                
+                if (($lower > 0) && ($upper > 0) && ($digit > 0))
+                {
+                    echo 'true';
+                }
+                else
+                {
+                    http_response_code(400);
+                    echo 'false';
+                }
+            }
+            else 
+            {
+                echo 'true';
+            }
         }
     }
 }

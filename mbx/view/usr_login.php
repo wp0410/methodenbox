@@ -48,14 +48,17 @@ $res = new AppResult($_GET);
             } 
             ?>
             
-            <form id="usr_login" method="post" action="../ctrl/usr_login.php">
+            <form id="usr_login" method="post" action="../ctrl/usr_login.php" data-parsley-validate="">
                  <div class="controls">
                     <div class="row form-row">
                         <div class="col col-sm-1 col-md-3 col-xl-3"></div>
                         <div class="col col-sm-5 col-md-3 col-xl-3">
                             <div class="form-group" id="login_email">
                                 <label for="user_email">E-Mail Adresse *</label>
-                                <input id="user_email" type="email" name="user_email" class="form-control" placeholder="E-Mail Adresse">
+                                <input id="user_email" type="email" name="user_email" class="form-control" placeholder="E-Mail Adresse"
+                                	data-parsley-required="" data-parsley-required-message="Die E-Mail Adresse muss eingegeben werden"
+                                	data-parsley-type-message="Keine g&uuml;ltige E-Mail Adresse"
+                                >
                             </div>
                         </div>
                     <!-- </div>
@@ -63,7 +66,9 @@ $res = new AppResult($_GET);
                         <div class="col col-sm-5 col-md-3 col-xl-3">
                             <div class="form-group" id="login_pwd">
                                 <label for="user_pwd">Passwort *</label>
-                                <input id="user_pwd" type="password" name="user_pwd" class="form-control" placeholder="Passwort">
+                                <input id="user_pwd" type="password" name="user_pwd" class="form-control" placeholder="Passwort"
+                                	data-parsley-required="" data-parsley-required-message="Das Passwort muss angegeben werden"
+                                >
                             </div>
                         </div>
                     </div>
@@ -114,27 +119,5 @@ $res = new AppResult($_GET);
         </div>
         
         <?php FormElements::scriptRefs(); ?>
-        <script type="text/javascript">
-            /* global $ */
-            $('#usr_login').validate({
-                rules: {
-                    user_email: {
-                        required: true
-                    },
-                    user_pwd: {
-                        required: true
-                    }
-                },
-                messages: {
-                    user_email: {
-                        email: "Keine g&uuml;ltige E-Mail Adresse",
-                        required: "Die E-Mail Adresse muss eingegeben werden"
-                    },
-                    user_pwd: {
-                        required: "Das Passwort muss angegeben werden"
-                    }
-                }
-            })
-        </script>
     </body>
  </html>   

@@ -42,14 +42,17 @@ session_start();
             
             <!-- ?php if ($res->code != 0) { FormElements::showAlert($res->style, 'col-md-6 col-xl-6', $res->text); } ? -->
             
-            <form id="usr_pwdres" method="post" action="../ctrl/usr_pwd_reset.php">
+            <form id="usr_pwdres" method="post" action="../ctrl/usr_pwd_reset.php" data-parsley-validate="">
                  <div class="controls">
                     <div class="row form-row">
                         <div class="col col-sm-1 col-md-3 col-xl-3"></div>
                         <div class="col col-sm-10 col-md-6 col-xl-6">
                             <div class="form-group" id="login_email">
                                 <label for="user_email">E-Mail Adresse *</label>
-                                <input id="user_email" type="email" name="user_email" class="form-control" placeholder="E-Mail Adresse">
+                                <input id="user_email" type="email" name="user_email" class="form-control" placeholder="E-Mail Adresse"
+									data-parsley-required="" data-parsley-required-message="Die E-Mail Adresse muss eingegeben werden"
+									data-parsley-type-message="Keine g&uuml;ltige E-Mail Adresse"
+								>
                             </div>
                         </div>
                     </div>
@@ -58,13 +61,20 @@ session_start();
                         <div class="col col-sm-5 col-md-3 col-xl-3">
                             <div class="form-group" id="reset_pwd">
                                 <label for="reset_pwd_1">Neues Passwort *</label>
-                                <input id="reset_pwd_1" type="password" name="reset_pwd_1" class="form-control" placeholder="Passwort">
+                                <input id="reset_pwd_1" type="password" name="reset_pwd_1" class="form-control" placeholder="Passwort"
+									data-parsley-required="" data-parsley-required-message="Das neue Passwort muss eingegeben werden"
+									data-parsley-minlength="8" data-parsley-minlength-message="Das neue Passwort muss mindestens 8 Zeichen lang sein"
+									data-parsley-remote="../ctrl/usr_check.php" data-parsley-remote-message="Das neue Passwort muss Gro&szlig;buchstaben, Kleinbuchstaben und Ziffern enthalten"
+								>
                             </div>
                         </div>
                         <div class="col col-sm-5 col-md-3 col-xl-3">
                             <div class="form_group" id="conf_pwd">
                                 <label for="reset_pwd_2">Passwort Best&auml;tigung *</label>
-                                <input id="reset_pwd_2" type="password" name="reset_pwd_2" class="form-control" placeholder="Passwort Best&auml;tigung">
+                                <input id="reset_pwd_2" type="password" name="reset_pwd_2" class="form-control" placeholder="Passwort Best&auml;tigung"
+									data-parsley-required="" data-parsley-required-message="Bitte das Passwort zur Best&auml;tigung wiederholen"
+									data-parsley-equalto="#reset_pwd_1" data-parsley-equalto-message="Die eingegebenen Passw&ouml;rter stimmen nicht überein"
+								>
                             </div>
                         </div>
                     </div>
@@ -107,39 +117,5 @@ session_start();
         </div>
         
         <?php FormElements::scriptRefs(); ?>
-        <script type="text/javascript">
-            /* global $ */
-            $('#usr_pwdres').validate({
-                rules: {
-                    user_email: {
-                        required: true
-                    },
-                    reset_pwd_1: {
-                        required: true,
-                        minlength: 8,
-                        remote: "/mbx/ctrl/usr_check.php"
-                    },
-                    reset_pwd_2: {
-                        required: true,
-                        equalTo: '#reset_pwd_1'
-                    }
-                },
-                messages: {
-                    user_email: {
-                        email: "Keine g&uuml;ltige E-Mail Adresse",
-                        required: "Die E-Mail Adresse muss eingegeben werden"
-                    },
-                    reset_pwd_1: {
-                        required: "Das neue Passwort muss eingegeben werden",
-                        minlength: "Das neue Passwort muss mindestens 8 Zeichen lang sein",
-                        remote: "Das neue Passwort muss Gro&szlig;buchstaben, Kleinbuchstaben und Ziffern enthalten"
-                    },
-                    reset_pwd_2: {
-                        required: "Bitte das Passwort zur Best&auml;tigung wiederholen",
-                        equalTo: "Die eingegebenen Passw&ouml;rter stimmen nicht überein"
-                    }
-                }
-            })
-        </script>
     </body>
  </html>   

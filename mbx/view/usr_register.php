@@ -51,14 +51,19 @@ $res = new AppResult($_GET);
             } 
             ?>
             
-            <form id="usr_register" method="post" action="../ctrl/usr_register.php">
+            <form id="usr_register" method="post" action="../ctrl/usr_register.php" data-parsley-validate="">
                 <div class="controls">
                     <div class="row form-row">
                         <div class="col-sm-1 col-md-3 col-xl-3"></div>
                         <div class="col-sm-10 col-md-6 col-xl-6">
                             <div class="form-group" id="reg_email">
                                 <label for="user_email">E-Mail Adresse *</label>
-                                <input id="user_email" type="email" name="user_email" class="form-control" placeholder="E-Mail Adresse">
+                                <input id="user_email" type="email" name="user_email" class="form-control" placeholder="E-Mail Adresse"
+									data-parsley-required="" data-parsley-required-message="Die E-Mail Adresse muss eingegeben werden"
+									data-parsley-type-message="Keine g&uuml;ltige E-Mail Adresse"
+									data-parsley-remote="../ctrl/usr_check.php"
+									data-parsley-remote-message="Es gibt bereits eine Registrierung unter dieser E-Mail Adresse"
+								>
                             </div>
                         </div>
                     </div>
@@ -68,14 +73,18 @@ $res = new AppResult($_GET);
                         <div class="col-sm-5 col-md-3 col-xl-3">
                             <div class="form-group" id="reg_fst_name">
                                 <label for="user_fst_name">Vorname *</label>
-                                <input id="user_fst_name" type="text" name="user_fst_name" class="form-control" placeholder="Vorname"> 
+                                <input id="user_fst_name" type="text" name="user_fst_name" class="form-control" placeholder="Vorname"
+									data-parsley-required="" data-parsley-required-message="Der Vorname muss eingegeben werden"
+								> 
                             </div>
                         </div>
 
                         <div class="col-sm-5 col-md-3 col-xl-3">
                             <div class="form-group" id="reg_lst_name">
                                 <label for="user_lst_name">Familienname *</label>
-                                <input id="user_lst_name" type="text" name="user_lst_name" class="form-control" placeholder="Familienname"> 
+                                <input id="user_lst_name" type="text" name="user_lst_name" class="form-control" placeholder="Familienname"
+									data-parsley-required="" data-parsley-required-message="Der Familienname muss eingegeben werden"
+								> 
                             </div>
                         </div>
                     </div>
@@ -85,14 +94,21 @@ $res = new AppResult($_GET);
                         <div class="col-sm-5 col-md-3 col-xl-3">
                             <div class="form-group" id="reg_pwd">
                                 <label for="user_pwd">Passwort *</label>
-                                <input id="user_pwd" type="password" name="user_pwd" class="form-control" placeholder="Passwort">
+                                <input id="user_pwd" type="password" name="user_pwd" class="form-control" placeholder="Passwort"
+									data-parsley-required="" data-parsley-required-message="Bitte ein g&uuml;ltiges Passwort eingeben"
+									data-parsley-minlength="8" data-parsley-minlength-message="Das Passwort muss mindestens 8 Zeichen lang sein"
+									data-parsley-remote="../ctrl/usr_check.php" data-parsley-remote-message="Das Passwort muss Gro&szlig;buchstaben, Kleinbuchstaben und Ziffern enthalten"
+								>
                             </div>
                         </div>
 
                         <div class="col-sm-5 col-md-3 col-xl-3">
                             <div class="form-group" id="reg_pwd_conf">
                                 <label for="user_pwd_conf">Passwort Best&auml;tigung *</label>
-                                <input id="user_pwd_conf" type="password" name="user_pwd_conf" class="form-control" placeholder="Passwort Best&auml;tigung"> 
+                                <input id="user_pwd_conf" type="password" name="user_pwd_conf" class="form-control" placeholder="Passwort Best&auml;tigung"
+									data-parsley-required="" data-parsley-required-message="Bitte das Passwort zur Best&auml;tigung wiederholen"
+									data-parsley-equalto="#user_pwd" data-parsley-equalto-message="Die eingegebenen Passw&ouml;rter stimmen nicht überein"
+								> 
                             </div>
                         </div>
                     </div>
@@ -136,54 +152,5 @@ $res = new AppResult($_GET);
         </div>
         
         <?php FormElements::scriptRefs(); ?>
-        
-        <script type="text/javascript">
-            /* global $ */
-            $('#usr_register').validate({
-                rules: {
-                    user_email: {
-                        required: true,
-                        remote: "../ctrl/usr_check.php"
-                    },
-                    user_fst_name: {
-                        required: true
-                    },
-                    user_lst_name: {
-                        required: true
-                    },
-                    user_pwd: {
-                        required: true,
-                        minlength: 8,
-                        remote: "../ctrl/usr_check.php"
-                    },
-                    user_pwd_conf: {
-                        required: true,
-                        equalTo: '#user_pwd'
-                    }
-                },
-                messages: {
-                    user_email: {
-                        email: "Keine g&uuml;ltige E-Mail Adresse",
-                        required: "Die E-Mail Adresse muss eingegeben werden",
-                        remote: "Es gibt bereits eine Registrierung unter dieser E-Mail Adresse"
-                    },
-                    user_fst_name: {
-                        required: "Der Vorname muss eingegeben werden"
-                    },
-                    user_lst_name: {
-                        required: "Der Familienname muss eingegeben werden"
-                    },
-                    user_pwd: {
-                        required: "Bitte ein g&uuml;ltiges Passwort eingeben",
-                        minlength: "Das Passwort muss mindestens 8 Zeichen lang sein",
-                        remote: "Das Passwort muss Gro&szlig;buchstaben, Kleinbuchstaben und Ziffern enthalten"
-                    },
-                    user_pwd_conf: {
-                        required: "Bitte das Passwort zur Best&auml;tigung wiederholen",
-                        equalTo: "Die eingegebenen Passw&ouml;rter stimmen nicht überein"
-                    }
-                }
-            })
-        </script>
     </body>
  </html>   
