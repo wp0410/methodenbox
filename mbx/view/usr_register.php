@@ -107,7 +107,7 @@ $res = new AppResult($_GET);
                                 <label for="user_pwd_conf">Passwort Best&auml;tigung *</label>
                                 <input id="user_pwd_conf" type="password" name="user_pwd_conf" class="form-control" placeholder="Passwort Best&auml;tigung"
 									data-parsley-required="" data-parsley-required-message="Bitte das Passwort zur Best&auml;tigung wiederholen"
-									data-parsley-equalto="#user_pwd" data-parsley-equalto-message="Die eingegebenen Passw&ouml;rter stimmen nicht überein"
+									data-parsley-equalto="#user_pwd" data-parsley-equalto-message="Die eingegebenen Passw&ouml;rter stimmen nicht &uuml;berein"
 								> 
                             </div>
                         </div>

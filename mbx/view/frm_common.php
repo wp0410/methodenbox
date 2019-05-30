@@ -17,7 +17,7 @@ class FormElements
     {
         // Bootswatch themes including bootstrap: default theme is "lumen"
         // echo '<link rel="stylesheet" href="/mbx/css/flatly.bootstrap.min.css">';
-        echo '<link rel="stylesheet" href="/mbx/css/lumen.bootstrap.min.css">';
+        // echo '<link rel="stylesheet" href="/mbx/css/lumen.bootstrap.min.css">';
         // echo '<link rel="stylesheet" href="/mbx/css/materia.bootstrap.min.css">';
         // echo '<link rel="stylesheet" href="/mbx/css/pulse.bootstrap.min.css">';
         // echo '<link rel="stylesheet" href="/mbx/css/sandstone.bootstrap.min.css">';
@@ -27,6 +27,21 @@ class FormElements
         // echo '<link rel="stylesheet" href="/mbx/css/superhero.bootstrap.min.css">';
         // echo '<link rel="stylesheet" href="/mbx/css/united.bootstrap.min.css">';
         // echo '<link rel="stylesheet" href="/mbx/css/yeti.bootstrap.min.css">';
+        if (! empty($_SESSION['skin']))
+        {
+            echo '<link rel="stylesheet" href="/mbx/css/' . $_SESSION['skin'] . '.bootstrap.min.css">';
+        }
+        else 
+        {
+            if (empty(GlobalParameter::$applicationConfig['formSkin']))
+            {
+                echo '<link rel="stylesheet" href="/mbx/css/lumen.bootstrap.min.css">';
+            }
+            else
+            {
+                echo '<link rel="stylesheet" href="/mbx/css/' . GlobalParameter::$applicationConfig['formSkin'] . '.bootstrap.min.css">';
+            }
+        }
         echo '<link rel="stylesheet" href="/mbx/css/mbx.css">';
         echo '<link rel="stylesheet" href="/mbx/font-awesome-4.7.0/css/font-awesome.min.css">';
 		echo '<link rel="stylesheet" href="/mbx/css/parsley.css">';
@@ -46,32 +61,34 @@ class FormElements
     {
         // Sub Menu Configuration: client user is authenticated
         $sub_menu_auth_1 = array(
-            'ADM.USR'  => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>2, 'MTH.RATE'=>1, 'MTH.ADM'=>2, 'USR.REG'=>0, 'USR.CONF'=>0, 'USR.IN'=>0, 'USR.OUT'=>1, 'ADM.USR'=>0 ),
-            'AUX.ERR'  => array( 'MTH.SRCH'=>0, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>0, 'USR.CONF'=>0, 'USR.IN'=>0, 'USR.OUT'=>0, 'ADM.USR'=>0 ),
-            'AUX.HLP'  => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>2, 'MTH.RATE'=>1, 'MTH.ADM'=>2, 'USR.REG'=>0, 'USR.CONF'=>0, 'USR.IN'=>0, 'USR.OUT'=>1, 'ADM.USR'=>2 ),
-            'MTH.SRCH' => array( 'MTH.SRCH'=>0, 'MTH.NEW'=>2, 'MTH.RATE'=>1, 'MTH.ADM'=>2, 'USR.REG'=>0, 'USR.CONF'=>0, 'USR.IN'=>0, 'USR.OUT'=>1, 'ADM.USR'=>2 ),
-            'MTH.NEW'  => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>0, 'MTH.RATE'=>1, 'MTH.ADM'=>2, 'USR.REG'=>0, 'USR.CONF'=>0, 'USR.IN'=>0, 'USR.OUT'=>1, 'ADM.USR'=>2 ),
-            'MTH.RATE' => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>2, 'MTH.RATE'=>0, 'MTH.ADM'=>2, 'USR.REG'=>0, 'USR.CONF'=>0, 'USR.IN'=>0, 'USR.OUT'=>1, 'ADM.USR'=>2 ),
-            'MTH.ADM'  => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>2, 'MTH.RATE'=>1, 'MTH.ADM'=>0, 'USR.REG'=>0, 'USR.CONF'=>0, 'USR.IN'=>0, 'USR.OUT'=>1, 'ADM.USR'=>2 ),
-            'USR.REG'  => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>0, 'USR.CONF'=>1, 'USR.IN'=>1, 'USR.OUT'=>0, 'ADM.USR'=>0 ),
-            'USR.CONF' => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>1, 'USR.CONF'=>0, 'USR.IN'=>1, 'USR.OUT'=>0, 'ADM.USR'=>0 ),
-            'USR.IN'   => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>1, 'USR.CONF'=>1, 'USR.IN'=>0, 'USR.OUT'=>0, 'ADM.USR'=>0 ),
+            'ADM.USR'  => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>2, 'MTH.RATE'=>1, 'MTH.ADM'=>2, 'USR.REG'=>0, 'USR.CONF'=>0, 'USR.IN'=>0, 'USR.OUT'=>1, 'USR.OPT'=>1, 'ADM.USR'=>0 ),
+            'AUX.ERR'  => array( 'MTH.SRCH'=>0, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>0, 'USR.CONF'=>0, 'USR.IN'=>0, 'USR.OUT'=>0, 'USR.OPT'=>0, 'ADM.USR'=>0 ),
+            'AUX.HLP'  => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>2, 'MTH.RATE'=>1, 'MTH.ADM'=>2, 'USR.REG'=>0, 'USR.CONF'=>0, 'USR.IN'=>0, 'USR.OUT'=>1, 'USR.OPT'=>1, 'ADM.USR'=>2 ),
+            'MTH.SRCH' => array( 'MTH.SRCH'=>0, 'MTH.NEW'=>2, 'MTH.RATE'=>1, 'MTH.ADM'=>2, 'USR.REG'=>0, 'USR.CONF'=>0, 'USR.IN'=>0, 'USR.OUT'=>1, 'USR.OPT'=>1, 'ADM.USR'=>2 ),
+            'MTH.NEW'  => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>0, 'MTH.RATE'=>1, 'MTH.ADM'=>2, 'USR.REG'=>0, 'USR.CONF'=>0, 'USR.IN'=>0, 'USR.OUT'=>1, 'USR.OPT'=>1, 'ADM.USR'=>2 ),
+            'MTH.RATE' => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>2, 'MTH.RATE'=>0, 'MTH.ADM'=>2, 'USR.REG'=>0, 'USR.CONF'=>0, 'USR.IN'=>0, 'USR.OUT'=>1, 'USR.OPT'=>1, 'ADM.USR'=>2 ),
+            'MTH.ADM'  => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>2, 'MTH.RATE'=>1, 'MTH.ADM'=>0, 'USR.REG'=>0, 'USR.CONF'=>0, 'USR.IN'=>0, 'USR.OUT'=>1, 'USR.OPT'=>1, 'ADM.USR'=>2 ),
+            'USR.REG'  => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>0, 'USR.CONF'=>1, 'USR.IN'=>1, 'USR.OUT'=>0, 'USR.OPT'=>0, 'ADM.USR'=>0 ),
+            'USR.CONF' => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>1, 'USR.CONF'=>0, 'USR.IN'=>1, 'USR.OUT'=>0, 'USR.OPT'=>0, 'ADM.USR'=>0 ),
+            'USR.IN'   => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>1, 'USR.CONF'=>1, 'USR.IN'=>0, 'USR.OUT'=>0, 'USR.OPT'=>0, 'ADM.USR'=>0 ),
+            'USR.OPT'  => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>1, 'MTH.RATE'=>1, 'MTH.ADM'=>1, 'USR.REG'=>0, 'USR.CONF'=>0, 'USR.IN'=>0, 'USR.OUT'=>1, 'USR.OPT'=>0, 'ADM.USR'=>2 ),
             'USR.OUT'  => array()
         );
             
         // Sub Menu Configuration: client user is NOT authenticated
         $sub_menu_auth_0 = array(
-            'ADM.USR'  => array( 'MTH.SRCH'=>0, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>1, 'USR.CONF'=>0, 'USR.IN'=>1, 'USR.OUT'=>0, 'ADM.USR'=>0 ),
-            'AUX.ERR'  => array( 'MTH.SRCH'=>0, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>0, 'USR.CONF'=>0, 'USR.IN'=>0, 'USR.OUT'=>0, 'ADM.USR'=>0 ),
-            'AUX.HLP'  => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>1, 'USR.CONF'=>1, 'USR.IN'=>1, 'USR.OUT'=>0, 'ADM.USR'=>0 ),
-            'MTH.SRCH' => array( 'MTH.SRCH'=>0, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>1, 'USR.CONF'=>1, 'USR.IN'=>1, 'USR.OUT'=>0, 'ADM.USR'=>0 ),
-            'MTH.NEW'  => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>0, 'USR.CONF'=>0, 'USR.IN'=>0, 'USR.OUT'=>0, 'ADM.USR'=>0 ),
-            'MTH.RATE' => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>0, 'USR.CONF'=>0, 'USR.IN'=>0, 'USR.OUT'=>0, 'ADM.USR'=>0 ),
-            'MTH.ADM'  => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>0, 'USR.CONF'=>0, 'USR.IN'=>0, 'USR.OUT'=>0, 'ADM.USR'=>0 ),
-            'USR.REG'  => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>0, 'USR.CONF'=>1, 'USR.IN'=>1, 'USR.OUT'=>0, 'ADM.USR'=>0 ),
-            'USR.CONF' => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>1, 'USR.CONF'=>0, 'USR.IN'=>1, 'USR.OUT'=>0, 'ADM.USR'=>0 ),
-            'USR.IN'   => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>1, 'USR.CONF'=>1, 'USR.IN'=>0, 'USR.OUT'=>0, 'ADM.USR'=>0 ),
-            'USR.PWD'  => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>1, 'USR.CONF'=>1, 'USR.IN'=>0, 'USR.OUT'=>0, 'ADM.USR'=>0 ),
+            'ADM.USR'  => array( 'MTH.SRCH'=>0, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>1, 'USR.CONF'=>0, 'USR.IN'=>1, 'USR.OUT'=>0, 'USR.OPT'=>0, 'ADM.USR'=>0 ),
+            'AUX.ERR'  => array( 'MTH.SRCH'=>0, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>0, 'USR.CONF'=>0, 'USR.IN'=>0, 'USR.OUT'=>0, 'USR.OPT'=>0, 'ADM.USR'=>0 ),
+            'AUX.HLP'  => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>1, 'USR.CONF'=>1, 'USR.IN'=>1, 'USR.OUT'=>0, 'USR.OPT'=>0, 'ADM.USR'=>0 ),
+            'MTH.SRCH' => array( 'MTH.SRCH'=>0, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>1, 'USR.CONF'=>1, 'USR.IN'=>1, 'USR.OUT'=>0, 'USR.OPT'=>0, 'ADM.USR'=>0 ),
+            'MTH.NEW'  => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>0, 'USR.CONF'=>0, 'USR.IN'=>0, 'USR.OUT'=>0, 'USR.OPT'=>0, 'ADM.USR'=>0 ),
+            'MTH.RATE' => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>0, 'USR.CONF'=>0, 'USR.IN'=>0, 'USR.OUT'=>0, 'USR.OPT'=>0, 'ADM.USR'=>0 ),
+            'MTH.ADM'  => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>0, 'USR.CONF'=>0, 'USR.IN'=>0, 'USR.OUT'=>0, 'USR.OPT'=>0, 'ADM.USR'=>0 ),
+            'USR.REG'  => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>0, 'USR.CONF'=>1, 'USR.IN'=>1, 'USR.OUT'=>0, 'USR.OPT'=>0, 'ADM.USR'=>0 ),
+            'USR.CONF' => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>1, 'USR.CONF'=>0, 'USR.IN'=>1, 'USR.OUT'=>0, 'USR.OPT'=>0, 'ADM.USR'=>0 ),
+            'USR.IN'   => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>1, 'USR.CONF'=>1, 'USR.IN'=>0, 'USR.OUT'=>0, 'USR.OPT'=>0, 'ADM.USR'=>0 ),
+            'USR.OPT'  => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>1, 'USR.CONF'=>1, 'USR.IN'=>0, 'USR.OUT'=>0, 'USR.OPT'=>0, 'ADM.USR'=>0 ),
+            'USR.PWD'  => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>0, 'MTH.RATE'=>0, 'MTH.ADM'=>0, 'USR.REG'=>1, 'USR.CONF'=>1, 'USR.IN'=>0, 'USR.OUT'=>0, 'USR.OPT'=>0, 'ADM.USR'=>0 ),
             'USR.OUT'  => array()
         );
             
@@ -83,6 +100,7 @@ class FormElements
             'USR.REG'  => array('TEXT' => 'Registrieren', 'LINK' => '../view/usr_register.php'), 
             'USR.CONF' => array('TEXT' => 'Registrierung Best&auml;tigen', 'LINK' => '../view/usr_confirm.php'), 
             'USR.IN'   => array('TEXT' => 'Anmelden', 'LINK' => '../view/usr_login.php'), 
+            'USR.OPT'  => array('TEXT' => 'Einstellungen', 'LINK' => '../view/usr_settings.php'),
             'USR.OUT'  => array('TEXT' => 'Abmelden', 'LINK' => '../ctrl/usr_logout.php'),
             'AUX.HLP'  => array('TEXT' => 'Hilfe', 'LINK' => '../view/aux_help.php'),
             'ADM.USR'  => array('TEXT' => 'Benutzerverwaltung', 'LINK' => '../view/adm_usr_account.php')
@@ -151,7 +169,7 @@ class FormElements
         echo '<li class="nav-item dropdown">';
         echo '<a class="nav-link dropdown-toggle" href="#" id="navbarBenutzerLink" role="button" data-toggle="dropdown" aria-haspopup="true" area-expanded="false">Benutzer</a>';
         echo '<div class="dropdown-menu" aria-labelledby="navbarBenutzerLink">';
-        $sub_items = array('USR.REG', 'USR.CONF', 'USR.IN', 'USR.OUT');
+        $sub_items = array('USR.REG', 'USR.OPT', 'USR.CONF', 'USR.IN', 'USR.OUT');
         foreach($sub_items as $sub_item)
         {
             if ($usr_authenticated)
@@ -331,7 +349,7 @@ class FormElements
             echo '<div class="' . $col_intend . '"></div>';
         }
         echo '<div class="' . $col_format . '">';
-        echo '<div class="alert alert-' . $alert_type . '" role="alert"><center><h5>' . $alert_text . '</h4></center></div></div></div>';
+        echo '<div id="global_alert" class="alert alert-' . $alert_type . '" role="alert"><center><h5>' . $alert_text . '</h4></center></div></div></div>';
     }
 }
 

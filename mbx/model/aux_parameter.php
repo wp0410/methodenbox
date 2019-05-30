@@ -14,7 +14,7 @@
 class GlobalParameter
 {
     public static $applicationConfig = array (
-        'appVersion'             => 'v1.2.26b (2019-05-30)',
+        'appVersion'             => 'v1.2.27b (2019-05-30)',
         'applicationTitle'       => 'Methodenbox',
         'userAccountFailLimit'   => 3,
         'userSessionLifetimeSec' => 3600,
@@ -41,6 +41,9 @@ class GlobalParameter
         'doSendEmail'            => false,
         'validateCaptcha'        => false,
         // 'validateCaptcha'        => true,
+        
+        'formSkin'               => 'lumen',
+        'formAvailableSkins'     => array('lumen', 'flatly', 'materia', 'pulse', 'sandstone', 'simplex', 'slate', 'solar', 'superhero', 'united', 'yeti'),
         
         'void'                   => ''
     );

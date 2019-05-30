@@ -63,7 +63,7 @@ $new_usr = new UserAccount($db_conn);
 $res = $new_usr->createUserAccount($_POST['user_fst_name'], $_POST['user_lst_name'], $_POST['user_email'], $_POST['user_pwd'], 'UPLOAD');
 if (! $res->isOK())
 {
-    header('Location: ../view/usr_register.php?res_code=' . $res->com . '&res_text=' . $res->textUrlEncoded());
+    header('Location: ../view/usr_register.php?res_code=' . $res->code . '&res_text=' . $res->textUrlEncoded());
     exit();
 }
 

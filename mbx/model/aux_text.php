@@ -51,6 +51,7 @@ class GlobalResultText
             // Info Messages
             'E_901' => 'Sie werden in K&uuml;rze ein E-Mail and die angegebene E-Mail Adresse erhalten. Bitte folgen Sie den Anweisungen in dieser E-Mail, um die Registrierung abzuschlie&szlig;en',
             'E_902' => 'Sie werden in K&uuml;rze ein E-Mail and die angegebene E-Mail Adresse erhalten. Bitte folgen Sie den Anweisungen in dieser E-Mail, um die &Auml;nderung des Passworts abzuschlie&szlig;en',
+            'E_949' => 'Diese Funktion ist noch nicht implementiert. Die Aktion hatte keine Auswirkung',
             
             // Success Messages
             'E_951' => 'Die Unterrichtsmethode "[%M]" wurde erfolgreich hochgeladen.',
