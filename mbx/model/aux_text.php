@@ -29,6 +29,8 @@ class GlobalResultText
             'E_410' => 'E_410 Benutzer Anmeldung fehlgeschlagen (Ung&uuml;ltiges Benutzerkonto oder falsches Passwort)',
             'E_411' => 'E_411 Benutzer Anmeldung fehlgeschlagen (die Registrierung ist noch nicht best&auml;tigt)',
             'E_412' => 'E_412 Benutzer Anmeldung fehlgeschlagen (das Benutzerkonto ist gesperrt). Bitte kontaktieren Sie einen Administrator',
+            'E_413' => 'E_413 Das alte Passwort ist ung&uuml;ltig. Das Passwort kann daher nicht ge&auml;ndert werden',
+            'E_414' => 'E_414 Die eingegebenen Passw&ouml;rter stimmen nicht überein',
             'E_420' => 'E_420 Die Registrierung konnte nicht korrekt best&auml;tigt werden',
             
             // Section: User Session
@@ -55,6 +57,7 @@ class GlobalResultText
             
             // Success Messages
             'E_951' => 'Die Unterrichtsmethode "[%M]" wurde erfolgreich hochgeladen.',
+            'E_952' => 'Das Passwort wurde erfolgreich ge&auml;ndert',
         
             // End of Array
             'E_999' => 'VOID'

@@ -12,6 +12,9 @@
 //----------------------------------------------------------------------------------------
 include_once '../model/aux_parameter.php';
 include_once '../model/aux_parameter_sec.php';
+include_once '../model/sql_connection.php';
+include_once '../model/usr_account.php';
+include_once '../model/usr_session.php';
 include_once '../model/app_result.php';
 include_once '../model/app_warning.php';
 
@@ -21,7 +24,7 @@ $res = new AppResult(0);
 
 if (empty($_POST) || (empty($_POST['set_type'])))
 {
-    $res = new AppResult(949);
+    $res = new AppResult(100);
 }
 else 
 {
@@ -36,12 +39,55 @@ else
     {
         if ($_POST['set_type'] == 'PWD')
         {
-            $res = new AppResult(949);
+            $db_conn = DatabaseConnection::get_connection();
+            $usr_session = new UserSession($db_conn);
+            if (empty($_SESSION) || empty($_SESSION['user']))
+            {
+                $res = new AppResult(405);
+            }
+            else 
+            {
+                $res = $usr_session->validateSession($_SESSION['user']);
+                
+                if ($res->isOK())
+                {
+                    if (! $usr_session->isAuthenticated())
+                    {
+                        $res = new AppResult(406);
+                    }
+                    else
+                    {
+                        $_SESSION['user'] = array('sid' => $usr_session->getId(), 'uid' => $usr_session->getUsrId(), 'hash' => $usr_session->getSessionHash());
+                        
+                        if (empty($_POST['current_pwd']) || empty($_POST['new_pwd']) || empty($_POST['new_pwd_conf']) || ($_POST['new_pwd'] != $_POST['new_pwd_conf']))
+                        {
+                            $res = new AppResult(414);
+                        }
+                        if ($res->isOK())
+                        {
+                            $usr_acc = new UserAccount($db_conn);
+                            $res = $usr_acc->loadById($usr_session->getUsrId());
+                        }
+                        if ($res->isOK())
+                        {
+                            $res = $usr_acc->checkUserPassword($_POST['current_pwd']);
+                        }
+                        if ($res->isOK())
+                        {
+                            $res = $usr_acc->modifyUserAccount($_POST['new_pwd']);
+                        }
+                        if ($res->isOK())
+                        {
+                            $res = new AppResult(952);
+                        }
+                    }
+                }
+            }
         }
     }
 }
 
-if ($res === 0)
+if ($res->code == 0)
 {
     header('Location: ../view/usr_settings.php');
 }

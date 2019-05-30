@@ -397,6 +397,18 @@ class UserAccount implements JsonSerializable
         return $res;
     }
     
+    public function checkUserPassword($password)
+    {
+        if ($this->verifyPassword($password))
+        {
+            return new AppResult(0);
+        }
+        else 
+        {
+            return new AppResult(413);
+        }
+    }
+    
     public function verifyChallenge($email_addr, $password, $challenge)
     {
         $res = $this->loadByEmail($email_addr);

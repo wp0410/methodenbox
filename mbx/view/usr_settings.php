@@ -147,12 +147,12 @@ $res = new AppResult($_GET);
                                     	</div> <!-- row -->
                                     	
                                     	<div class="row form-row">
-                                    		<div class="col col-sm-6 col-md-8 col-xl-10">
+                                    		<div class="col col-sm-6 col-md-8 col-xl-8">
                                     			<span class="text-dark">Mit * gekennzeichnete Felder m&uuml;ssen eingegeben werden.</p>
                                     		</div> <!-- col -->
-                                    		<div class="col col-sm-6 col-md-4 col-xl-2">
+                                    		<div class="col col-sm-6 col-md-4 col-xl-4">
                                                 <div class="form-group" id="set_pwd_submit">
-                                                    <input type="submit" class="btn btn-primary btn-send" value="Passwort &Auml;ndern">
+                                                    <input type="submit" class="btn btn-primary btn-send float-right" value="Passwort &Auml;ndern">
                                                 </div>
                                     		</div> <!-- col -->
                                     	</div> <!-- row -->
