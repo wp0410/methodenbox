@@ -83,19 +83,22 @@ $res = new AppResult($_GET);
                 }
             ?>
             
-            <form id="mth_upload" enctype="multipart/form-data" method="post" action="../ctrl/mth_upload.php">
+            <form id="mth_upload" enctype="multipart/form-data" method="post" action="../ctrl/mth_upload.php" data-parsley-validate="">
                 <div class="controls">
                     <div class="row form-row"><div class="col col-md-2 col-xl-2"></div>
                         <div class="col col-md-4 col-xl-4">
                             <div class="form-group">
                                 <label for="mth_name">Name der Methode *</label>
-                                <input id="mth_name" type="text" name="mth_name" class="form-control" placeholder="Name">
+                                <input id="mth_name" type="text" name="mth_name" class="form-control" placeholder="Name"
+                                    data-parsley-required="" data-parsley-required-message="Der Name der Methode muss eingegeben werden"
+                                    data-parsley-maxlength="127" data-parsley-maxlength-message="Der Name darf h&ouml;chstens 127 Zeichen lang sein">
                             </div>
                         </div>
                         <div class="col col-md-2 col-xl-2">
                             <div class="form-group">
                                 <label for="mth_subject">Unterrichtsfach *</label>
-                                <select class="form-control" id="mth_subject" name="mth_subject">
+                                <select class="form-control" id="mth_subject" name="mth_subject"
+                                    data-parsley-required="" data-parsley-required-message="Bitte w&auml;hlen Sie ein Unterrichtsfach aus">
                                     <option></option>
                                     <?php
                                         foreach(MethodSelectionFactory::getSubjects() as $sub)
@@ -109,7 +112,8 @@ $res = new AppResult($_GET);
                         <div class="col col-md-2 col-xl-2">
                             <div class="form-group">
                                 <label for="mth_area">Fachbereich *</label>
-                                <select class="form-control" id="mth_area" name="mth_area">
+                                <select class="form-control" id="mth_area" name="mth_area"
+                                    data-parsley-required="" data-parsley-required-message="Bitte w&auml;hlen Sie einen Fachbereich aus">
                                     <option></option>
                                 </select>
                             </div>
@@ -120,14 +124,16 @@ $res = new AppResult($_GET);
                         <div class="col-md-4 col-xl-4">
                             <div class="form-group">
                                 <label for="mth_summary">Beschreibung *</label>
-                                <textarea id="mth_summary" class="form-control" name="mth_summary" form="mth_upload" rows="5" placeholder="Beschreibung"></textarea>
+                                <textarea id="mth_summary" class="form-control" name="mth_summary" form="mth_upload" rows="5" placeholder="Beschreibung"
+                                    data-parsley-required="" data-parsley-required-message="Eine Beschreibung der Methode muss eingegeben werden"
+                                    data-parsley-maxlength="4000" data-parsley-maxlength-message="Die Beschreibung darf h&ouml;chstens 4000 Zeichen lang sein"></textarea>
                             </div>    
                         </div> <!-- col -->
                         <div class="col-md-2 col-xl-2">
-
                             <div class="form-group">
                                 <label for="mth_prep_tm">Vorbereitungszeit *</label>
-                                <select class="form-control" id="mth_prep_tm" name="mth_prep_tm">
+                                <select class="form-control" id="mth_prep_tm" name="mth_prep_tm"
+                                    data-parsley-required="" data-parsley-required-message="Bitte w&auml;hlen Sie die Vorbereitungszeit aus">
                                     <option></option>
                                     <?php
                                         foreach(MethodSelectionFactory::getPrepTime() as $prep)
@@ -141,7 +147,8 @@ $res = new AppResult($_GET);
                         <div class="col col-md-2 col-xl-2">
                            <div class="form-group">
                                 <label for="mth_exec_tm">Durchf&uuml;hrungszeit *</label>
-                                <select class="form-control" id="mth_exec_tm" name="mth_exec_tm">
+                                <select class="form-control" id="mth_exec_tm" name="mth_exec_tm"
+                                    data-parsley-required="" data-parsley-required-message="Bitte w&auml;hlen Sie die Durchf&uuml;hrungszeit aus">
                                     <option></option>
                                     <?php
                                         foreach(MethodSelectionFactory::getExecTime() as $exec)
@@ -153,7 +160,8 @@ $res = new AppResult($_GET);
                             </div>
                             <div class="form-group">
                                 <label for="mth_class">Jahrgang *</label>
-                                <select class="form-control" id="mth_age_grp" name="mth_age_grp">
+                                <select class="form-control" id="mth_age_grp" name="mth_age_grp"
+                                    data-parsley-required="" data-parsley-required-message="Bitte w&auml;hlen Sie einen Jahrgang aus">
                                     <option></option>
                                     <?php
                                         foreach(MethodSelectionFactory::getAgeGroups() as $cls)
@@ -173,7 +181,9 @@ $res = new AppResult($_GET);
                             <div class="card">
                                 <div class="card-body">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="mth_phase_E" name="mth_phase[]" value="E">
+                                        <input class="form-check-input" type="checkbox" id="mth_phase_E" name="mth_phase[]" value="E"
+                                        	data-parsley-required="" data-parsley-required-message="Bitte w&auml;hlen Sie mindestens eine Unterrichtsphase aus"
+                                            data-parsley-mincheck="1" data-parsley-mincheck-message="Bitte w&auml;hlen Sie mindestens eine Unterrichtsphase aus">
                                         <label class="form-check-label" for="mth_phase_E">Einstieg</label>
                                     </div>    
                                     <div class="form-check">
@@ -196,19 +206,21 @@ $res = new AppResult($_GET);
                             <div class="card">
                                 <div class="card-body">
                                     <div class="form-check">
-                                        <input class="form-check-input soc_f_grp" type="checkbox" id="mth_soc_E" name="mth_soc[]" value="E">
+                                        <input class="form-check-input" type="checkbox" id="mth_soc_E" name="mth_soc[]" value="E"
+                                        	data-parsley-required="" data-parsley-required-message="Bitte w&auml;hlen Sie mindestens eine Sozialform aus"
+                                            data-parsley-mincheck="1" data-parsley-mincheck-message="Bitte w&auml;hlen Sie mindestens eine Sozialform aus">
                                         <label class="form-check-label" for="mth_soc_E">Einzelarbeit</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input soc_f_grp" type="checkbox" id="mth_soc_P" name="mth_soc[]" value="P">
+                                        <input class="form-check-input" type="checkbox" id="mth_soc_P" name="mth_soc[]" value="P">
                                         <label class="form-check-label" for="mth_soc_P">Partnerarbeit</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input soc_f_grp" type="checkbox" id="mth_soc_G" name="mth_soc[]" value="G">
+                                        <input class="form-check-input" type="checkbox" id="mth_soc_G" name="mth_soc[]" value="G">
                                         <label class="form-check-label" for="mth_soc_G">Gruppenarbeit</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input soc_f_grp" type="checkbox" id="mth_soc_K" name="mth_soc[]" value="K">
+                                        <input class="form-check-input" type="checkbox" id="mth_soc_K" name="mth_soc[]" value="K">
                                         <label class="form-check-label" for="mth_soc_K">Klassenplenum</label>
                                     </div>
                                 </div>
@@ -230,7 +242,8 @@ $res = new AppResult($_GET);
                         <div class="col-md-2 col-xl-2">
                             <div class="form-group">
                                 <label for="mth_add_author">Zus&auml;tzliche AutorInnen</label>
-                                <textarea id="mth_add_author" class="form-control" name="mth_add_author" form="mth_upload" rows="5" placeholder="Name"></textarea>
+                                <textarea id="mth_add_author" class="form-control" name="mth_add_author" form="mth_upload" rows="5" placeholder="Name"
+                                    data-parsley-maxlength="120" data-parsley-maxlength-message="F&uuml;r die zus&auml;tzlichen AutorInnen sind h&ouml;chstens 120 Zeichen vorgesehen"></textarea>
                             </div>
                         </div>
                     </div> <!-- row -->
@@ -241,12 +254,16 @@ $res = new AppResult($_GET);
                                 <div class="input-group">
                                     <label class="input-group-btn">
                                         <span class="btn btn-outline-dark">
-                                            Datei ausw&auml;hlen &hellip; 
+                                            Datei ausw&auml;hlen (max. 4 MB) &hellip; 
                                             <input type="file" style="display: none;" id="mth_file" name="mth_file" 
-                                                   accept="<?php echo GlobalParameter::$applicationConfig['mthUploadFileTypes'] ?>">
+                                                   accept="<?php echo GlobalParameter::$applicationConfig['mthUploadFileTypes'] ?>"
+												   data-parsley-max-file-size="4096"
+												   data-parsley-max-file-size-message="Die Datei ist gr&ouml;&szlig;er als 4 MB">
                                         </span>
                                     </label>
-                                    <input type="text" class="form-control" id="mth_file_name", name="mth_file_name" aria-describedby="mth_file">
+                                    <input type="text" class="form-control" id="mth_file_name", name="mth_file_name" aria-describedby="mth_file"
+                                        data-parsley-required="" data-parsley-required-message="Bitte eine Archivdatei (ZIP, GZ, TAR) ausw&auml;hlen"
+                                        data-parsley-remote="../ctrl/mth_file_check.php" data-parsley-remote-message="Die Datei hat das falsche Format. Bitte eine Archivdatei (ZIP, GZ, TAR) ausw&auml;hlen">
                                 </div> <!-- input-group -->
                             </div>
                         </div>
@@ -255,7 +272,8 @@ $res = new AppResult($_GET);
                     <div class="row form-row"><div class="col col-md-2 col-xl-2"></div>
                         <div class="col-md-4 col-xl-4">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="confirm_agb" name="confirm_agb" value="agb_confirm">
+                                <input class="form-check-input" type="checkbox" id="confirm_agb" name="confirm_agb" value="agb_confirm"
+                                    data-parsley-required="" data-parsley-required-message="Bitte best&auml;tigen Sie die AGB">
                                 <label class="form-check-label" for="confirm_agb">
                                     * AGB/Richtlinie f&uuml;r die Bereitstellung von Unterrichtsmaterial gelesen und akzeptiert
                                 </label>
@@ -283,85 +301,7 @@ $res = new AppResult($_GET);
         
         <?php FormElements::scriptRefs(); ?>
         <?php if (!$res->isOK()) { FormElements::launchFeedback(); } ?>
-        <script type="text/javascript">
-            /* global $ */
-            $('#mth_upload').validate({
-                rules: {
-                    mth_name: {
-                        required: true,
-                        maxlength: 127
-                    },
-                    mth_subject: {
-                        required: true
-                    },
-                    mth_area: {
-                        required: true
-                    },
-                    mth_summary: {
-                        required: true,
-                        maxlength: 4000
-                    },
-                    mth_prep_tm: {
-                        required: true
-                    },
-                    mth_exec_tm: {
-                        required: true
-                    },
-                    mth_age_grp: {
-                        required: true
-                    },
-                    mth_add_author: {
-                        maxlength: 120
-                    },
-                    confirm_author: {
-                        required: function(element) {
-                            return ($('#mth_add_author').val().length > 0);
-                        }
-                    },
-                    mth_file_name: {
-                        required: true,
-                        remote: "../ctrl/mth_file_check.php"
-                    },
-                    confirm_agb: "required"
-                },
-                messages: {
-                    mth_name: {
-                        required: "Der Name der Methode muss eingegeben werden",
-                        maxlength: "Der Name darf h&ouml;chstens 127 Zeichen lang sein"
-                    },
-                    mth_subject: {
-                        required: "Bitte w&auml;hlen Sie ein Unterrichtsfach aus"
-                    },
-                    mth_area: {
-                        required: "Bitte w&auml;hlen Sie einen Fachbereich aus"
-                    },
-                    mth_summary: {
-                        required: "Eine Beschreibung der Methode muss eingegeben werden",
-                        maxlength: "Die Beschreibung darf h&ouml;chstens 4000 Zeichen lang sein"
-                    },
-                    mth_prep_tm: {
-                        required: "Bitte w&auml;hlen Sie die Zeit f&uuml;r die Vorbereitung aus"
-                    },
-                    mth_exec_tm: {
-                        required: "Bitte w&auml;hlen Sie die Zeit f&uuml;r die Durchf&uuml;hrung aus"
-                    },
-                    mth_age_grp: {
-                        required: "Bitte w&auml;hlen Sie einen Jahrgang aus"
-                    },
-                    mth_add_author: {
-                        maxlength: "F&uuml;r die zus&auml;tzlichen AutorInnen sind h&ouml;chstens 120 Zeichen vorgesehen"
-                    },
-                    confirm_author: {
-                        required: "Bitte best&auml;tigen Sie das Einverst&auml;ndnis der zus&auml;tzlichen AutorInnen"
-                    },
-                    mth_file_name: {
-                        required: "Bitte eine Archivdatei (ZIP, GZ, TAR) ausw&auml;hlen",
-                        remote: "Die Datei hat das falsche Format. Bitte eine Archivdatei (ZIP, GZ, TAR) ausw&auml;hlen"
-                    },
-                    confirm_agb: "Bitte best&auml;tigen Sie die AGB"
-                }
-            })
-        </script>
+
         <script type="text/javascript">
             /* global $ */
             $(document).ready(function () {
@@ -376,12 +316,20 @@ $res = new AppResult($_GET);
                             $("#mth_area").html(data);
                             // $("#mth_area").html(data.replace('<option></option>',''));
                         }
-                    )
-                })
-            })
-        </script>
-        <script type="text/javascript">
-            /* global $ */
+                    );
+                });
+                $("#mth_add_author").change(function() {
+                    if ($("[name=mth_add_author]").val().length == 0) {
+                        $("[name=confirm_author]").removeAttr("data-parsley-required");
+                        $("[name=confirm_author]").removeAttr("data-parsley-required-message");
+                    }
+                    else {
+                        $("[name=confirm_author]").attr("data-parsley-required", "");
+                        $("[name=confirm_author]").attr("data-parsley-required-message", "Bitte best&auml;tigen Sie das Einverst&auml;ndnis der zus&auml;tzlichen AutorInnen");
+                    }
+                });
+            });
+
             $(function() {
                 $(document).on('change', ':file', function() {
                     var input = $(this),
@@ -404,5 +352,17 @@ $res = new AppResult($_GET);
                 });
             });
         </script>
+		<script type="text/javascript">
+			window.Parsley.addValidator('maxFileSize', {
+				validateString: function(_value, maxSize, parsleyInstance) {
+					var files = parsleyInstance.$element[0].files;
+					return (files.length != 1)  || (files[0].size <= maxSize * 1024);
+				},
+				requirementType: 'integer',
+				messages: {
+					en: 'This file should not be larger than %s MBytes',
+				}
+			});
+		</script>
     </body>
  </html>   

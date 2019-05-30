@@ -15,6 +15,7 @@ include_once '../model/aux_helpers.php';
 if (empty($_GET))
 {
    echo 'false';
+   http_response_code(400);
 }
 else
 {
@@ -22,6 +23,7 @@ else
     if ($mth_file == null)
     {
         echo 'false';
+        http_response_code(400);
     }
     else
     {
@@ -32,6 +34,7 @@ else
         else
         {
             echo 'false';
+            http_response_code(400);
         }
     }
 }
