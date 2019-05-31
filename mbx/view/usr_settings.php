@@ -71,39 +71,8 @@ $res = new AppResult($_GET);
             	<div class="col-sm-1 col-md-3 col-xl-3"></div>
 				<div class="col-sm-10 col-md-6 col-xl-6">
                     <div id="SettingsAccordion">
-                    	<div class="card">
-                            <div class="card-header" id="set_skin_hdr">
-                                <button class="btn btn-link" data-toggle="collapse" data-target="#set_skin_bdy" aria-expanded="false" aria-controls="set_skin_bdy">
-                                    Benutzeroberfl&auml;che
-                                </button>
-                            </div> <!-- card-header -->
-                            <div id="set_skin_bdy" class="collapse" aria-labelledby="set_skin_hdr" data-parent="#SettingsAccordion">
-                                <div class="card-body">
-                                	<div class="row">
-                                		<div class="col-sm-10 col-md-8 col-xl-8">
-                                			<div class="input-group">
-  												<select class="custom-select" id="usr_skin" name="usr_skin" aria-label="Themen f&uuml;r die Benutzeroberfl&auml;che">
-                                                    <option selected value="lumen">lumen</option>
-                                                    <?php
-                                                        foreach(GlobalParameter::$applicationConfig['formAvailableSkins'] as $skin)
-                                                        {
-                                                            if ($skin != "lumen")
-                                                            {
-                                                                echo '<option value="' . $skin . '">' . $skin . '</option>';
-                                                            }
-                                                        }
-                                                    ?>
-  												</select>
-                                                <div class="input-group-append">
-  		                                        	<button class="btn btn-outline-primary" id="skin_apply" name="skin_apply" type="button">Anwenden</button>
-                                                </div>
-											</div> <!-- input-group -->
-                                		</div> <!-- col -->
-                                	</div>
-                                </div>
-                            </div>
-                    	</div> <!-- card -->
-                    	
+                    
+                    	<!-- Change the password -->
                     	<div class="card">
                     		<div class="card-header" id="set_pwd_hdr">
                     			<button class="btn btn-link" data-toggle="collapse" data-target="#set_pwd_bdy" aria-expanded="false" aria-controls="set_pwd_bdy">
@@ -160,6 +129,42 @@ $res = new AppResult($_GET);
                     			</div> <!-- card-body -->
                     		</div> <!-- set_pwd_body -->
                      	</div> <!-- card -->
+						
+						<!-- change the form skin -->
+                    	<div class="card">
+                            <div class="card-header" id="set_skin_hdr">
+                                <button class="btn btn-link" data-toggle="collapse" data-target="#set_skin_bdy" aria-expanded="false" aria-controls="set_skin_bdy">
+                                    Benutzeroberfl&auml;che
+                                </button>
+                            </div> <!-- card-header -->
+                            <div id="set_skin_bdy" class="collapse" aria-labelledby="set_skin_hdr" data-parent="#SettingsAccordion">
+                                <div class="card-body">
+                                	<div class="row">
+                                		<div class="col col-sm-1 col-md-2 col-xl-2"><br></div>
+                                		<div class="col-sm-10 col-md-8 col-xl-8">
+                                			<div class="input-group">
+  												<select class="custom-select" id="usr_skin" name="usr_skin" aria-label="Themen f&uuml;r die Benutzeroberfl&auml;che">
+                                                    <option selected value="lumen">lumen</option>
+                                                    <?php
+                                                        foreach(GlobalParameter::$applicationConfig['formAvailableSkins'] as $skin)
+                                                        {
+                                                            if ($skin != "lumen")
+                                                            {
+                                                                echo '<option value="' . $skin . '">' . $skin . '</option>';
+                                                            }
+                                                        }
+                                                    ?>
+  												</select>
+                                                <div class="input-group-append">
+  		                                        	<button class="btn btn-outline-primary" id="skin_apply" name="skin_apply" type="button">Anwenden</button>
+                                                </div>
+											</div> <!-- input-group -->
+                                		</div> <!-- col -->
+                                	</div>
+                                </div>
+                            </div>
+                    	</div> <!-- card -->
+
                     </div> <!-- SettingsAccordion -->
 				</div> <!-- col -->
             </div> <!-- row -->
