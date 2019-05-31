@@ -14,10 +14,11 @@
 class GlobalParameter
 {
     public static $applicationConfig = array (
-        'appVersion'             => 'v1.2.14b (2019-04-14)',
+        'appVersion'             => 'v1.2.29b (2019-05-31)',
         'applicationTitle'       => 'Methodenbox',
         'userAccountFailLimit'   => 3,
         'userSessionLifetimeSec' => 3600,
+        // 'deploymentZone'         => 'DEV',
         'deploymentZone'         => 'DEMO',
         'mthResultNumLines'      => 5,
         'mthRatingNumLines'      => 5,
@@ -38,7 +39,11 @@ class GlobalParameter
         
         'logDestination'         => '/php_warning.log',
         'doSendEmail'            => false,
-        'validateCaptcha'        => true,
+        'validateCaptcha'        => false,
+        // 'validateCaptcha'        => true,
+        
+        'formSkin'               => 'lumen',
+        'formAvailableSkins'     => array('lumen', 'flatly', 'materia', 'pulse', 'sandstone', 'simplex', 'slate', 'solar', 'superhero', 'united', 'yeti'),
         
         'void'                   => ''
     );

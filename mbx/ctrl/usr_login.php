@@ -78,6 +78,7 @@ if (! $res->isOK())
 }
 else
 {
+    $sess->ses_usr_email = $_POST['user_email'];
     $_SESSION['user'] = array('sid' => $sess->getId(), 'uid' => $usr->getId(), 'hash' => $sess->getSessionHash());
     header('Location: ../view/mth_search_pg.php');
     exit;

@@ -59,6 +59,11 @@ class FormElements
     
     public static function topNavigationBar($current_form_id, $usr_authenticated, $usr_permissions = '')
     {
+        FormElements::persTopNavigationBar($current_form_id, $usr_authenticated, '', $usr_permissions);    
+    }
+    
+    public static function persTopNavigationBar($current_form_id, $usr_authenticated, $usr_name, $usr_permissions = '')
+    {
         // Sub Menu Configuration: client user is authenticated
         $sub_menu_auth_1 = array(
             'ADM.USR'  => array( 'MTH.SRCH'=>1, 'MTH.NEW'=>2, 'MTH.RATE'=>1, 'MTH.ADM'=>2, 'USR.REG'=>0, 'USR.CONF'=>0, 'USR.IN'=>0, 'USR.OUT'=>1, 'USR.OPT'=>1, 'ADM.USR'=>0 ),
@@ -167,7 +172,16 @@ class FormElements
         
         // Menu Entry: Benutzer
         echo '<li class="nav-item dropdown">';
-        echo '<a class="nav-link dropdown-toggle" href="#" id="navbarBenutzerLink" role="button" data-toggle="dropdown" aria-haspopup="true" area-expanded="false">Benutzer</a>';
+        echo '<a class="nav-link dropdown-toggle" href="#" id="navbarBenutzerLink" role="button" data-toggle="dropdown" aria-haspopup="true" area-expanded="false">';
+        if (empty($usr_name))
+        {
+            echo 'Benutzer';
+        }
+        else 
+        {
+            echo 'Benutzer (' . $usr_name . ')';
+        }
+        echo '</a>';
         echo '<div class="dropdown-menu" aria-labelledby="navbarBenutzerLink">';
         $sub_items = array('USR.REG', 'USR.OPT', 'USR.CONF', 'USR.IN', 'USR.OUT');
         foreach($sub_items as $sub_item)

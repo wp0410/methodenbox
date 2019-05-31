@@ -19,6 +19,7 @@ class UserSession implements JsonSerializable
 {
     private $ses_id;
     public  $ses_usr_id;
+    public  $ses_usr_email;
     private $ses_start_time;
     private $ses_end_time;
     private $ses_last_change;
@@ -37,6 +38,7 @@ class UserSession implements JsonSerializable
         $this->ses_end_time = '';
         $this->ses_last_change = '';
         $this->ses_usr_id = -1;				// Important note: do not change this. For un-initialized sessions, ses_usr_id must be -1 !
+        $this->ses_usr_email = '';
         $this->ses_usr_grant = -1;
         $this->ses_salt = '';
 		$this->ses_permissions = '';
@@ -110,17 +112,24 @@ class UserSession implements JsonSerializable
     
     private function loadSession($ses_id)
     {
+        /*
         $sql_stmt =
             'select ses_id, ses_start_time, ses_end_time, ses_last_change, ses_usr_id, ses_usr_grant, ses_salt, ses_permissions ' .
             'from   ta_usr_session ' .
             'where  ses_id = ?;';
+        */
+        $sql_stmt = 
+            'select ses.ses_id, ses.ses_start_time, ses.ses_end_time, ses.ses_last_change, ses.ses_usr_id, ses.ses_usr_grant, ' .
+                    'ses.ses_salt, ses.ses_permissions, acc.usr_email ' .
+            'from   ta_usr_session ses inner join ta_usr_account acc on acc.usr_id = ses.ses_usr_id ' .
+            'where  ses.ses_id = ?;';
         $stm_se5 = $this->db_conn->prepare($sql_stmt);
         $stm_se5->bind_param('i', $ses_id);
         if ($stm_se5->execute())
         {
             $stm_se5->bind_result(
                 $this->ses_id, $this->ses_start_time, $this->ses_end_time, $this->ses_last_change, $this->ses_usr_id, 
-                $this->ses_usr_grant, $this->ses_salt, $this->ses_permissions);
+                $this->ses_usr_grant, $this->ses_salt, $this->ses_permissions, $this->ses_usr_email);
         
             $sql_res = $stm_se5->fetch();
             $stm_se5->free_result();

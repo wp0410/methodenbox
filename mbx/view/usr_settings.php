@@ -20,6 +20,7 @@ set_private_warning_handler();
 session_start();
 $db_conn = DatabaseConnection::get_connection();
 $usr_session = new UserSession($db_conn);
+$usr_name = '';
 if (! empty($_SESSION) && ! empty($_SESSION['user']))
 {
     $res = $usr_session->validateSession($_SESSION['user']);
@@ -34,6 +35,7 @@ if (! empty($_SESSION) && ! empty($_SESSION['user']))
     else
     {
         $_SESSION['user'] = $usr_session->getSessionDescriptor();
+        $usr_name = $usr_session->ses_usr_email;
     }
 }
 
@@ -48,7 +50,7 @@ $res = new AppResult($_GET);
         <?php FormElements::styleSheetRefs(); ?>
     </head>
     <body>
-        <?php FormElements::topNavigationBar('USR.OPT', $usr_session->isAuthenticated(), $usr_session->getPermissions()); ?>
+        <?php FormElements::persTopNavigationBar('USR.OPT', $usr_session->isAuthenticated(), $usr_name, $usr_session->getPermissions()); ?>
         <?php FormElements::bottomNavigationBar('USR.OPT', 0, 0); ?>
         
         <div class="container-fluid">
