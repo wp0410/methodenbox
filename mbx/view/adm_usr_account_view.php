@@ -101,14 +101,22 @@ class UserAccountAdminResult
         switch ($line->usr_status)
         {
             case 0:
-                // Unconfirmed user accounts can be deleted after one week:
                 $min_age = Helpers::dateTimeString(time() - 7 * 86400);
                 if ($line->usr_reg_date < $min_age)
                 {
+                    // Unconfirmed user accounts can be deleted after one week:
                     $this->addOutput('<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#usrDeleteModal" ');
                     $this->addOutput('id="usr_del_' . $line->usr_id . '" data-usrid="' . $line->usr_id . '" data-currid="' . $this->usr_view->usr_id  . '" ');
                     $this->addOutput('data-usrname="' . $line->usr_fst_name . ' ' . $line->usr_lst_name . '(' . $line->usr_email . ')" >');
                     $this->addOutput('L&ouml;schen</button>');
+                }
+                else 
+                {
+                    // Within one week, unconfirmed accounts can be activated
+                    $this->addOutput('<button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#usrModifyModal" ');
+                    $this->addOutput('id="usr_act_' . $line->usr_id . '" data-usrid="' . $line->usr_id . '" data-currid="' . $this->usr_view->usr_id . '" ');
+                    $this->addOutput('data-usrname="' . $line->usr_fst_name . ' ' . $line->usr_lst_name . '(' . $line->usr_email . ')" data-fn="USR_ACT" >');
+                    $this->addOutput('Aktivieren</button>');
                 }
                 break;
             case 1:
@@ -131,10 +139,10 @@ class UserAccountAdminResult
         $this->addOutput('</td><td>');
         if ($add_perm)
         {
-            $this->addOutput('<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#usrPermissionAddModal" ');
+            $this->addOutput('<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#usrPermissionModal" ');
             $this->addOutput('id="usr_perm_' . $line->usr_id . '"' . 'data-usrid="' . $line->usr_id . '" data-currid="' . $this->usr_view->usr_id . '" ');
             $this->addOutput('data-usrname="' . $line->usr_fst_name . ' ' . $line->usr_lst_name . '(' . $line->usr_email . ')" ');
-            $this->addOutput('data-permits="');
+            $this->addOutput('data-fn="PRV_ADD" data-permits="');
             if ($line->role_admin > 0)
             {
                 $this->addOutput('ADMIN');
@@ -167,10 +175,10 @@ class UserAccountAdminResult
         $this->addOutput('</td><td>');
         if ($del_perm)
         {
-            $this->addOutput('<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#usrPermissionDelModal" ');
+            $this->addOutput('<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#usrPermissionModal" ');
             $this->addOutput('id="usr_perm_' . $line->usr_id . '"' . 'data-usrid="' . $line->usr_id . '" data-currid="' . $this->usr_view->usr_id . '" ');
             $this->addOutput('data-usrname="' . $line->usr_fst_name . ' ' . $line->usr_lst_name . '(' . $line->usr_email . ')" ');
-            $this->addOutput('data-permits="');
+            $this->addOutput('data-fn="PRV_DEL" data-permits="');
             
             if ($line->role_admin > 0)
             {

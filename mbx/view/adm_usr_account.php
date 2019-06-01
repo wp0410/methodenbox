@@ -21,6 +21,7 @@ session_start();
 
 $db_conn = DatabaseConnection::get_connection();
 $usr_session = new UserSession($db_conn);
+$usr_name = '';
 
 if (empty($_SESSION) || empty($_SESSION['user']))
 {
@@ -45,6 +46,7 @@ else
             else
             {
                 $_SESSION['user'] = $usr_session->getSessionDescriptor();
+                $usr_name = $usr_session->ses_usr_email;
             }
         }
     }
@@ -64,7 +66,7 @@ if (! $res->isOK())
         <?php FormElements::styleSheetRefs(); ?>
     </head>
     <body>
-        <?php FormElements::topNavigationBar('ADM.USR', $usr_session->isAuthenticated(), $usr_session->getPermissions()); ?>
+        <?php FormElements::persTopNavigationBar('ADM.USR', $usr_session->isAuthenticated(), $usr_name, $usr_session->getPermissions()); ?>
         <?php FormElements::bottomNavigationBar('ADM.USR'); ?>
         
         <div class="container-fluid">
@@ -137,16 +139,16 @@ if (! $res->isOK())
             </div> <!-- modal-dialog -->
         </div> <!-- modal -->
 
-        <div class="modal fade" id="usrPermissionAddModal" role="dialog" aria-labelledby="usrPermissionAddLabel" aria-hidden="true">
+        <div class="modal fade" id="usrPermissionModal" role="dialog" aria-labelledby="usrPermissionLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="usrPermissionAddLabel"></h5>
+                        <h5 class="modal-title" id="usrPermissionLabel"></h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle" aria-hidden="true"></i></span></button>
                     </div> <!-- modal-header -->
-                    <div class="modal-body" id="usrPermissionAddBody">
+                    <div class="modal-body" id="usrPermissionBody">
                     </div> <!-- modal-body -->
-                    <div class="modal-footer" id="usrPermissionAddFooter">
+                    <div class="modal-footer" id="usrPermissionFooter">
                     </div>
                 </div> <!-- modal-content -->
             </div> <!-- modal-dialog -->
@@ -188,34 +190,82 @@ if (! $res->isOK())
         </script>
         <script type="text/javascript">
         	/* global $ */
-        	$('#usrPermissionAddModal').on('show.bs.modal', function(event) {
+        	$('#usrPermissionModal').on('show.bs.modal', function(event) {
                 var button = $(event.relatedTarget);
                 var usr_id = button.data('usrid');
                 var curr_usr_id = button.data('currid');
                 var usr_name = button.data('usrname');
+                var perm_fn = button.data('fn');
                 var usr_permits = button.data('permits');
                 var modal = $(this);
       			modal.find('.modal-title').text('Berechtigungen Erteilen: Benutzerkonto ' + usr_name);  
 
       			$.post(
-      	      		"/mbx/view/adm_usr_permission_add.php",
+      	      		"/mbx/view/adm_usr_permission.php",
       	      		{
+          	      		perm_fn: perm_fn,
           	      		usr_id: usr_id,
           	      		usr_role: usr_permits
       	      		},
       	      		function(data, status) {
-          	      		$('#usrPermissionAddBody').html(data);
+          	      		$('#usrPermissionBody').html(data);
       	      		}
       	      	);
 
       			modal.find('.modal-footer').html(
                         '<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Schlie&szlig;en</button>' +
-                        '<button type="button" class="btn btn-primary btn-sm" onclick="xxxxx(' + usr_id + ')">Berechtigungen speichern</button>' );
+                        '<button type="button" class="btn btn-primary btn-sm" onclick="usrPermissionsChange(' + usr_id + ')">Berechtigungen speichern</button>' );
         	});
 
         	$('#usrPermissionModal').on('hidden.bs.modal', function(event) {
             	load_contents();
         	});
+
+        	function usrPermissionsChange(usr_id) {
+            	var perm_val = "";
+            	var elem = document.getElementById('add_clt');
+            	if ((elem != null) && elem.checked) {
+                	perm_val = $('#add_clt').val();
+            	}
+            	elem = document.getElementById('add_clt_upl');
+            	if ((elem != null) && elem.checked) {
+                	perm_val = $('#add_clt_upl').val();
+            	}
+            	elem = document.getElementById('add_clt_upl_adm');
+            	if ((elem != null) && elem.checked) {
+                	perm_val = $('#add_clt_upl_adm').val();
+            	}
+
+            	elem = document.getElementById('del_adm'); 
+            	if ((elem != null) && elem.checked) {
+                	perm_val = $('#del_adm').val();
+            	}
+            	
+            	elem = document.getElementById('del_adm_upl'); 
+            	if ((elem != null) && elem.checked) {
+                	perm_val = $('#del_adm_upl').val();
+            	}
+
+            	elem = document.getElementById('del_adm_upl_clt');
+            	if ((elem != null) && elem.checked) {
+                	perm_val = $('#del_adm_upl_clt').val();
+            	}
+
+            	$.post(
+					"/mbx/ctrl/adm_usr_action.php",
+					{
+						usr_id: usr_id,
+						adm_action: 'USR_PERMITS',
+						perm_action: perm_val
+					},
+					function(data,status) {
+						$('#usrPermChangeMsg').html(data);
+					}
+                );
+                
+				$('#usrPermissionFooter').html(	
+	                '<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Schlie&szlig;en</button>');                
+        	}
         </script>
         <script type="text/javascript">
             /* global $ */
@@ -269,11 +319,17 @@ if (! $res->isOK())
                 var act_text = 'sperren';
 
                 if (usr_action == 'USR_LCK') {
-                	modal.find('.modal-title').text('Benutzerkonto sperren');
+                	modal.find('.modal-title').text('Benutzerkonto Sperren');
                 }
                 else {
-                    modal.find('.modal-title').text('Benutzerkonto entsperren');
-                    act_text = 'entsperren';
+                    if (usr_action == 'USR_UNL') {
+                        modal.find('.modal-title').text('Benutzerkonto Entsperren');
+                        act_text = 'entsperren';
+                    }
+                    else {
+                        modal.find('.modal-title').text('Benutzerkonto Aktivieren');
+                        act_text = 'aktivieren';
+                    }
                 }
                 
                 $('#usrModifyMessage').html(

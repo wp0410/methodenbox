@@ -74,13 +74,27 @@ else
                 $usr_acc->unlockUserAccount();
                 $success_msg = 'Das Benutzerkonto wurde erfolgreich entsperrt.';
                 break;
+            case 'USR_ACT':
+                $usr_acc->unlockUserAccount();
+                $success_msg = 'Das Benutzerkonto wurde erfolgreich aktiviert.';
+                break;
+            case 'USR_PERMITS':
+                if (empty($_POST['perm_action']))
+                {
+                    $res = new AppResult(100);
+                }
+                else 
+                {
+                    $success_msg = 'Die Benutzerberechtigungen wurden erfolgreich ge&auml;ndert';
+                }
+                break;
         }
     }
 }
 
 if ($res->isOK())
 {
-    echo '<div class="alert alert-info" role="alert"><h5 class="action_confirm">' . $success_msg . '</h5></div>';
+    echo '<div class="alert alert-success" role="alert"><h5 class="action_confirm">' . $success_msg . '</h5></div>';
 }
 else
 {
