@@ -85,7 +85,17 @@ else
                 }
                 else 
                 {
-                    $success_msg = 'Die Benutzerberechtigungen wurden erfolgreich ge&auml;ndert';
+                    $privs = explode('.', $_POST['perm_action']);
+                    if ($privs[0] == "ADD")
+                    {
+                        $usr_acc->privilegesGrant(array_slice($privs, 1));
+                        $success_msg = 'Die Benutzerberechtigungen wurden erfolgreich erteilt';
+                    }
+                    else 
+                    {
+                        $usr_acc->privilegesRevoke(array_slice($privs, 1));
+                        $success_msg = 'Die Benutzerberechtigungen wurden erfolgreich entzogen';
+                    }
                 }
                 break;
         }

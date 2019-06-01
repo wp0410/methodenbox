@@ -463,5 +463,79 @@ class UserAccount implements JsonSerializable
         
         return $res;
     }
+    
+    public function privilegesGrant($privileges)
+    {
+        $all_permissions = array();
+        
+        foreach ($privileges as $priv)
+        {
+            switch($priv)
+            {
+                case 'CLT':
+                case 'NON':
+                    break;
+                case 'UPL':
+                    $all_permissions[] = 'MTH.NEW';
+                    $all_permissions[] = 'MTH.ADM';
+                    break;
+                case 'ADM':
+                    $all_permissions[] = 'ADM.USR';
+                    break;
+                default:
+                    break;
+            }
+        }
+        $sql_stmt = 'insert into ta_usr_permissions( per_usr_id, per_permission ) values ( ?, ? );';
+        $stm_u10 = $this->db_conn->prepare($sql_stmt);
+        foreach ($all_permissions as $permission)
+        {
+            $stm_u10->bind_param('is', $this->usr_id, $permission);
+            if (! $stm_u10->execute())
+            {
+                $stm_u10->close();
+                return new AppResult(402);
+            }
+        }
+        $stm_u10->close();
+        
+    }
+    
+    public function privilegesRevoke($privileges)
+    {
+        $all_permissions = array();
+        
+        foreach($privileges as $priv)
+        {
+            switch($priv)
+            {
+                case 'CLT':
+                case 'NON':
+                    break;
+                case 'UPL':
+                    $all_permissions[] = 'MTH.NEW';
+                    $all_permissions[] = 'MTH.ADM';
+                    break;
+                case 'ADM':
+                    $all_permissions[] = 'ADM.USR';
+                    break;
+                default:
+                    break;
+            }
+        }
+        
+        $sql_stm = 'delete from ta_usr_permissions where per_usr_id=? and per_permission=?;';
+        $stm_u11 = $this->db_conn->prepare($sql_stm);
+        foreach($all_permissions as $permission)
+        {
+            $stm_u11->bind_param('is', $this->usr_id, $permission);
+            if (! $stm_u11->execute())
+            {
+                $stm_u11->close();
+                return new AppResult(402);
+            }
+        }
+        $stm_u11->close();
+    }
 }
 ?>
