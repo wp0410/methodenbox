@@ -10,12 +10,29 @@
 //  ANY KIND, either express or implied. See the License for the specific language 
 //  governing permissions and limitations under the License.
 //----------------------------------------------------------------------------------------
+include_once '../model/sql_connection.php';
+include_once '../model/usr_session.php';
 include_once '../model/aux_parameter.php';
 include_once '../view/frm_common.php';
 include_once '../model/app_warning.php';
 
 set_private_warning_handler();
 session_start();
+
+$db_conn = DatabaseConnection::get_connection();
+$usr_session = new UserSession($db_conn);
+$usr_name = '';
+
+if (! empty($_SESSION) && ! empty($_SESSION['user']))
+{
+    $res = $usr_session->validateSession($_SESSION['user']);
+    if ($res->isOK())
+    {
+        $_SESSION['user'] = $usr_session->getSessionDescriptor();
+        $usr_name = $usr_session->ses_usr_email;
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -26,10 +43,11 @@ session_start();
         <?php FormElements::styleSheetRefs(); ?>
     </head>
     <body>
-        <?php FormElements::topNavigationBar('AUX.HLP', 0); ?>
+        <?php FormElements::persTopNavigationBar('AUX.HLP', $usr_session->isAuthenticated(), $usr_name, $usr_session->getPermissions()); ?>
         <?php FormElements::bottomNavigationBar('AUX.HLP', 0); ?>
         
         <div class="container-fluid">
+            <div class="row row-fluid"><br></div>
             <div class="row row-fluid">
                 <div class="col">
                     <div class="alert alert-primary" role="alert"><center><h4>Hilfe</h4></center></div>

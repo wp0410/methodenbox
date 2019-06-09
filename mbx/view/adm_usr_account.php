@@ -143,7 +143,7 @@ if (! $res->isOK())
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="usrPermissionLabel"></h5>
+                        <h4 class="modal-title" id="usrPermissionLabel"></h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle" aria-hidden="true"></i></span></button>
                     </div> <!-- modal-header -->
                     <div class="modal-body" id="usrPermissionBody">
@@ -198,7 +198,7 @@ if (! $res->isOK())
                 var perm_fn = button.data('fn');
                 var usr_permits = button.data('permits');
                 var modal = $(this);
-      			modal.find('.modal-title').text('Berechtigungen Erteilen: Benutzerkonto ' + usr_name);  
+      			modal.find('.modal-title').text('Benutzerkonto ' + usr_name);  
 
       			$.post(
       	      		"/mbx/view/adm_usr_permission.php",

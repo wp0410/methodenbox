@@ -246,7 +246,7 @@ class FormElements
         
         echo '</ul>';
         
-        // Rechtes Menü
+        // right menu
         echo '<ul class="navbar-nav">';
         echo '<li class="nav-item"><a class="nav-link" href="#">' . GlobalParameter::$applicationConfig['appVersion'] . '</a></li>';
         echo '<li class="nav-item">';
