@@ -42,9 +42,9 @@ class FormElements
                 echo '<link rel="stylesheet" href="/mbx/css/' . GlobalParameter::$applicationConfig['formSkin'] . '.bootstrap.min.css">';
             }
         }
-        echo '<link rel="stylesheet" href="/mbx/css/mbx.css">';
         echo '<link rel="stylesheet" href="/mbx/font-awesome-4.7.0/css/font-awesome.min.css">';
 		echo '<link rel="stylesheet" href="/mbx/css/parsley.css">';
+		echo '<link rel="stylesheet" href="/mbx/css/mbx.css">';
     }
     
     public static function scriptRefs()
@@ -111,7 +111,14 @@ class FormElements
             'ADM.USR'  => array('TEXT' => 'Benutzerverwaltung', 'LINK' => '../view/adm_usr_account.php')
         );
 
-        echo '<nav class="navbar navbar-expand-lg navbar-primary bg-light">';
+        if ($current_form_id == 'AUX.HLP')
+        {
+            echo '<nav class="navbar fixed-top navbar-expand-lg navbar-primary bg-light">';
+        }
+        else 
+        {
+            echo '<nav class="navbar navbar-expand-lg navbar-primary bg-light">';
+        }
         if ($current_form_id == 'MTH.SRCH')
         {
             echo '<a class="navbar-brand" href="#">' . GlobalParameter::$applicationConfig['applicationTitle'] . '</a>';

@@ -41,79 +41,69 @@ if (! empty($_SESSION) && ! empty($_SESSION['user']))
         <meta charset="utf-8">
         <title><?php echo GlobalParameter::$applicationConfig['applicationTitle'] . ' - Hilfe';?></title>
         <?php FormElements::styleSheetRefs(); ?>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
     </head>
     <body>
         <?php FormElements::persTopNavigationBar('AUX.HLP', $usr_session->isAuthenticated(), $usr_name, $usr_session->getPermissions()); ?>
-        <?php FormElements::bottomNavigationBar('AUX.HLP', 0); ?>
-        
-        <div class="container-fluid">
-            <div class="row row-fluid"><br></div>
-            <div class="row row-fluid">
-                <div class="col">
-                    <div class="alert alert-primary" role="alert"><center><h4>Hilfe</h4></center></div>
-                </div>
-            </div>
-            
-            <div class="row row-fluid">
-                <div class="col">
-                    <div id="HelpAccordion">
-                        <div class="card">
-                            <div class="card-header" id="help_header_01">
-                                <button class="btn btn-link" data-toggle="collapse" data-target="#collChapter_01" aria-expanded="false" aria-controls="collChapter_01">
-                                    <h5>Hilfethema 1</h5>
-                                </button>
-                            </div> <!-- card-header -->
-                            <div id="collChapter_01" class="collapse" aria-labelledby="help_header_01" data-parent="#HelpAccordion">
-                                <div class="card-body">
-                                    Hier sollte der Text f&uuml;r das erste Hilfethema stehen ...
-                                </div>
-                            </div>
-                        </div> <!-- card -->
-                        
-                        <div class="card">
-                            <div class="card-header" id="help_header_01">
-                                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collChapter_02" aria-expanded="false" aria-controls="collChapter_02">
-                                    <h5>Hilfethema 2</h5>
-                                </button>
-                            </div> <!-- card-header -->
-                            <div id="collChapter_02" class="collapse" aria-labelledby="help_header_02" data-parent="#HelpAccordion">
-                                <div class="card-body">
-                                    Hier sollte der Text f&uuml;r das zweite Hilfethema stehen ...
-                                </div>
-                            </div>
-                        </div> <!-- card -->
+              
+		<div class="wrapper">
+			<nav id="sidebar" class="bg-info">
+				<div class="sidebar-header bg-primary">
+					<h2>Inhaltsverzeichnis</h2>
+				</div> <!-- sidebar-header -->
+				
+				<ul class="list-unstyled components border-bottom border-primary">
+					<li><a href="#" onclick="javascript:hlpTopic('ht_10.00');"><h4>Einf&uuml;hrung</h4></a></li>
+					<li><a href="#" onclick="javascript:hlpTopic('ht_20.00');"><h4>Rechtliche Hinweise</h4></a></li>
+					<li>
+						<a href="#accountSubMenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><h4>Benutzerkonto</h4></a>
+						<ul class="collapse list-unstyled" id="accountSubMenu">
+							<li><a href="#" onclick="javascript:hlpTopic('ht_30.00');"><h5>Registrierung</h5></a></li>
+							<li><a href="#" onclick="javascript:hlpTopic('ht_30.10');"><h5>Registrierung abschlie&szlig;en</h5></a></li>
+							<li><a href="#" onclick="javascript:hlpTopic('ht_30.20');"><h5>Anmeldung</h5></a></li>
+							<li><a href="#" onclick="javascript:hlpTopic('ht_30.30');"><h5>Abmeldung</h5></a></li>
+						</ul>
+					</li>
+					<li>
+						<a href="#methodSubMenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><h4>Unterrichtsmethode</h4></a>
+						<ul class="collapse list-unstyled" id="methodSubMenu">
+							<li><a href="#" onclick="javascript:hlpTopic('ht_40.00');"><h5>Methoden suchen</h5></a></li>
+							<li><a href="#" onclick="javascript:hlpTopic('ht_40.10');"><h5>Methode anlegen</h5></a></li>
+							<li><a href="#" onclick="javascript:hlpTopic('ht_40.20');"><h5>Methode bewerten</h5></a></li>
+							<li><a href="#" onclick="javascript:hlpTopic('ht_40.30');"><h5>Methoden verwalten</h5></a></li>
+						</ul>
+					</li>
+					<li><a href="#" onclick="javascript:hlpTopic('ht_50.00');"><h4>Fragen und Antworten</h4></a></li>
+				</ul> <!-- list-unstyled components -->
+			</nav> <!-- sidebar -->
+		
+			<div id="content">
 
-                        <div class="card">
-                            <div class="card-header" id="help_header_03">
-                                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collChapter_03" aria-expanded="false" aria-controls="collChapter_03">
-                                    <h5>Hilfethema 3</h5>
-                                </button>
-                            </div> <!-- card-header -->
-                            <div id="collChapter_03" class="collapse" aria-labelledby="help_header_03" data-parent="#HelpAccordion">
-                                <div class="card-body">
-                                    Hier sollte der Text f&uuml;r das dritte Hilfethema stehen ...
-                                </div>
-                            </div>
-                        </div> <!-- card -->
+			</div> <!-- content -->
 
-                        <div class="card">
-                            <div class="card-header" id="help_header_NN">
-                                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collChapter_NN" aria-expanded="false" aria-controls="collChapter_NN">
-                                    <h5>Weiteres Hilfethema</h5>
-                                </button>
-                            </div> <!-- card-header -->
-                            <div id="collChapter_NN" class="collapse" aria-labelledby="help_header_NN" data-parent="#HelpAccordion">
-                                <div class="card-body">
-                                    Hier sollte der Text f&uuml;r ein weiteres Hilfethema stehen ...
-                                </div>
-                            </div>
-                        </div> <!-- card -->
-
-                    </div>
-                </div>
-            </div>
-        </div>
+		</div> <!-- wrapper -->
 
         <?php FormElements::scriptRefs(); ?>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+		<script type="text/javascript">
+			/* global $ */
+			$(document).ready(function () {
+				$("#sidebar").mCustomScrollbar({
+					theme: "minimal"
+				});
+				
+				$('#sidebarCollapse').on('click', function () {
+					$('#sidebar').toggleClass('active');
+					$('.collapse.in').toggleClass('in');
+					$('a[aria-expanded=true]').attr('aria-expanded', 'false');
+				});
+			});
+			
+			function hlpTopic(topic) {
+				var fName = 'aux_help_' + topic + '.html';
+				alert(fName);
+				// $('#content').load(fName);
+			}
+		</script>
     </body>
  </html>   

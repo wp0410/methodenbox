@@ -7,3 +7,69 @@ label.error {
   padding:1px 20px 1px 20px;
 }
 
+.wrapper {
+	display: flex;
+	width: 100%;
+}
+
+a[data-toggle="collapse"] {
+	position: relative;
+}
+
+.dropdown-toggle::after {
+	display: block;
+	position: absolute;
+	top: 50%;
+	right: 20px;
+	transform: translateY(-50%);
+}
+
+#sidebar {
+	width: 320px;
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100vh;
+	z-index: 999;
+	
+	transition: all 0.3s;
+}
+
+#sidebar.active {
+	margin-left: -320px;
+}
+
+#sidebar .sidebar-header {
+	padding: 20px;
+	padding-top: 80px;
+}
+
+#sidebar ul.components {
+	padding: 20px 0;
+}
+
+#sidebar ul p {
+	color: #fff;
+	padding: 10px;
+}
+
+#sidebar ul li a {
+	padding-top: 10px;
+	padding-left: 20px;
+	display: block;
+}
+
+#sidebar ul ul a {
+	padding-left: 40px !important;
+}
+
+#content {
+    width: calc(100% - 320px);
+	padding: 10px;
+    padding-top: 40px;
+    min-height: 100vh;
+    transition: all 0.3s;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
