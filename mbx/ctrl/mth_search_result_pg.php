@@ -21,10 +21,11 @@ set_private_warning_handler();
 
 session_start();
 $db_conn = DatabaseConnection::get_connection();
+$res_view = new MethodResultView($db_conn);
+
 $max_pages = GlobalParameter::$applicationConfig['mthPageNumPages'];
 $cur_page = 1;
 
-$res_view = new MethodResultView($db_conn);
 $res_view->lines_per_page = GlobalParameter::$applicationConfig['mthPageNumLines'];
 $res_from_cache = false;
 

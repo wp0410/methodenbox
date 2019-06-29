@@ -100,9 +100,15 @@ if (! empty($_SESSION) && ! empty($_SESSION['user']))
 			});
 			
 			function hlpTopic(topic) {
-				var fName = 'aux_help_' + topic + '.html';
-				alert(fName);
-				// $('#content').load(fName);
+				$.post(
+					"/mbx/ctrl/aux_help_topic.php",
+					{
+						hlp_topic: topic
+					},
+					function(data, status) {
+						$('#content').html(data);
+					}
+				);
 			}
 		</script>
     </body>

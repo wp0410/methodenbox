@@ -24,6 +24,38 @@ class DatabaseConnection
 {
     private static $db_connection = null;
     private static $db_error = null;
+	private static $rep_connection = null;
+	
+	/**
+	 * Retrieves the connection parameters for the deployment zone
+	 * 
+	 * @access     private
+	 * @return     Database connection parameters as array
+	 */
+	private static function get_connection_params($deploy_zone)
+	{
+		if ($deploy_zone == 'DEMO')
+		{
+			return array(
+				'db_host' => 'localhost',
+				'db_username' => 'u294174670_mbx',
+				'db_password' => '4U5N1NQrPezQ',
+				'db_name' => 'u294174670_mbx',
+				'db_port' => 3306
+			);
+		}
+		
+		if ($deploy_zone == 'DEV')
+		{
+			return array(
+				'db_host' => getenv('IP'),
+				'db_username' => 'mthbox',
+				'db_password' => 'AcIw35926+MB',
+				'db_name' => 'mthbox',
+				'db_port' => 3306
+			);
+		}
+	}
     
     /**
      * Establishes a connection to the MySQL database
@@ -38,35 +70,10 @@ class DatabaseConnection
         {
             return null;
         }
+		
+		$conn_par = self::get_connection_params(GlobalParameter::$applicationConfig['deploymentZone']);
         
-        if (GlobalParameter::$applicationConfig['deploymentZone'] == 'DEMO')
-        {
-            $db_host = 'localhost';
-            $db_username = 'u294174670_mbx';
-            $db_password = '4U5N1NQrPezQ';
-            $db_name = 'u294174670_mbx';
-            $db_port = 3306;
-        }
-        
-        if (GlobalParameter::$applicationConfig['deploymentZone'] == 'DEV_C9')
-        {
-            $db_host = getenv('IP');
-            $db_username = getenv('C9_USER');
-            $db_password = null;
-            $db_name = 'c9';
-            $db_port = null;
-        }
-
-        if (GlobalParameter::$applicationConfig['deploymentZone'] == 'DEV')
-        {
-            $db_host = getenv('IP');
-            $db_username = 'mthbox';
-            $db_password = 'AcIw35926+MB';
-            $db_name = 'mthbox';
-            $db_port = 3306;
-        }
-        
-        $db_conn = new mysqli($db_host, $db_username, $db_password, $db_name, $db_port);
+        $db_conn = new mysqli($conn_par['db_host'], $conn_par['db_username'], $conn_par['db_password'], $conn_par['db_name'], $conn_par['db_port']);
         if ($db_conn->connect_error)
         {
             self::$db_error = new ErrorInfo();
@@ -97,7 +104,31 @@ class DatabaseConnection
         }
         return self::$db_connection;
     }
-    
+	
+	/**
+	 * Getter: retrieves the connection parameters as "KoolReport" database 
+	 * connection array
+	 *
+	 * @access     public
+	 * @return     KoolReport database connection array
+	 */
+	public static function get_report_connection()
+	{
+		if (self::$rep_connection == null)
+		{
+			$conn_par = self::get_connection_params(GlobalParameter::$applicationConfig['deploymentZone']);
+			
+			self::$rep_connection = array(
+				'connectionString' => 'mysql:host=' . $conn_par['db_host'] . ';port=' . $conn_par['db_port'] . ';dbname=' . $conn_par['db_name'],
+				'username' => $conn_par['db_username'],
+				'password' => $conn_par['db_password'],
+				'charset' => 'utf8'
+			);
+		}
+		
+		return self::$rep_connection;
+    }
+	
     /**
      * Getter: retrieves the description of the error that occurred when
      * tying to establish the database connection
@@ -111,5 +142,4 @@ class DatabaseConnection
         return self::$db_error;
     }
 }
-
 ?>

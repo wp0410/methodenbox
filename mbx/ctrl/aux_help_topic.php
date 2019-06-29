@@ -10,26 +10,26 @@
 //  ANY KIND, either express or implied. See the License for the specific language 
 //  governing permissions and limitations under the License.
 //----------------------------------------------------------------------------------------
-include_once 'aux_helpers.php';
 
-class SessionLog
+if (empty($_POST) || empty($_POST['hlp_topic']))
 {
-    private $db_conn;
-    
-    public function __construct($db_cn)
-    {
-        $this->db_conn = $db_cn;
-    }
-    
-    public function logLoginAttempt($usr_email, $usr_pwd, $log_status, $log_details)
-    {
-        $log_time = Helpers::dateTimeString(time());
-        $sql_stmt = 'insert into ta_log_usr_session( log_time, log_usr_email, log_usr_pwd, log_status, log_extra ) values( ?, ?, ?, ?, ? );';
-        $stm_lg1 = $this->db_conn->prepare($sql_stmt);
-        $stm_lg1->bind_param('sssis', $log_time, $usr_email, $usr_pwd, $log_status, $log_details);
-        $stm_lg1->execute();
-        $stm_lg1->close();
-    }
+	$help_contents = '<div class="alert alert-primary mt-4 pl-5 pr-5"><h3>Das Hilfethema konnte nicht gefunden werden</h3></div>';
 }
 
+$static_file = '../static/aux_help_' . $_POST['hlp_topic'] . '.html';
+
+if (file_exists($static_file))
+{
+	$help_contents = file_get_contents($static_file);
+	if ($help_contents === false)
+	{
+		$help_contents = '<div class="alert alert-primary mt-4 pl-5 pr-5"><h3>Das Hilfethema "' . $_POST['hlp_topic'] . '" konnte nicht geladen werden</h3></div>';
+	}
+}
+else
+{
+	$help_contents = '<div class="alert alert-primary mt-4 pl-5 pr-5"><h3>Das Hilfethema "' . $_POST['hlp_topic'] . '" konnte nicht gefunden werden</h3></div>';
+}
+
+echo $help_contents;
 ?>
