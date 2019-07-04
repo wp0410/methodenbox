@@ -129,8 +129,8 @@ class UserPermission implements JsonSerializable
 					INNER JOIN ta_usr_role AS role ON role.role_name = acrl.rl_role_name
 					INNER JOIN ta_usr_role_permission AS rlpm ON rlpm.role_name = acrl.rl_role_name
 					INNER JOIN ta_usr_permission AS perm ON perm.perm_name = rlpm.perm_name
-			 WHERE  acrl.rl_usr_id = 1
-			   AND  perm.perm_authenticated = ?";
+			 WHERE  acrl.rl_usr_id = ?
+			   AND  perm.perm_authenticated = 1";
 		$stm_p2 = $this->db_conn->prepare($sql_stmt);
 		$stm_p2->bind_param('i', $usr_id);
 		if ($stm_p2->execute())

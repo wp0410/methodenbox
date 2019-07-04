@@ -286,10 +286,10 @@ from (
 ) tab1 group by tab1.usr_id;
 
 CREATE OR REPLACE VIEW vi_rep_mth_dnl_top AS 
-SELECT mth.mth_id, mth.mth_name, COUNT(1) AS num_dnl
+SELECT mth.mth_id, mth.mth_name, mth.mth_subject, mth.mth_subject_area, COUNT(1) AS num_dnl
 FROM   ta_mth_method_header AS mth
        INNER JOIN ta_mth_method_download AS dnl ON dnl.dnl_mth_id = mth.mth_id
-GROUP BY mth.mth_id, mth.mth_name
+GROUP BY mth.mth_id, mth.mth_name, mth.mth_subject, mth.mth_subject_area
 ORDER BY num_dnl DESC LIMIT 5;
 
 CREATE OR REPLACE VIEW vi_rep_mth_rtg_top AS 

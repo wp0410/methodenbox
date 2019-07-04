@@ -25,15 +25,16 @@ class MethodStatistics
 		$res = array();
 		
 		$sql_stmt =
-			"SELECT sub.mth_subject, MAX(mth_sub_name) AS mth_sub_name, SUM(num_per_subj) AS num_per_subj
-			FROM   (
-				SELECT mth.mth_subject, '' as mth_sub_name, COUNT(1) AS num_per_subj
-				FROM   ta_mth_method_header AS mth
-				GROUP BY mth.mth_subject
-				UNION ALL 
-				SELECT subj.mth_sub_val AS mth_subject, subj.mth_sub_name,  0 AS num_per_subj
-				FROM   vi_mth_subjects AS subj ) sub
-			GROUP BY sub.mth_subject ORDER BY sub.num_per_subj DESC";
+			"SELECT sub.mth_subject, MAX(sub.mth_sub_name) AS mth_sub_name, SUM(sub.num_per_subj) AS num_per_subj
+             FROM   (
+             	SELECT mth.mth_subject, '' as mth_sub_name, COUNT(1) AS num_per_subj
+            	FROM   ta_mth_method_header AS mth
+            	GROUP BY mth.mth_subject
+            	UNION ALL 
+            	SELECT subj.mth_sub_val AS mth_subject, subj.mth_sub_name,  0 AS num_per_subj
+            	FROM   vi_mth_subjects AS subj ) sub
+             GROUP BY sub.mth_subject 
+             ORDER BY num_per_subj DESC";
 			
 		$stm_st1 = $this->db_conn->prepare($sql_stmt);
 		if ($stm_st1->execute())
