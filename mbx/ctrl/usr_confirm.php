@@ -69,7 +69,7 @@ if (! $res->isOK())
 }
 
 $sess = new UserSession($db_conn);
-$res = $sess->startSession($usr->getId(), $usr->getRole());
+$res = $sess->startSession($usr->getId(), $usr->getRole(), $usr->getPermissions());
 if (! $res->isOK())
 {
     header('Location: ../view/usr_confirm.php?res_code=' . $res->code . '&res_text=' . $res->textUrlEncoded());

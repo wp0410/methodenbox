@@ -250,16 +250,6 @@ create or replace view vi_mth_method_rating as
               inner join vi_mth_exec_times extm on extm.mth_opt_val = mth.mth_exec_time
               inner join vi_mth_dnl_no_rtg dnl on dnl.dnl_mth_id = mth.mth_id;
 
-select mth_id, mth_name, mth_summary, mth_subject, mth_subject_text, 
-       mth_subject_area, mth_subject_area_text, mth_age_grp, mth_age_grp_text, 
-       mth_prep_time, mth_prep_time_text, mth_exec_time, mth_exec_time_text, 
-       mth_phase, mth_soc_form, mth_authors, 
-       mth_owner_id, mth_create_time, 
-       file_guid, file_name, 
-       dnl_cnt, dnl_first_tm, dnl_last_tm, dnl_usr_id, 
-       rtg_cnt, rtg_first_tm, rtg_last_tm, rtg_min_val, rtg_max_val, rtg_avg_val
-from   vi_mth_method_result where mth_id > 0 ;
-
 create or replace view vi_usr_roles as
 select usr_id, max(per_role_client) as per_role_client, max(per_role_upload) as per_role_upload, max(per_role_admin) as per_role_admin
 from (
@@ -279,4 +269,110 @@ from (
 	group by usr.usr_id having count(1) = 1
 ) tab1 group by tab1.usr_id;
 
+CREATE OR REPLACE VIEW vi_rep_mth_dnl_top AS 
+SELECT mth.mth_id, mth.mth_name, COUNT(1) AS num_dnl
+FROM   ta_mth_method_header AS mth
+       INNER JOIN ta_mth_method_download AS dnl ON dnl.dnl_mth_id = mth.mth_id
+GROUP BY mth.mth_id, mth.mth_name
+ORDER BY num_dnl DESC LIMIT 5;
 
+CREATE OR REPLACE VIEW vi_rep_mth_rtg_top AS 
+SELECT mth.mth_id, mth.mth_name, mth.mth_subject, mth.mth_subject_area, 
+   	 COUNT(1) num_rate, ROUND(SUM(rate.rtg_value) / COUNT(1), 1) avg_rate,
+   	 MIN(rate.rtg_value) min_rate, MAX(rate.rtg_value) max_rate
+FROM   ta_mth_method_header AS mth INNER JOIN ta_mth_method_rating AS rate on rate.rtg_mth_id = mth.mth_id
+GROUP BY mth.mth_id, mth.mth_name, mth.mth_subject, mth.mth_subject_area
+ORDER BY avg_rate DESC LIMIT 5
+
+CREATE TABLE `ta_aux_contact_request` (
+	`req_id` INT(11) NOT NULL AUTO_INCREMENT,
+	`usr_addr_form` VARCHAR(127) NOT NULL COLLATE 'utf8_unicode_ci',
+	`usr_fst_name` VARCHAR(127) NOT NULL COLLATE 'utf8_unicode_ci',
+	`usr_lst_name` VARCHAR(127) NOT NULL COLLATE 'utf8_unicode_ci',
+	`usr_email` VARCHAR(255) NOT NULL COLLATE 'utf8_unicode_ci',
+	`req_type` VARCHAR(7) NOT NULL COLLATE 'utf8_unicode_ci',
+	`req_text` VARCHAR(4000) NOT NULL COLLATE 'utf8_unicode_ci',
+	`req_create_time` DATETIME NOT NULL,
+	`req_close_time` DATETIME NULL DEFAULT NULL,
+	`req_close_usr_id` INT(11) NULL DEFAULT NULL,
+	`req_answer` VARCHAR(4000) NULL DEFAULT NULL COLLATE 'utf8_unicode_ci',
+	PRIMARY KEY (`req_id`)
+);
+
+-- PRELIMINARY - DO NOT INSTALL
+CREATE TABLE ta_usr_role (
+	role_name VARCHAR(127) COLLATE UTF8_UNICODE_CI NOT NULL,
+	role_description VARCHAR(255) COLLATE UTF8_UNICODE_CI NOT NULL,
+	role_img VARCHAR(255) COLLATE UTF8_UNICODE_CI NOT NULL,
+	PRIMARY KEY (role_name) 
+);
+INSERT INTO ta_usr_role( role_name, role_description, role_img ) VALUES
+	('USER',   'Normaler Benutzer',  '-'),
+	('METHOD', 'Methoden Verwalten', '-'),
+	('ADMIN',  'Administrator',      '-');
+CREATE TABLE ta_usr_permission(
+	perm_name VARCHAR(127) COLLATE UTF8_UNICODE_CI NOT NULL,
+	perm_description VARCHAR(255) COLLATE UTF8_UNICODE_CI NOT NULL,
+	perm_authenticated INT NOT NULL DEFAULT 0,
+	perm_unauthenticated INT NOT NULL DEFAULT 0, 
+	PRIMARY KEY (perm_name) 
+);
+INSERT INTO ta_usr_permission ( perm_name, perm_description, perm_authenticated, perm_unauthenticated ) VALUES 
+	( 'USR.REG',  'Benutzer registrieren', 0, 1 ),
+	( 'USR.CONF', 'Benutzerregistrierung bestätigen', 0, 1),
+	( 'USR.IN',   'Benutzer anmelden', 0, 1 ),
+	( 'USR.OUT',  'Benutzer abmelden', 1, 0 ),
+	( 'USR.OPT',  'Benutzer Einstellungen', 1, 0 ),
+	( 'MTH.SRCH', 'Methoden suchen', 1, 1 ),
+	( 'MTH.NEW',  'Methoden anlegen', 1, 0 ),
+	( 'MTH.RATE', 'Methoden bewerten', 1, 0 ),
+	( 'MTH.ADM',  'Methoden verwalten', 1, 0 ),
+	( 'ADM.USR',  'Benutzer verwalten', 1, 0 ),
+	( 'ADM.REQ',  'Anfragen bearbeiten', 1, 0 ),
+	( 'REP.MRNK', 'Bericht Methoden Ranking', 1, 1 ),
+	( 'REP.MST',  'Bericht Methoden Statistik', 1, 1 );
+CREATE TABLE ta_usr_role_permission(
+	role_name VARCHAR(127) COLLATE UTF8_UNICODE_CI NOT NULL,
+	perm_name VARCHAR(127) COLLATE UTF8_UNICODE_CI NOT NULL,
+	PRIMARY KEY (role_name, perm_name),
+	INDEX fk_rp_role (role_name),
+	INDEX fk_rp_perm (perm_name),
+	CONSTRAINT fk_rp_role FOREIGN KEY (role_name) REFERENCES ta_usr_role (role_name),
+	CONSTRAINT fk_rp_perm FOREIGN KEY (perm_name) REFERENCES ta_usr_permission (perm_name)
+);
+INSERT INTO ta_usr_role_permission( role_name, perm_name ) VALUES 
+	( 'USER', 'MTH.SRCH' ),
+	( 'USER', 'MTH.RATE' ),
+	( 'USER', 'REP.MRNK' ),
+	( 'USER', 'REP.MST'  ),
+	( 'USER', 'USR.OPT'  ),
+	( 'USER', 'USR.OUT'  ),
+	
+	( 'METHOD', 'MTH.SRCH' ),
+	( 'METHOD', 'MTH.RATE' ),
+	( 'METHOD', 'REP.MRNK' ),
+	( 'METHOD', 'REP.MST'  ),
+	( 'METHOD', 'USR.OPT'  ),
+	( 'METHOD', 'USR.OUT'  ),
+	( 'METHOD', 'MTH.NEW'  ),
+	
+	( 'ADMIN', 'MTH.SRCH' ),
+	( 'ADMIN', 'MTH.RATE' ),
+	( 'ADMIN', 'REP.MRNK' ),
+	( 'ADMIN', 'REP.MST'  ),
+	( 'ADMIN', 'USR.OPT'  ),
+	( 'ADMIN', 'USR.OUT'  ),
+	( 'ADMIN', 'MTH.NEW'  ),
+	( 'ADMIN', 'MTH.ADM' ),
+	( 'ADMIN', 'ADM.USR' ),
+	( 'ADMIN', 'ADM.REQ' );
+CREATE TABLE ta_usr_account_role (
+	rl_usr_id INT NOT NULL,
+	rl_role_name VARCHAR(127) COLLATE UTF8_UNICODE_CI NOT NULL,
+	PRIMARY KEY (rl_usr_id, rl_role_name),
+	INDEX fk_acc_usr (rl_usr_id),
+	INDEX fk_acc_role (rl_role_name),
+	CONSTRAINT fk_acc_usr FOREIGN KEY (rl_usr_id) REFERENCES ta_usr_account (usr_id),
+	CONSTRAINT fk_acc_role FOREIGN KEY (rl_role_name) REFERENCES ta_usr_role (role_name)
+);	
+ 
