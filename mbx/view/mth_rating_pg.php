@@ -21,7 +21,6 @@ set_private_warning_handler();
 session_start();
 $db_conn = DatabaseConnection::get_connection();
 $usr_session = new UserSession($db_conn);
-$usr_name = '';
 
 if (empty($_SESSION) || empty($_SESSION['user']))
 {
@@ -40,7 +39,6 @@ else
         else
         {
             $_SESSION['user'] = $usr_session->getSessionDescriptor();
-            $usr_name = $usr_session->ses_usr_email;
         }
     }
 }
@@ -61,7 +59,7 @@ if (! $res->isOK())
         <?php FormElements::styleSheetRefs(); ?>
     </head>
     <body>
-        <?php FormElements::persTopNavigationBar('MTH.RATE', $usr_session->isAuthenticated(), $usr_name, $usr_session->getPermissions()); ?>
+        <?php FormElements::topNavBar('MTH.RATE', $usr_session); ?>
         <!-- php FormElements::bottomNavigationBar('MTH.RATE'); ? -->
         
         <div class="container-fluid">

@@ -14,9 +14,13 @@ include_once '../model/aux_parameter.php';
 include_once '../model/app_result.php';
 include_once '../view/frm_common.php';
 include_once '../model/app_warning.php';
+include_once '../model/sql_connection.php';
+include_once '../model/usr_session.php';
 
 set_private_warning_handler();
 session_start();
+
+$usr_session = new UserSession(DatabaseConnection::get_connection());
 
 $res = new AppResult($_GET);
 ?>
@@ -28,8 +32,8 @@ $res = new AppResult($_GET);
         <?php FormElements::styleSheetRefs(); ?>
     </head>
     <body>
-        <?php FormElements::topNavigationBar('USR.IN', 0); ?>
-        <?php FormElements::bottomNavigationBar('USR.IN'); ?>
+        <?php FormElements::topNavBar('USR.IN', $usr_session); ?>
+        <?php FormElements::bottomNavBar('USR.IN'); ?>
         
         <div class="container-fluid">
             <div class="row row-fluid"><div class="col"><br></div></div>
@@ -79,7 +83,7 @@ $res = new AppResult($_GET);
                         </div>
                         <div class="col col-sm-2 col-md-1 col-xl-1">
                             <div class="form-group" id="login_submit">
-                                <input type="submit" class="btn btn-primary btn-send" value="Anmelden">
+                                <input type="submit" class="btn btn-primary btn-block btn-send" value="Anmelden">
                             </div>
                         </div>
                     </div>

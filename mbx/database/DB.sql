@@ -34,6 +34,7 @@ create table ta_usr_permissions (
 	foreign key fk_per_usr_id (per_usr_id) references ta_usr_account (usr_id) match full on delete cascade on update cascade
 );
 
+-- OBSOLETE - see below
 create table ta_usr_session (
     ses_id            int not null auto_increment primary key,
     ses_start_time    datetime not null,
@@ -45,6 +46,21 @@ create table ta_usr_session (
 	ses_permissions   varchar(255) collate utf8_unicode_ci,
 
     foreign key fk_ses_usr_id (ses_usr_id) references ta_usr_account (usr_id) match full on delete cascade on update cascade
+);
+
+CREATE TABLE `ta_usr_session` (
+	`ses_id` INT(11) NOT NULL AUTO_INCREMENT,
+	`ses_start_time` DATETIME NOT NULL,
+	`ses_end_time` DATETIME NOT NULL,
+	`ses_last_change` DATETIME NOT NULL,
+	`ses_usr_id` INT(11) NOT NULL,
+	`ses_usr_email` VARCHAR(127) NULL DEFAULT NULL COLLATE 'utf8_unicode_ci',
+	`ses_usr_full_name` VARCHAR(127) NULL DEFAULT NULL COLLATE 'utf8_unicode_ci',
+	`ses_salt` CHAR(16) NOT NULL COLLATE 'utf8_unicode_ci',
+	`ses_permissions` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8_unicode_ci',
+	PRIMARY KEY (`ses_id`),
+	INDEX `fk_ses_usr_id` (`ses_usr_id`),
+	CONSTRAINT `fk_ses_usr_id` FOREIGN KEY (`ses_usr_id`) REFERENCES `ta_usr_account` (`usr_id`)
 );
 
 create table ta_log_usr_session (

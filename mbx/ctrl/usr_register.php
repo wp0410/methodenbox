@@ -60,7 +60,7 @@ if (GlobalParameter::$applicationConfig['validateCaptcha'])
 
 $db_conn = DatabaseConnection::get_connection();
 $new_usr = new UserAccount($db_conn);
-$res = $new_usr->createUserAccount($_POST['user_fst_name'], $_POST['user_lst_name'], $_POST['user_email'], $_POST['user_pwd'], 'UPLOAD');
+$res = $new_usr->createUserAccount($_POST['user_fst_name'], $_POST['user_lst_name'], $_POST['user_email'], $_POST['user_pwd'], GlobalParameter::$applicationConfig['userDefaultRole']);
 if (! $res->isOK())
 {
     header('Location: ../view/usr_register.php?res_code=' . $res->code . '&res_text=' . $res->textUrlEncoded());

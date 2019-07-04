@@ -32,6 +32,7 @@ class GlobalResultText
             'E_413' => 'E_413 Das alte Passwort ist ung&uuml;ltig. Das Passwort kann daher nicht ge&auml;ndert werden',
             'E_414' => 'E_414 Die eingegebenen Passw&ouml;rter stimmen nicht überein',
             'E_420' => 'E_420 Die Registrierung konnte nicht korrekt best&auml;tigt werden',
+			'E_430' => 'E_430 Schwerer interner Fehler beim Laden der Benutzerberechtigungen, Bitte kontaktieren Sie einen Administrator',
             
             // Section: User Session
             'E_501' => 'E_501 Fehler beim Starten der Benutzersitzung. Bitte kontaktieren Sie einen Administrator',

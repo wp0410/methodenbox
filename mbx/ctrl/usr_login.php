@@ -70,7 +70,9 @@ if (! $res->isOK())
 }
 
 $sess = new UserSession($db_conn);
-$res = $sess->startSession($usr->getId(), $usr->getRole(), $usr->getPermissions());
+$sess->ses_usr_email = $usr->usr_email;
+$sess->ses_usr_full_name = $usr->usr_fst_name . ' ' . $usr->usr_lst_name;
+$res = $sess->startSession($usr->getId(), $usr->getPermissionsString());
 if (! $res->isOK())
 {
     header('Location: ../view/usr_login.php?res_code=' . $res->code . '&res_text=' . $res->textUrlEncoded());
@@ -78,7 +80,6 @@ if (! $res->isOK())
 }
 else
 {
-    $sess->ses_usr_email = $_POST['user_email'];
     $_SESSION['user'] = array('sid' => $sess->getId(), 'uid' => $usr->getId(), 'hash' => $sess->getSessionHash());
     header('Location: ../view/mth_search_pg.php');
     exit;

@@ -21,7 +21,6 @@ session_start();
 
 $db_conn = DatabaseConnection::get_connection();
 $usr_session = new UserSession($db_conn);
-$usr_name = '';
 
 if (! empty($_SESSION) && ! empty($_SESSION['user']))
 {
@@ -29,7 +28,6 @@ if (! empty($_SESSION) && ! empty($_SESSION['user']))
     if ($res->isOK())
     {
         $_SESSION['user'] = $usr_session->getSessionDescriptor();
-        $usr_name = $usr_session->ses_usr_email;
     }
 }
 
@@ -44,7 +42,7 @@ if (! empty($_SESSION) && ! empty($_SESSION['user']))
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
     </head>
     <body>
-        <?php FormElements::persTopNavigationBar('AUX.HLP', $usr_session->isAuthenticated(), $usr_name, $usr_session->getPermissions()); ?>
+        <?php FormElements::topNavBar('AUX.HLP', $usr_session); ?>
               
 		<div class="wrapper">
 			<nav id="sidebar" class="bg-info">

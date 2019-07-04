@@ -22,7 +22,6 @@ session_start();
 
 $db_conn = DatabaseConnection::get_connection();
 $usr_session = new UserSession($db_conn);
-$usr_name = '';
 
 if (! empty($_SESSION) && ! empty($_SESSION['user']))
 {
@@ -30,7 +29,6 @@ if (! empty($_SESSION) && ! empty($_SESSION['user']))
     if ($res->isOK())
     {
         $_SESSION['user'] = $usr_session->getSessionDescriptor();
-        $usr_name = $usr_session->ses_usr_email;
     }
 }
 
@@ -53,8 +51,8 @@ if (! $res->isOK())
         <script src='https://www.google.com/recaptcha/api.js' async defer></script>
      </head>
     <body>
-        <?php FormElements::persTopNavigationBar('AUX.CON', $usr_session->isAuthenticated(), $usr_name, $usr_session->getPermissions()); ?>
-        <?php FormElements::bottomNavigationBar('AUX.CON', 0, 0); ?>
+        <?php FormElements::topNavBar('AUX.CON', $usr_session); ?>
+        <?php FormElements::bottomNavBar('AUX.CON'); ?>
         
         <div class="container-fluid">
             <div class="row row-fluid"><div class="col"><br></div></div>

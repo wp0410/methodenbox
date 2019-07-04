@@ -14,13 +14,18 @@
 class GlobalParameter
 {
     public static $applicationConfig = array (
-        'appVersion'             => 'v1.2.36b (2019-07-02)',
+        'appVersion'             => 'v1.2.37b (2019-07-03)',
         'applicationTitle'       => 'Methodenbox',
+		'applicationDefaultLink' => '../view/mth_search_pg.php',
+		'applicationHelpLink'    => '../view/aux_help.php',
         'userAccountFailLimit'   => 3,
         'userSessionLifetimeSec' => 3600,
+		'userDefaultRole'        => 'METHOD',
+		
         'deploymentZone'         => 'DEV',
         // 'deploymentZone'         => 'DEMO',
-        'mthResultNumLines'      => 5,
+        
+		'mthResultNumLines'      => 5,
         'mthRatingNumLines'      => 5,
         'mthAdminNumLines'       => 5,
         'rtgListNumLines'        => 15,

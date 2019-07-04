@@ -10,14 +10,18 @@
 //  ANY KIND, either express or implied. See the License for the specific language 
 //  governing permissions and limitations under the License.
 //----------------------------------------------------------------------------------------
+include_once '../model/sql_connection.php';
 include_once '../model/app_result.php';
 include_once '../model/aux_parameter.php';
 include_once '../view/frm_common.php';
 include_once '../model/app_warning.php';
+include_once '../model/usr_session.php';
 
 set_private_warning_handler();
 
 session_start();
+$usr_session = new UserSession(DatabaseConnection::get_connection(), -1);
+
 $res = new AppResult($_GET);
 ?>
 <!DOCTYPE html>
@@ -28,8 +32,8 @@ $res = new AppResult($_GET);
         <?php FormElements::styleSheetRefs(); ?>
     </head>
     <body>
-        <?php FormElements::topNavigationBar('AUX.ERR', 0); ?>
-        <?php FormElements::bottomNavigationBar('AUX.ERR', 0); ?>
+        <?php FormElements::topNavBar('AUX.ERR', $usr_session); ?>
+        <?php FormElements::bottomNavBar('AUX.ERR'); ?>
         
        <div class="container-fluid">
             <div class="row row-fluid"><div class="col"><br></div></div>

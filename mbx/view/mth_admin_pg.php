@@ -21,7 +21,6 @@ set_private_warning_handler();
 session_start();
 $db_conn = DatabaseConnection::get_connection();
 $usr_session = new UserSession($db_conn);
-$usr_name = '';
 
 if (empty($_SESSION) || empty($_SESSION['user']))
 {
@@ -40,7 +39,6 @@ else
         else
         {
             $_SESSION['user'] = $usr_session->getSessionDescriptor();
-            $usr_name = $usr_session->ses_usr_email;
         }
     }
 }
@@ -61,8 +59,9 @@ if (! $res->isOK())
         <?php FormElements::styleSheetRefs(); ?>
     </head>
     <body>
-        <?php FormElements::persTopNavigationBar('MTH.ADM', $usr_session->isAuthenticated(), $usr_name, $usr_session->getPermissions()); ?>
-        <?php FormElements::bottomNavigationBar('MTH.ADM'); ?>
+        <?php FormElements::topNavBar('MTH.ADM', $usr_session); ?>
+        <?php FormElements::bottomNavBar('MTH.ADM'); ?>
+		
         <div class="container-fluid">
             <div class="row row-fluid"><br></div>
             <div class="row row-fluid">
