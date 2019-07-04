@@ -34,7 +34,7 @@ class UserAccountAdminResult
     {
         $this->renderPagination();
         
-        $this->addOutput('<table class="table"><thead class="thead-light"><tr>');
+        $this->addOutput('<table class="table table-striped"><thead class="thead-dark"><tr>');
         $this->addOutput('<th scope="col">ID</th>');
         $this->addOutput('<th scope="col">Name</th>');
         $this->addOutput('<th scope="col">E-Mail Adresse</th>');
@@ -42,8 +42,8 @@ class UserAccountAdminResult
         $this->addOutput('<th scope="col">Letzte Anmeldung</th>');
         $this->addOutput('<th scope="col">Status</th>');
         $this->addOutput('<th scope="col">Berechtigungen</th>');
-        $this->addOutput('<th scope="col">Aktion</th>');
-        $this->addOutput('<th scope="col" colspan="2">Rechte verwalten</th>');
+        $this->addOutput('<th scope="col" colspan="2">Aktion</th>');
+        // $this->addOutput('<th scope="col" colspan="2">Rechte verwalten</th>');
         $this->addOutput('</tr></thead><tbody>');
         
         $line_no = 1;
@@ -63,6 +63,7 @@ class UserAccountAdminResult
         
         $this->addOutput('<tr><td>' . $line->usr_id . '</td><td>' . $line->usr_fst_name . ' ' . $line->usr_lst_name . '</td><td>' . $line->usr_email . '</td>');
         $this->addOutput('<td>' . substr($line->usr_reg_date,0,10) . '</td><td>' . substr($line->usr_login_date,0,16) . '</td><td>');
+		$this->addOutput('<h5><span class="badge badge-primary">');
         switch($line->usr_status)
         {
             case 0:
@@ -75,26 +76,9 @@ class UserAccountAdminResult
                 $this->addOutput('GESPERRT');
                 break;
         }
+		$this->addOutput('</span></h5>');
         $this->addOutput('</td><td>');
-        
-        if ($line->role_client > 0)
-        {
-            $this->addOutput('<i class="fa fa-user-o fa-2x" aria-hidden="true"></i>&nbsp;&nbsp;');
-            $add_perm = true;
-            $del_perm = false;
-        }
-        if ($line->role_upload > 0)
-        {
-            $this->addOutput('<i class="fa fa-cloud-upload fa-2x" aria-hidden="true"></i>&nbsp;&nbsp;');
-            $add_perm = true;
-            $del_perm = true;
-        }
-        if ($line->role_admin > 0)
-        {
-            $this->addOutput('<i class="fa fa-cog fa-2x" aria-hidden="true"></i>&nbsp;&nbsp;');
-            $add_perm = false;
-            $del_perm = true;
-        }
+		$this->addOutput('<h4><span class="badge badge-info badge-lg"><i class="fa ' . $line->role_symbol . '" aria-hidden="true"></i>&nbsp;&nbsp;' . $line->role_description . '</span></h4>');
         $this->addOutput('</td><td>');
         
         // Administrator actions
@@ -105,7 +89,7 @@ class UserAccountAdminResult
                 if ($line->usr_reg_date < $min_age)
                 {
                     // Unconfirmed user accounts can be deleted after one week:
-                    $this->addOutput('<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#usrDeleteModal" ');
+                    $this->addOutput('<button type="button" class="btn btn-danger btn-sm btn-block" data-toggle="modal" data-target="#usrDeleteModal" ');
                     $this->addOutput('id="usr_del_' . $line->usr_id . '" data-usrid="' . $line->usr_id . '" data-currid="' . $this->usr_view->usr_id  . '" ');
                     $this->addOutput('data-usrname="' . $line->usr_fst_name . ' ' . $line->usr_lst_name . '(' . $line->usr_email . ')" >');
                     $this->addOutput('L&ouml;schen</button>');
@@ -113,7 +97,7 @@ class UserAccountAdminResult
                 else 
                 {
                     // Within one week, unconfirmed accounts can be activated
-                    $this->addOutput('<button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#usrModifyModal" ');
+                    $this->addOutput('<button type="button" class="btn btn-success btn-sm btn-block" data-toggle="modal" data-target="#usrModifyModal" ');
                     $this->addOutput('id="usr_act_' . $line->usr_id . '" data-usrid="' . $line->usr_id . '" data-currid="' . $this->usr_view->usr_id . '" ');
                     $this->addOutput('data-usrname="' . $line->usr_fst_name . ' ' . $line->usr_lst_name . '(' . $line->usr_email . ')" data-fn="USR_ACT" >');
                     $this->addOutput('Aktivieren</button>');
@@ -121,14 +105,14 @@ class UserAccountAdminResult
                 break;
             case 1:
                 // Active user accounts can be locked:
-                $this->addOutput('<button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#usrModifyModal" ');
+                $this->addOutput('<button type="button" class="btn btn-warning btn-sm btn-block" data-toggle="modal" data-target="#usrModifyModal" ');
                 $this->addOutput('id="usr_lock_' . $line->usr_id . '" data-usrid="' . $line->usr_id . '" data-currid="' . $this->usr_view->usr_id . '" ');
                 $this->addOutput('data-usrname="' . $line->usr_fst_name . ' ' . $line->usr_lst_name . '(' . $line->usr_email . ')" data-fn="USR_LCK" >');
                 $this->addOutput('Sperren</button>');
                 break;
             case 2:
                 // Locked user accounts can be unlocked:
-                $this->addOutput('<button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#usrModifyModal" ');
+                $this->addOutput('<button type="button" class="btn btn-success btn-sm btn-block" data-toggle="modal" data-target="#usrModifyModal" ');
                 $this->addOutput('id="usr_lock_' . $line->usr_id . '" data-usrid="' . $line->usr_id . '" data-currid="' . $this->usr_view->usr_id . '" ');
                 $this->addOutput('data-usrname="' . $line->usr_fst_name . ' ' . $line->usr_lst_name . '(' . $line->usr_email . ')" data-fn="USR_UNL" >');
                 $this->addOutput('Sperre aufheben</button>');
@@ -137,77 +121,11 @@ class UserAccountAdminResult
         
         // Change permissions
         $this->addOutput('</td><td>');
-        if ($add_perm)
-        {
-            $this->addOutput('<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#usrPermissionModal" ');
-            $this->addOutput('id="usr_perm_' . $line->usr_id . '"' . 'data-usrid="' . $line->usr_id . '" data-currid="' . $this->usr_view->usr_id . '" ');
-            $this->addOutput('data-usrname="' . $line->usr_fst_name . ' ' . $line->usr_lst_name . '(' . $line->usr_email . ')" ');
-            $this->addOutput('data-fn="PRV_ADD" data-permits="');
-            if ($line->role_admin > 0)
-            {
-                $this->addOutput('ADMIN');
-            }
-            else 
-            {
-                if ($line->role_upload > 0)
-                {
-                    $this->addOutput('UPLOAD');
-                }
-                else 
-                {
-                    if ($line->role_client > 0)
-                    {
-                        $this->addOutput('CLIENT');
-                    }
-                    else 
-                    {
-                        $this->addOutput('NONE');
-                    }
-                }
-            }
-            $this->addOutput('"><span><i class="fa fa-plus-circle" aria-hidden="true"></i></span></button>');
-        }
-        else
-        {
-            $this->addOutput('<button type="button" class="btn btn-primary btn-sm" disabled><span><i class="fa fa-plus-circle" aria-hidden="true"></i></span></button>');
-        }
-        
-        $this->addOutput('</td><td>');
-        if ($del_perm)
-        {
-            $this->addOutput('<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#usrPermissionModal" ');
-            $this->addOutput('id="usr_perm_' . $line->usr_id . '"' . 'data-usrid="' . $line->usr_id . '" data-currid="' . $this->usr_view->usr_id . '" ');
-            $this->addOutput('data-usrname="' . $line->usr_fst_name . ' ' . $line->usr_lst_name . '(' . $line->usr_email . ')" ');
-            $this->addOutput('data-fn="PRV_DEL" data-permits="');
-            
-            if ($line->role_admin > 0)
-            {
-                $this->addOutput('ADMIN');
-            }
-            else
-            {
-                if ($line->role_upload > 0)
-                {
-                    $this->addOutput('UPLOAD');
-                }
-                else
-                {
-                    if ($line->role_client > 0)
-                    {
-                        $this->addOutput('CLIENT');
-                    }
-                    else
-                    {
-                        $this->addOutput('NONE');
-                    }
-                }
-            }
-            $this->addOutput('"><span><i class="fa fa-minus-circle" aria-hidden="true"></i></span></button>');
-        }
-        else 
-        {
-            $this->addOutput('<button type="button" class="btn btn-primary btn-sm" disabled><span><i class="fa fa-minus-circle" aria-hidden="true"></i></span></button>');
-        }
+        $this->addOutput('<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#usrPermissionModal" ');
+        $this->addOutput('id="usr_perm_' . $line->usr_id . '"' . 'data-usrid="' . $line->usr_id . '" data-currid="' . $this->usr_view->usr_id . '" ');
+        $this->addOutput('data-usrname="' . $line->usr_fst_name . ' ' . $line->usr_lst_name . ' (' . $line->usr_email . ')" ');
+        $this->addOutput('data-permit="' . $line->role_name . '">Berechtigungen &Auml;ndern</button>');
+        // $this->addOutput('</td><td>');
         $this->addOutput('</td></tr>');
     }
 
@@ -331,8 +249,6 @@ class UserAccountAdminResult
     {
         echo $this->output;
     }
-    
-    
 }
 
 

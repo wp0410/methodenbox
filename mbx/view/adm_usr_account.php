@@ -21,7 +21,6 @@ session_start();
 
 $db_conn = DatabaseConnection::get_connection();
 $usr_session = new UserSession($db_conn);
-$usr_name = '';
 
 if (empty($_SESSION) || empty($_SESSION['user']))
 {
@@ -39,14 +38,13 @@ else
         }
         else
         {
-            if (strpos($usr_session->getPermissions(), 'ADM.USR') === false)
+            if (! $usr_session->checkPermission('ADM.USR'))
             {
                 $res = new AppResult(407);
             }
             else
             {
                 $_SESSION['user'] = $usr_session->getSessionDescriptor();
-                $usr_name = $usr_session->ses_usr_email;
             }
         }
     }
@@ -66,22 +64,22 @@ if (! $res->isOK())
         <?php FormElements::styleSheetRefs(); ?>
     </head>
     <body>
-        <?php FormElements::persTopNavigationBar('ADM.USR', $usr_session->isAuthenticated(), $usr_name, $usr_session->getPermissions()); ?>
-        <?php FormElements::bottomNavigationBar('ADM.USR'); ?>
+        <?php FormElements::topNavBar('ADM.USR', $usr_session); ?>
+        <?php FormElements::bottomNavBar('ADM.USR'); ?>
         
         <div class="container-fluid">
            <div class="row row-fluid"><br></div>
            <div class="row row-fluid">
-           		<div class="col-md-2 col-xl-2"> </div>
-                <div class="col-md-8 col-xl-8">
+           		<div class="col-sm-1 col-md-1 col-xl-1"> </div>
+                <div class="col-sm-10 col-md-10 col-xl-10">
                     <div class="alert alert-primary" role="alert"><center><h4>Benutzerverwaltung</h4></center></div>
                 </div>
             </div>
             <div class="row row-fluid"></div>
 
             <div class="row row-fluid">
-           		<div class="col-md-2 col-xl-2"> </div>
-				<div class="col col-md-8 col-xl-8">
+           		<div class="col col-sm-1 col-md-1 col-xl-1"> </div>
+				<div class="col col-sm-10 col-md-10 col-xl-10">
 					<div class="card">
 						<div class="card-header">
 							<div class="row">
@@ -188,6 +186,14 @@ if (! $res->isOK())
                 );
             }
         </script>
+		
+		<script type="text/javascript">
+			/* global $ */
+			$(document).ready(function() {
+				$('[data-toggle="popover"]').popover(); 
+			});
+		</script>
+		
         <script type="text/javascript">
         	/* global $ */
         	$('#usrPermissionModal').on('show.bs.modal', function(event) {
@@ -195,17 +201,15 @@ if (! $res->isOK())
                 var usr_id = button.data('usrid');
                 var curr_usr_id = button.data('currid');
                 var usr_name = button.data('usrname');
-                var perm_fn = button.data('fn');
-                var usr_permits = button.data('permits');
+                var usr_permit = button.data('permit');
                 var modal = $(this);
       			modal.find('.modal-title').text('Benutzerkonto ' + usr_name);  
 
       			$.post(
       	      		"/mbx/view/adm_usr_permission.php",
       	      		{
-          	      		perm_fn: perm_fn,
           	      		usr_id: usr_id,
-          	      		usr_role: usr_permits
+          	      		usr_role: usr_permit
       	      		},
       	      		function(data, status) {
           	      		$('#usrPermissionBody').html(data);
@@ -223,34 +227,25 @@ if (! $res->isOK())
 
         	function usrPermissionsChange(usr_id) {
             	var perm_val = "";
-            	var elem = document.getElementById('add_clt');
-            	if ((elem != null) && elem.checked) {
-                	perm_val = $('#add_clt').val();
-            	}
-            	elem = document.getElementById('add_clt_upl');
-            	if ((elem != null) && elem.checked) {
-                	perm_val = $('#add_clt_upl').val();
-            	}
-            	elem = document.getElementById('add_clt_upl_adm');
-            	if ((elem != null) && elem.checked) {
-                	perm_val = $('#add_clt_upl_adm').val();
-            	}
-
-            	elem = document.getElementById('del_adm'); 
-            	if ((elem != null) && elem.checked) {
-                	perm_val = $('#del_adm').val();
-            	}
-            	
-            	elem = document.getElementById('del_adm_upl'); 
-            	if ((elem != null) && elem.checked) {
-                	perm_val = $('#del_adm_upl').val();
-            	}
-
-            	elem = document.getElementById('del_adm_upl_clt');
-            	if ((elem != null) && elem.checked) {
-                	perm_val = $('#del_adm_upl_clt').val();
-            	}
-
+            	var elem = null;
+				var cnt = 1;
+				
+				do {
+					var elem_name = 'role_' + cnt;
+					cnt++;
+					elem = document.getElementById(elem_name);
+					if ((elem != null) && elem.checked) {
+						perm_val = $('#' + elem_name).val();
+					}
+				} while(elem != null);
+				
+				/*
+				elem = document.getElementById('role_2');
+				if ((elem != null) && elem.checked) {
+					perm_val = $('#role_2').val();
+				}
+				*/
+				
             	$.post(
 					"/mbx/ctrl/adm_usr_action.php",
 					{

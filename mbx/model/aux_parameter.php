@@ -14,7 +14,7 @@
 class GlobalParameter
 {
     public static $applicationConfig = array (
-        'appVersion'             => 'v1.2.37b (2019-07-03)',
+        'appVersion'             => 'v1.2.38b (2019-07-04)',
         'applicationTitle'       => 'Methodenbox',
 		'applicationDefaultLink' => '../view/mth_search_pg.php',
 		'applicationHelpLink'    => '../view/aux_help.php',

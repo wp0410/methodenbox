@@ -16,6 +16,7 @@ include_once '../model/aux_helpers.php';
 include_once '../model/app_warning.php';
 include_once '../model/usr_account.php';
 include_once '../model/usr_session.php';
+include_once '../model/usr_permission.php';
 
 set_private_warning_handler();
 
@@ -85,17 +86,10 @@ else
                 }
                 else 
                 {
-                    $privs = explode('.', $_POST['perm_action']);
-                    if ($privs[0] == "ADD")
-                    {
-                        $usr_acc->privilegesGrant(array_slice($privs, 1));
-                        $success_msg = 'Die Benutzerberechtigungen wurden erfolgreich erteilt';
-                    }
-                    else 
-                    {
-                        $usr_acc->privilegesRevoke(array_slice($privs, 1));
-                        $success_msg = 'Die Benutzerberechtigungen wurden erfolgreich entzogen';
-                    }
+					// TO DO: Assign user to role $_POST['perm_action']
+					$usr_perm = new UserPermission($db_conn, $_POST['usr_id']);
+					$usr_perm->assignRole($_POST['perm_action']);
+					$success_msg = 'Die Benutzerrolle wurde auf "' . $_POST['perm_action'] . '" ge&auml;ndert.';
                 }
                 break;
         }

@@ -197,4 +197,65 @@ class UserPermission implements JsonSerializable
 		$stm_p5->close();
 	}
 }
+
+class UserPermissionSchema
+{
+	private $db_conn;
+	
+	public function __construct($db_cn)
+    {
+        $this->db_conn = $db_cn;
+	}
+	
+	public function getAllRoles(): array
+	{
+		$role_list = array();
+		
+		$sql_stmt = 
+			"SELECT role.role_name, role.role_description, role.role_symbol
+             FROM   ta_usr_role AS role
+             ORDER BY role_seq";
+		$stm_p6 = $this->db_conn->prepare($sql_stmt);
+		if ($stm_p6->execute())
+		{
+			$role_name = $role_descr = $role_sym = '';
+			$stm_p6->bind_result($role_name, $role_descr, $role_sym);
+			
+			while($stm_p6->fetch())
+			{
+				$role_list[] = array('role_name' => $role_name, 'role_description' => $role_descr, 'role_symbol' => $role_sym);
+			}
+		}
+		$stm_p6->close();
+		
+		return $role_list;
+	}
+	
+	public function getRolePrivileges($for_role): array
+	{
+		$priv_list = array();
+		
+		$sql_stmt = 
+			"SELECT rp.role_name, rp.perm_name, perm.perm_description
+			 FROM   ta_usr_role_permission AS rp
+					INNER JOIN ta_usr_permission AS perm ON perm.perm_name = rp.perm_name
+			 WHERE  rp.role_name = ?
+			 ORDER BY rp.role_name, perm.perm_seq";
+		$stm_p7 = $this->db_conn->prepare($sql_stmt);
+		$stm_p7->bind_param('s', $for_role);
+		if ($stm_p7->execute())
+		{
+			$role_name = $perm_name = $perm_descr = '';
+			$stm_p7->bind_result($role_name, $perm_name, $perm_descr);
+			
+			while($stm_p7->fetch())
+			{
+				$priv_list[] = array('role_name' => $role_name, 'perm_name' => $perm_name, 'perm_description' => $perm_descr);
+			}
+		}
+		$stm_p7->close();
+		
+		return $priv_list;
+	}
+}
 ?>

@@ -52,10 +52,11 @@ class UserAccountView implements JsonSerializable
     public function InitAdmStatement()
     {
         $this->select_stmt =
-            'select usr.usr_id, usr.usr_fst_name, usr.usr_lst_name, usr.usr_email, usr.usr_register_date, usr.usr_login_date, usr.usr_status, ' .
-            'uro.per_role_client, uro.per_role_upload, uro.per_role_admin ' .
-            'from   ta_usr_account usr ' .
-	        '  inner join vi_usr_roles uro on uro.usr_id = usr.usr_id';
+			"SELECT usr.usr_id, usr.usr_fst_name, usr.usr_lst_name, usr.usr_email, usr.usr_register_date, usr.usr_login_date, usr.usr_status,
+					urol.rl_role_name, role.role_description, role.role_symbol
+			 FROM   ta_usr_account AS usr
+					INNER JOIN ta_usr_account_role AS urol ON urol.rl_usr_id = usr.usr_id
+					INNER JOIN ta_usr_role AS role ON role.role_name = urol.rl_role_name ";
         $this->where_clause = '';
     }
     
@@ -95,14 +96,14 @@ class UserAccountView implements JsonSerializable
             $usr_fst_name = $usr_lst_name = $usr_email = '';
             $usr_reg_date = $usr_login_date = '';
             $usr_status = -1;
-            $role_client = $role_upload = $role_admin = 0;
+			$role_name = $role_desc = $role_img = '';
             
             $stm_ad2->store_result();
             $this->current_page = $page_no;
             $stm_ad2->bind_result( 
                 $usr_id, $usr_fst_name, $usr_lst_name, $usr_email, 
                 $usr_reg_date, $usr_login_date, $usr_status, 
-                $role_client, $role_upload, $role_admin);
+                $role_name, $role_desc, $role_img);
             
             while ($stm_ad2->fetch())
             {
@@ -114,9 +115,9 @@ class UserAccountView implements JsonSerializable
                 $row->usr_reg_date = $usr_reg_date;
                 $row->usr_login_date = $usr_login_date;
                 $row->usr_status = $usr_status;
-                $row->role_client = $role_client;
-                $row->role_upload = $role_upload;
-                $row->role_admin = $role_admin;
+				$row->role_name = $role_name;
+				$row->role_description = $role_desc;
+				$row->role_symbol = $role_img;
                 
                 $this->lines[] = $row;
             }
@@ -136,9 +137,9 @@ class AccountViewLine
     public $usr_reg_date;
     public $usr_login_date;
     public $usr_status;
-    public $role_client;
-    public $role_upload;
-    public $role_admin;
+	public $role_name;
+	public $role_description;
+	public $role_symbol;
     
     public function __construct()
     {
@@ -146,7 +147,7 @@ class AccountViewLine
         $this->usr_fst_name = $this->usr_lst_name = $this->usr_email = '';
         $this->usr_reg_date = $this->usr_login_date = '';
         $this->usr_status = -1;
-        $this->role_client = $this->role_upload = $this->role_admin = 0;
+        $this->role_name = $this->role_description = $this->role_symbol = '';
     }
 }
 

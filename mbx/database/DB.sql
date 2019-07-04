@@ -319,34 +319,37 @@ CREATE TABLE `ta_aux_contact_request` (
 CREATE TABLE ta_usr_role (
 	role_name VARCHAR(127) COLLATE UTF8_UNICODE_CI NOT NULL,
 	role_description VARCHAR(255) COLLATE UTF8_UNICODE_CI NOT NULL,
-	role_img VARCHAR(255) COLLATE UTF8_UNICODE_CI NOT NULL,
+	role_symbol VARCHAR(255) COLLATE UTF8_UNICODE_CI NOT NULL,
+	role_seq INT(3) NOT NULL DEFAULT 0,
 	PRIMARY KEY (role_name) 
 );
-INSERT INTO ta_usr_role( role_name, role_description, role_img ) VALUES
-	('USER',   'Normaler Benutzer',  '-'),
-	('METHOD', 'Methoden Verwalten', '-'),
-	('ADMIN',  'Administrator',      '-');
+INSERT INTO ta_usr_role( role_name, role_description, role_symbol, role_seq ) VALUES
+	('USER',   'Normaler Benutzer',  'fa-user-o', 1),
+	('METHOD', 'Methoden Verwalten', 'fa-cloud-upload', 2),
+	('ADMIN',  'Administrator',      'fa-cog', 3);
+	
 CREATE TABLE ta_usr_permission(
 	perm_name VARCHAR(127) COLLATE UTF8_UNICODE_CI NOT NULL,
 	perm_description VARCHAR(255) COLLATE UTF8_UNICODE_CI NOT NULL,
 	perm_authenticated INT NOT NULL DEFAULT 0,
 	perm_unauthenticated INT NOT NULL DEFAULT 0, 
+	perm_seq INT(3) NOT NULL DEFAULT 0,
 	PRIMARY KEY (perm_name) 
 );
-INSERT INTO ta_usr_permission ( perm_name, perm_description, perm_authenticated, perm_unauthenticated ) VALUES 
-	( 'USR.REG',  'Benutzer registrieren', 0, 1 ),
-	( 'USR.CONF', 'Benutzerregistrierung bestätigen', 0, 1),
-	( 'USR.IN',   'Benutzer anmelden', 0, 1 ),
-	( 'USR.OUT',  'Benutzer abmelden', 1, 0 ),
-	( 'USR.OPT',  'Benutzer Einstellungen', 1, 0 ),
-	( 'MTH.SRCH', 'Methoden suchen', 1, 1 ),
-	( 'MTH.NEW',  'Methoden anlegen', 1, 0 ),
-	( 'MTH.RATE', 'Methoden bewerten', 1, 0 ),
-	( 'MTH.ADM',  'Methoden verwalten', 1, 0 ),
-	( 'ADM.USR',  'Benutzer verwalten', 1, 0 ),
-	( 'ADM.REQ',  'Anfragen bearbeiten', 1, 0 ),
-	( 'REP.MRNK', 'Bericht Methoden Ranking', 1, 1 ),
-	( 'REP.MST',  'Bericht Methoden Statistik', 1, 1 );
+INSERT INTO ta_usr_permission ( perm_name, perm_description, perm_authenticated, perm_unauthenticated, perm_seq ) VALUES 
+	( 'USR.REG',  'Benutzer registrieren', 0, 1, 12 ),
+	( 'USR.CONF', 'Benutzerregistrierung bestätigen', 0, 1, 13 ),
+	( 'USR.IN',   'Benutzer anmelden', 0, 1, 11 ),
+	( 'USR.OUT',  'Benutzer abmelden', 1, 0, 22 ),
+	( 'USR.OPT',  'Benutzer Einstellungen', 1, 0, 21 ),
+	( 'MTH.SRCH', 'Methoden suchen', 1, 1, 31 ),
+	( 'MTH.NEW',  'Methoden anlegen', 1, 0, 32 ),
+	( 'MTH.RATE', 'Methoden bewerten', 1, 0, 33 ),
+	( 'MTH.ADM',  'Methoden verwalten', 1, 0, 34 ),
+	( 'ADM.USR',  'Benutzer verwalten', 1, 0, 41 ),
+	( 'ADM.REQ',  'Anfragen bearbeiten', 1, 0, 42 ),
+	( 'REP.MRNK', 'Bericht Methoden Ranking', 1, 1, 51 ),
+	( 'REP.MST',  'Bericht Methoden Statistik', 1, 1, 52 );
 CREATE TABLE ta_usr_role_permission(
 	role_name VARCHAR(127) COLLATE UTF8_UNICODE_CI NOT NULL,
 	perm_name VARCHAR(127) COLLATE UTF8_UNICODE_CI NOT NULL,
