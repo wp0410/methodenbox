@@ -42,12 +42,25 @@ if (! empty($_POST) && ! empty($_POST['usr_role']) && ! empty($_POST['usr_id']))
 	$cnt = 1;
 	foreach($role_list as $role)
 	{
+		if ($role['role_name'] == $_POST['usr_role'])
+		{
+			continue;
+		}
+		
 		echo '<tr><td><div class="form-check">';
-		echo '<input class="form-check-input" type="radio" name="roles[]" id="role_' . $cnt++ . '" value="' . $role['role_name'] . '" ';
+		echo '<input class="form-check-input" type="radio" name="roles[]" id="role_' . $cnt . '" value="' . $role['role_name'] . '" ';
+		/*
 		if ($role['role_name'] == $_POST['usr_role'])
 		{
 			echo ' disabled';
 		}
+		*/
+		if ($cnt == 1)
+		{
+			echo 'checked';
+		}
+		$cnt ++;
+		
 		echo '></td><td>';
 		
 		echo '<h2><span class="badge badge-light"><i class="fa ' . $role['role_symbol'] . '" aria-hidden="true"></i>&nbsp;&nbsp;';
@@ -56,9 +69,10 @@ if (! empty($_POST) && ! empty($_POST['usr_role']) && ! empty($_POST['usr_id']))
 		
 		$perm_list = $perm_schema->getRolePrivileges($role['role_name']);
 		
+	
 		foreach($perm_list as $perm)
 		{
-			echo '<h6><span class="badge badge-primary">' . $perm['perm_description'] . '</span></h6>';
+			echo '<h6><span class="badge badge-primary">' . $perm['perm_description'] .  '</span></h6>';
 		}
 		
 		echo '</td></tr>';

@@ -16,12 +16,14 @@ include_once '../model/app_warning.php';
 include_once '../model/app_result.php';
 include_once '../model/sql_connection.php';
 include_once '../model/usr_session.php';
+include_once '../model/usr_account.php';
 
 set_private_warning_handler();
 session_start();
 
 $db_conn = DatabaseConnection::get_connection();
 $usr_session = new UserSession($db_conn);
+$usr_account = null;
 
 if (! empty($_SESSION) && ! empty($_SESSION['user']))
 {
@@ -29,6 +31,9 @@ if (! empty($_SESSION) && ! empty($_SESSION['user']))
     if ($res->isOK())
     {
         $_SESSION['user'] = $usr_session->getSessionDescriptor();
+		
+		$usr_account = new UserAccount($db_conn);
+		$usr_account->loadById($usr_session->getUsrId());
     }
 }
 
@@ -58,22 +63,22 @@ if (! $res->isOK())
             <div class="row row-fluid"><div class="col"><br></div></div>
 		
             <div class="row row-fluid">
-                <div class="col col-sm-1 col-md-3 col-xl-3"></div>
-				<div class="col col-sm-10 col-md-6 col-xl-6">
+				<div class="col col-sm-1 col-md-1 col-xl-2"></div>
+				<div class="col col-sm-10 col-md-10 col-xl-8">
 					<div class="alert alert-primary" role="alert"><center><h4>Kontakt</h4></center></div>
 				</div>
 			</div> <!-- row row-fluid-->
 			
 			<form id="aux_ctc" method="post" action="../ctrl/aux_contact.php" data-parsley-validate=""><div class="controls">
 				<div class="row form-row">
-					<div class="col col-sm-1 col-md-3 col-xl-3"></div>
-					<div class="col col-sm-10 col-md-6 col-xl-6">
+					<div class="col col-sm-1 col-md-1 col-xl-2"></div>
+					<div class="col col-sm-10 col-md-10 col-xl-8">
 						<div class="card">
 							<div class="card-body">
 								<h5 class="alert alert-info">Bitte geben Sie einige pers&ouml;nliche Informationen an. Das Methodenbox-Team ben&ouml;tigt diese Daten, um mit Ihnen Kontakt aufzunehmen.</h5>
 								
 								<div class="row form-row">
-									<div class="col col-sm-2 col-md-2 col-xl-2">
+									<div class="col col-sm-1 col-md-1 col-xl-1">
 										<div class="form-group" id="ctc_anrede">
 											<label for="usr_addr">Anrede *</label>
 											<select id="usr_addr" name="usr_addr" class="form-control"
@@ -84,29 +89,57 @@ if (! $res->isOK())
 											</select>
 										</div> <!-- form-group -->
 									</div>
-									<div class="col col-sm-5 col-md-5 col-xl-5">
+									<div class="col col-sm-3 col-md-3 col-xl-3">
 										<div class="form-group" id="ctc_first_name">
 											<label for="usr_first_name">Vorname *</label>
-											<input id="usr_first_name" type="text" name="usr_first_name" class="form-control" placeholder="Vorname"
-												data-parsley-required="" data-parsley-required-message="Bitte geben Sie Ihren Vornamen ein.">
+											<?php
+												if (empty($usr_account))
+												{
+													echo '<input id="usr_first_name" type="text" name="usr_first_name" class="form-control" placeholder="Vorname" ';
+													echo 'data-parsley-required="" data-parsley-required-message="Bitte geben Sie Ihren Vornamen ein.">';
+												}
+												else
+												{
+													echo '<input id="usr_first_name" type="text" name="usr_first_name" class="form-control" disabled ';
+													echo 'value="' . $usr_account->usr_fst_name . '">';
+												}
+											?>
 										</div> <!-- form-group -->
 									</div> <!-- col -->
 									
-									<div class="col col-sm-5 col-md-5 col-xl-5">
+									<div class="col col-sm-3 col-md-3 col-xl-3">
 										<div class="form-group" id="ctc_last_name">
 											<label for="usr_last_name">Familienname *</label>
-											<input id="usr_last_name" type="text" name="usr_last_name" class="form-control" placeholder="Familienname"
-												data-parsley-required="" data-parsley-required-message="Bitte geben Sie Ihren Familiennamen ein.">
+											<?php
+												if (empty($usr_account))
+												{
+													echo '<input id="usr_last_name" type="text" name="usr_last_name" class="form-control" placeholder="Familienname" ';
+													echo 'data-parsley-required="" data-parsley-required-message="Bitte geben Sie Ihren Familiennamen ein.">';
+												}
+												else
+												{
+													echo '<input id="usr_last_name" type="text" name="usr_last_name" class="form-control" disabled ';
+													echo 'value="' . $usr_account->usr_lst_name . '">';
+												}
+											?>
 										</div> <!-- form-group -->
 									</div> <!-- col -->
-								</div> <!-- row form-row -->
-								
-								<div class="row form-row">
-									<div class="col">
+
+									<div class="col col-sm-5 col-md-5 col-xl-5">
 										<div class="form-group" id="ctc_email">
 											<label for="usr_email">E-Mail Adresse *</label>
-											<input id="usr_email" type="email" name="usr_email" class="form-control"
-												data-parsley-required="" data-parsley-required-message="Bitte geben Sie Ihre E-Mail Adresse ein.">
+											<?php
+												if (empty($usr_account))
+												{
+													echo '<input id="usr_email" type="email" name="usr_email" class="form-control" ';
+													echo 'data-parsley-required="" data-parsley-required-message="Bitte geben Sie Ihre E-Mail Adresse ein.">';
+												}
+												else
+												{
+													echo '<input id="usr_email" type="email" name="usr_email" class="form-control" disabled ';
+													echo 'value="' . $usr_account->usr_email . '">';
+												}
+											?>
 										</div> <!-- form-group -->
 									</div> <!-- col -->
 								</div> <!-- row form-row -->
@@ -117,8 +150,8 @@ if (! $res->isOK())
 				</div> <!-- row form-row -->
 				<div class="row form-row"><br></div>
 				<div class="row form-row">
-					<div class="col col-sm-1 col-md-3 col-xl-3"></div>
-					<div class="col col-sm-10 col-md-6 col-xl-6">
+					<div class="col col-sm-1 col-md-1 col-xl-2"></div>
+					<div class="col col-sm-10 col-md-10 col-xl-8">
 						<div class="card">
 							<div class="card-body">
 								<h5 class="alert alert-info">Bitte beschreiben Sie Ihr Anliegen</h5>

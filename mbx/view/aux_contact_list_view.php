@@ -10,18 +10,18 @@
 //  ANY KIND, either express or implied. See the License for the specific language 
 //  governing permissions and limitations under the License.
 //----------------------------------------------------------------------------------------
-include_once '../model/usr_account_view.php';
+include_once '../model/aux_contact_list.php';
 
-class UserAccountAdminResult
+class ContactListView
 {
     protected $output;
-    protected $usr_view;
+    protected $req_list;
     protected $max_pages;
     
-    public function __construct($usr_view, $max_pages)
+    public function __construct($req_list, $max_pages)
     {
-        $this->usr_view = $usr_view;
         $this->output = '';
+        $this->req_list = $req_list;
         $this->max_pages = $max_pages;
     }
     
@@ -35,22 +35,15 @@ class UserAccountAdminResult
         $this->renderPagination();
         
         $this->addOutput('<table class="table table-striped"><thead class="thead-dark"><tr>');
-        $this->addOutput('<th scope="col">ID</th>');
-        $this->addOutput('<th scope="col">Name</th>');
-        $this->addOutput('<th scope="col">E-Mail Adresse</th>');
-        $this->addOutput('<th scope="col">Registriert am</th>');
-        $this->addOutput('<th scope="col">Letzte Anmeldung</th>');
-        $this->addOutput('<th scope="col">Status</th>');
-        $this->addOutput('<th scope="col">Rolle</th>');
-        $this->addOutput('<th scope="col">Aktion</th>');
-		$this->addOutput('<th scope="col">Rechte</td>');
+        $this->addOutput('<th scope="col">Name und E-Mail</th>');
+        $this->addOutput('<th scope="col">Erstellt</th>');
+        $this->addOutput('<th scope="col">Art</th>');
         $this->addOutput('</tr></thead><tbody>');
         
         $line_no = 1;
-        foreach($this->usr_view->lines as $line)
+        foreach ($this->req_list->lines as $line)
         {
             $this->renderLine($line_no, $line);
-            $line_no++;
         }
         
         $this->addOutput('</tbody></table>');
@@ -58,79 +51,11 @@ class UserAccountAdminResult
     
     protected function renderLine($line_no, $line)
     {
-        $add_perm = false;
-        $del_perm = false;
-        
-        $this->addOutput('<tr><td>' . $line->usr_id . '</td><td>' . $line->usr_fst_name . ' ' . $line->usr_lst_name . '</td><td>' . $line->usr_email . '</td>');
-        $this->addOutput('<td>' . substr($line->usr_reg_date,0,10) . '</td><td>' . substr($line->usr_login_date,0,16) . '</td><td>');
-        switch($line->usr_status)
-        {
-            case 0:
-				$this->addOutput('<h5><span class="badge badge-primary">');
-                $this->addOutput('NEU');
-                break;
-            case 1:
-				$this->addOutput('<h5><span class="badge badge-success">');
-                $this->addOutput('AKTIV');
-                break;
-            case 2:
-				$this->addOutput('<h5><span class="badge badge-danger">');
-                $this->addOutput('GESPERRT');
-                break;
-        }
-		$this->addOutput('</span></h5>');
-        $this->addOutput('</td><td>');
-		$this->addOutput('<h4><span class="badge badge-info badge-lg"><i class="fa ' . $line->role_symbol . '" aria-hidden="true"></i>&nbsp;&nbsp;' . $line->role_description . '</span></h4>');
-        $this->addOutput('</td><td>');
-        
-        // Administrator actions
-        switch ($line->usr_status)
-        {
-            case 0:
-                $min_age = Helpers::dateTimeString(time() - 7 * 86400);
-                if ($line->usr_reg_date < $min_age)
-                {
-                    // Unconfirmed user accounts can be deleted after one week:
-                    $this->addOutput('<button type="button" class="btn btn-danger btn-sm btn-block" data-toggle="modal" data-target="#usrDeleteModal" ');
-                    $this->addOutput('id="usr_del_' . $line->usr_id . '" data-usrid="' . $line->usr_id . '" data-currid="' . $this->usr_view->usr_id  . '" ');
-                    $this->addOutput('data-usrname="' . $line->usr_fst_name . ' ' . $line->usr_lst_name . '(' . $line->usr_email . ')" >');
-                    $this->addOutput('L&ouml;schen</button>');
-                }
-                else 
-                {
-                    // Within one week, unconfirmed accounts can be activated
-                    $this->addOutput('<button type="button" class="btn btn-success btn-sm btn-block" data-toggle="modal" data-target="#usrModifyModal" ');
-                    $this->addOutput('id="usr_act_' . $line->usr_id . '" data-usrid="' . $line->usr_id . '" data-currid="' . $this->usr_view->usr_id . '" ');
-                    $this->addOutput('data-usrname="' . $line->usr_fst_name . ' ' . $line->usr_lst_name . '(' . $line->usr_email . ')" data-fn="USR_ACT" >');
-                    $this->addOutput('Aktivieren</button>');
-                }
-                break;
-            case 1:
-                // Active user accounts can be locked:
-                $this->addOutput('<button type="button" class="btn btn-warning btn-sm btn-block" data-toggle="modal" data-target="#usrModifyModal" ');
-                $this->addOutput('id="usr_lock_' . $line->usr_id . '" data-usrid="' . $line->usr_id . '" data-currid="' . $this->usr_view->usr_id . '" ');
-                $this->addOutput('data-usrname="' . $line->usr_fst_name . ' ' . $line->usr_lst_name . '(' . $line->usr_email . ')" data-fn="USR_LCK" >');
-                $this->addOutput('Sperren</button>');
-                break;
-            case 2:
-                // Locked user accounts can be unlocked:
-                $this->addOutput('<button type="button" class="btn btn-success btn-sm btn-block" data-toggle="modal" data-target="#usrModifyModal" ');
-                $this->addOutput('id="usr_lock_' . $line->usr_id . '" data-usrid="' . $line->usr_id . '" data-currid="' . $this->usr_view->usr_id . '" ');
-                $this->addOutput('data-usrname="' . $line->usr_fst_name . ' ' . $line->usr_lst_name . '(' . $line->usr_email . ')" data-fn="USR_UNL" >');
-                $this->addOutput('Sperre aufheben</button>');
-                break;
-        }
-        
-        // Change permissions
-        $this->addOutput('</td><td>');
-        $this->addOutput('<button type="button" class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#usrPermissionModal" ');
-        $this->addOutput('id="usr_perm_' . $line->usr_id . '"' . 'data-usrid="' . $line->usr_id . '" data-currid="' . $this->usr_view->usr_id . '" ');
-        $this->addOutput('data-usrname="' . $line->usr_fst_name . ' ' . $line->usr_lst_name . ' (' . $line->usr_email . ')" ');
-        $this->addOutput('data-permit="' . $line->role_name . '">&Auml;ndern</button>');
-        // $this->addOutput('</td><td>');
-        $this->addOutput('</td></tr>');
+        $this->addOutput('<tr><td>' . $line['usr_fst_name'] . ' ' . $line['usr_lst_name'] . ' (' . $line['usr_email'] . ')</td>');
+        $this->addOutput('<td>' . $line['req_create_date'] . '</td>');
+        $this->addOutput('<td><span class="badge badge-primary">' . $line['req_type_text'] . '</span></td></tr>');
     }
-
+    
     protected function renderPageEntries($first_page_no, $last_page_no, $active_page_no)
     {
         $cur_page = $first_page_no;
@@ -252,6 +177,5 @@ class UserAccountAdminResult
         echo $this->output;
     }
 }
-
 
 ?>

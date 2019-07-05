@@ -187,13 +187,6 @@ if (! $res->isOK())
             }
         </script>
 		
-		<script type="text/javascript">
-			/* global $ */
-			$(document).ready(function() {
-				$('[data-toggle="popover"]').popover(); 
-			});
-		</script>
-		
         <script type="text/javascript">
         	/* global $ */
         	$('#usrPermissionModal').on('show.bs.modal', function(event) {
