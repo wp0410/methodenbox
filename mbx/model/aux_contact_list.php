@@ -57,7 +57,7 @@ class ContactRequestList implements JsonSerializable
 			"SELECT req_id, usr_addr_form, usr_fst_name, usr_lst_name, usr_email, 
 					req_type, req_text, req_create_time 
 			 FROM   ta_aux_contact_request WHERE req_close_time IS NULL AND req_close_usr_id IS NULL 
-			 ORDER BY req_id DESC ";
+			 ORDER BY req_id ASC ";
 		$this->where_clause = "";
 	}
 	
@@ -105,7 +105,7 @@ class ContactRequestList implements JsonSerializable
 				$row->usr_addr_form = $us_adf;
 				$row->usr_fst_name = $us_fst_name;
 				$row->usr_lst_name = $us_lst_name;
-				$row->us_email = $us_email;
+				$row->usr_email = $us_email;
 				$row->setReqType($rq_type);
 				$row->req_create_time = $rq_cretm;
 				

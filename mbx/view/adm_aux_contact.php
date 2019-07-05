@@ -115,7 +115,7 @@ if (! $res->isOK())
             	$.post(
                 	"/mbx/ctrl/adm_aux_contact.php",
                 	{
-                		curr_usr_id: 0,
+                		curr_usr_id: $('#curr_usr_id').val(),
                         lines_per_pg: $('#res_lpp').val()
                 	},
                 	function(data, status) {

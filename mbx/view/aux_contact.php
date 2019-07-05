@@ -100,8 +100,9 @@ if (! $res->isOK())
 												}
 												else
 												{
-													echo '<input id="usr_first_name" type="text" name="usr_first_name" class="form-control" disabled ';
+													echo '<input id="usr_fn" type="text" name="usr_fn" class="form-control" disabled ';
 													echo 'value="' . $usr_account->usr_fst_name . '">';
+													echo '<input type="hidden" id="usr_first_name" name="usr_first_name" value="' . $usr_account->usr_fst_name . '">';
 												}
 											?>
 										</div> <!-- form-group -->
@@ -118,8 +119,9 @@ if (! $res->isOK())
 												}
 												else
 												{
-													echo '<input id="usr_last_name" type="text" name="usr_last_name" class="form-control" disabled ';
+													echo '<input id="usr_ln" type="text" name="usr_ln" class="form-control" disabled ';
 													echo 'value="' . $usr_account->usr_lst_name . '">';
+													echo '<input type="hidden" id="usr_last_name" name="usr_last_name" value="' . $usr_account->usr_lst_name . '">';
 												}
 											?>
 										</div> <!-- form-group -->
@@ -136,8 +138,9 @@ if (! $res->isOK())
 												}
 												else
 												{
-													echo '<input id="usr_email" type="email" name="usr_email" class="form-control" disabled ';
+													echo '<input id="usr_em" type="email" name="usr_em" class="form-control" disabled ';
 													echo 'value="' . $usr_account->usr_email . '">';
+													echo '<input type="hidden" id="usr_email" name="usr_email" value="' . $usr_account->usr_email . '">';
 												}
 											?>
 										</div> <!-- form-group -->

@@ -38,6 +38,17 @@ else
 
 if ($param_missing)
 {
+    $err_text = '';
+    /*
+    if (empty($_POST)) $err_text = $err_text . 'empty($_POST);';
+    if (empty($_POST['usr_first_name'])) $err_text = $err_text . 'empty($_POST[usr_first_name])';
+    if (empty($_POST['usr_last_name'])) $err_text = $err_text . 'empty($_POST[usr_last_name])';
+    if (empty($_POST['usr_email'])) $err_text = $err_text . 'empty($_POST[usr_email])';
+    if (empty($_POST['req_type'])) $err_text = $err_text . 'empty($_POST[req_type])';
+    if (empty($_POST['req_desc'])) $err_text = $err_text . 'empty($_POST[req_desc])';
+    if (empty($_POST['emul_captcha'])) $err_text = $err_text . 'empty($_POST[emul_captcha])';
+    if (empty($_POST['g-recaptcha-response'])) $err_text = $err_text . 'empty($_POST[g-recaptcha-response])';
+    */
     $res = new AppResult(100);
     header('Location: ../view/aux_contact.php?res_code=' . $res->code . '&res_text=' . $res->textUrlEncoded());
     exit;

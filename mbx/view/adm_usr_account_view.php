@@ -32,7 +32,10 @@ class UserAccountAdminResult
     
     public function renderHtml()
     {
-        $this->renderPagination();
+        if (! $this->renderPagination())
+        {
+            return;
+        }
         
         $this->addOutput('<table class="table table-striped"><thead class="thead-dark"><tr>');
         $this->addOutput('<th scope="col">ID</th>');
@@ -157,12 +160,12 @@ class UserAccountAdminResult
             $this->addOutput('<div class="card"><div class="card-body">');
             $this->addOutput('<span><i class="fa fa-info-circle fa-2x" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Keine Daten vorhanden ...</span>');
             $this->addOutput('</div>');
-            return;
+            return false;
         }
         
         if ($num_pages == 1)
         {
-            return;
+            return true;
         }
         
         $this->addOutput('<div class="card"><div class="card-body">');
@@ -245,6 +248,8 @@ class UserAccountAdminResult
         $this->addOutput('<a class="page-link" href="' . $ref_page . '" aria-label="Last"><i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>');
         
         $this->addOutput('</ul></nav></div></div>'); // card-body / card
+        
+        return true;
     }
     
     public function outputHtml()

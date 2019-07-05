@@ -32,7 +32,10 @@ class ContactListView
     
     public function renderHtml()
     {
-        $this->renderPagination();
+        if (! $this->renderPagination())
+        {
+            return;
+        }
         
         $this->addOutput('<table class="table table-striped"><thead class="thead-dark"><tr>');
         $this->addOutput('<th scope="col">Name und E-Mail</th>');
@@ -51,9 +54,9 @@ class ContactListView
     
     protected function renderLine($line_no, $line)
     {
-        $this->addOutput('<tr><td>' . $line['usr_fst_name'] . ' ' . $line['usr_lst_name'] . ' (' . $line['usr_email'] . ')</td>');
-        $this->addOutput('<td>' . $line['req_create_date'] . '</td>');
-        $this->addOutput('<td><span class="badge badge-primary">' . $line['req_type_text'] . '</span></td></tr>');
+        $this->addOutput('<tr><td>' . $line->usr_fst_name . ' ' . $line->usr_lst_name . ' (' . $line->usr_email . ')</td>');
+        $this->addOutput('<td>' . $line->req_create_time . '</td>');
+        $this->addOutput('<td><span class="badge badge-primary">' . $line->req_type_text . '</span></td></tr>');
     }
     
     protected function renderPageEntries($first_page_no, $last_page_no, $active_page_no)
@@ -63,31 +66,31 @@ class ContactListView
         {
             if ($cur_page == $active_page_no)
             {
-                $this->addOutput('<li class="page-item active"><a class="page-link" href="javascript:goto_page(\'' . $this->usr_view->getCacheId() . '\',' . $cur_page . ');">' . $cur_page . '</a></li>');
+                $this->addOutput('<li class="page-item active"><a class="page-link" href="javascript:goto_page(\'' . $this->req_list->getCacheId() . '\',' . $cur_page . ');">' . $cur_page . '</a></li>');
             }
             else
             {
-                $this->addOutput('<li class="page-item"><a class="page-link" href="javascript:goto_page(\'' . $this->usr_view->getCacheId() . '\',' . $cur_page . ');">' . $cur_page . '</a></li>');
+                $this->addOutput('<li class="page-item"><a class="page-link" href="javascript:goto_page(\'' . $this->req_list->getCacheId() . '\',' . $cur_page . ');">' . $cur_page . '</a></li>');
             }
             $cur_page += 1;
         }
     }
     protected function renderPagination()
     {
-        $num_pages = ceil($this->usr_view->total_rows / $this->usr_view->lines_per_page);
-        $cur_page = $this->usr_view->current_page;
+        $num_pages = ceil($this->req_list->total_rows / $this->req_list->lines_per_page);
+        $cur_page = $this->req_list->current_page;
         
         if ($num_pages == 0)
         {
             $this->addOutput('<div class="card"><div class="card-body">');
             $this->addOutput('<span><i class="fa fa-info-circle fa-2x" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Keine Daten vorhanden ...</span>');
             $this->addOutput('</div>');
-            return;
+            return false;
         }
         
         if ($num_pages == 1)
         {
-            return;
+            return true;
         }
         
         $this->addOutput('<div class="card"><div class="card-body">');
@@ -106,7 +109,7 @@ class ContactListView
         else
         {
             $this->addOutput('<li class="page-item">');
-            $ref_page = 'javascript:goto_page(\'' . $this->usr_view->getCacheId() . '\',' . $target_page . ');';
+            $ref_page = 'javascript:goto_page(\'' . $this->req_list->getCacheId() . '\',' . $target_page . ');';
         }
         $this->addOutput('<a class="page-link" href="' . $ref_page . '" aria-label="First"><i class="fa fa-angle-double-left" aria-hidden="true"></i></a></li>');
         
@@ -120,7 +123,7 @@ class ContactListView
         else
         {
             $this->addOutput('<li class="page-item">');
-            $ref_page = 'javascript:goto_page(\'' . $this->usr_view->getCacheId() . '\',' . $target_page . ');';
+            $ref_page = 'javascript:goto_page(\'' . $this->req_list->getCacheId() . '\',' . $target_page . ');';
         }
         $this->addOutput('<a class="page-link" href="' . $ref_page . '" aria-label="Previous"><i class="fa fa-angle-left" aria-hidden="true"></i></a></li>');
         
@@ -151,7 +154,7 @@ class ContactListView
         else
         {
             $this->addOutput('<li class="page-item">');
-            $ref_page = 'javascript:goto_page(\'' . $this->usr_view->getCacheId() . '\',' . $target_page . ');';
+            $ref_page = 'javascript:goto_page(\'' . $this->req_list->getCacheId() . '\',' . $target_page . ');';
         }
         $this->addOutput('<a class="page-link" href="' . $ref_page . '" aria-label="Last"><i class="fa fa-angle-right" aria-hidden="true"></i></a></li>');
         
@@ -165,11 +168,13 @@ class ContactListView
         else
         {
             $this->addOutput('<li class="page-item">');
-            $ref_page = 'javascript:goto_page(\'' . $this->usr_view->getCacheId() . '\',' . $target_page . ');';
+            $ref_page = 'javascript:goto_page(\'' . $this->req_list->getCacheId() . '\',' . $target_page . ');';
         }
         $this->addOutput('<a class="page-link" href="' . $ref_page . '" aria-label="Last"><i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>');
         
         $this->addOutput('</ul></nav></div></div>'); // card-body / card
+        
+        return true;
     }
     
     public function outputHtml()
