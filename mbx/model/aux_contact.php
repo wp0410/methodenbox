@@ -42,6 +42,45 @@ class ContactRequest
 		$this->req_close_usr_id = 0;
 	}
 	
+	public function getId(): int
+	{
+	    return $this->req_id;
+	}
+	
+	public function getCreateTime(): string
+	{
+	    return $this->req_create_time;
+	}
+	
+	public function getTypeText(): string
+	{
+	    $req_type_text = '';
+	    
+	    switch($this->req_type)
+	    {
+	        case "Q":
+	            $req_type_text = "Frage";
+	            break;
+	        case "H":
+	            $req_type_text = "Hilfe";
+	            break;
+	        case "R":
+	            $req_type_text = "Bemerkung";
+	            break;
+	        case "E":
+	            $req_type_text = "Fehlermeldung";
+	            break;
+	        case "W":
+	            $req_type_text = "Wunsch";
+	            break;
+	        default:
+	            $req_type_text = "Sonstiges";
+	            break;
+	    }
+	    
+	    return $req_type_text;
+	}
+	
 	public function create()
 	{
 		$sql_stmt = 
@@ -54,6 +93,39 @@ class ContactRequest
 		$stm_c1->execute();
 		$this->req_id = $stm_c1->insert_id;
 		$stm_c1->close();
+	}
+	
+	public function loadById($req_id)
+	{
+	    $res = new AppResult(0);
+	    
+	    $sql_stmt =
+	       "SELECT req_id, usr_addr_form, usr_fst_name, usr_lst_name, usr_email,
+                   req_type, req_text, req_create_time, req_close_time, req_close_usr_id, req_answer 
+            FROM   ta_aux_contact_request 
+            WHERE  req_id = ?";
+	    $stm_c2 = $this->db_conn->prepare($sql_stmt);
+	    $stm_c2->bind_param('i', $req_id);
+	    if ($stm_c2->execute())
+	    {
+	        $stm_c2->bind_result(
+	            $this->req_id, $this->usr_addr_form, $this->usr_first_name, $this->usr_last_name, $this->usr_email,
+	            $this->req_type, $this->req_text, $this->req_create_time, $this->req_close_time, $this->req_close_usr_id, 
+	            $this->req_answer);
+	        
+	        if (! $stm_c2->fetch())
+	        {
+	            $res = new AppResult(702);
+	        }
+	        
+	        $stm_c2->close();
+	    }
+	    else 
+	    {
+	        $res = new AppResult(701);
+	    }
+	    
+	    return $res;
 	}
 }
 

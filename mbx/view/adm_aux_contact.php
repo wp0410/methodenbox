@@ -97,12 +97,12 @@ if (! $res->isOK())
 							</div> <!-- row form-row -->
 						</div> <!-- card-header -->
 
-						<div class="card-body" id="adm_result">
-						</div>
+						<div class="card-body" id="adm_result"></div>
 					</div> <!-- card -->
 				</div> <!-- col-sm-6 col-md-5 ... -->
 				
 				<div class="col-sm-6 col-md-7 col-lg-8 col-xl-8">
+					<div id="adm_detail"></div>
 				</div> <!-- col-sm-6 col-md-7 ... -->
 			</div> <!-- row row-fluid -->
 			
@@ -127,6 +127,29 @@ if (! $res->isOK())
 			$(window).on('load', function() {
                 load_req_list();
             });
+
+            function get_req_detail(req_id) {
+                $.post(
+                	"/mbx/view/adm_aux_contact_detail.php",
+                	{
+                    	curr_usr_id: $('#curr_usr_id').val(),
+                    	req_id: req_id
+                	},
+                	function(data, status) {
+                    	$('#adm_detail').html(data);
+                	}
+                );
+            }
+
+            function post_answer(req_id) {
+                var req_answer = $('#req_ans_ta').val().trim();
+                if ((req_answer !== null) && (req_answer !== '') && (req_answer.length > 0)) {
+                	alert(req_answer);
+                }
+                else {
+                    alert('Bitte etwas eingeben');
+                }
+            }
 		</script>
      </body>
  </html>   

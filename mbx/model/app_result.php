@@ -60,7 +60,7 @@ class AppResult
         }
     }
     
-    public function style()
+    public function style(): string
     {
         if ($this->code < 900)
         {
@@ -87,6 +87,18 @@ class AppResult
     public function textUrlEncoded()
     {
         return urlencode($this->text);
+    }
+    
+    public function alert($size = ''): string
+    {
+        if (empty($size))
+        {
+            return '<span class="alert alert-' . $this->style() . '">' . $this->text . '</span>';
+        }
+        else 
+        {
+            return '<' . $size . '><span class="alert alert-' . $this->style() . '">' . $this->text . '</span></' . $size . '>';
+        }
     }
 }
 

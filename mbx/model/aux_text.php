@@ -50,6 +50,10 @@ class GlobalResultText
             'E_655' => 'E_655 Fehler beim Laden der Datei f&uuml;r die Unterrichtsmethode. Bitte kontaktieren Sie einen Administrator',
             'E_671' => 'E_671 Fehler beim Speichern der Bewertung. Bitte kontaktieren Sie einen Administrator',
             'E_681' => 'E_681 Fehler beim Speichern des Downloads. Bitte kontaktieren Sie einen Administrator',
+        
+            // SEction: Contact Request
+            'E_701' => 'E_701 Fehler beim Zugriff auf die Datenbank. Bitte kontaktieren Sie einen Administrator',
+            'E_702' => 'E_702 Fehler: die Kontaktanfrage kann in der Datenbank nicht gefunden werden. Bitte kontaktieren Sie einen Administrator',
 
             // Info Messages
             'E_901' => 'Sie werden in K&uuml;rze ein E-Mail and die angegebene E-Mail Adresse erhalten. Bitte folgen Sie den Anweisungen in dieser E-Mail, um die Registrierung abzuschlie&szlig;en',

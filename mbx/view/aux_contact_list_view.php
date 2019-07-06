@@ -54,7 +54,11 @@ class ContactListView
     
     protected function renderLine($line_no, $line)
     {
-        $this->addOutput('<tr><td>' . $line->usr_fst_name . ' ' . $line->usr_lst_name . ' (' . $line->usr_email . ')</td>');
+        // $this->addOutput('<tr><td>' . $line->usr_fst_name . ' ' . $line->usr_lst_name . ' (' . $line->usr_email . ')</td>');
+        $usr_name = $line->usr_fst_name . ' ' . $line->usr_lst_name . ' (' . $line->usr_email . ')';
+        $this->addOutput('<tr><td>');
+        $this->addOutput('<a href="#" onclick="javascript:get_req_detail(' . $line->req_id . ')">' . $usr_name . '</a>');
+        $this->addOutput('</td>');
         $this->addOutput('<td>' . $line->req_create_time . '</td>');
         $this->addOutput('<td><span class="badge badge-primary">' . $line->req_type_text . '</span></td></tr>');
     }
