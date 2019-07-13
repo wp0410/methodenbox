@@ -45,15 +45,8 @@ $res = new AppResult($_GET);
                 </div>
             </div>
             
-            <?php 
-            if ($res->code != 0) 
-            {
-                FormElements::showAlert($res->style(), 'col-sm-10 col-md-6 col-xl-6', $res->text, 'col col-sm-1 col-md-3 col-xl-3'); 
-            } 
-            ?>
-            
             <form id="usr_login" method="post" action="../ctrl/usr_login.php" data-parsley-validate="">
-                 <div class="controls">
+                <div class="controls">
                     <div class="row form-row">
                         <div class="col col-sm-1 col-md-3 col-xl-3"></div>
                         <div class="col col-sm-5 col-md-3 col-xl-3">
@@ -120,8 +113,10 @@ $res = new AppResult($_GET);
                     </a>
                 </div>
             </div>
+			<?php if (! $res->isOK()) { FormElements::feedbackModal($res, 'Schlie&szlig;en'); } ?>
         </div>
-        
+		
         <?php FormElements::scriptRefs(); ?>
+		<?php if (! $res->isOK()) { FormElements::launchFeedback(); } ?>
     </body>
  </html>   

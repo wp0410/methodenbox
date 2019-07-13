@@ -78,7 +78,7 @@ function showContactReqDetail($req)
     echo '            <th scope="col">Anfrage Text</th>';
     echo '         </tr></thead>';
     echo '         <tbody><tr>';
-    echo '            <td><h5>' . $req->req_text . '</h5></td>';
+    echo '            <td>' . $req->req_text . '</td>';
     echo '         </tr></tbody>';
     echo '      </table>';
     echo '   </div>'; // col
@@ -109,16 +109,18 @@ function showContactReqDetail($req)
     
     echo '            </td></tr>';
     echo '            <tr><td colspan="8">';
-    // echo '               <form id="rq_answer_frm"><div class="form-group" id="rq_answer">';
     echo '               <div class="form-group" id="rq_answer">';
-    echo '                  <textarea id="req_ans_ta" name="req_ans_ta" form="rq_answer_frm" class="form-control" rows="8"></textarea>';
+    echo '                  <textarea id="req_ans_ta" name="req_ans_ta" form="rq_answer_frm" class="form-control" rows="8" ';
+	echo '                     oninput="javascript:answer_changed()">';
+	echo '                  </textarea>';
     echo '               </div>'; // form-group
-    // echo '               </div></form>'; // form-group
     echo '            </td></tr>';
     echo '            <tr>';
     echo '               <td colspan="4">Liebe Gr&uuml;&szlig;e<br>Das Methodenbox Team</td>';
     echo '               <td>';
-    echo '                  <a href="#" class="btn btn-primary btn-block" onclick="javascript:post_answer(' . $req->getId() . ')">Senden</a>';
+    echo '                  <button type="button" class="btn btn-primary btn-block" id="btn_send" name="btn_send" disabled';
+	echo '                     onclick="javascript:post_answer(' . $req->getId() . ')">Senden';
+	echo '                  </button>';
     echo '               </td>';
     echo '               <td>';
     echo '                  <a href="mailto:' . $req->usr_email . '?subject=Methodenbox Kontaktanfrage vom ' . substr($req->getCreateTime(),0,10) . 

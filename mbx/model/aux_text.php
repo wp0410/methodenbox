@@ -54,6 +54,8 @@ class GlobalResultText
             // SEction: Contact Request
             'E_701' => 'E_701 Fehler beim Zugriff auf die Datenbank. Bitte kontaktieren Sie einen Administrator',
             'E_702' => 'E_702 Fehler: die Kontaktanfrage kann in der Datenbank nicht gefunden werden. Bitte kontaktieren Sie einen Administrator',
+			'E_703' => 'E_703 Fehler: die Antwort kann nicht gespeichert werden. Bitte kontaktieren Sie einen Administrator',
+			'E_704' => 'E_704 Fehler: die Kontaktanfrage kann nicht geschlossen werden. Bitte kontaktieren Sie einen Administrator',
 
             // Info Messages
             'E_901' => 'Sie werden in K&uuml;rze ein E-Mail and die angegebene E-Mail Adresse erhalten. Bitte folgen Sie den Anweisungen in dieser E-Mail, um die Registrierung abzuschlie&szlig;en',

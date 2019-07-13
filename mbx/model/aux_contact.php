@@ -127,6 +127,62 @@ class ContactRequest
 	    
 	    return $res;
 	}
+	
+	public function saveAnswer($usr_id, $req_answer)
+	{
+		$res = new AppResult(0);
+		
+		if (empty($this->req_answer))
+		{
+			$db_answer = '=== TIME=' . Helpers::dateTimeString(time()) . ' USRID = ' . $usr_id . ':' . PHP_EOL . $req_answer;
+		}
+		else
+		{
+			$db_answer = $this->req_answer . PHP_EOL . 
+				'=== TIME=' . Helpers::dateTimeString(time()) . ' USRID = ' . $usr_id . ':' . PHP_EOL . $req_answer;
+		}
+		
+		$sql_stmt = "UPDATE ta_aux_contact_request SET req_answer = ? WHERE req_id = ?;";
+		
+		$stm_c3 = $this->db_conn->prepare($sql_stmt);
+		$stm_c3->bind_param('si', $db_answer, $this->req_id);
+		if ($stm_c3->execute())
+		{
+			$this->req_answer = $db_answer;
+		}
+		else
+		{
+			$res = new AppResult(703);
+		}
+		$stm_c3->close();
+		
+		return $res;
+	}
+	
+	public function closeContactRequest($usr_id)
+	{
+		$res = new AppResult(0);
+		
+		$rq_clt = Helpers::dateTimeString(time());
+		
+		$sql_stmt =
+			"UPDATE ta_aux_contact_request SET req_close_time = ?, req_close_usr_id = ? WHERE req_id = ?";
+			
+		$stm_c4 = $this->db_conn->prepare($sql_stmt);
+		$stm_c4->bind_param('sii', $req_clt, $usr_id, $this->req_id);
+		if ($stm_c4->execute())
+		{
+			$this->req_close_time = $req_clt;
+			$this->req_close_usr_id = $usr_id;
+		}
+		else
+		{
+			$res = new AppResult(704);
+		}
+		$stm_c4->close();
+		
+		return $res;
+	}
 }
 
 ?>

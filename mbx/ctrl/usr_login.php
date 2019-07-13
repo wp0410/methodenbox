@@ -21,12 +21,7 @@ set_private_warning_handler();
 
 session_start();
 
-$param_missing = 
-    empty($_POST) || 
-    empty($_POST['user_email']) || 
-    empty($_POST['user_pwd']);
-
-if ($param_missing)
+if (empty($_POST) || empty($_POST['user_email']) || empty($_POST['user_pwd']))
 {
     $res = new AppResult(100);
     header('Location: ../view/aux_error.php?res_code=' . $res->code . '&res_text=' . $res->textUrlEncoded());
@@ -38,32 +33,24 @@ $usr = new UserAccount($db_conn);
 $res = $usr->userLogin($_POST['user_email'], $_POST['user_pwd']);
 if (! $res->isOK())
 {
-    $log_detail = 'Remote IP: ';
-    if (empty($_SERVER['REMOTE_ADDR']))
-    {
-        $log_detail = $log_detail . 'Unknown IP address';
-    }
-    else 
-    {
-        $log_detail = $log_detail . $_SERVER['REMOTE_ADDR'];
-    }
-    if (empty($_SERVER['REMOTE_HOST']))
-    {
-        $log_detail = $log_detail . '(Unknown Host Name)';
-    }
-    else 
-    {
-        $log_detail = $log_detail . '(' . $_SERVER['REMOTE_HOST'] . ')';
-    }
-    
-    $tmp_pwd = '';
+	$log_entry = new InvalidLoginAttemptEntry();
+	$log_entry->usr_email = $_POST['user_email'];
+	$log_entry->rem_ip_address = $_SERVER['REMOTE_ADDR'];
+	$log_entry->rem_host_name = $_SERVER['REMOTE_HOST'];
+	$log_entry->err_code = $res->code;
+	$log_entry->err_text = $res->text;
+
     if (($res->code == 400) || ($res->code == 410))
     {
-        $tmp_pwd = $_POST['user_pwd'];
+		$log_entry->usr_password = $_POST['user_pwd'];
     }
-    
-    $logger = new SessionLog($db_conn);
-    $logger->logLoginAttempt($_POST['user_email'], $tmp_pwd, $res->code, $log_detail);
+	else
+	{
+		$log_entry->usr_password = '********';
+	}
+
+	$logger = new SecurityLog($db_conn);
+	$logger->storeLogEntry($log_entry);
     
     header('Location: ../view/usr_login.php?res_code=' . $res->code . '&res_text=' . $res->textUrlEncoded());
     exit;

@@ -12,24 +12,111 @@
 //----------------------------------------------------------------------------------------
 include_once 'aux_helpers.php';
 
-class SessionLog
+interface ILogEntry
 {
-    private $db_conn;
-    
-    public function __construct($db_cn)
+	public function getUserId(): string;
+	public function getLogTimestamp(): string;
+	public function getRemoteIp(): string;
+	public function getRemoteHost(): string;
+}
+
+class InvalidLoginAttemptEntry implements ILogEntry, JsonSerializable
+{
+	public $usr_email;
+	public $usr_password;
+	public $rem_ip_address;
+	public $rem_host_name;
+	public $err_code;
+	public $err_text;
+	
+	private $log_timestamp;
+	
+	public function __construct()
+	{
+		$this->usr_email = $this->usr_password = $this->rem_ip_address = $this->rem_host_name = $this->err_text = '';
+		$this->err_code = 999;
+	}
+	
+	public function getUserId(): string
+	{
+		if (empty($this->usr_email))
+		{
+			$this->usr_email = 'UNKNOWN';
+		}
+		return $this->usr_email;
+	}
+	
+	public function getLogTimestamp(): string
+	{
+		if (empty($this->log_timestamp))
+		{
+			$this->log_timestamp = Helpers::dateTimeString(time());
+		}
+		return $this->log_timestamp;
+	}
+	
+	public function getRemoteIp(): string
+	{
+		if (empty($this->rem_ip_address))
+		{
+			$this->rem_ip_address = 'UNKNOWN';
+		}
+		return $this->rem_ip_address;
+	}
+	
+	public function getRemoteHost(): string
+	{
+		if (empty($this->rem_host_name))
+		{
+			if (($this->rem_ip_address == '127.0.0.1') || ($this->rem_ip_address == '::1'))
+			{
+				$this->rem_host_name = 'localhost';
+			}
+			else
+			{
+				$this->rem_host_name = 'UNKNOWN';
+			}
+		}
+		
+		return $this->rem_host_name;
+	}
+	
+    public function jsonSerialize()
     {
-        $this->db_conn = $db_cn;
-    }
-    
-    public function logLoginAttempt($usr_email, $usr_pwd, $log_status, $log_details)
-    {
-        $log_time = Helpers::dateTimeString(time());
-        $sql_stmt = 'insert into ta_log_usr_session( log_time, log_usr_email, log_usr_pwd, log_status, log_extra ) values( ?, ?, ?, ?, ? );';
-        $stm_lg1 = $this->db_conn->prepare($sql_stmt);
-        $stm_lg1->bind_param('sssis', $log_time, $usr_email, $usr_pwd, $log_status, $log_details);
-        $stm_lg1->execute();
-        $stm_lg1->close();
+        return array(
+			'log_timestamp'  => $this->log_timestamp,
+			'usr_email'      => $this->getUserId(),
+			'usr_password'   => $this->usr_password,
+			'err_code'       => $this->err_code,
+			'err_text'       => $this->err_text,
+			'rem_ip_address' => $this->getRemoteIp(),
+			'rem_host_name'  => $this->getRemoteHost()
+        );
     }
 }
 
+class SecurityLog
+{
+	private $db_conn;
+	
+	public function __construct($db_cn)
+	{
+		$this->db_conn = $db_cn;
+	}
+	
+	public function storeLogEntry($entry)
+	{
+		$log_usr_id = $entry->getUserId();
+		$log_timestamp = $entry->getLogTimestamp();
+		$log_rem_ip = $entry->getRemoteIp();
+		$log_rem_host = $entry->getRemoteHost();
+		$log_detail = json_encode($entry);
+		
+		$sql_stmt = 'INSERT INTO ta_log_security( log_timestamp, log_client_id, log_remote_ip, log_remote_host, log_detail ) VALUES( ?, ?, ?, ?, ? )';
+		$stm_slg1 = $this->db_conn->prepare($sql_stmt);
+		$stm_slg1->bind_param('sssss', $log_timestamp, $log_usr_id, $log_rem_ip, $log_rem_host, $log_detail);
+		$stm_slg1->execute();
+		$stm_slg1->close();
+	}
+}
 ?>

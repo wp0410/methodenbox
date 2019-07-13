@@ -125,14 +125,15 @@ CREATE TABLE `ta_usr_session` (
 	CONSTRAINT `fk_ses_usr_id` FOREIGN KEY (`ses_usr_id`) REFERENCES `ta_usr_account` (`usr_id`) ) 
 COLLATE='utf8_unicode_ci';
 
-CREATE TABLE `ta_log_usr_session` (
+CREATE TABLE `ta_log_security` (
 	`log_id` INT(11) NOT NULL AUTO_INCREMENT,
-	`log_time` DATETIME NOT NULL,
-	`log_usr_email` VARCHAR(255) NOT NULL COLLATE 'utf8_unicode_ci',
-	`log_usr_pwd` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8_unicode_ci',
-	`log_status` INT(11) NOT NULL DEFAULT 0,
-	`log_extra` VARCHAR(1023) NULL DEFAULT NULL COLLATE 'utf8_unicode_ci',
-	PRIMARY KEY (`log_id`) )
+	`log_timestamp` DATETIME NOT NULL,
+	`log_client_id` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8_unicode_ci',
+	`log_remote_ip` VARCHAR(127) NULL DEFAULT NULL COLLATE 'utf8_unicode_ci',
+	`log_remote_host` VARCHAR(127) NULL DEFAULT NULL COLLATE 'utf8_unicode_ci',
+	`log_detail` VARCHAR(2047) NULL DEFAULT NULL COLLATE 'utf8_unicode_ci',
+	PRIMARY KEY (`log_id`)
+)
 COLLATE='utf8_unicode_ci';
 
 CREATE TABLE `ta_mth_subject_area` (

@@ -106,7 +106,38 @@ if (! $res->isOK())
 				</div> <!-- col-sm-6 col-md-7 ... -->
 			</div> <!-- row row-fluid -->
 			
+			<div class="modal modal-fade" id="reqOkModal" name="reqOkModal" role="dialog" aria-labelledby="reqOkModal" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title"><span><i class="fa fa-check-circle" aria-hidden="true"></i>&nbsp;&nbsp;Erfolg</span></h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>					
+						</div>
+						<div class="modal-body">
+							<div class="alert alert-success"><h4>Die Antwort wurde erfolgreich gesendet, die Kontaktanfrage wurde geschlossen</h4></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal modal-fade" id="reqErrorModal" name="reqErrorModal" role="dialog" aria-labelledby="reqErrorModal" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title"><span><i class="fa fa-exclamation" aria-hidden="true"></i>&nbsp;&nbsp;Fehler</span></h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>					
+						</div>
+						<div class="modal-body">
+							<div class="alert alert-danger" id="reqErrTxt"></div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div> <!-- container-fluid -->
+
 		
         <?php FormElements::scriptRefs(); ?>
 		<script type="text/javascript">
@@ -140,16 +171,50 @@ if (! $res->isOK())
                 	}
                 );
             }
-
-            function post_answer(req_id) {
+			
+			function answer_changed() {
                 var req_answer = $('#req_ans_ta').val().trim();
+
                 if ((req_answer !== null) && (req_answer !== '') && (req_answer.length > 0)) {
-                	alert(req_answer);
+                	document.getElementById('btn_send').disabled = false;
                 }
-                else {
-                    alert('Bitte etwas eingeben');
-                }
+				else {
+                	document.getElementById('btn_send').disabled = true;
+				}
+			}
+		</script>
+
+		<script type="text/javascript">
+            function post_answer(par_req_id) {
+                var loc_answer = $('#req_ans_ta').val().trim();
+                if ((loc_answer !== null) && (loc_answer !== '') && (loc_answer.length > 0)) {
+					$.post(
+						"/mbx/ctrl/adm_aux_contact_answer.php",
+						{
+							curr_usr_id: $('#curr_usr_id').val(),
+							req_id: par_req_id,
+							req_answer: loc_answer
+						},
+						function(data, status) {
+							if (data == "OK") {
+								$('#reqOkModal').modal('show');
+							}
+							else {
+								$('#reqErrTxt').html('<h4>' + data + '</h4>');
+								$('#reqErrorModal').modal('show');
+							}
+						}
+					);                    	
+				}
             }
+			
+			$('#reqOkModal').on('hidden.bs.modal', function (e) {
+				location.reload();
+			});			
+
+			$('#reqErrorModal').on('hidden.bs.modal', function (e) {
+				location.reload();
+			});			
 		</script>
      </body>
  </html>   
