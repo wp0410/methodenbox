@@ -10,14 +10,42 @@
 //  ANY KIND, either express or implied. See the License for the specific language 
 //  governing permissions and limitations under the License.
 //----------------------------------------------------------------------------------------
+/**
+ * "Methodenbox" User Identification and Authentication.
+ *
+ * @package        MBX/Model/UserAuth
+ * @author         Walter Pachlinger <walter.pachlinger@gmail.com>
+ * @copyright      2019 Walter Pachlinger (walter.pachlinger@gmail.com)
+ * @license        Apache License, Version 2.0
+ * @license        http://www.apache.org/licenses/LICENSE-2.0
+ */
 
+/**
+ * Roles and permissions for a Methodenbox User Account.
+ * 
+ * @author Walter Pachlinger <walter.pachlinger@gmail.com>
+ * 
+ * @property-read string[] $permissions List of assigned permissions.
+ * @property-read string $permissionString List of assigned permissions as delimited string.
+ * @property-read string[] $assignedRoles List of assigned roles.
+ */
 class UserPermission implements JsonSerializable
 {
+    /** Handle to the MySQL database session. */
 	private $db_conn;
+	/** Reference to a User Account. */
 	private $usr_id;
+	/** List of permissions for the referenced User Account */
 	private $permissions;
 	
-	public function __construct($db_cn, $usr_id, $perm_string = null)
+	/**
+	 * Constructor (initializes a new User Permission object).
+	 * 
+	 * @param mysqli $db_cn MySQL database session to be used for DB operations.
+	 * @param int $usr_id Internal identifier of a User Account.
+	 * @param string $perm_string Assigned permissions as a delimted string, optional.
+	 */
+	public function __construct(mysqli $db_cn, int $usr_id, string $perm_string = null)
     {
         $this->db_conn = $db_cn;
 		$this->usr_id = $usr_id;
@@ -31,7 +59,34 @@ class UserPermission implements JsonSerializable
 			$this->permissions = explode(';', $perm_string);
 		}
 	}
+	
+	/**
+	 * Magic function implementing the read only properties of a User Permission.
+	 * 
+	 * @param string $field Name of the read only property.
+	 * @throws Exception Undefined property name.
+	 * @return string|string[] Value of the requested read-only property.
+	 */
+	public function __get(string $field)
+	{
+	    switch($field)
+	    {
+	        case 'permissions':
+	            return $this->getPermissions();
+	        case 'permissionString':
+	            return $this->getPermissionsString();
+	        case 'assignedRoles':
+	            return $this->getAssignedRoles();
+	        default:
+	            throw new Exception('exception: undefined property "UserPermission::' . $field . '"');
+	    }
+	}
 
+	/**
+	 * Implementation of JsonSerializable::jsonSerialize().
+	 * 
+	 * @return string[] Instance mapped to an associative array.
+	 */
     public function jsonSerialize()
     {
         return array(
@@ -40,7 +95,12 @@ class UserPermission implements JsonSerializable
 		);
 	}
 	
-	public function getPermissions(): array
+	/**
+	 * Gets the list of assigned permissions from the object.
+	 * 
+	 * @return string[] List of permissions.
+	 */
+	public function getPermissions()
 	{
 		if (empty($this->permissions))
 		{
@@ -57,7 +117,12 @@ class UserPermission implements JsonSerializable
 		return $this->permissions;
 	}
 	
-	public function getAssignedRoles(): array
+	/**
+	 * Get list of roles assigned to the referenced User Account.
+	 * 
+	 * @return string[] List of assigned roles.
+	 */
+	public function getAssignedRoles()
 	{
 		$roles = array();
 		
@@ -74,7 +139,12 @@ class UserPermission implements JsonSerializable
 		return $roles;
 	}
 	
-	public function getPermissionsString(): string
+	/**
+	 * Get list of assigned permissions as a separated string.
+	 * 
+	 * @return string List of assigned permissions.
+	 */
+	public function getPermissionsString()
 	{
 		$perm_string = '';
 		$perm_list = $this->getPermissions();
@@ -87,21 +157,38 @@ class UserPermission implements JsonSerializable
 		return $perm_string;
 	}
 	
-	public function checkPermission($perm_to_check)
+	/**
+	 * Checks if a permission is present in the associated permissions.
+	 * 
+	 * @param string $perm_to_check Permission to check.
+	 * @return boolean Permission is in list (true) or not (false).
+	 */
+	public function checkPermission(string $perm_to_check)
 	{
 		$perm_string = $this->getPermissionsString();
 		
 		return ! (strpos($perm_string, $perm_to_check) === false);
 	}
 	
-	public function hasRole($role_to_check)
+	/**
+	 * Checks if a role is assigned to the User Account.
+	 * 
+	 * @param string $role_to_check Role to check.
+	 * @return boolean Role is assigned (true) or not (false).
+	 */
+	public function hasRole(string $role_to_check)
 	{
 		$perm_string = $this->getPermissionsString();
 		
 		return ! (strpos($perm_string, $role_to_check . '/') === false);
 	}
 	
-	public function assignRole($role_to_assign)
+	/**
+	 * Assigns a role to the current permission object.
+	 * 
+	 * @param string $role_to_assign Name of the role to assign.
+	 */
+	public function assignRole(string $role_to_assign)
 	{
 		if ($this->usr_id > 0)
 		{
@@ -111,6 +198,9 @@ class UserPermission implements JsonSerializable
 		}
 	}
 	
+	/**
+	 * Cleans up the permission table in the database when the assoctiated User Account is dropped.
+	 */
 	public function cleanupOnDropUser()
 	{
 		if ($this->usr_id > 0)
@@ -119,7 +209,13 @@ class UserPermission implements JsonSerializable
 		}
 	}
 	
-	private function loadUsrPermissions($usr_id): array
+	/**
+	 * Loads the list of associated permissions from the database.
+	 * 
+	 * @param int $usr_id Reference to a User Account.
+	 * @return string[] List of associated permissions read from the database.
+	 */
+	private function loadUsrPermissions(int $usr_id)
 	{
 		$perm = array();
 		
@@ -147,7 +243,12 @@ class UserPermission implements JsonSerializable
 		return $perm;
 	}
 	
-	private function loadUnauthPermissions(): array
+	/**
+	 * Load permissions for unauthenticated users.
+	 * 
+	 * @return string[] List of permissions for unauthenticated users.
+	 */
+	private function loadUnauthPermissions()
 	{
 		$perm = array();
 		
@@ -170,7 +271,12 @@ class UserPermission implements JsonSerializable
 		return $perm;
 	}
 	
-	private function unassignRoleFromUser($role_to_unassign = null)
+	/**
+	 * Unassignes a role and its associated permissins from the referenced User Account.
+	 * 
+	 * @param string $role_to_unassign Name of the role to unassign.
+	 */
+	private function unassignRoleFromUser(string $role_to_unassign = null)
 	{
 		if (empty($role_to_unassign))
 		{
@@ -188,7 +294,12 @@ class UserPermission implements JsonSerializable
 		$stm_p4->close();
 	}
 	
-	private function assignRoleToUser($role_to_assign)
+	/**
+	 * Assign a role and its associated permissions to the referenced User Account.
+	 * 
+	 * @param string $role_to_assign Name of the role to assign.
+	 */
+	private function assignRoleToUser(string $role_to_assign)
 	{
 		$sql_stmt = "INSERT INTO ta_usr_account_role( rl_usr_id, rl_role_name ) VALUES ( ?, ? )";
 		$stm_p5 = $this->db_conn->prepare($sql_stmt);
@@ -198,16 +309,33 @@ class UserPermission implements JsonSerializable
 	}
 }
 
+/**
+ * Permission schema (roles and permissions) for the Methodenbox application.
+ * 
+ * @author Walter Pachlinger <walter.pachlinger@gmail.com>
+ *
+ */
 class UserPermissionSchema
 {
+    /** Handle to the MySQL database session. */
 	private $db_conn;
 	
-	public function __construct($db_cn)
+	/**
+	 * Constructor (initializes a new Permission Schema object).
+	 * 
+	 * @param mysqli $db_cn MySQL database session to be used for DB operations.
+	 */
+	public function __construct(mysqli $db_cn)
     {
         $this->db_conn = $db_cn;
 	}
 	
-	public function getAllRoles(): array
+	/**
+	 * Retrieves all defined roles from the database.
+	 * 
+	 * @return string[][] List of defined roles (name, description, symbol).
+	 */
+	public function getAllRoles()
 	{
 		$role_list = array();
 		
@@ -231,7 +359,13 @@ class UserPermissionSchema
 		return $role_list;
 	}
 	
-	public function getRolePrivileges($for_role): array
+	/**
+	 * Retrieves all defined privileges for a role from the database.
+	 * 
+	 * @param string $for_role Name of the role.
+	 * @return string[][] List of assinged privileges (role name, permission name, description);
+	 */
+	public function getRolePrivileges(string $for_role)
 	{
 		$priv_list = array();
 		

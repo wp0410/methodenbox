@@ -1,38 +1,75 @@
-<?php
+﻿<?php
 //---------------------------------------------------------------------------------------
 //  Copyright (c) 2018, 2019 Walter Pachlinger (walter.pachlinger@gmail.com)
-//    
-//  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this 
+//
+//  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this
 //  file except in compliance with the License. You may obtain a copy of the License at
 //      http://www.apache.org/licenses/LICENSE-2.0
-//  Unless required by applicable law or agreed to in writing, software distributed under 
-//  the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF 
-//  ANY KIND, either express or implied. See the License for the specific language 
+//  Unless required by applicable law or agreed to in writing, software distributed under
+//  the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF
+//  ANY KIND, either express or implied. See the License for the specific language
 //  governing permissions and limitations under the License.
 //----------------------------------------------------------------------------------------
+/**
+ * "Methodenbox" User Identification and Authentication.
+ *
+ * @package        MBX/Model/UserAuth
+ * @author         Walter Pachlinger <walter.pachlinger@gmail.com>
+ * @copyright      2019 Walter Pachlinger (walter.pachlinger@gmail.com)
+ * @license        Apache License, Version 2.0
+ * @license        http://www.apache.org/licenses/LICENSE-2.0
+ */
+
 include_once 'aux_helpers.php';
 include_once 'app_result.php';
 include_once 'usr_permission.php';
 
+/**
+ * Identity of a "Methodenbox" User.
+ * 
+ * @author         Walter Pachlinger <walter.pachlinger@gmail.com>
+ * 
+ * @property-read int $usrId Getter for the internal identification of the User Account.
+ * @property-read string $usrChallenge Getter for the currently valid challenge value.
+ * @property-read string $permissionString Getter for the permissions associated with the User Account.
+ */
 class UserAccount implements JsonSerializable
 {
+    /** First name of the person owning the User Account. */
     public $usr_fst_name;
+    /** Last name of the person owning the User Account. */
     public $usr_lst_name;
+    /** E-Mail address of the person owning the User Account. */
     public $usr_email;
+    /** Registration date of the User Account (date and time). */
     public $usr_register_date;
+    /** Date and time when registration was confirmed by User Account owner. */
     public $usr_confirm_date;
+    /** Date and time of last usage of the User Account. */
     public $usr_login_date;
     
+    /** Internal identification of the User Account. */
     private $usr_id;
+    /** User Account password. */
     private $usr_pwd;
+    /** Random salt value for password hashing. */
     private $usr_salt;
+    /** Number of subsequent failed login attempts. */
     private $usr_fail_count;
+    /** Status of the User Account (0 = Unconfirmed, 1 = Active, 2 = Locked). */
     private $usr_status;
+    /** Protection against replay attacks. */
     private $usr_challenge;
+    /** List of permission associated with the User Account. */
 	private $usr_permissions; // Type: UserPermission
-    
+    /** Handle to the MySQL database session. */
     private $db_conn;
 
+    /**
+     * Constructor (intializes the properties of a new User Account).
+     * 
+     * @param mysqli $db_cn MySQL database session to be used for DB operations.
+     */
     public function __construct($db_cn)
     {
         $this->db_conn = $db_cn;
@@ -45,6 +82,11 @@ class UserAccount implements JsonSerializable
 		$this->usr_permissions = null;
     }
     
+    /**
+     * Implementation of JsonSerializable::jsonSerialize().
+     * 
+     * @return string[]      Instance mapped to an associative array.
+     */
     public function jsonSerialize()
     {
         return array(
@@ -61,17 +103,56 @@ class UserAccount implements JsonSerializable
         );
     }
     
+    /**
+     * Magic function implementing the read only properties of a User Account.
+     * 
+     * @param string $field Name of the read only property.
+     * @throws Exception Undefined property name.
+     * @return number|string Value of the requested read-only property.
+     */
+    public function __get(string $field)
+    {
+        switch($field)
+        {
+            case 'usrId':
+                return $this->getId();
+            case 'usrChallenge':
+                return $this->getChallenge();
+            case 'permissionString':
+                return $this->getPermissionsString();
+            default:
+                throw new Exception('exception: undefined property "UserAccount::' . $field . '"');
+        }
+    }
+    
+    /**
+     * Returns the internal identifier of the User Account.
+     * 
+     * @return int Internal identifier of the User Account.
+     */
     public function getId()
     {
         return $this->usr_id;
     }
     
+    /**
+     * Returns the current challenge value.
+     * 
+     * @return string Current value of the challenge value.
+     */
     public function getChallenge()
     {
         return $this->usr_challenge;
     }
     
-    private function hashPassword($password, $salt)
+    /**
+     * Calculates the password hash.
+     * 
+     * @param string $password A password.
+     * @param string $salt A password salt value.
+     * @return void
+     */
+    private function hashPassword(string $password, string $salt)
     {
         $pwd = hash('sha256', $password . $salt);
         for ($cnt = 0; $cnt < 50000; $cnt++)
@@ -82,7 +163,17 @@ class UserAccount implements JsonSerializable
         return $pwd;
     }
 
-    public function createUserAccount($usr_fst_name, $usr_lst_name, $usr_email, $usr_pwd, $usr_role_name)
+    /**
+     * Creates a new User Account and stores it in the database.
+     * 
+     * @param string $usr_fst_name First name of the person owning the new User Account.
+     * @param string $usr_lst_name Last name of the person owning the new User Account.
+     * @param string $usr_email EMail address of the person owning the new User Account.
+     * @param string $usr_pwd Initial password for the new User Account.
+     * @param string $usr_role_name Initial role assigned to the User Account.
+     * @return AppResult Indication of success (code == 0) or failure.
+     */
+    public function createUserAccount(string $usr_fst_name, string $usr_lst_name, string $usr_email, string $usr_pwd, string $usr_role_name)
     {
         $this->usr_fst_name = $usr_fst_name;
         $this->usr_lst_name = $usr_lst_name;
@@ -101,17 +192,14 @@ class UserAccount implements JsonSerializable
         
         // Check for duplicates
         $usr_exists = 0;
-        // $sql_stmt = 'select count(1) as usr_exists from ta_usr_account where usr_email = ? or (usr_fst_name = ? and usr_lst_name = ?);';
-        $sql_stmt = 'select count(1) as usr_exists from ta_usr_account where usr_email = ?;';
+        $sql_stmt = 'SELECT COUNT(1) AS usr_exists FROM ta_usr_account WHERE usr_email = ?;';
         $stm_u1 = $this->db_conn->prepare($sql_stmt);
-        // $stm_u1->bind_param('sss', $this->usr_email, $this->usr_fst_name, $this->usr_lst_name);
         $stm_u1->bind_param('s', $this->usr_email);
         if ($stm_u1->execute())
         {
             $stm_u1->bind_result($usr_exists);
             $stm_u1->fetch();
         }
-        $stm_u1->free_result();
         $stm_u1->close();
         
         if ($usr_exists != 0)
@@ -119,8 +207,8 @@ class UserAccount implements JsonSerializable
             return new AppResult(401);
         }
         
-        $sql_stmt = 'insert into ta_usr_account( usr_fst_name, usr_lst_name, usr_email, usr_pwd, usr_salt, usr_register_date, usr_challenge ) ' .
-                    'values( ?, ?, ?, ?, ?, ?, ?, ? );';
+        $sql_stmt = 'INSERT INTO ta_usr_account( usr_fst_name, usr_lst_name, usr_email, usr_pwd, usr_salt, usr_register_date, usr_challenge ) ' .
+                    'VALUES( ?, ?, ?, ?, ?, ?, ?, ? );';
         $stm_u2 = $this->db_conn->prepare($sql_stmt);
         $stm_u2->bind_param('sssssss', 
                     $this->usr_fst_name, $this->usr_lst_name, $this->usr_email, 
@@ -140,7 +228,13 @@ class UserAccount implements JsonSerializable
         return new AppResult(0);
     }
     
-    public function modifyUserAccount($new_pwd)
+    /**
+     * Changes the password for a User Account.
+     * 
+     * @param string $new_pwd New password for the User Account.
+     * @return AppResult Indication of success (code == 0) or failure.
+     */
+    public function modifyUserAccount(string $new_pwd)
     {
         // Hash the password using a random salt
         $this->usr_salt = Helpers::randomString(16);
@@ -166,6 +260,11 @@ class UserAccount implements JsonSerializable
         return new AppResult(0);
     }
     
+    /**
+     * Deletes a User Account from the database.
+     * 
+     * @return AppResult Indication of success or failure.
+     */
     public function deleteUserAccount()
     {
 		
@@ -176,7 +275,7 @@ class UserAccount implements JsonSerializable
 	
 		$this->usr_permissions->cleanupOnDropUser();
 		
-        $sql_stmt = 'delete from ta_usr_account where usr_id=?;';
+        $sql_stmt = 'DELETE FROM ta_usr_account WHERE usr_id=?;';
         $stm_uad2 = $this->db_conn->prepare($sql_stmt);
         $stm_uad2->bind_param('i', $this->usr_id);
         $stm_uad2->execute();
@@ -185,14 +284,20 @@ class UserAccount implements JsonSerializable
         return new AppResult(0);
     }
 	
-	private function findUserIdByEmail($usr_email): int
+    /**
+     * Looks up an User Account in the database using EMail address as search criterion.
+     * 
+     * @param string $usr_email EMail address to search for.
+     * @return int Internal identifier of a User Account (-1 if User Account does not exist).
+     */
+	private function findUserIdByEmail(string $usr_email)
 	{
 		$usr_id = -1;
 		
         $sql_stmt =
-            'select usr_id ' .
-            'from   ta_usr_account ' .
-            'where  usr_email = ?;';
+            'SELECT usr_id ' .
+            'FROM   ta_usr_account ' .
+            'WHERE  usr_email = ?;';
         $stm_u7 = $this->db_conn->prepare($sql_stmt);
         $stm_u7->bind_param('s', $usr_email);
         if ($stm_u7->execute())
@@ -209,12 +314,24 @@ class UserAccount implements JsonSerializable
 		return $usr_id;
 	}
     
-    public function checkByEmail($usr_email)
+	/**
+	 * Checks if an EMail address is already in use.
+	 * 
+	 * @param string $usr_email EMail address to be checked.
+	 * @return boolean true = Email adress alread exists, false otherwise.
+	 */
+    public function checkByEmail(string $usr_email)
     {
 		return ($this->findUserIdByEmail($usr_email) > 0);
     }
     
-    public function loadByEmail($usr_email)
+    /**
+     * Loads a User Account from the database using the given EMail address.
+     * 
+     * @param string $usr_email Given EMail address.
+     * @return AppResult Indication of success (code == 0) or failure.
+     */
+    public function loadByEmail(string $usr_email)
     {
         $usr_id = $this->findUserIdByEmail($usr_email);
 		if ($usr_id > 0)
@@ -227,7 +344,13 @@ class UserAccount implements JsonSerializable
 		}
     }
 
-    public function loadById($usr_id)
+    /**
+     * Loads a User Account from the database.
+     * 
+     * @param int $usr_id Internal identifier of a User Account.
+     * @return AppResult Indication of success (code == 0) or failure.
+     */
+    public function loadById(int $usr_id)
     {
         $sql_stmt = 
             'select usr_id, usr_fst_name, usr_lst_name, usr_email, usr_pwd, usr_salt, usr_register_date, usr_confirm_date, usr_login_date, usr_fail_count, ' .
@@ -260,41 +383,66 @@ class UserAccount implements JsonSerializable
         return new AppResult(0);
     }
     
-    private function verifyPassword($password)
+    /**
+     * Compares a password to the password associated with the User Account.
+     * 
+     * @param string $password Password to be checked.
+     * @return boolean Password is correct (true) or incorrect (false)
+     */
+    private function verifyPassword(string $password)
     {
         $usr_pwd = $this->hashPassword($password, $this->usr_salt);
         return  ($usr_pwd === $this->usr_pwd);
     }
     
+    /**
+     * Updates the administrative properties of a User Account in the database.
+     * @return void
+     */
     private function updateStatus()
     {
         $sql_stmt =
-            'update ta_usr_account ' .
-            '   set usr_register_date = ?, ' .
-            '       usr_confirm_date  = ?, ' .
-            '       usr_login_date    = ?, ' .
-            '       usr_fail_count    = ?, ' .
-            '       usr_status        = ? ' .
-            'where  usr_id = ?;';
+            'UPDATE ta_usr_account 
+                SET usr_register_date = ?,
+                    usr_confirm_date  = ?,
+                    usr_login_date    = ?,
+                    usr_fail_count    = ?,
+                    usr_status        = ? 
+             WHERE  usr_id = ?;';
         $stm_u4 = $this->db_conn->prepare($sql_stmt);
         $stm_u4->bind_param('sssiii', $this->usr_register_date, $this->usr_confirm_date, $this->usr_login_date, $this->usr_fail_count, $this->usr_status, $this->usr_id);
         $stm_u4->execute();
         $stm_u4->close();
     }
     
+    /**
+     * Sets the status of the User Account to LOCKED.
+     * @return void
+     */
     public function lockUserAccount()
     {
         $this->usr_status = 2;
         $this->updateStatus();
     }
     
+    /**
+     * Sets the status of the User Account to ACTIVE.
+     * @return void
+     */
     public function unlockUserAccount()
     {
         $this->usr_status = 1;
         $this->updateStatus();
     }
 
-    public function userLogin($email_addr, $password)
+    /**
+     * Performs authentication for a client user trying to access the application.
+     * 
+     * @param string $email_addr EMail address provided by the client user.
+     * @param string $password Password provided by the client user.
+     * @return AppResult Indication of success (code == 0) or failure.
+     */
+    public function userLogin(string $email_addr, string $password)
     {
         $res = $this->loadByEmail($email_addr);
         if (! $res->isOK())
@@ -334,7 +482,13 @@ class UserAccount implements JsonSerializable
         return $res;
     }
     
-    public function checkUserPassword($password)
+    /**
+     * Checks the correctness of a password provided by a client user.
+     * 
+     * @param string $password Password provided by a client user
+     * @return AppResult Indication of success (code == 0) or failure.
+     */
+    public function checkUserPassword(string $password)
     {
         if ($this->verifyPassword($password))
         {
@@ -346,7 +500,15 @@ class UserAccount implements JsonSerializable
         }
     }
     
-    public function verifyChallenge($email_addr, $password, $challenge)
+    /**
+     * Verifies the challenge shown by a user frontend.
+     * 
+     * @param string $email_addr EMail address of the client user.
+     * @param string $password Password of the client user.
+     * @param string $challenge Challenge shown by the frontend.
+     * @return AppResult Indication of success (code == 0) or failure.
+     */
+    public function verifyChallenge(string $email_addr, string $password, string $challenge)
     {
         $res = $this->loadByEmail($email_addr);
         if (! $res->isOK())
@@ -400,7 +562,12 @@ class UserAccount implements JsonSerializable
         
         return $res;
     }
-	
+    
+	/**
+	 * Gets the permissions associated with the User Account.
+	 * 
+	 * @return string|null Permissions associated with the User Account.
+	 */
 	public function getPermissionsString()
 	{
 		if (empty($this->usr_permissions))

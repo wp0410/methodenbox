@@ -11,10 +11,31 @@
 //  governing permissions and limitations under the License.
 //----------------------------------------------------------------------------------------
 
+/**
+ * "Methodenbox" Miscellaneous functions.
+ *
+ * @package        MBX/Model/Misc
+ * @author         Walter Pachlinger <walter.pachlinger@gmail.com>
+ * @copyright      2019 Walter Pachlinger (walter.pachlinger@gmail.com)
+ * @license        Apache License, Version 2.0
+ * @license        http://www.apache.org/licenses/LICENSE-2.0
+ */
+
+/**
+ * Encapsulates lists of global application parameters.
+ * 
+ * @author Walter Pachlinger <walter.pachlinger@gmail.com>
+ *
+ */
 class GlobalParameter
 {
+    /**
+     * Array containing global application parameters.
+     * 
+     * @var array List of global application parameters.
+     */
     public static $applicationConfig = array (
-        'appVersion'             => 'v1.2.43b (2019-07-12)',
+        'appVersion'             => 'v1.2.44b (2019-07-14)',
         'applicationTitle'       => 'Methodenbox',
 		'applicationDefaultLink' => '../view/mth_search_pg.php',
 		'applicationHelpLink'    => '../view/aux_help.php',
@@ -53,6 +74,11 @@ class GlobalParameter
         'void'                   => ''
     );
         
+    /**
+     * List of valid MIME types for file upload.
+     * 
+     * @var array List of valid MIME types.
+     */
     public static $validMimeTypes = array (
         'application/zip' => '.zip',
         'application/x-tar' => '.tar',

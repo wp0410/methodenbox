@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<phpdoc>
+    <title>Methodenbox</title>
+	<parser>
+		<target>/var/www/html/mbx_doc/</target>
+		<encoding>utf8</encoding>
+		<markers>
+			<item>TODO</item>
+		</markers>
+		<extensions>
+			<extension>php</extension>
+		</extensions>
+		<visibility></visibility>
+	</parser>
+	<transformer>
+		<target>/var/www/html/mbx_doc/</target>
+	</transformer>
+	<logging>
+		<level>warn</level>
+		<paths>
+			<default>/home/walter/log/phpdoc.{DATE}.log</default>
+			<errors>/home/walter/log/phpdoc.{DATE}.error.log</errors>
+		</paths>
+	</logging>
+	<transformations>
+		<template name="responsive" />
+	</transformations>
+	<files>
+		<file>./model/app_result.php</file>
+		<file>./model/aux_parameter.php</file>
+		<file>./model/usr_account.php</file>
+		<file>./model/usr_permission.php</file>
+		<file>./model/usr_session.php</file>
+	</files>
+</phpdoc>
