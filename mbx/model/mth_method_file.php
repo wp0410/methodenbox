@@ -21,6 +21,7 @@ class TeachingMethodFile
     private $file_type;
     private $file_name;
     private $file_data;
+	private $data_length;
     private $db_conn;
     
     public function __construct($db_cn)
@@ -31,19 +32,43 @@ class TeachingMethodFile
         $this->file_type = '';
         $this->file_name = '';
         $this->file_data = null;
+		$this->data_length = 0;
     }
+	
+	public function __get($property)
+	{
+		switch ($property)
+		{
+			case 'file_name':
+				return $this->file_name;
+				break;
+			case 'data_length':
+				return $this->data_length;
+				break;
+			case 'file_data':
+				return $this->getFileData();
+				break;
+			default:
+				trigger_error('Undefined property for __get(): "' . $name . '" in ' . __FILE__ . ' line ' . __LINE__, E_USER_NOTICE);
+				break;
+		}
+	}
     
     public function loadFile($mth_id, $file_guid)
     {
         $result = null;
         $this->file_mth_id = $mth_id;
         
-        $stm_mt2 = $this->db_conn->prepare('select file_guid, file_type, file_name, file_data from ta_mth_method_file where file_mth_id=? and file_guid=?;');
+		$sql_stmt = 
+			'SELECT file_guid, file_type, file_name, OCTET_LENGTH(file_data) as data_length, file_data
+			 FROM   ta_mth_method_file 
+			 WHERE  file_mth_id = ? and file_guid = ?;';
+        $stm_mt2 = $this->db_conn->prepare($sql_stmt);
         $stm_mt2->bind_param('is', $this->file_mth_id, $file_guid);
         if ($stm_mt2->execute())
         {
             $stm_mt2->store_result();
-            $stm_mt2->bind_result($this->file_guid, $this->file_type, $this->file_name, $this->file_data);
+            $stm_mt2->bind_result($this->file_guid, $this->file_type, $this->file_name, $this->data_length, $this->file_data);
             if ($stm_mt2->fetch())
             {
                 $result = new AppResult(0); // OK
@@ -110,7 +135,7 @@ class TeachingMethodFile
         }
         
         $file_exists = false;
-        $stm_mt2 = $this->db_conn->prepare('select file_guid from ta_mth_method_file where file_mth_id=?;');
+        $stm_mt2 = $this->db_conn->prepare('SELECT file_guid FROM ta_mth_method_file WHERE file_mth_id=?;');
         $stm_mt2->bind_param('i', $this->file_mth_id);
         if ($stm_mt2->execute())
         {
@@ -143,7 +168,7 @@ class TeachingMethodFile
         }
         else
         {
-            $stm_mt1 = $this->db_conn->prepare('insert into ta_mth_method_file( file_mth_id, file_guid, file_type, file_name, file_data ) values ( ?, ?, ?, ?, ? );');
+            $stm_mt1 = $this->db_conn->prepare('INSERT INTO ta_mth_method_file( file_mth_id, file_guid, file_type, file_name, file_data ) VALUES ( ?, ?, ?, ?, ? );');
             $stm_mt1->bind_param('isssb', $this->file_mth_id, $this->file_guid, $this->file_type, $this->file_name, $hlp_null);
             $stm_mt1->send_long_data(4, file_get_contents($files_elem['tmp_name']));
             if ($stm_mt1->execute())
@@ -153,7 +178,7 @@ class TeachingMethodFile
             else
             {
                 $result = new AppResult(653);
-                $result->text = $result.text . ' Detail: DB result = [' . $stm_mt1->errno . ', ' . $stm_mt1->error . ']';
+                $result->text = $result->text . ' Detail: DB result = [' . $stm_mt1->errno . ', ' . $stm_mt1->error . ']';
             }
             $stm_mt1->close();
         }
@@ -165,5 +190,12 @@ class TeachingMethodFile
     {
         return $this->file_data;
     }
+	
+	public function getTempFile()
+	{
+		$fname = tempnam("../tmp", "dnl");
+		file_put_contents($fname, $this->file_data);
+		return $fname;
+	}
 }
 ?>

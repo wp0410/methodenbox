@@ -18,8 +18,8 @@ include_once '../model/mth_selection.php';
 class TeachingMethod implements JsonSerializable
 {
     private $mth_id;
-    public  $mth_name;
-    public  $mth_summary;
+    private $mth_name;
+    private $mth_summary;
     public  $mth_subject;
     public  $mth_subject_area;
     public  $mth_age_grp;
@@ -43,6 +43,44 @@ class TeachingMethod implements JsonSerializable
         $this->mth_phase = $this->mth_soc_form = '';
         $this->mth_authors = '';
     }
+	
+	public function __set($name, $value)
+	{
+		switch($name)
+		{
+			case 'mth_name':
+				$this->mth_name = htmlentities($value);
+				break;
+			case 'mth_summary':
+				$this->mth_summary = htmlentities($value);
+				break;
+			default:
+				trigger_error('Undefined property for __set(): ' . $name . "' in '" . __FILE__ . ' line ' . __LINE__, E_USER_NOTICE);
+				break;
+		}
+	}
+	
+	public function __get($name)
+	{
+		switch($name)
+		{
+			case 'mth_name':
+				return $this->mth_name;
+				break;
+			case 'mth_summary':
+				return $this->mth_summary;
+				break;
+			case 'mth_id':
+				return $this->getId();
+				break;
+			case 'mth_authors':
+				return $this->getAuthors();
+				break;
+			default:
+				trigger_error('Undefined property for __get(): "' . $name . '" in ' . __FILE__ . ' line ' . __LINE__, E_USER_NOTICE);
+				break;
+		}
+	}
     
     public function getId()
     {
@@ -77,7 +115,7 @@ class TeachingMethod implements JsonSerializable
         {
             if (strlen(trim($add_author)) > 0)
             {
-                $this->mth_authors[] = $add_author;
+                $this->mth_authors[] = htmlentities($add_author);
             }
         }
     }

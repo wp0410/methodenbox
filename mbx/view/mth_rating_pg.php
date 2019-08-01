@@ -363,11 +363,16 @@ if (! $res->isOK())
                                         </div> <!-- card -->
                                     </div> <!-- col -->
                                 </div> <!-- row -->
+								<div class="form-row">
+									<div class="col">
+										<div id="rtg_feedback"></div>
+									</div>
+								</div>
                             </form>
                         </div> <!-- modal-body -->
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Schlie&szlig;en</button>
-                            <button type="button" id="rtg_save" name="rtg_save" class="btn btn-primary btn-sm" data-dismiss="modal" onclick="saveRating()" disabled>Bewertung abschicken</button>                            
+                            <div id="rtg_hide"><button type="button" id="rtg_save" name="rtg_save" class="btn btn-primary btn-sm" onclick="saveRating()" disabled>Bewertung abschicken</button></div>
                         </div>
                     </div> <!-- modal-content -->
                 </div> <!-- modal-dialog -->
@@ -515,6 +520,10 @@ if (! $res->isOK())
                 $('#mth_rtg_5').prop("checked", false);
                 $('#rtg_comment').val("");
             }); 
+			
+			$('#ratingModal').on('hidden.bs.modal', function(event) {
+				load_contents();
+			});
             
             function saveRating() {
                 var mth_rtg_val = null;
@@ -533,8 +542,12 @@ if (! $res->isOK())
                         mth_rtg_comm: $('#rtg_comment').val()
                     },
                     function(data, status) {
-                        var btn_name = '#rate_btn_' + $('#mth_id').val();
-                        $(btn_name).prop("disabled", true);
+						// load_contents();
+						$('#rtg_feedback').html('<div class="alert alert-success" role="alert" ><h4>Vielen Dank f&uuml;r die Bewertung</h4></div>');
+						// $('#rtg_save').prop("disabled", true);
+						
+						var x = document.getElementById("rtg_hide");
+						x.style.display = "none";
                     }
                 );
             };

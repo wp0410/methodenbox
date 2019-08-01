@@ -153,7 +153,10 @@ if (! empty($_SESSION) && ! empty($_SESSION['user']))
 									"),
 									'title' => 'Relativer Anteil der Top 5',
 									'columns' => array(
-										'mth_name' => array('label' => 'Name'),
+										'mth_name' => array(
+											'label' => 'Name',
+											'formatValue' => function($value) { return html_entity_decode($value); }
+										),
 										'num_dnl' => array('label' => 'Anzahl')
 									)
 								)
@@ -180,7 +183,10 @@ if (! empty($_SESSION) && ! empty($_SESSION['user']))
 									"),
 									'title' => 'Relativer Anteil der Top 5',
 									'columns' => array(
-										'mth_name' => array('label' => 'Name'),
+										'mth_name' => array(
+											'label' => 'Name',
+											'formatValue' => function($value) { return html_entity_decode($value); }
+										),
 										'num_rate' => array('label' => 'Anzahl')
 									)
 								)

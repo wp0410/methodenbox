@@ -87,7 +87,7 @@ if (! empty($_SESSION) && ! empty($_SESSION['user']))
 										'mth_name' => array('label' => 'Name der Methode'),
 										'mth_sub_name' => array('label' => 'Unterrichtsfach'),
 										'mth_area_name' => array('label' => 'Fachbereich'),
-										'num_dnl' => array('label' => 'Anzahl Downloads', 'cssStyle' => 'text-align:right')
+										'num_dnl' => array('label' => 'Anzahl', 'cssStyle' => 'text-align:right')
 									),
 									'cssClass' => array(
 										'table' => "table table-striped",

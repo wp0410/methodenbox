@@ -10,6 +10,7 @@
 //  ANY KIND, either express or implied. See the License for the specific language 
 //  governing permissions and limitations under the License.
 //----------------------------------------------------------------------------------------
+include_once '../model/aux_browser.php';
 
 class FormElements
 {
@@ -274,6 +275,90 @@ class FormElements
         echo '<div class="' . $col_format . '">';
         echo '<div id="global_alert" class="alert alert-' . $alert_type . '" role="alert"><center><h5>' . $alert_text . '</h4></center></div></div></div>';
     }
+	
+	public static function suspiciousBrowserModal()
+	{
+		if (empty($_SESSION))
+		{
+			return;
+		}
+		
+		if (empty($_SESSION['browser_check']))
+		{
+			$browser_check = new BrowserCompatibility($_SERVER['HTTP_USER_AGENT']);
+
+			if (! $browser_check->isCompatible)
+			{
+				// echo '<div class="modal fade" id="BrowserModal" name="BrowserModal" aria-labelled-by="BrowserModalTitle" aria-hidden="true">';
+				echo '<div class="modal fade" id="BrowserModal" name="BrowserModal" aria-hidden="true">';
+  			    echo '   <div class="modal-dialog modal-dialog-centered modal-lg" role="document">';
+				echo '      <div class="modal-content">';
+				echo '         <div class="modal-header">';
+				//echo '            <h2 class="modal-title" id="BrowserModalTitle"><span><i class="fa fa-exclamation" aria-hidden="true"></i>&nbsp;&nbsp;';
+				//echo '            Wichtiger Hinweis zu Ihrem Browser (' . $browser_check->browserName . ')</span></h2>';
+				echo '            <div class="alert alert-warning" role="alert">';
+				echo '               <h2><span>';
+				echo '                  <i class="fa fa-exclamation" aria-hidden="true"></i>';
+				echo '                  &nbsp;&nbsp;';
+				echo '                  Wichtiger Hinweis zu Ihrem Browser (' . $browser_check->browserName . ')';
+				echo '              </span></h2>';
+				echo '            </div>';
+				echo '         </div>';
+				echo '         <h5 class="modal-body">';
+				
+				if ($browser_check->isDeprecated)
+				{
+					echo 'Der von Ihnen verwendete Browser (' . $browser_check->browserName . ') wird nicht unterst&uuml;tzt. Das f&uuml;hrt zu folgenden Problemen:';
+					echo '<ul>';
+					echo '   <li>Einzelne Funktionen der Applikation k&ouml;nnen nicht verwendet werden, z.B. das Herunterladen von Methoden;</li>';
+					echo '   <li>Einzelne Bildschirme werden nicht korrekt dargestellt;</li>';
+					echo '   <li>Einzelne Funktionen f&uuml;hren zu Fehlermeldungen oder unerwartetem Verhalten der Applikation</li>';
+					echo '</ul>';
+					
+					echo 'Bitte verwenden Sie daher einen Browser, der von der Anwendung unterst&uuml;tzt wird, in der jeweils aktuellsten Version:';
+					echo '<ul><li>Google Chrome</li><li>Mozilla Firefox</li><li>Apple Safari</li><li>Microsoft Edge</li></ul>';
+					echo 'Von der Verwendung der Methodenbox mit Ihrem aktuellen Browser (' . $browser_check->browserName . ') wird dringend abgeraten.';
+				}
+				else
+				{
+					echo 'Die Anwendung ist f&uuml;r den von Ihnen verwendeten Browser (' . $browser_check->browserName . ') nicht getestet. Das k&ouml;nnte m&ouml;glicherweise zu Problemen f&uuml;hren:';
+					echo '<ul>';
+					echo '   <li>Einzelne Funktionen der Applikation k&ouml;nnen nicht verwendet werden, z.B. das Herunterladen von Methoden;</li>';
+					echo '   <li>Einzelne Bildschirme k&ouml;nnten nicht korrekt dargestellt werden;</li>';
+					echo '   <li>Einzelne Funktionen k&ouml;nnten zu Fehlermeldungen oder unerwartetem Verhalten der Applikation f&uuml;hren.</li>';
+					echo '</ul>';
+					
+					echo 'Um diese m&oumglichen Probleme zu vermeiden, verwenden Sie bitte einen Browser, der von der Anwendung unterst&uuml;tzt wird, in der jeweils aktuellsten Version:';
+					echo '<ul><li>Google Chrome</li><li>Mozilla Firefox</li><li>Apple Safari</li><li>Microsoft Edge</li></ul>';
+					echo 'Wenn Sie dennoch mit Ihrem aktuellen Browser (' . $browser_check->browserName . ') weiterarbeiten, w&uuml;rde sich das Methodenbox Team abschlie&szlig;end ';
+					echo '&uuml;ber eine kurze Nachricht mittels Kontaktformular freuen:';
+					echo '<ul><li>Hat alles funktiert?</li><li>Hatten Sie Probleme mit einzelnen Funktionen? Wenn ja, mit welchen?</li>';
+					echo '<li>Wurden Bildschirme nicht korrekt dargestellt? Wenn ja, welche?</li></ul>';
+					echo 'Diese R&uuml;ckmeldung hilft uns, die Qualit&auml;t der Applikation zu verbessern.';
+				}
+				echo '         </h5>'; 
+				echo '         <div class="modal-footer">';
+				echo '            <button type="button" class="btn btn-warning" data-dismiss="modal"><h5>HINWEIS GELESEN</h5></button>';				
+				echo '         </div></div></div></div>';
+			}
+		}
+	}
+	
+	public static function launchBrowserModal()
+	{
+		if (empty($_SESSION))
+		{
+			return;
+		}
+		
+		if (empty($_SESSION['browser_check']))
+		{
+			$_SESSION['browser_check'] = 'CHECKED';
+			echo '<script type="text/javascript"> /* global $ */';
+			echo '$(window).on(\'load\',function(){ $(\'#BrowserModal\').modal(\'show\'); });';
+			echo '</script>';
+		}
+	}
 }
 
 ?>

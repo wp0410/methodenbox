@@ -374,6 +374,12 @@ if (! empty($_SESSION) && ! empty($_SESSION['user']))
                 $('#res_lpp').change(function() {
                     load_contents();
                 });
+				$('#mth_search').keypress(function(e) {
+					if (e.keyCode === 13) {
+						e.preventDefault();
+						$('#filter_apply').click();
+					}
+				});
             });
 
             $(window).on('load', function() {

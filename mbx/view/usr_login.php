@@ -113,10 +113,28 @@ $res = new AppResult($_GET);
                     </a>
                 </div>
             </div>
-			<?php if (! $res->isOK()) { FormElements::feedbackModal($res, 'Schlie&szlig;en'); } ?>
+			<?php 
+				if (! $res->isOK()) 
+				{ 
+					FormElements::feedbackModal($res, 'Schlie&szlig;en'); 
+				}
+				else
+				{
+					FormElements::suspiciousBrowserModal();
+				}
+			?>
         </div>
 		
-        <?php FormElements::scriptRefs(); ?>
-		<?php if (! $res->isOK()) { FormElements::launchFeedback(); } ?>
+        <?php 
+			FormElements::scriptRefs(); 
+			if (! $res->isOK()) 
+			{ 
+				FormElements::launchFeedback(); 
+			}
+			else
+			{
+				FormElements::launchBrowserModal();
+			}
+		?>
     </body>
  </html>   

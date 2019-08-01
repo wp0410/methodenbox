@@ -120,7 +120,7 @@ class MethodResultView
         {
             if (strlen(trim($att)) > 0)
             {
-                $this->compareLike($att_name, $att);
+                $this->compareLike($att_name, htmlentities($att));
             }
         }
     }
@@ -133,7 +133,7 @@ class MethodResultView
         {
             if (strlen(trim($att)) > 0)
             {
-                 $stm_part = $stm_part . " or (" . $att_name . " like '%" . $att . "'%) ";
+                 $stm_part = $stm_part . " or (" . $att_name . " like '%" . htmlentities($att) . "'%) ";
             }
         }
         
@@ -151,12 +151,12 @@ class MethodResultView
     
     public function compareMthName($mth_name)
     {
-        $this->compareLike('mth_name', $mth_name);
+        $this->compareLike('mth_name', htmlentities($mth_name));
     }
     
     public function compareMthSummary($mth_summary)
     {
-        $this->compareLike('mth_summary', $mth_summary);
+        $this->compareLike('mth_summary', htmlentities($mth_summary));
     }
     
     public function compareMthSubject($mth_subject)

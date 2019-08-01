@@ -27,7 +27,8 @@ class MethodSearchRatingView extends MethodSearchViewBase
         $this->addOutput('<div id="res_tgl_' . $line_no . '"><i id="res_img_' . $line_no . '" class="fa fa-caret-right"></i></div></button></div>'); // class="col-md-1 col-xl-1"
         
         // Column 2: Method Name
-        $this->addOutput('<div class="col-md-4 col-xl-4"><span class="badge badge-light"><h5>' . htmlentities($line->mth_name) . '</h5></span></div>');
+        // $this->addOutput('<div class="col-md-4 col-xl-4"><span class="badge badge-light"><h5>' . htmlentities($line->mth_name) . '</h5></span></div>');
+        $this->addOutput('<div class="col-md-4 col-xl-4 text-truncate"><span class="badge badge-light"><h5>' . $line->mth_name . '</h5></span></div>');
         
         // Column 3: 
         $this->addOutput('<div class="col-md-2 col-xl-2">');
@@ -49,7 +50,8 @@ class MethodSearchRatingView extends MethodSearchViewBase
         $this->addOutput('<div class="card-body"><div class="row"><table class="table table-sm"><tbody>');
         
         // Table row 1: method summary
-        $this->addOutput('<tr><th scope="row" class="table-secondary">Beschreibung</td><td colspan=5><span>' . htmlentities($line->mth_summary) . '</span></th></tr>');
+        // $this->addOutput('<tr><th scope="row" class="table-secondary">Beschreibung</td><td colspan=5><span>' . htmlentities($line->mth_summary) . '</span></th></tr>');
+        $this->addOutput('<tr><th scope="row" class="table-secondary">Beschreibung</td><td colspan=5><span>' . $line->mth_summary . '</span></th></tr>');
 
         // Table row 2: field headers
         $this->addOutput('<tr><th scope="col" class="table-secondary">Unterrichtsfach / Phase</th>');
