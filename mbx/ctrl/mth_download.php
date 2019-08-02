@@ -81,7 +81,7 @@ else
     {
         $dnl = new MethodDownload($db_conn, $mth_id, $usr_session->getUsrId());
         $dnl->saveDownload();
-        
+		
         echo $tmf->getFileData();
     }
 }

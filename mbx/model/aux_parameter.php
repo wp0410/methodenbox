@@ -35,7 +35,7 @@ class GlobalParameter
      * @var array List of global application parameters.
      */
     public static $applicationConfig = array (
-        'appVersion'             => 'v1.2.45b (2019-08-01)',
+        'appVersion'             => 'v1.2.46b (2019-08-02)',
         'applicationTitle'       => 'Methodenbox',
 		'applicationDefaultLink' => '../view/mth_search_pg.php',
 		'applicationHelpLink'    => '../view/aux_help.php',
