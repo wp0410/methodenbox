@@ -522,6 +522,11 @@ if (! $res->isOK())
             }); 
 			
 			$('#ratingModal').on('hidden.bs.modal', function(event) {
+				$('#rtg_feedback').html('');
+				
+				var x = document.getElementById("rtg_hide");
+				x.style.display = "initial";
+
 				load_contents();
 			});
             
