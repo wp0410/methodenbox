@@ -30,7 +30,6 @@ if (! empty($_SESSION) && ! empty($_SESSION['user']))
         $_SESSION['user'] = $usr_session->getSessionDescriptor();
     }
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -39,64 +38,94 @@ if (! empty($_SESSION) && ! empty($_SESSION['user']))
         <meta charset="utf-8">
         <title><?php echo GlobalParameter::$applicationConfig['applicationTitle'] . ' - Hilfe';?></title>
         <?php FormElements::styleSheetRefs(); ?>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
-    </head>
+        <link rel="stylesheet" href="/mbx/css/sidebar-main.css">
+        <link rel="stylesheet" href="/mbx/css/sidebar-themes.css">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+		<link rel="stylesheet" href="//malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.min.css">
+   </head>
     <body>
         <?php FormElements::topNavBar('AUX.HLP', $usr_session); ?>
-              
-		<div class="wrapper">
-			<nav id="sidebar" class="bg-info">
-				<div class="sidebar-header bg-primary">
-					<h2>Inhaltsverzeichnis</h2>
-				</div> <!-- sidebar-header -->
-				
-				<ul class="list-unstyled components border-bottom border-primary">
-					<li><a href="#" onclick="javascript:hlpTopic('ht_10.00');"><h4>Einf&uuml;hrung</h4></a></li>
-					<li><a href="#" onclick="javascript:hlpTopic('ht_20.00');"><h4>Rechtliche Hinweise</h4></a></li>
-					<li>
-						<a href="#accountSubMenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><h4>Benutzerkonto</h4></a>
-						<ul class="collapse list-unstyled" id="accountSubMenu">
-							<li><a href="#" onclick="javascript:hlpTopic('ht_30.00');"><h5>Registrierung</h5></a></li>
-							<li><a href="#" onclick="javascript:hlpTopic('ht_30.10');"><h5>Registrierung abschlie&szlig;en</h5></a></li>
-							<li><a href="#" onclick="javascript:hlpTopic('ht_30.20');"><h5>Anmeldung</h5></a></li>
-							<li><a href="#" onclick="javascript:hlpTopic('ht_30.30');"><h5>Abmeldung</h5></a></li>
-						</ul>
-					</li>
-					<li>
-						<a href="#methodSubMenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><h4>Unterrichtsmethode</h4></a>
-						<ul class="collapse list-unstyled" id="methodSubMenu">
-							<li><a href="#" onclick="javascript:hlpTopic('ht_40.00');"><h5>Methoden suchen</h5></a></li>
-							<li><a href="#" onclick="javascript:hlpTopic('ht_40.10');"><h5>Methode anlegen</h5></a></li>
-							<li><a href="#" onclick="javascript:hlpTopic('ht_40.20');"><h5>Methode bewerten</h5></a></li>
-							<li><a href="#" onclick="javascript:hlpTopic('ht_40.30');"><h5>Methoden verwalten</h5></a></li>
-						</ul>
-					</li>
-					<li><a href="#" onclick="javascript:hlpTopic('ht_50.00');"><h4>Fragen und Antworten</h4></a></li>
-				</ul> <!-- list-unstyled components -->
-			</nav> <!-- sidebar -->
 		
-			<div id="content">
+		<div class="page-wrapper light-theme toggled">
+			<a id="show-sidebar" class="btn btn-sm btn-dark" href="#"><i class="fas fa-bars" aria-hidden="true"></i></a>
+			<nav id="sidebar" class="sidebar-wrapper">
+				<div class="sidebar-content">
+					<div class="sidebar-header">
+						<h3 class="alert alert-primary">Methodenbox Hilfe</h3>
+					</div> <!-- sidebar-header -->
 
-			</div> <!-- content -->
+					<div class="sidebar-menu">
+						<ul>
+							<li class="header-menu">
+								<span><h3>Inhalt</h3></span>
+							</li>
 
-		</div> <!-- wrapper -->
+							<li class="sidebar-dropdown">
+								<a href="#"><span><h5>Allgemeine Informationen</h5></span></a>
+								<div class="sidebar-submenu">
+									<ul>
+										<li><a href="#" onclick="javascript:hlpTopic('ht_10.00');">Einf&uuml;hrung</a></li>
+										<li><a href="#" onclick="javascript:hlpTopic('ht_20.00');">Rechtliche Hinweise</a></li>
+									</ul>
+								</div> <!-- sidebar-menu -->
+							</li>
+							
+							<li class="sidebar-dropdown">
+								<a href="#"><span><h5>Benutzerkonto</h5></span></a>
+								<div class="sidebar-submenu">
+									<ul>
+										<li><a href="#" onclick="javascript:hlpTopic('ht_30.00');">Registrierung</a></li>
+										<li><a href="#" onclick="javascript:hlpTopic('ht_30.10');">Registrierung abschlie&szlig;en</a></li>
+										<li><a href="#" onclick="javascript:hlpTopic('ht_30.20');">Anmeldung</a></li>
+										<li><a href="#" onclick="javascript:hlpTopic('ht_30.30');">Einstellungen</a></li>
+										<li><a href="#" onclick="javascript:hlpTopic('ht_30.40');">Abmeldung</a></li>
+									</ul>
+								</div> <!-- sidebar-submenu -->
+							</li>
+
+							<li class="sidebar-dropdown">
+								<a href="#"><span><h5>Unterrichtsmethode</h5></span></a>
+								<div class="sidebar-submenu">
+									<ul>
+										<li><a href="#" onclick="javascript:hlpTopic('ht_40.00');">Methoden suchen</a></li>
+										<li><a href="#" onclick="javascript:hlpTopic('ht_40.10');">Methode anlegen</a></li>
+										<li><a href="#" onclick="javascript:hlpTopic('ht_40.20');">Methode bewerten</a></li>
+										<li><a href="#" onclick="javascript:hlpTopic('ht_40.30');">Methoden herunterladen</a></li>
+									</ul>
+								</div> <!-- sidebar-submenu -->
+							</li>
+
+							<!-- template 
+							<li class="sidebar-dropdown">
+								<a href="#"><span><h5></h5></span></a>
+								<div class="sidebar-submenu">
+									<ul>
+										<li><a href="#"></a></li>
+										<li><a href="#"></a></li>
+										<li><a href="#"></a></li>
+										<li><a href="#"></a></li>
+										<li><a href="#"></a></li>
+									</ul>
+								</div> 
+							</li>
+							-->
+						</ul>
+					</div> <!-- sidebar-menu -->
+					
+				</div> <!-- sidebar-content -->
+			</nav>
+
+			<main class="page-content">
+				<div id="overlay" class="overlay"></div>
+				<div class="container-fluid">
+					<div id="help_contents"></div>
+				</div>
+			</main>
+		</div>
 
         <?php FormElements::scriptRefs(); ?>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+		<script type="text/javascript" src="/mbx/js/sidebar-main.js"></script>
 		<script type="text/javascript">
-			/* global $ */
-			$(document).ready(function () {
-				$("#sidebar").mCustomScrollbar({
-					theme: "minimal"
-				});
-				
-				$('#sidebarCollapse').on('click', function () {
-					$('#sidebar').toggleClass('active');
-					$('.collapse.in').toggleClass('in');
-					$('a[aria-expanded=true]').attr('aria-expanded', 'false');
-				});
-			});
-			
 			function hlpTopic(topic) {
 				$.post(
 					"/mbx/ctrl/aux_help_topic.php",
@@ -104,7 +133,7 @@ if (! empty($_SESSION) && ! empty($_SESSION['user']))
 						hlp_topic: topic
 					},
 					function(data, status) {
-						$('#content').html(data);
+						$('#help_contents').html(data);
 					}
 				);
 			}

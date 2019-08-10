@@ -154,6 +154,16 @@ class MethodSelectionFactory
     {
         return MethodSelectionFactory::getOptionName('JG', $age_val);
     }
+	
+	public static function getMethodTypes()
+	{
+		return self::getOptions('MTH.ART');
+	}
+	
+	public static function getMethodTypeName($mth_art)
+	{
+		return self::getOptionName('MTH.ART', $mth_art);
+	}
     
     public static function getPrepTime()
     {

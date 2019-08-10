@@ -140,10 +140,11 @@ if (! $res->isOK())
                                 <div class="row form-row">
                                     <div class="col col-md-6 col-xl-6">
                                         <div class="form-group">
+											<!-- 
                                             <label for="mth_class">Jahrgang</label>
                                             <select class="form-control" id="mth_class" name="mth_class">
                                                 <option></option>
-                                                <?php
+                                                < --php
                                                     foreach(MethodSelectionFactory::getAgeGroups() as $cls)
                                                     {
                                                         // echo '<option>' . $cls['NAME'] . '</option>';
@@ -151,6 +152,17 @@ if (! $res->isOK())
                                                     }
                                                 ?>
                                             </select>
+											-->
+											<label for="mth_type">Art der Methode</label>
+											<select class="form-control" id="mth_type" name="mth_type">
+												<option></option>
+												<?php
+													foreach(MethodSelectionFactory::getMethodTypes() as $mtypes)
+													{
+														echo '<option value="' . $mtypes['VAL'] . '">' . $mtypes['NAME'] . '</option>';
+													}
+												?>
+											</select>
                                         </div> <!-- form-group -->
                                     </div> <!-- col col-md-6 col-xl-6 -->
                                     <div class="col col-md-6 col-xl-6">
@@ -286,7 +298,7 @@ if (! $res->isOK())
                         mth_owner: $('#mth_owner').val(),
                         mth_subject: $('#mth_subject').val(),
                         mth_area: $('#mth_area').val(),
-                        mth_class: $('#mth_class').val(),
+						mth_type: $('#mth_type').val(),
                         mth_name: $('#mth_name').val(),
                         mth_res_sort: $('#mth_res_sort').val(),
                         curr_usr_id: $('#curr_usr_id').val(),

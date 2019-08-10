@@ -190,7 +190,11 @@ VALUES
 	('TM.E', 10, '1', '&lt; 30 Min'),
 	('TM.E', 20, '2', '30-60 Min'),
 	('TM.E', 30, '3', '60-90 Min'),
-	('TM.E', 40, '4', '&gt; 90 Min');
+	('TM.E', 40, '4', '&gt; 90 Min'),
+	('MTH.ART', 10, '1', 'Kleine Methode'),
+	('MTH.ART', 20, '2', 'Komplexe Methode'),
+	('MTH.ART', 30, '3', 'Unterrichtseinheit'),
+	('MTH.ART', 40, '4', '&Uuml;bungsbeispiel');
 
 CREATE TABLE `ta_mth_method_header` (
 	`mth_id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -198,17 +202,23 @@ CREATE TABLE `ta_mth_method_header` (
 	`mth_summary` VARCHAR(4000) NOT NULL COLLATE 'utf8_unicode_ci',
 	`mth_subject` VARCHAR(15) NOT NULL COLLATE 'utf8_unicode_ci',
 	`mth_subject_area` VARCHAR(15) NOT NULL COLLATE 'utf8_unicode_ci',
-	`mth_age_grp` VARCHAR(15) NOT NULL COLLATE 'utf8_unicode_ci',
+	`mth_type` VARCHAR(15) NOT NULL COLLATE 'utf8_unicode_ci',
+	`mth_age_grp` VARCHAR(15) NOT NULL DEFAULT 'NA' COLLATE 'utf8_unicode_ci',
 	`mth_prep_time` VARCHAR(15) NOT NULL COLLATE 'utf8_unicode_ci',
 	`mth_exec_time` VARCHAR(15) NOT NULL COLLATE 'utf8_unicode_ci',
-	`mth_phase` VARCHAR(15) NOT NULL COLLATE 'utf8_unicode_ci',
+	`mth_phase` VARCHAR(15) NOT NULL DEFAULT 'NA' COLLATE 'utf8_unicode_ci',
+	`mth_elements` VARCHAR(15) NOT NULL COLLATE 'utf8_unicode_ci',
 	`mth_soc_form` VARCHAR(15) NOT NULL COLLATE 'utf8_unicode_ci',
 	`mth_authors` VARCHAR(127) NOT NULL COLLATE 'utf8_unicode_ci',
 	`mth_owner_id` INT(11) NOT NULL,
 	`mth_create_time` DATETIME NOT NULL,
+	`mth_release_usr_id` INT(11) NULL DEFAULT NULL,
+	`mth_release_time` DATETIME NULL DEFAULT NULL,
 	PRIMARY KEY (`mth_id`),
 	INDEX `fk_owner_id` (`mth_owner_id`),
-	CONSTRAINT `fk_owner_id` FOREIGN KEY (`mth_owner_id`) REFERENCES `ta_usr_account` (`usr_id`) )
+	CONSTRAINT `fk_owner_id` FOREIGN KEY (`mth_owner_id`) REFERENCES `ta_usr_account` (`usr_id`),
+	CONSTRAINT `fk_release_usr_id` FOREIGN KEY (`mth_release_usr_id`) REFERENCES `ta_usr_account` (`usr_id`)
+)
 COLLATE='utf8_unicode_ci';
 
 CREATE TABLE `ta_mth_method_file` (
@@ -273,60 +283,65 @@ CREATE TABLE `ta_aux_contact_request` (
 COLLATE='utf8_unicode_ci';
 
 CREATE OR REPLACE VIEW vi_mth_method_download AS
-	SELECT dnl_mth_id, COUNT(1) AS dnl_cnt, MIN(dnl_date) AS dnl_first_tm, MAX(dnl_date) AS dnl_last_tm
-	FROM ta_mth_method_download
-	GROUP BY dnl_mth_id;
+SELECT dnl_mth_id, COUNT(1) AS dnl_cnt, MIN(dnl_date) AS dnl_first_tm, MAX(dnl_date) AS dnl_last_tm
+FROM ta_mth_method_download
+GROUP BY dnl_mth_id;
 
 CREATE OR REPLACE VIEW vi_mth_method_rates AS
-	SELECT rtg_mth_id, COUNT(1) AS rtg_cnt, MIN(rtg_date) AS rtg_first_tm, MAX(rtg_date) AS rtg_last_tm, 
-		   MIN(rtg_value) AS rtg_min_val, MAX(rtg_value) AS rtg_max_val, AVG(rtg_value) AS rtg_avg_val
-	FROM ta_mth_method_rating
-	GROUP BY rtg_mth_id;
+SELECT rtg_mth_id, COUNT(1) AS rtg_cnt, MIN(rtg_date) AS rtg_first_tm, MAX(rtg_date) AS rtg_last_tm, 
+	   MIN(rtg_value) AS rtg_min_val, MAX(rtg_value) AS rtg_max_val, AVG(rtg_value) AS rtg_avg_val
+FROM ta_mth_method_rating
+GROUP BY rtg_mth_id;
     
 CREATE OR REPLACE VIEW vi_mth_subjects AS 
-	SELECT DISTINCT mth_sub_val, mth_sub_name
-	FROM ta_mth_subject_area;
+SELECT DISTINCT mth_sub_val, mth_sub_name
+FROM ta_mth_subject_area;
 
 CREATE OR REPLACE VIEW vi_mth_subject_areas AS
-	SELECT DISTINCT mth_area_val, mth_area_name
-	FROM ta_mth_subject_area;
+SELECT DISTINCT mth_area_val, mth_area_name
+FROM ta_mth_subject_area;
 
 CREATE OR REPLACE VIEW vi_mth_age_groups AS 
-	SELECT DISTINCT mth_opt_val, mth_opt_name
-	FROM ta_mth_selections
-	WHERE mth_sel_val='JG';
+SELECT DISTINCT mth_opt_val, mth_opt_name
+FROM ta_mth_selections
+WHERE mth_sel_val='JG';
+
+CREATE OR REPLACE VIEW vi_mth_method_type AS 
+SELECT DISTINCT mth_opt_val, mth_opt_name
+FROM ta_mth_selections
+WHERE mth_sel_val='MTH.ART';
 
 CREATE OR REPLACE VIEW vi_mth_prep_times AS 
-	SELECT DISTINCT mth_opt_val, mth_opt_name
-	FROM ta_mth_selections
-	WHERE mth_sel_val='TM.P';
+SELECT DISTINCT mth_opt_val, mth_opt_name
+FROM ta_mth_selections
+WHERE mth_sel_val='TM.P';
 
 CREATE OR REPLACE VIEW vi_mth_exec_times AS
-	SELECT DISTINCT mth_opt_val, mth_opt_name
-	FROM ta_mth_selections
-	WHERE mth_sel_val='TM.E';
+SELECT DISTINCT mth_opt_val, mth_opt_name
+FROM ta_mth_selections
+WHERE mth_sel_val='TM.E';
 
 CREATE OR REPLACE VIEW vi_mth_method_result AS
-    SELECT mth.mth_id, mth.mth_name, mth.mth_summary, 
-           mth.mth_subject, subj.mth_sub_name AS mth_subject_text, 
-           mth.mth_subject_area, area.mth_area_name AS mth_subject_area_text,
-           mth.mth_age_grp, age.mth_opt_name AS mth_age_grp_text, 
-           mth.mth_prep_time, prep.mth_opt_name AS mth_prep_time_text,
-           mth.mth_exec_time, extm.mth_opt_name AS mth_exec_time_text, 
-           mth.mth_phase, mth.mth_soc_form, mth.mth_authors, 
-           mth.mth_owner_id, mth_create_time, 
-           mtf.file_guid, mtf.file_name, 
-           dnl.dnl_cnt, dnl.dnl_first_tm, dnl.dnl_last_tm, '' AS dnl_usr_id, 
-           rtg.rtg_cnt, rtg.rtg_first_tm, rtg.rtg_last_tm, rtg.rtg_min_val, rtg.rtg_max_val, rtg.rtg_avg_val
-    FROM   ta_mth_method_header mth
-              INNER JOIN ta_mth_method_file mtf ON mtf.file_mth_id = mth.mth_id
-              INNER JOIN vi_mth_subjects subj ON subj.mth_sub_val = mth.mth_subject
-              INNER JOIN vi_mth_subject_areas area ON area.mth_area_val = mth.mth_subject_area
-              INNER JOIN vi_mth_age_groups age ON age.mth_opt_val = mth.mth_age_grp
-              INNER JOIN vi_mth_prep_times prep ON prep.mth_opt_val = mth.mth_prep_time
-              INNER JOIN vi_mth_exec_times extm ON extm.mth_opt_val = mth.mth_exec_time
-              LEFT JOIN vi_mth_method_download dnl ON dnl.dnl_mth_id = mth.mth_id
-              LEFT JOIN vi_mth_method_rates rtg ON rtg.rtg_mth_id = mth.mth_id;
+SELECT mth.mth_id, mth.mth_name, mth.mth_summary, 
+       mth.mth_subject, subj.mth_sub_name AS mth_subject_text, 
+       mth.mth_subject_area, area.mth_area_name AS mth_subject_area_text,
+       mth.mth_type, mtyp.mth_opt_name AS mth_type_text,
+       mth.mth_prep_time, prep.mth_opt_name AS mth_prep_time_text,
+       mth.mth_exec_time, extm.mth_opt_name AS mth_exec_time_text, 
+       mth.mth_elements, mth.mth_soc_form, mth.mth_authors, 
+       mth.mth_owner_id, mth_create_time, 
+       mtf.file_guid, mtf.file_name, 
+       dnl.dnl_cnt, dnl.dnl_first_tm, dnl.dnl_last_tm, '' as dnl_usr_id, 
+       rtg.rtg_cnt, rtg.rtg_first_tm, rtg.rtg_last_tm, rtg.rtg_min_val, rtg.rtg_max_val, rtg.rtg_avg_val
+FROM   ta_mth_method_header mth
+       INNER JOIN ta_mth_method_file mtf ON mtf.file_mth_id = mth.mth_id
+       INNER JOIN vi_mth_subjects subj ON subj.mth_sub_val = mth.mth_subject
+       INNER JOIN vi_mth_subject_areas area ON area.mth_area_val = mth.mth_subject_area
+       INNER JOIN vi_mth_method_type mtyp ON mtyp.mth_opt_val = mth.mth_type      
+		 INNER JOIN vi_mth_prep_times prep ON prep.mth_opt_val = mth.mth_prep_time
+       INNER JOIN vi_mth_exec_times extm ON extm.mth_opt_val = mth.mth_exec_time
+       LEFT JOIN vi_mth_method_download dnl ON dnl.dnl_mth_id = mth.mth_id
+       LEFT join vi_mth_method_rates rtg ON rtg.rtg_mth_id = mth.mth_id;
 
 CREATE OR REPLACE VIEW vi_mth_dnl_and_rtg AS
     SELECT dnl.dnl_mth_id, dnl.dnl_usr_id, rtg.rtg_usr_id, MIN(dnl.dnl_date) AS dnl_first_tm, MAX(dnl.dnl_date) AS dnl_last_tm
@@ -340,40 +355,40 @@ CREATE OR REPLACE VIEW vi_mth_dnl_no_rtg AS
     WHERE  dnl_usr_id IS NOT NULL
       AND  rtg_usr_id IS NULL;
 
-CREATE OR REPLACE VIEW vi_mth_method_rating AS 
-    SELECT mth.mth_id, mth.mth_name, mth.mth_summary, 
-           mth.mth_subject, subj.mth_sub_name AS mth_subject_text, 
-           mth.mth_subject_area, area.mth_area_name AS mth_subject_area_text,
-           mth.mth_age_grp, age.mth_opt_name AS mth_age_grp_text, 
-           mth.mth_prep_time, prep.mth_opt_name AS mth_prep_time_text,
-           mth.mth_exec_time, extm.mth_opt_name AS mth_exec_time_text, 
-           mth.mth_phase, mth.mth_soc_form, mth.mth_authors, 
-           mth.mth_owner_id, mth_create_time, 
-           '' AS file_guid, '' AS file_name, 
-           0 AS dnl_cnt, dnl.dnl_first_tm, dnl.dnl_last_tm, dnl.dnl_usr_id, 
-           0 AS rtg_cnt, '' AS rtg_first_tm, '' AS rtg_last_tm, '' AS rtg_min_val, '' AS rtg_max_val, '' AS rtg_avg_val
-    FROM   ta_mth_method_header mth
-              INNER JOIN vi_mth_subjects subj ON subj.mth_sub_val = mth.mth_subject
-              INNER JOIN vi_mth_subject_areas area ON area.mth_area_val = mth.mth_subject_area
-              INNER JOIN vi_mth_age_groups age ON age.mth_opt_val = mth.mth_age_grp
-              INNER JOIN vi_mth_prep_times prep ON prep.mth_opt_val = mth.mth_prep_time
-              INNER JOIN vi_mth_exec_times extm ON extm.mth_opt_val = mth.mth_exec_time
-              INNER JOIN vi_mth_dnl_no_rtg dnl ON dnl.dnl_mth_id = mth.mth_id;
+CREATE OR REPLACE VIEW vi_mth_method_rating AS
+SELECT mth.mth_id, mth.mth_name, mth.mth_summary, 
+       mth.mth_subject, subj.mth_sub_name AS mth_subject_text, 
+       mth.mth_subject_area, area.mth_area_name AS mth_subject_area_text,
+       mth.mth_type, mtyp.mth_opt_name AS mth_type_text,
+       mth.mth_prep_time, prep.mth_opt_name AS mth_prep_time_text,
+       mth.mth_exec_time, extm.mth_opt_name AS mth_exec_time_text, 
+       mth.mth_elements, mth.mth_soc_form, mth.mth_authors, 
+       mth.mth_owner_id, mth_create_time, 
+       '' AS file_guid, '' AS file_name, 
+       0 AS dnl_cnt, dnl.dnl_first_tm, dnl.dnl_last_tm, dnl.dnl_usr_id, 
+       0 AS rtg_cnt, '' AS rtg_first_tm, '' AS rtg_last_tm, '' AS rtg_min_val, '' AS rtg_max_val, '' AS rtg_avg_val
+FROM   ta_mth_method_header mth
+       INNER JOIN vi_mth_subjects subj ON subj.mth_sub_val = mth.mth_subject
+       INNER JOIN vi_mth_subject_areas area on area.mth_area_val = mth.mth_subject_area
+       INNER JOIN vi_mth_method_type mtyp ON mtyp.mth_opt_val = mth.mth_type
+       INNER JOIN vi_mth_prep_times prep ON prep.mth_opt_val = mth.mth_prep_time
+       INNER JOIN vi_mth_exec_times extm ON extm.mth_opt_val = mth.mth_exec_time
+       INNER JOIN vi_mth_dnl_no_rtg dnl ON dnl.dnl_mth_id = mth.mth_id;
 
 CREATE OR REPLACE VIEW vi_rep_mth_dnl_top AS 
-	SELECT mth.mth_id, mth.mth_name, mth.mth_subject, mth.mth_subject_area, COUNT(1) AS num_dnl
-	FROM   ta_mth_method_header AS mth
-		   INNER JOIN ta_mth_method_download AS dnl ON dnl.dnl_mth_id = mth.mth_id
-	GROUP BY mth.mth_id, mth.mth_name, mth.mth_subject, mth.mth_subject_area
-	ORDER BY num_dnl DESC LIMIT 5;
+SELECT mth.mth_id, mth.mth_name, mth.mth_subject, mth.mth_subject_area, COUNT(1) AS num_dnl
+FROM   ta_mth_method_header AS mth
+	   INNER JOIN ta_mth_method_download AS dnl ON dnl.dnl_mth_id = mth.mth_id
+GROUP BY mth.mth_id, mth.mth_name, mth.mth_subject, mth.mth_subject_area
+ORDER BY num_dnl DESC LIMIT 5;
 
 CREATE OR REPLACE VIEW vi_rep_mth_rtg_top AS 
-	SELECT mth.mth_id, mth.mth_name, mth.mth_subject, mth.mth_subject_area, 
-		 COUNT(1) num_rate, ROUND(SUM(rate.rtg_value) / COUNT(1), 1) avg_rate,
-		 MIN(rate.rtg_value) min_rate, MAX(rate.rtg_value) max_rate
-	FROM  ta_mth_method_header AS mth 
-		  INNER JOIN ta_mth_method_rating AS rate ON rate.rtg_mth_id = mth.mth_id
-	GROUP BY mth.mth_id, mth.mth_name, mth.mth_subject, mth.mth_subject_area
-	ORDER BY avg_rate DESC LIMIT 5;
+SELECT mth.mth_id, mth.mth_name, mth.mth_subject, mth.mth_subject_area, 
+	 COUNT(1) num_rate, ROUND(SUM(rate.rtg_value) / COUNT(1), 1) avg_rate,
+	 MIN(rate.rtg_value) min_rate, MAX(rate.rtg_value) max_rate
+FROM  ta_mth_method_header AS mth 
+	  INNER JOIN ta_mth_method_rating AS rate ON rate.rtg_mth_id = mth.mth_id
+GROUP BY mth.mth_id, mth.mth_name, mth.mth_subject, mth.mth_subject_area
+ORDER BY avg_rate DESC LIMIT 5;
 
  

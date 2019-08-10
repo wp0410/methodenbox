@@ -54,10 +54,12 @@ $param_missing =
     empty($_POST['mth_summary']) ||
     empty($_POST['mth_subject']) ||
     empty($_POST['mth_area']) ||
-    empty($_POST['mth_age_grp']) ||
+    // empty($_POST['mth_age_grp']) ||
+	empty($_POST['mth_type']) ||
     empty($_POST['mth_prep_tm']) ||
     empty($_POST['mth_exec_tm']) ||
-    empty($_POST['mth_phase']) ||
+    // empty($_POST['mth_phase']) ||
+    empty($_POST['mth_elem']) ||
     empty($_POST['mth_soc']) ||
     empty($_POST['mth_prime_author']) ||
     empty($_FILES) ||
@@ -77,11 +79,19 @@ $mth->mth_name = $_POST['mth_name'];
 $mth->mth_summary = $_POST['mth_summary'];
 $mth->mth_subject = $_POST['mth_subject'];
 $mth->mth_subject_area = $_POST['mth_area'];
-$mth->mth_age_grp = $_POST['mth_age_grp'];
+if (array_key_exists('mth_age_grp', $_POST))
+{
+	$mth->mth_age_grp = $_POST['mth_age_grp'];
+}
+$mth->mth_type = $_POST['mth_type'];
 $mth->mth_prep_time = $_POST['mth_prep_tm'];
 $mth->mth_exec_time = $_POST['mth_exec_tm'];
 $mth->mth_soc_form = $_POST['mth_soc'];
-$mth->mth_phase = $_POST['mth_phase'];
+if (array_key_exists('mth_phase', $_POST))
+{
+	$mth->mth_phase = $_POST['mth_phase'];
+}
+$mth->mth_elem = $_POST['mth_elem'];
 
 $res = $mth->createMethod();
 if (! $res->isOK())

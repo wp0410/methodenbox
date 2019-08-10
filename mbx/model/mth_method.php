@@ -23,12 +23,17 @@ class TeachingMethod implements JsonSerializable
     public  $mth_subject;
     public  $mth_subject_area;
     public  $mth_age_grp;
+	public  $mth_type;
     public  $mth_prep_time;
     public  $mth_exec_time;
     public  $mth_phase;
+	public  $mth_elem;
     public  $mth_soc_form;
     private $mth_authors;
     private $mth_owner_id;
+	private $mth_create_time;
+	private $mth_release_usr_id;
+	private $mth_release_time;
     
     private $db_conn;
     
@@ -39,9 +44,11 @@ class TeachingMethod implements JsonSerializable
         $this->mth_id = -1;
         $this->mth_name = $this->mth_summary = '';
         $this->mth_subject = $this->mth_subject_area = '';
-        $this->mth_age_grp = $this->mth_prep_time = $this->mth_exec_time = '';
-        $this->mth_phase = $this->mth_soc_form = '';
+        $this->mth_age_grp = $this->mth_prep_time = $this->mth_exec_time = $this->mth_type = '';
+        $this->mth_phase = $this->mth_soc_form = $this->mth_elem = '';
         $this->mth_authors = '';
+		$this->mth_create_time = '';
+		$this->mth_release_usr_id = $this->mth_release_time = null;
     }
 	
 	public function __set($name, $value)
@@ -96,11 +103,14 @@ class TeachingMethod implements JsonSerializable
                   'mth_subject' => array ($this->mth_subject, MethodSelectionFactory::getSubjectName($this->mth_subject)),
                   'mth_subject_area' => array($this->mth_subject_area, MethodSelectionFactory::getSubjectAreaName($this->mth_subject, $this->mth_subject_area)),
                   'mth_age_group'    => array($this->mth_age_grp, MethodSelectionFactory::getAgeGroupName($this->mth_age_grp)),
+				  'mth_type'         => array($this->mth_type, MethodSelectionFactory::getMethodTypeName($this->mth_type)),
                   'mth_prep_time'    => array($this->mth_prep_time, MethodSelectionFactory::getPrepTimeName($this->mth_prep_time)),
                   'mth_exec_time'    => array($this->mth_exec_time, MethodSelectionFactory::getExecTimeName($this->mth_exec_time)),
                   'mth_phase'        => $this->mth_phase,
+				  'mth_elem'         => $this->mth_elem,
                   'mth_soc_form'     => $this->mth_soc_form,
                   'mth_owner_id'     => $this->mth_owner_id,
+				  'mth_create_time'  => $this->mth_create_time,
                   'mth_authors'      => $this->mth_authors
                );
     }
@@ -130,19 +140,21 @@ class TeachingMethod implements JsonSerializable
         $result = new AppResult(0);
 
         $mth_phase = Helpers::arrayToString($this->mth_phase);
+		$mth_elem = Helpers::arrayToString($this->mth_elem);
         $mth_soc_form = Helpers::arrayToString($this->mth_soc_form);
         $mth_authors = Helpers::arrayToString($this->mth_authors);
         $mth_create_time = Helpers::dateTimeString(time());
         
         $sql_stmt =
-            'insert into ta_mth_method_header( ' . 
-            '   mth_name, mth_summary, mth_subject, mth_subject_area, mth_age_grp, mth_prep_time, mth_exec_time, ' .
-            '   mth_phase, mth_soc_form, mth_authors, mth_owner_id, mth_create_time ) ' .
-            'values ( ' .
-            '   ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? );';
+            'INSERT INTO ta_mth_method_header(
+                mth_name, mth_summary, mth_subject, mth_subject_area, mth_type, mth_age_grp, mth_prep_time, mth_exec_time, 
+                mth_phase, mth_elements, mth_soc_form, mth_authors, mth_owner_id, mth_create_time ) 
+             VALUES (
+                ?, ?, ?, ?, ?, ?, ?, ?, 
+				?, ?, ?, ?, ?, ? )';
         $stm_mh1 = $this->db_conn->prepare($sql_stmt);
-        $stm_mh1->bind_param('ssssssssssis', $this->mth_name, $this->mth_summary, $this->mth_subject, $this->mth_subject_area,
-                    $this->mth_age_grp, $this->mth_prep_time, $this->mth_exec_time, $mth_phase, $mth_soc_form, 
+        $stm_mh1->bind_param('ssssssssssssis', $this->mth_name, $this->mth_summary, $this->mth_subject, $this->mth_subject_area,
+                    $this->mth_type, $this->mth_age_grp, $this->mth_prep_time, $this->mth_exec_time, $mth_phase, $mth_elem, $mth_soc_form, 
                     $mth_authors, $this->mth_owner_id, $mth_create_time);
         if ($stm_mh1->execute())
         {
@@ -162,10 +174,11 @@ class TeachingMethod implements JsonSerializable
         $result = null;
         
         $sql_stmt =
-            'select mth_id, mth_name, mth_summary, mth_subject, mth_subject_area, mth_age_grp, mth_prep_time, mth_exec_time, ' .
-            '       mth_phase, mth_soc_form, mth_authors, mth_owner_id ' .
-            'from   ta_mth_method_header ' .
-            'where  mth_id=?;';
+            'SELECT mth_id, mth_name, mth_summary, mth_subject, mth_subject_area, mth_type, mth_age_grp, mth_prep_time, mth_exec_time, 
+                    mth_phase, mth_elements, mth_soc_form, mth_authors, 
+					mth_owner_id, mth_create_time, mth_release_usr_id, mth_release_time
+             FROM   ta_mth_method_header 
+             WHERE  mth_id = ?';
         $stm_mh2 = $this->db_conn->prepare($sql_stmt);
         $stm_mh2->bind_param('i', $mth_id);
         if ($stm_mh2->execute())
@@ -173,16 +186,19 @@ class TeachingMethod implements JsonSerializable
             $stm_mh2->store_result();
             
             $mth_phase = '';
+			$mth_elems = '';
             $mth_soc_form = '';
             $mth_authors = '';
             
             $stm_mh2->bind_result(
                         $this->mth_id, $this->mth_name, $this->mth_summary, $this->mth_subject, $this->mth_subject_area,
-                        $this->mth_age_grp, $this->mth_prep_time, $this->mth_exec_time, $mth_phase, $mth_soc_form, $mth_authors,
-                        $this->mth_owner_id );
+						$this->mth_type, $this->mth_age_grp, $this->mth_prep_time, $this->mth_exec_time, 
+						$mth_phase, $mth_elems, $mth_soc_form, $mth_authors,
+                        $this->mth_owner_id, $this->mth_create_time, $this->mth_release_usr_id, $this->mth_release_time );
             if ($stm_mh2->fetch())
             {
                 $this->mth_phase = Helpers::stringToArray($mth_phase);
+				$this->mth_elem = Helpers::stringToArray($mth_elems);
                 $this->mth_soc_form = Helpers::stringToArray($mth_soc_form);
                 $this->mth_authors = Helpers::stringToArray($mth_authors);
                 

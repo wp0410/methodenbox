@@ -150,7 +150,15 @@ class FormElements
         echo '<li class="nav-item"><a class="nav-link" href="#">' . GlobalParameter::$applicationConfig['appVersion'] . '</a></li>';
         echo '<li class="nav-item">';
         echo '<a class="nav-link" href="' . GlobalParameter::$applicationConfig['applicationHelpLink'] . '">';
-        echo '<span><i class="fa fa-question-circle-o fa-lg" aria-hidden="true"></i>&nbsp;Hilfe</span>';
+        
+		if ($current_form_id == 'AUX.HLP')
+		{
+			echo '<span><i class="far fa-question-circle" aria-hidden="true"></i>&nbsp;Hilfe</span>';
+		}
+		else
+		{
+			echo '<span><i class="fa fa-question-circle-o fa-lg" aria-hidden="true"></i>&nbsp;Hilfe</span>';
+		}
         echo '</a>';
         echo '</li></ul>';
         echo '</div></nav>';

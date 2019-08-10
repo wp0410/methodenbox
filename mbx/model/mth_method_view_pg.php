@@ -41,15 +41,15 @@ class MethodResultView
     public function initSearchResultStmt()
     {
         $this->select_stmt = 
-            'select mth_id, mth_name, mth_summary, mth_subject, mth_subject_text, ' . 
-            '       mth_subject_area, mth_subject_area_text, mth_age_grp, mth_age_grp_text, ' .
-            '       mth_prep_time, mth_prep_time_text, mth_exec_time, mth_exec_time_text, ' .
-            '       mth_phase, mth_soc_form, mth_authors, ' .
-            '       mth_owner_id, mth_create_time, ' . 
-            '       file_guid, file_name, ' .
-            '       dnl_cnt, dnl_first_tm, dnl_last_tm, dnl_usr_id, ' .
-            '       rtg_cnt, rtg_first_tm, rtg_last_tm, rtg_min_val, rtg_max_val, rtg_avg_val ' .
-            'from   vi_mth_method_result where mth_id > 0 ';
+            'SELECT mth_id, mth_name, mth_summary, mth_subject, mth_subject_text, 
+                    mth_subject_area, mth_subject_area_text, mth_type, mth_type_text,
+                    mth_prep_time, mth_prep_time_text, mth_exec_time, mth_exec_time_text, 
+                    mth_elements, mth_soc_form, mth_authors, 
+                    mth_owner_id, mth_create_time, 
+                    file_guid, file_name, 
+                    dnl_cnt, dnl_first_tm, dnl_last_tm, dnl_usr_id, 
+                    rtg_cnt, rtg_first_tm, rtg_last_tm, rtg_min_val, rtg_max_val, rtg_avg_val 
+             FROM   vi_mth_method_result WHERE mth_id > 0 ';
         $this->stm_type = 'SEARCH_RESULT';
         $this->where_clause = '';
     }
@@ -57,15 +57,15 @@ class MethodResultView
     public function initRatingListStmt()
     {
         $this->select_stmt = 
-            'select mth_id, mth_name, mth_summary, mth_subject, mth_subject_text, ' . 
-            '       mth_subject_area, mth_subject_area_text, mth_age_grp, mth_age_grp_text, ' .
-            '       mth_prep_time, mth_prep_time_text, mth_exec_time, mth_exec_time_text, ' .
-            '       mth_phase, mth_soc_form, mth_authors, ' .
-            '       mth_owner_id, mth_create_time, ' . 
-            '       file_guid, file_name, ' .
-            '       dnl_cnt, dnl_first_tm, dnl_last_tm, dnl_usr_id, ' .
-            '       rtg_cnt, rtg_first_tm, rtg_last_tm, rtg_min_val, rtg_max_val, rtg_avg_val ' .
-            'from   vi_mth_method_rating where mth_id > 0 ';
+            'SELECT mth_id, mth_name, mth_summary, mth_subject, mth_subject_text, 
+                    mth_subject_area, mth_subject_area_text, mth_type, mth_type_text, 
+                    mth_prep_time, mth_prep_time_text, mth_exec_time, mth_exec_time_text, 
+                    mth_elements, mth_soc_form, mth_authors, 
+                    mth_owner_id, mth_create_time, 
+                    file_guid, file_name, 
+                    dnl_cnt, dnl_first_tm, dnl_last_tm, dnl_usr_id, 
+                    rtg_cnt, rtg_first_tm, rtg_last_tm, rtg_min_val, rtg_max_val, rtg_avg_val 
+             FROM   vi_mth_method_rating WHERE mth_id > 0 ';
         $this->stm_type = 'RATING_LIST';        
         $this->where_clause = '';
     }
@@ -73,43 +73,43 @@ class MethodResultView
     public function InitAdminListStmt()
     {
         $this->select_stmt = 
-            'select mth_id, mth_name, mth_summary, mth_subject, mth_subject_text, ' . 
-            '       mth_subject_area, mth_subject_area_text, mth_age_grp, mth_age_grp_text, ' .
-            '       mth_prep_time, mth_prep_time_text, mth_exec_time, mth_exec_time_text, ' .
-            '       mth_phase, mth_soc_form, mth_authors, ' .
-            '       mth_owner_id, mth_create_time, ' . 
-            '       file_guid, file_name, ' .
-            '       dnl_cnt, dnl_first_tm, dnl_last_tm, dnl_usr_id, ' .
-            '       rtg_cnt, rtg_first_tm, rtg_last_tm, rtg_min_val, rtg_max_val, rtg_avg_val ' .
-            'from   vi_mth_method_result where mth_id > 0 ';
+            'SELECT mth_id, mth_name, mth_summary, mth_subject, mth_subject_text, 
+                    mth_subject_area, mth_subject_area_text, mth_type, mth_type_text, 
+                    mth_prep_time, mth_prep_time_text, mth_exec_time, mth_exec_time_text, 
+                    mth_elements, mth_soc_form, mth_authors, 
+                    mth_owner_id, mth_create_time, 
+                    file_guid, file_name, 
+                    dnl_cnt, dnl_first_tm, dnl_last_tm, dnl_usr_id, 
+                    rtg_cnt, rtg_first_tm, rtg_last_tm, rtg_min_val, rtg_max_val, rtg_avg_val 
+             FROM   vi_mth_method_result where mth_id > 0 ';
         $this->stm_type = 'ADMIN_LIST'; 
         $this->where_clause = '';
     }
     
     private function compareLike($att_name, $att_value)
     {
-        $stm_part = " and " . $att_name . " like '%" . $att_value . "%' ";
+        $stm_part = " AND " . $att_name . " LIKE '%" . $att_value . "%' ";
         $this->select_stmt = $this->select_stmt . $stm_part;
         $this->where_clause = $this->where_clause . $stm_part;
     }
     
     private function compareStrEqual($att_name, $att_value)
     {
-        $stm_part = " and " . $att_name . " = '" . $att_value . "' ";
+        $stm_part = " AND " . $att_name . " = '" . $att_value . "' ";
         $this->select_stmt = $this->select_stmt . $stm_part;
         $this->where_clause = $this->where_clause . $stm_part;
     }
     
     private function compareNumEqual($att_name, $att_value)
     {
-        $stm_part = " and " . $att_name . " = " . $att_value . " ";
+        $stm_part = " AND " . $att_name . " = " . $att_value . " ";
         $this->select_stmt = $this->select_stmt . $stm_part;
         $this->where_clause = $this->where_clause . $stm_part;
     }
     
     private function compareNumGen($att_name, $att_value, $operator)
     {
-        $stm_part = " and " . $att_name . " " . $operator . " " . $att_value . " ";
+        $stm_part = " AND " . $att_name . " " . $operator . " " . $att_value . " ";
         $this->select_stmt = $this->select_stmt . $stm_part;
         $this->where_clause = $this->where_clause . $stm_part;
     }
@@ -127,7 +127,7 @@ class MethodResultView
     
     private function compareArrayAny($att_name, $att_value)
     {
-        $stm_part = " and ((1 = 1) ";
+        $stm_part = " AND ((1 = 1) ";
         
         foreach($att_value as $att)
         {
@@ -173,6 +173,11 @@ class MethodResultView
     {
         $this->compareStrEqual('mth_age_grp', $mth_age_grp);
     }
+	
+	public function compareMthType($mth_type)
+	{
+		$this->compareStrEqual('mth_type', $mth_type);
+	}
     
     public function compareMthPrepTime($mth_prep_tm)
     {
@@ -188,6 +193,11 @@ class MethodResultView
     {
         $this->compareArrayAll('mth_phase', Helpers::stringToArray($mth_phase));
     }
+	
+	public function compareMthElements($mth_elems)
+	{
+		$this->compareArrayAll('mth_elements', Helpers::stringToArray($mth_elems));
+	}
     
     public function compareMthSocForm($mth_soc_form)
     {
@@ -273,7 +283,7 @@ class MethodResultView
         }
         $stm_mv2->free_result();
         $stm_mv2->close();
-        
+		
         // Retrieve the lines for the requested page
         $full_stmt = $this->select_stmt . ' limit ' . ($page_no - 1) * $this->lines_per_page . ',' . $this->lines_per_page . ';';
         $stm_mv1 = $this->db_conn->prepare($full_stmt);
@@ -281,8 +291,8 @@ class MethodResultView
         {
             $mth_id = -1;
             $mth_name = $mth_summary = $mth_subj = $mth_subj_txt = $mth_subj_area = $mth_subj_area_txt = '';
-            $mth_age_grp = $mth_age_grp_txt = $mth_prep_tm = $mth_prep_tm_txt = $mth_exec_tm = $mth_exec_tm_txt = '';
-            $mth_soc_form = $mth_phase = $mth_authors = '';
+            $mth_type = $mth_type_txt = $mth_prep_tm = $mth_prep_tm_txt = $mth_exec_tm = $mth_exec_tm_txt = '';
+            $mth_soc_form = $mth_elems = $mth_authors = '';
             $mth_owner_id = -1;
             $mth_create_tm = '';
             $mth_dnl_cnt = -1;
@@ -299,9 +309,9 @@ class MethodResultView
             
             $stm_mv1->bind_result(
                 $mth_id, $mth_name, $mth_summary, $mth_subj, $mth_subj_txt, $mth_subj_area, $mth_subj_area_txt, 
-                $mth_age_grp, $mth_age_grp_txt, $mth_prep_tm, $mth_prep_tm_txt,
+                $mth_type, $mth_type_txt, $mth_prep_tm, $mth_prep_tm_txt,
                 $mth_exec_tm, $mth_exec_tm_txt,
-                $mth_phase, $mth_soc_form, $mth_authors, $mth_owner_id, $mth_create_tm,
+                $mth_elems, $mth_soc_form, $mth_authors, $mth_owner_id, $mth_create_tm,
                 $mth_file_guid, $mth_file_name, 
                 $mth_dnl_cnt, $mth_dnl_first_tm, $mth_dnl_last_tm, $mth_dnl_usr_id, 
                 $mth_rtg_cnt, $mth_rtg_first_tm, $mth_rtg_last_tm, $mth_rtg_min, $mth_rtg_max, $mth_rtg_avg );
@@ -318,14 +328,14 @@ class MethodResultView
                 $mvl->mth_subject_txt = $mth_subj_txt;
                 $mvl->mth_subj_area = $mth_subj_area;
                 $mvl->mth_subj_area_txt = $mth_subj_area_txt;
-                $mvl->mth_age_grp = $mth_age_grp;
-                $mvl->mth_age_grp_txt = $mth_age_grp_txt;
+                $mvl->mth_type = $mth_type;
+                $mvl->mth_type_txt = $mth_type_txt;
                 $mvl->mth_prep_tm = $mth_prep_tm;
                 $mvl->mth_prep_tm_txt = $mth_prep_tm_txt;
                 $mvl->mth_exec_tm = $mth_exec_tm;
                 $mvl->mth_exec_tm_txt = $mth_exec_tm_txt;
-                $mvl->mth_phase = $mth_phase;
-                $mvl->mth_phase_arr = Helpers::stringToArray($mth_phase);
+                $mvl->mth_elems = $mth_elems;
+                $mvl->mth_elems_arr = Helpers::stringToArray($mth_elems);
                 $mvl->mth_soc_form = $mth_soc_form;
                 $mvl->mth_soc_form_arr = Helpers::stringToArray($mth_soc_form);
                 $mvl->mth_authors = $mth_authors;
@@ -365,16 +375,16 @@ class MethodViewLine
     public $mth_subject_txt;
     public $mth_subj_area;
     public $mth_subj_area_txt;
-    public $mth_age_grp;
-    public $mth_age_grp_txt;
+    public $mth_type;
+    public $mth_type_txt;
     public $mth_prep_tm;
     public $mth_prep_tm_txt;
     public $mth_exec_tm;
     public $mth_exec_tm_txt;
     public $mth_soc_form;
     public $mth_soc_form_arr;
-    public $mth_phase;
-    public $mth_phase_arr;
+    public $mth_elems;
+    public $mth_elems_arr;
     public $mth_authors;
     public $mth_authors_arr;
     public $mth_owner_id;
@@ -396,10 +406,10 @@ class MethodViewLine
     {
         $this->mth_id = $this->mth_owner_id = -1;
         $this->mth_name = $this->mth_summary = '';
-        $this->mth_subject = $this->mth_subj_area = $this->mth_age_grp = $this->mth_prep_tm = $this->mth_exec_tm = '';
-        $this->mth_subject_txt = $this->mth_subj_area_txt = $this->mth_age_grp_txt = $this->mth_prep_tm_txt = $this->mth_exec_tm_txt = '';
-        $this->mth_soc_form = $this->mth_phase = $this->mth_authors = '';
-        $this->mth_soc_form_arr = $this->mth_phase_arr = $this->mth_authors_arr = null;
+        $this->mth_subject = $this->mth_subj_area = $this->mth_type = $this->mth_prep_tm = $this->mth_exec_tm = '';
+        $this->mth_subject_txt = $this->mth_subj_area_txt = $this->mth_type_txt = $this->mth_prep_tm_txt = $this->mth_exec_tm_txt = '';
+        $this->mth_soc_form = $this->mth_elems = $this->mth_authors = '';
+        $this->mth_soc_form_arr = $this->mth_elems_arr = $this->mth_authors_arr = null;
         $this->mth_rtg_cnt = $this->mth_dnl_cnt = $this->mth_rtg_min = $this->mth_rtg_max = $this->mth_rtg_avg = 0;
         $this->mth_dnl_first_tm = $this->mth_dnl_last_tm = $this->mth_dnl_usr_id = '';
         $this->mth_rtg_first_tm = $this->mth_rtg_last_tm = '';

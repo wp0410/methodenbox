@@ -69,10 +69,16 @@ else
 		{
 			$res_view->compareMthSubArea($_POST['mth_area']);
 		}
+		/*
 		if (! empty($_POST['mth_class']))
 		{
 			$res_view->compareMthAgeGrp($_POST['mth_class']);
 		}
+		*/
+		if (! empty($_POST['mth_type']))
+		{
+			$res_view->compareMthType($_POST['mth_type']);
+		}			
 		if (! empty($_POST['mth_prep_tm']))
 		{
 			$res_view->compareMthPrepTime($_POST['mth_prep_tm']);
@@ -81,9 +87,15 @@ else
 		{
 			$res_view->compareMthExecTime($_POST['mth_exec_tm']);
 		}
+		/*
 		if (! empty($_POST['mth_phase']))
 		{
 			$res_view->compareMthPhase($_POST['mth_phase']);
+		}
+		*/
+		if (! empty($_POST['mth_elem']))
+		{
+			$res_view->compareMthElements($_POST['mth_elem']);
 		}
 		if (! empty($_POST['mth_soc']))
 		{

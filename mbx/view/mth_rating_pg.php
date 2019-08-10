@@ -173,10 +173,11 @@ if (! $res->isOK())
                                 <div class="row form-row">
                                     <div class="col-md-6 col-xl-6">
                                         <div class="form-group">
+											<!--
                                             <label for="mth_class">Jahrgang</label>
                                             <select class="form-control" id="mth_class" name="mth_class">
                                                 <option></option>
-                                                <?php
+                                                < php
                                                     foreach(MethodSelectionFactory::getAgeGroups() as $cls)
                                                     {
                                                         // echo '<option>' . $cls['NAME'] . '</option>';
@@ -184,7 +185,19 @@ if (! $res->isOK())
                                                     }
                                                 ?>
                                             </select>
-                                        </div> <!-- form-group -->
+											-->
+											
+ 											<label for="mth_type">Art der Methode</label>
+											<select class="form-control" id="mth_type" name="mth_type">
+												<option></option>
+												<?php
+													foreach(MethodSelectionFactory::getMethodTypes() as $mtypes)
+													{
+														echo '<option value="' . $mtypes['VAL'] . '">' . $mtypes['NAME'] . '</option>';
+													}
+												?>
+											</select>
+                                       </div> <!-- form-group -->
                                     </div> <!-- col -->
 
                                     <div class="col-md-6 col-xl-6">
@@ -207,9 +220,10 @@ if (! $res->isOK())
                                     <div class="col-md-6 col-xl-6">
                                         <div class="card">
                                             <div class="card-header">
-                                                Unterrichtsphase
+                                                <!-- Unterrichtsphase -->Unterrichtselemente
                                             </div>
                                             <div class="card-body">
+												<!--
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="checkbox" id="mth_phase_E" name="mth_phase[]" value="E">
                                                     <label class="form-check-label" for="mth_phase_E">Einstieg</label>
@@ -225,7 +239,28 @@ if (! $res->isOK())
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="checkbox" id="mth_phase_A" name="mth_phase[]" value="A">
                                                     <label class="form-check-label" for="mth_phase_A">Aktivierung</label>
-                                                </div>    
+                                                </div>
+												-->
+												<div class="form-check">
+													<input class="form-check-input" type="checkbox" id="mth_elem_E" name="mth_elem[]" value="E">
+													<label class="form-check-label" for="mth_elem_E">Anfangen</label>
+												</div>
+												<div class="form-check">
+													<input class="form-check-input" type="checkbox" id="mth_elem_I" name="mth_elem[]" value="I">
+													<label class="form-check-label" for="mth_elem_I">Informieren</label>
+												</div>
+												<div class="form-check">
+													<input class="form-check-input" type="checkbox" id="mth_elem_S" name="mth_elem[]" value="S">
+													<label class="form-check-label" for="mth_elem_S">Sicherung - Wissen Abfragen</label>
+												</div>
+												<div class="form-check">
+													<input class="form-check-input" type="checkbox" id="mth_elem_W" name="mth_elem[]" value="W">
+													<label class="form-check-label" for="mth_elem_W">Sicherung - Wissen Anwenden</label>
+												</div>
+												<div class="form-check">
+													<input class="form-check-input" type="checkbox" id="mth_elem_A" name="mth_elem[]" value="A">
+													<label class="form-check-label" for="mth_elem_A">Auflockerung</label>
+												</div>
                                             </div>
                                         </div> <!-- card -->
                                     </div> <!-- col -->
@@ -400,19 +435,22 @@ if (! $res->isOK())
         <script type="text/javascript">
             /* global $ */
             function load_contents() {
-                var mphase = '';
-                if (document.getElementById('mth_phase_E').checked) {
-                    mphase = 'E:';
-                }
-                if (document.getElementById('mth_phase_A').checked) {
-                    mphase = mphase + 'A:';
-                }
-                if (document.getElementById('mth_phase_I').checked) {
-                    mphase = mphase + 'I:';
-                }
-                if (document.getElementById('mth_phase_S').checked) {
-                    mphase = mphase + 'S:';
-                }
+				var mElems = '';
+				if (document.getElementById('mth_elem_E').checked) {
+					mElems = mElems + 'E:';
+				}
+				if (document.getElementById('mth_elem_I').checked) {
+					mElems = mElems + 'I:';
+				}
+				if (document.getElementById('mth_elem_S').checked) {
+					mElems = mElems + 'S:';
+				}
+				if (document.getElementById('mth_elem_W').checked) {
+					mElems = mElems + 'W:';
+				}
+				if (document.getElementById('mth_elem_A').checked) {
+					mElems = mElems + 'A:';
+				}
                 
                 var msoc = '';
                 if (document.getElementById('mth_soc_E').checked) {
@@ -433,10 +471,10 @@ if (! $res->isOK())
                     {
                         mth_subject: $('#mth_subject').val(),
                         mth_area: $('#mth_area').val(),
-                        mth_class: $('#mth_class').val(),
+                        mth_type: $('#mth_type').val(),
                         mth_prep_tm: $('#mth_prep_tm').val(),
                         mth_exec_tm: $('#mth_exec_tm').val(),
-                        mth_phase: mphase, 
+                        mth_elem: mElems,
                         mth_soc: msoc, 
                         mth_author: $('#mth_author').val(),
                         mth_name: $('#mth_name').val(),

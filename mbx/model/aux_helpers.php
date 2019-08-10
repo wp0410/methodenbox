@@ -32,10 +32,13 @@ class Helpers
     public static function arrayToString($the_array, $delimiter = ':')
     {
         $str_res = '';
-        foreach($the_array as $the_entry)
-        {
-            $str_res = $str_res . $the_entry . $delimiter;
-        }
+		if (is_array($the_array))
+		{
+			foreach($the_array as $the_entry)
+			{
+				$str_res = $str_res . $the_entry . $delimiter;
+			}
+		}
         return $str_res;
     }
     

@@ -83,9 +83,9 @@ else
     {
         $res_view->compareMthSubArea($_POST['mth_area']);
     }
-    if (! empty($_POST['mth_class']))
+    if (! empty($_POST['mth_type']))
     {
-        $res_view->compareMthAgeGrp($_POST['mth_class']);
+        $res_view->compareMthType($_POST['mth_type']);
     }
     if (! empty($_POST['mth_res_sort']))
     {

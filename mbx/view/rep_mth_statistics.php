@@ -65,54 +65,66 @@ if (! empty($_SESSION) && ! empty($_SESSION['user']))
 				</div>
 			</div>
 			<div class="row row-fluid">
-				<?php
-					$mth_stat = new MethodStatistics($db_conn);
-					$subjects = $mth_stat->mth_per_subject();
-					
-					foreach($subjects as $subj)
+			<?php
+				$mth_stat = new MethodStatistics($db_conn);
+				$subjects = $mth_stat->mth_per_subject();
+				
+				$subj_count = 0;
+				foreach($subjects as $subj)
+				{
+					if ($subj['num_per_subj'] != 0)
 					{
-						echo '<div class="col col-sm-4 col-md-4 col-xl-4">';
-						$cn = DatabaseConnection::get_report_connection();
-						if ($subj['num_per_subj'] != 0)
-						{
-							DonutChart::create(
-								array(
-									'dataSource' => (new PdoDataSource($cn))->query("
-										SELECT sub.mth_subject, sub.mth_subject_area, sub.mth_area_name, sum(sub.num_per_area) as num_per_area
-										FROM (
-											SELECT subj.mth_sub_val as mth_subject, subj.mth_area_val as mth_subject_area, subj.mth_area_name, 0 as num_per_area
-											FROM   ta_mth_subject_area as subj
-											UNION ALL
-											SELECT mth.mth_subject, mth.mth_subject_area, subj.mth_area_name, COUNT(1) as num_per_area
-											FROM   ta_mth_method_header as mth
-													INNER JOIN ta_mth_subject_area subj on subj.mth_sub_val = mth.mth_subject and subj.mth_area_val = mth.mth_subject_area
-											GROUP BY mth.mth_subject, mth.mth_subject_area, subj.mth_area_name ) sub
-										WHERE sub.mth_subject = '" . $subj['mth_subject'] . "'
-										GROUP BY sub.mth_subject, sub.mth_subject_area, sub.mth_area_name;
-									")->pipe(
-										new CalculatedColumn(array(
-											'area_name' => array(
-												'exp' => function($data){
-													return html_entity_decode($data['mth_area_name']);
-												},
-												'type' => 'string'
-											)
-										))
-									),
-									'title' => $subj['mth_sub_name'] . ' (Anzahl: ' . $subj['num_per_subj'] . ')',
-									'columns' => array(
-										'area_name' => array('label' => 'Fachbereich'),
-										'num_per_area' => array('label' => 'Anzahl Gesamt')
-									)
-								)
-							);
-						}
+						$subj_count += 1;
+					}
+				}
+				$col_size = 8 - ($subj_count - 1) * 2;
+				$col_size = 'col-sm-' . $col_size . ' col-md-' . $col_size . ' col-lg-' . $col_size . ' col-xl-' . $col_size;
+				
+				foreach($subjects as $subj)
+				{
+					$cn = DatabaseConnection::get_report_connection();
+					if ($subj['num_per_subj'] != 0)
+					{
+						echo '<div class="col ' . $col_size . '">';
 
+						DonutChart::create(
+							array(
+								'dataSource' => (new PdoDataSource($cn))->query("
+									SELECT sub.mth_subject, sub.mth_subject_area, sub.mth_area_name, sum(sub.num_per_area) as num_per_area
+									FROM (
+										SELECT subj.mth_sub_val as mth_subject, subj.mth_area_val as mth_subject_area, subj.mth_area_name, 0 as num_per_area
+										FROM   ta_mth_subject_area as subj
+										UNION ALL
+										SELECT mth.mth_subject, mth.mth_subject_area, subj.mth_area_name, COUNT(1) as num_per_area
+										FROM   ta_mth_method_header as mth
+												INNER JOIN ta_mth_subject_area subj on subj.mth_sub_val = mth.mth_subject and subj.mth_area_val = mth.mth_subject_area
+										GROUP BY mth.mth_subject, mth.mth_subject_area, subj.mth_area_name ) sub
+									WHERE sub.mth_subject = '" . $subj['mth_subject'] . "'
+									GROUP BY sub.mth_subject, sub.mth_subject_area, sub.mth_area_name;
+								")->pipe(
+									new CalculatedColumn(array(
+										'area_name' => array(
+											'exp' => function($data){
+												return html_entity_decode($data['mth_area_name']);
+											},
+											'type' => 'string'
+										)
+									))
+								),
+								'title' => 'Fachbereiche Unterrichtsfach ' . $subj['mth_sub_name'] . ' (Anzahl: ' . $subj['num_per_subj'] . ')',
+								'columns' => array(
+									'area_name' => array('label' => 'Fachbereich'),
+									'num_per_area' => array('label' => 'Anzahl Gesamt')
+								)
+							)
+						);
+						
 						echo '</div>';
 					}
-				?>
+				}
+			?>
 			</div> <!-- row row-fluid -->
-
+			
 			<div class="row row-fluid">
 				<div class="col col-sm-12 col-md-12 col-xl-12">
 					<div class="alert alert-info"><center><h5>Unterrichtsmethoden nach Einzeleigenschaften</h5></center></div>
@@ -122,6 +134,8 @@ if (! empty($_SESSION) && ! empty($_SESSION['user']))
 			<div class="row row-fluid">	
 				<div class="col col-sm-4 col-md-4 col-xl-4">
 					<?php
+						// Anzahl Methoden pro Jahrgang
+						/*
 						$cn = DatabaseConnection::get_report_connection();
 						DonutChart::create(
 							array(
@@ -145,6 +159,42 @@ if (! empty($_SESSION) && ! empty($_SESSION['user']))
 								)
 							)
 						);
+						*/
+						
+						// Anzahl Methoden pro Art
+						$cn = DatabaseConnection::get_report_connection();
+						DonutChart::create(
+							array(
+								'dataSource' => (new PdoDataSource($cn))->query('
+									SELECT sub.mth_type, sub.mth_type_name, SUM(sub.num_per_type) AS num_per_type
+									FROM (
+										SELECT mtyp.mth_opt_val AS mth_type, mtyp.mth_opt_name AS mth_type_name, 0 AS num_per_type
+										FROM   vi_mth_method_type AS mtyp
+										UNION ALL
+										SELECT mth.mth_type, mtyp.mth_opt_name AS mth_type_name, COUNT(1) AS num_per_type
+										FROM   ta_mth_method_header AS mth
+												INNER JOIN vi_mth_method_type AS mtyp ON mth.mth_type = mtyp.mth_opt_val
+										GROUP BY mth.mth_type, mtyp.mth_opt_name
+									) AS sub
+									GROUP BY sub.mth_type, sub.mth_type_name
+								')->pipe(
+									new CalculatedColumn(array(
+										'mth_type_name' => array(
+											'exp' => function($data){
+												return html_entity_decode($data['mth_type_name']);
+											},
+											'type' => 'string'
+										)
+									))
+								),
+								'title' => 'Anzahl pro Art der Methode',
+								'columns' => array(
+									'mth_type_name' => array('label' => 'Art der Methode'),
+									'num_per_type' => array('label' => 'Anzahl Gesamt')
+								)
+							)
+						);
+						
 					?>
 				</div> <!-- col -->
 				
@@ -177,7 +227,7 @@ if (! empty($_SESSION) && ! empty($_SESSION['user']))
 										)
 									)
 								),
-								'title' => 'Methoden nach Vorbereitungszeit',
+								'title' => 'Anzahl pro Vorbereitungszeit',
 								'columns' => array(
 									'mth_opt_prep' => array('label' => 'Vorbereitungszeit'),
 									'num_per_pt' => array('label' => 'Anzahl Gesamt')
@@ -216,7 +266,7 @@ if (! empty($_SESSION) && ! empty($_SESSION['user']))
 										)
 									)
 								),
-								'title' => html_entity_decode('Methoden nach Durchf&uuml;hrungszeit'),
+								'title' => html_entity_decode('Anzahl pro Durchf&uuml;hrungszeit'),
 								'columns' => array(
 									'mth_opt_exec' => array('label' => 'Vorbereitungszeit'),
 									'num_per_et' => array('label' => 'Anzahl Gesamt')
@@ -272,6 +322,7 @@ if (! empty($_SESSION) && ! empty($_SESSION['user']))
 
 				<div class="col col-sm-6 col-md-6 col-xl-6">
 					<?php
+						/* Deprecated: Method Phase
 						$cn = DatabaseConnection::get_report_connection();
 						DonutChart::create(
 							array(
@@ -300,6 +351,53 @@ if (! empty($_SESSION) && ! empty($_SESSION['user']))
 								'columns' => array(
 									'mth_phase' => array('label' => 'Unterrichtsphase'),
 									'phase_num' => array('label' => 'Anzahl')
+								)
+							)
+						);
+						*/
+						$cn = DatabaseConnection::get_report_connection();
+						DonutChart::create(
+							array(
+								'dataSource' => (new PdoDataSource($cn))->query("
+									SELECT sub.mth_elem, SUM(sub.elem_num) AS elem_num
+									FROM (
+										SELECT mth.mth_id, 'Anfangen' AS mth_elem, 1 AS elem_num
+										FROM   ta_mth_method_header AS mth
+										WHERE  mth.mth_elements LIKE '%E:%'
+										UNION ALL 
+										SELECT mth.mth_id, 'Informieren' AS mth_elem, 1 AS elem_num
+										FROM   ta_mth_method_header AS mth
+										WHERE  mth.mth_elements LIKE '%I:%'
+										UNION ALL 
+										SELECT mth.mth_id, 'Sicherung - Wissen Abfragen' AS mth_elem, 1 AS elem_num
+										FROM   ta_mth_method_header AS mth
+										WHERE  mth.mth_elements LIKE '%S:%'
+										UNION ALL 
+										SELECT mth.mth_id, 'Sicherung - Wissen Anwenden' AS mth_elem, 1 AS elem_num
+										FROM   ta_mth_method_header AS mth
+										WHERE  mth.mth_elements LIKE '%W:%'
+										UNION ALL 
+										SELECT mth.mth_id, 'Auflockerung' AS mth_elem, 1 AS elem_num
+										FROM   ta_mth_method_header AS mth
+										WHERE  mth.mth_elements LIKE '%A:%'
+									) AS sub 
+									GROUP BY sub.mth_elem ORDER BY elem_num DESC"
+								)->pipe(
+									new CalculatedColumn(
+										array(
+											'mth_elem' => array(
+												'exp' => function($data){
+													return html_entity_decode($data['mth_elem']);
+												},
+												'type' => 'string'
+											)
+										)
+									)
+								),
+								'title' => 'Methoden nach Unterrichtselementen',
+								'columns' => array(
+									'mth_elem' => array('label' => 'Unterrichtselemente'),
+									'elem_num' => array('label' => 'Anzahl')
 								)
 							)
 						);

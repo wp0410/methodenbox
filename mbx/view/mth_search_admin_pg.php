@@ -90,7 +90,8 @@ class MethodAdminResultView extends MethodSearchViewBase
         $this->addOutput('<th scope="col" class="table-secondary">Fachbereich</th>');
         $this->addOutput('<th scope="col" class="table-secondary">Vorbereitungszeit</th>');
         $this->addOutput('<th scope="col" class="table-secondary">Durchf&uuml;hrungszeit</th>');
-        $this->addOutput('<th scope="col" class="table-secondary">Jahrgang</th>');
+        // $this->addOutput('<th scope="col" class="table-secondary">Jahrgang</th>');
+        $this->addOutput('<th scope="col" class="table-secondary">Art der Methode</th>');
         $this->addOutput('<th scope="col" class="table-secondary">AutorIn</th></tr>');
 
         // Table row 3: field values (subject, subject area, preparation time, execution time, age group, main author)
@@ -104,22 +105,30 @@ class MethodAdminResultView extends MethodSearchViewBase
         $this->addOutput('<td><span>' . $line->mth_subj_area_txt . '</span></td>');
         $this->addOutput('<td><span>' . $line->mth_prep_tm_txt . '</span></td>');
         $this->addOutput('<td><span>' . $line->mth_exec_tm_txt . '</span></td>');
-        $this->addOutput('<td><span>' . $line->mth_age_grp_txt . '</span></td>');
+        // $this->addOutput('<td><span>' . $line->mth_age_grp_txt . '</span></td>');
+        $this->addOutput('<td><span>' . $line->mth_type_txt . '</span></td>');
         $this->addOutput('<td><span>' . $line->mth_authors_arr[0] . '</span></td></tr>');
         
         // Table row 4: field values (social form, phase) + download button
         $this->addOutput('<tr><td colspan="2">');
+		/*
         $phase_txt = array('E' => 'Einstieg', 'I' => 'Information', 'S' => 'Sicherung', 'A' => 'Aktivierung');
         foreach($line->mth_phase_arr as $phase)
         {
             $this->addOutput('<span class="badge badge-secondary badge-pill badge-sm">' . $phase_txt[$phase] . '</span>');
+        }
+		*/
+        $elems_txt = array('E' => 'Anfangen', 'I' => 'Informieren', 'S' => 'Sicherung - Wissen Abfragen', 'W' => 'Sicherung - Wissen Anwenden', 'A' => 'Auflockerung');
+        foreach($line->mth_elems_arr as $elem)
+        {
+            $this->addOutput('<span class="badge badge-dark badge-pill badge-sm">' . $elems_txt[$elem] . '</span>');
         }
         $this->addOutput('</td><td colspan="2">');
     
         $soc_txt = array('E' => 'Einzelarbeit', 'P' => 'Partnerarbeit', 'G' => 'Gruppenarbeit', 'K' => 'Klassenplenum');
         foreach($line->mth_soc_form_arr as $soc_form)
         {
-            $this->addOutput('<span class="badge badge-secondary badge-pill badge-sm">' . $soc_txt[$soc_form] . '</span>');
+            $this->addOutput('<span class="badge badge-dark badge-pill badge-sm">' . $soc_txt[$soc_form] . '</span>');
         }
         $this->addOutput('</td><td colspan="2">');
         $this->addOutput('<div class="btn-toolbar" role="toolbar">');

@@ -68,15 +68,13 @@ $res = new AppResult($_GET);
         <div class="container-fluid">
            <div class="row row-fluid"><br></div>
            <div class="row row-fluid">
-                <div class="col col-md-2 col-xl-2"></div>
-                <div class="col-md-8 col-xl-8">
+                <div class="col col-md-1 col-lg-1 col-xl-1"></div>
+                <div class="col-md-10 col-lg-10 col-xl-10">
                     <div class="alert alert-primary" role="alert"><center><h4>Methode Anlegen</h4></center></div>
                 </div>
             </div>
             
             <?php 
-                // if ($res->code != 0) { FormElements::showAlert($res->style(), 'col-md-8 col-xl-8', $res->text, 'col col-md-2 col-xl-2'); }
-                // $res = new AppResult(951);
                 if (! $res->isOK())
                 {
                     FormElements::feedbackModal($res, 'Weitere Methoden anlegen', array('LABEL' => 'Zur Methoden&uuml;bersicht', 'LINK' => '../view/mth_search_pg.php'));
@@ -85,8 +83,8 @@ $res = new AppResult($_GET);
             
             <form id="mth_upload" enctype="multipart/form-data" method="post" action="../ctrl/mth_upload.php" data-parsley-validate="">
                 <div class="controls">
-                    <div class="row form-row"><div class="col col-md-2 col-xl-2"></div>
-                        <div class="col col-md-4 col-xl-4">
+                    <div class="row form-row"><div class="col col-md-1 col-lg-1 col-xl-1"></div>
+                        <div class="col col-md-5 col-lg-5 col-xl-5">
                             <div class="form-group">
                                 <label for="mth_name">Name der Methode *</label>
                                 <input id="mth_name" type="text" name="mth_name" class="form-control" placeholder="Name"
@@ -94,7 +92,8 @@ $res = new AppResult($_GET);
                                     data-parsley-maxlength="127" data-parsley-maxlength-message="Der Name darf h&ouml;chstens 127 Zeichen lang sein">
                             </div>
                         </div>
-                        <div class="col col-md-2 col-xl-2">
+						<div class="col col-md-1 col-lg-1 col-xl-1">&nbsp;</div>
+                        <div class="col col-md-2 col-lg-2 col-xl-2">
                             <div class="form-group">
                                 <label for="mth_subject">Unterrichtsfach *</label>
                                 <select class="form-control" id="mth_subject" name="mth_subject"
@@ -109,7 +108,7 @@ $res = new AppResult($_GET);
                                 </select>
                             </div>
                         </div> <!-- col -->
-                        <div class="col col-md-2 col-xl-2">
+                        <div class="col col-md-2 col-lg-2 col-xl-2">
                             <div class="form-group">
                                 <label for="mth_area">Fachbereich *</label>
                                 <select class="form-control" id="mth_area" name="mth_area"
@@ -120,8 +119,8 @@ $res = new AppResult($_GET);
                         </div> <!-- col -->
                     </div> <!-- row -->
                     
-                    <div class="row form-row"><div class="col col-md-2 col-xl-2"></div>
-                        <div class="col-md-4 col-xl-4">
+                    <div class="row form-row"><div class="col col-md-1 col-lg-1 col-xl-1"></div>
+                        <div class="col col-md-5 col-lg-5 col-xl-5">
                             <div class="form-group">
                                 <label for="mth_summary">Beschreibung *</label>
                                 <textarea id="mth_summary" class="form-control" name="mth_summary" form="mth_upload" rows="5" placeholder="Beschreibung"
@@ -129,7 +128,8 @@ $res = new AppResult($_GET);
                                     data-parsley-maxlength="4000" data-parsley-maxlength-message="Die Beschreibung darf h&ouml;chstens 4000 Zeichen lang sein"></textarea>
                             </div>    
                         </div> <!-- col -->
-                        <div class="col-md-2 col-xl-2">
+ 						<div class="col col-md-1 col-lg-1 col-xl-1">&nbsp;</div>
+						<div class="col col-md-2 col-lg-2 col-xl-2">
                             <div class="form-group">
                                 <label for="mth_prep_tm">Vorbereitungszeit *</label>
                                 <select class="form-control" id="mth_prep_tm" name="mth_prep_tm"
@@ -144,7 +144,7 @@ $res = new AppResult($_GET);
                                 </select>
                             </div>
                         </div> <!-- col -->
-                        <div class="col col-md-2 col-xl-2">
+                        <div class="col col-md-2 col-lg-2 col-xl-2">
                            <div class="form-group">
                                 <label for="mth_exec_tm">Durchf&uuml;hrungszeit *</label>
                                 <select class="form-control" id="mth_exec_tm" name="mth_exec_tm"
@@ -158,12 +158,13 @@ $res = new AppResult($_GET);
                                     ?>
                                 </select>
                             </div>
+							<!--
                             <div class="form-group">
                                 <label for="mth_class">Jahrgang *</label>
                                 <select class="form-control" id="mth_age_grp" name="mth_age_grp"
                                     data-parsley-required="" data-parsley-required-message="Bitte w&auml;hlen Sie einen Jahrgang aus">
                                     <option></option>
-                                    <?php
+                                    <--?php
                                         foreach(MethodSelectionFactory::getAgeGroups() as $cls)
                                         {
                                             // echo '<option>' . $cls['NAME'] . '</option>';
@@ -172,14 +173,30 @@ $res = new AppResult($_GET);
                                     ?>
                                 </select>
                             </div>
+							-->
+							<div class="form-group">
+								<label for="mth_type">Art der Methode *</label>
+								<select class="form-control" id="mth_type" name="mth_type"
+									data-parsley-required="" data-parsley-required-message="Bitte w&auml;hlen Sie die Art der Methode aus">
+									<option></option>
+									<?php
+										foreach(MethodSelectionFactory::getMethodTypes() as $mtype)
+										{
+											echo '<option value="' . $mtype['VAL'] . '">' . $mtype['NAME'] . '</option>';
+										}
+									?>
+								</select>
+							</div> <!-- form-group -->
                         </div> <!-- col -->
                     </div> <!-- row -->
                     
-                    <div class="row form-row"><div class="col col-md-2 col-xl-2"></div>
-                        <div class="col-md-2 col-xl-2">
-                            <label>Unterrichtsphase *</label>
+                    <div class="row form-row"><div class="col col-md-1 col-lg-1 col-xl-1"></div>
+                        <div class="col col-md-2 col-lg-2 col-xl-2">
+                            <!-- <label>Unterrichtsphase *</label> -->
+							<label>Unterrichtselemente *</label>
                             <div class="card">
                                 <div class="card-body">
+									<!--
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" id="mth_phase_E" name="mth_phase[]" value="E"
                                         	data-parsley-required="" data-parsley-required-message="Bitte w&auml;hlen Sie mindestens eine Unterrichtsphase aus"
@@ -197,12 +214,35 @@ $res = new AppResult($_GET);
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" id="mth_phase_A" name="mth_phase[]" value="A">
                                         <label class="form-check-label" for="mth_phase_A">Aktivierung</label>
-                                    </div>    
-                                </div>
+                                    </div>
+									-->
+									<div class="form-check">
+										<input type="checkbox" class="form-check-input" id="mth_elem_E" name="mth_elem[]" value="E"
+											data-parsley-required="" data-parsley-required-message="Bitte w&auml;hlen Sie mindestens ein Unterrichtselement aus"
+											data-parsley-mincheck="1" data-parsley-mincheck-message="Bitte w&auml;hlen Sie mindestens ein Unterrichtselement aus">
+										<label class="form-check-label" for="mth_elem_E">Anfangen</label>
+									</div>
+									<div class="form-check">
+										<input type="checkbox" class="form-check-input" id="mth_elem_I" name="mth_elem[]" value="I">
+										<label class="form-check-label" for="mth_elem_I">Informieren</label>
+									</div>
+									<div class="form-check">
+										<input type="checkbox" class="form-check-input" id="mth_elem_S" name="mth_elem[]" value="S">
+										<label class="form-check-label" for="mth_elem_S">Sicherung - Wissen Abfragen</label>
+									</div>
+									<div class="form-check">
+										<input type="checkbox" class="form-check-input" id="mth_elem_W" name="mth_elem[]" value="W">
+										<label class="form-check-label" for="mth_elem_W">Sicherung - Wissen Anwenden</label>
+									</div>
+									<div class="form-check">
+										<input type="checkbox" class="form-check-input" id="mth_elem_A" name="mth_elem[]" value="A">
+										<label class="form-check-label" for="mth_elem_A">Auflockerung</label>
+									</div>
+                                </div> <!-- card-body -->
                             </div>
                         </div> <!-- col -->
-                        <div class="col-md-2 col-xl-2">
-                            <label>Sozialform *</label>
+                        <div class="col col-md-2 col-lg-2 col-xl-2">
+                            <label>Sozialformen *</label>
                             <div class="card">
                                 <div class="card-body">
                                     <div class="form-check">
@@ -226,7 +266,7 @@ $res = new AppResult($_GET);
                                 </div>
                             </div>
                         </div> <!-- col -->
-                        <div class="col-md-2 col-xl-2">
+                        <div class="col col-md-3 col-lg-3 col-xl-3">
                             <div class="form-group">
                                 <label for="mth_author">AutorIn</label>
                                 <input id="mth_author" type="text" name="mth_author" class="form-control" value="<?php echo $usr_account->usr_fst_name . ' ' . $usr_account->usr_lst_name; ?>" disabled>
@@ -239,16 +279,16 @@ $res = new AppResult($_GET);
                                 </div>
                             </div>
                         </div> <!-- col -->
-                        <div class="col-md-2 col-xl-2">
+                        <div class="col col-md-3 col-lg-3 col-xl-3">
                             <div class="form-group">
                                 <label for="mth_add_author">Zus&auml;tzliche AutorInnen</label>
-                                <textarea id="mth_add_author" class="form-control" name="mth_add_author" form="mth_upload" rows="5" placeholder="Name"
+                                <textarea id="mth_add_author" class="form-control" name="mth_add_author" form="mth_upload" rows="6" placeholder="Name"
                                     data-parsley-maxlength="120" data-parsley-maxlength-message="F&uuml;r die zus&auml;tzlichen AutorInnen sind h&ouml;chstens 120 Zeichen vorgesehen"></textarea>
                             </div>
                         </div>
                     </div> <!-- row -->
-                    <div class="row form-row"><div class="col col-md-2 col-xl-2"></div>
-                        <div class="col-md-8 col-xl-8">
+                    <div class="row form-row"><div class="col col-md-1 col-lg-1 col-xl-1"></div>
+                        <div class="col col-md-10 col-lg-10 col-xl-10">
                             <div class="form-group">
                             	<input type="hidden" name="MAX_FILE_SIZE" value="4194304" />
                                 <div class="input-group">
@@ -269,31 +309,31 @@ $res = new AppResult($_GET);
                         </div>
                     </div> <!-- row -->
                     
-                    <div class="row form-row"><div class="col col-md-2 col-xl-2"></div>
-                        <div class="col-md-4 col-xl-4">
+                    <div class="row form-row"><div class="col col-md-1 col-lg-1 col-xl-1"></div>
+                        <div class="col col-md-5 col-lg-5 col-xl-5">
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="confirm_agb" name="confirm_agb" value="agb_confirm"
                                     data-parsley-required="" data-parsley-required-message="Bitte best&auml;tigen Sie die AGB">
                                 <label class="form-check-label" for="confirm_agb">
-                                    * AGB/Richtlinie f&uuml;r die Bereitstellung von Unterrichtsmaterial gelesen und akzeptiert
+                                    * Ich habe die AGB/Richtlinie f&uuml;r die Bereitstellung von Unterrichtsmethoden gelesen und akzeptiert
                                 </label>
                             </div>
                         </div> <!-- col -->
-                        <div class="col-md-2 col-xl-2">
+                        <div class="col col-md-2 col-lg-2 col-xl-2">
                             <button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#AGBModal">Richtlinie anzeigen</button>
                         </div>
-                        <div class="col-md-2 col-xl-2">
+						<div class="col col-md-1 col-lg-1 col-xl-1">&nbsp;</div>
+                        <div class="col col-md-2 col-lg-2 col-xl-2">
                             <div class="form-group float-right">
                                 <input type="submit" class="btn btn-primary btn-send" value="Neue Methode Speichern">
                             </div>
                         </div> <!-- col -->
                     </div>
                         
-                    <div class="row form-row"><div class="col col-md-2 col-xl-2"></div>
-                        <div class="col-md-4 col-xl-4">
-                            <label class="form-check-label">Mit * gekennzeichnete Felder m&uuml;ssen eingegeben werden.</label>
+                    <div class="row form-row"><div class="col col-md-1 col-lg-1 col-xl-1"></div>
+                        <div class="col col-md-6 col-lg-6 col-xl-6">
+                            <label class="form-check-label">Mit * gekennzeichnete Felder m&uuml;ssen eingegeben werden</label>
                         </div> <!-- col -->
-
                     </div> <!-- row -->
                 </div> <!-- controls -->
             </form>
