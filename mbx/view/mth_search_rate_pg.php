@@ -63,12 +63,6 @@ class MethodSearchRatingView extends MethodSearchViewBase
         $this->addOutput('<th scope="col" class="table-secondary">AutorIn</td></th>');
 
         // Table row 3: field values (subject, subject area, preparation time, execution time, age group, main author)
-//         $this->addOutput('<tr><td><span>' . htmlentities($line->mth_subject_txt) . '</span></td>');
-//         $this->addOutput('<td><span>' . htmlentities($line->mth_subj_area_txt) . '</span></td>');
-//         $this->addOutput('<td><span>' . htmlentities($line->mth_prep_tm_txt) . '</span></td>');
-//         $this->addOutput('<td><span>' . htmlentities($line->mth_exec_tm_txt) . '</span></td>');
-//         $this->addOutput('<td><span>' . htmlentities($line->mth_age_grp_txt) . '</span></td>');
-//         $this->addOutput('<td><span>' . htmlentities($line->mth_authors_arr[0]) . '</span></td></tr>');
         $this->addOutput('<tr><td><span>' . $line->mth_subject_txt . '</span></td>');
         $this->addOutput('<td><span>' . $line->mth_subj_area_txt . '</span></td>');
         $this->addOutput('<td><span>' . $line->mth_prep_tm_txt . '</span></td>');
@@ -80,13 +74,6 @@ class MethodSearchRatingView extends MethodSearchViewBase
         
         // Table row 4: field values (social form, phase) + download button
         $this->addOutput('<tr><td>');
-		/*
-        $phase_txt = array('E' => 'Einstieg', 'I' => 'Information', 'S' => 'Sicherung', 'A' => 'Aktivierung');
-        foreach($line->mth_phase_arr as $phase)
-        {
-            $this->addOutput('<span class="badge badge-secondary badge-pill badge-sm">' . $phase_txt[$phase] . '</span>');
-        }
-		*/
         $elems_txt = array('E' => 'Anfangen', 'I' => 'Informieren', 'S' => 'Sicherung - Wissen Abfragen', 'W' => 'Sicherung - Wissen Anwenden', 'A' => 'Auflockerung');
         foreach($line->mth_elems_arr as $elem)
         {

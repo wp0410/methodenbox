@@ -311,108 +311,108 @@ if (! $res->isOK())
                         </div> <!-- card-body -->
                     </div> <!-- card -->
                 </div> <!-- col-md-4 col-xl-3 -->
-                
             </div> <!-- row row-fluid -->
-        
-            <div class="modal fade" id="ratingModal" role="dialog" aria-labelledby="ratingModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="ratingModalLabel"></h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle" aria-hidden="true"></i></span></button>
-                        </div> <!-- modal-header -->
-                        <div class="modal-body">
-                            <form id="mth_rtg_form">
-                                <div class="form-group" id="mth_id_grp">
-                                    <input class="mthid" type="hidden" id="mth_id" name="mth_id" value="">
-                                </div>
-                                <div class="form-row">
-                                    <div class="col">
-                                        <div class="card">
-                                            <div class="card-header">Bewertung</div>
-                                            <div class="card-body">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" id="mth_rtg_5" name="mth_rate" value="5" onchange="selectRate()">
-                                                    <label class="form-check-label" for="mth_rtg_5">
-                                                        <span class="badge badge-success">
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                        </span>
-                                                    </label>
-                                                </div> <!-- form-check -->
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" id="mth_rtg_4" name="mth_rate" value="4" onchange="selectRate()">
-                                                    <label class="form-check-label" for="mth_rtg_4">
-                                                        <span class="badge badge-success">
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                        </span>
-                                                    </label>
-                                                </div> <!-- form-check -->
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" id="mth_rtg_3" name="mth_rate" value="3" onchange="selectRate()">
-                                                    <label class="form-check-label" for="mth_rtg_3">
-                                                        <span class="badge badge-warning">
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                        </span>
-                                                    </label>
-                                                </div> <!-- form-check -->
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" id="mth_rtg_2" name="mth_rate" value="2" onchange="selectRate()">
-                                                    <label class="form-check-label" for="mth_rtg_2">
-                                                        <span class="badge badge-danger">
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                        </span>
-                                                    </label>
-                                                </div> <!-- form-check -->
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" id="mth_rtg_1" name="mth_rate" value="1" onchange="selectRate()">
-                                                    <label class="form-check-label" for="mth_rtg_1">
-                                                        <span class="badge badge-danger">
-                                                            <i class="fa fa-star"></i>
-                                                        </span>
-                                                    </label>
-                                                </div> <!-- form-check -->
-                                            </div> <!-- card-body -->
-                                        </div> <!-- card -->
-                                    </div> <!-- col -->
-                                </div> <!-- row -->
-                                <div class="form-row"><div class="col"><p></p></div></div>
-                                <div class="form-row">
-                                    <div class="col">
-                                        <div class="card">
-                                            <div class="card-header">Kommentar</div>
-                                            <div class="card-body">
-                                                <div class="form-group">
-                                                    <textarea id="rtg_comment" class="form-control" name="rtg_comment" form="mth_rtg_form" rows="5" placeholder="Kommentar"></textarea>
-                                                </div>    
-                                            </div>
-                                        </div> <!-- card -->
-                                    </div> <!-- col -->
-                                </div> <!-- row -->
-								<div class="form-row">
-									<div class="col">
-										<div id="rtg_feedback"></div>
-									</div>
-								</div>
-                            </form>
-                        </div> <!-- modal-body -->
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Schlie&szlig;en</button>
-                            <div id="rtg_hide"><button type="button" id="rtg_save" name="rtg_save" class="btn btn-primary btn-sm" onclick="saveRating()" disabled>Bewertung abschicken</button></div>
-                        </div>
-                    </div> <!-- modal-content -->
-                </div> <!-- modal-dialog -->
-            </div> <!-- modal -->
         </div> <!-- container-fluid -->
+
+		<div class="modal fade" id="ratingModal" role="dialog" aria-labelledby="ratingModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="ratingModalLabel"></h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle" aria-hidden="true"></i></span></button>
+					</div> <!-- modal-header -->
+					
+					<div class="modal-body" id="rtg_modal_bd">
+						<form id="mth_rtg_form">
+							<!--
+							<d iv class="form-group" id="mth_id_grp">
+								<input class="mthid" type="hidden" id="mth_id" name="mth_id" value="">
+							<d iv>
+							-->
+							<div class="form-row">
+								<div class="col">
+									<div class="card">
+										<div class="card-header">Bewertung</div>
+										<div class="card-body">
+											<div class="form-check">
+												<input class="form-check-input" type="radio" id="mth_rtg_5" name="mth_rate" value="5">
+												<label class="form-check-label" for="mth_rtg_5">
+													<span class="badge badge-success">
+														<i class="fa fa-star"></i>
+														<i class="fa fa-star"></i>
+														<i class="fa fa-star"></i>
+														<i class="fa fa-star"></i>
+														<i class="fa fa-star"></i>
+													</span>
+												</label>
+											</div> <!-- form-check -->
+											<div class="form-check">
+												<input class="form-check-input" type="radio" id="mth_rtg_4" name="mth_rate" value="4">
+												<label class="form-check-label" for="mth_rtg_4">
+													<span class="badge badge-success">
+														<i class="fa fa-star"></i>
+														<i class="fa fa-star"></i>
+														<i class="fa fa-star"></i>
+														<i class="fa fa-star"></i>
+													</span>
+												</label>
+											</div> <!-- form-check -->
+											<div class="form-check">
+												<input class="form-check-input" type="radio" id="mth_rtg_3" name="mth_rate" value="3" checked>
+												<label class="form-check-label" for="mth_rtg_3">
+													<span class="badge badge-warning">
+														<i class="fa fa-star"></i>
+														<i class="fa fa-star"></i>
+														<i class="fa fa-star"></i>
+													</span>
+												</label>
+											</div> <!-- form-check -->
+											<div class="form-check">
+												<input class="form-check-input" type="radio" id="mth_rtg_2" name="mth_rate" value="2">
+												<label class="form-check-label" for="mth_rtg_2">
+													<span class="badge badge-danger">
+														<i class="fa fa-star"></i>
+														<i class="fa fa-star"></i>
+													</span>
+												</label>
+											</div> <!-- form-check -->
+											<div class="form-check">
+												<input class="form-check-input" type="radio" id="mth_rtg_1" name="mth_rate" value="1">
+												<label class="form-check-label" for="mth_rtg_1">
+													<span class="badge badge-danger">
+														<i class="fa fa-star"></i>
+													</span>
+												</label>
+											</div> <!-- form-check -->
+										</div> <!-- card-body -->
+									</div> <!-- card -->
+								</div> <!-- col -->
+							</div> <!-- row -->
+							<div class="form-row"><div class="col"><p></p></div></div>
+							<div class="form-row">
+								<div class="col">
+									<div class="card">
+										<div class="card-header">Kommentar</div>
+										<div class="card-body">
+											<div class="form-group">
+												<textarea id="rtg_comment" class="form-control" name="rtg_comment" form="mth_rtg_form" rows="5" placeholder="Kommentar"></textarea>
+											</div>    
+										</div>
+									</div> <!-- card -->
+								</div> <!-- col -->
+							</div> <!-- row -->
+							<div class="form-row">
+								<div class="col">
+									<div id="rtg_feedback"></div>
+								</div>
+							</div>
+						</form>
+					</div> <!-- modal-body -->
+					<div class="modal-footer" id="rtg_modal_ft">
+					</div>
+				</div> <!-- modal-content -->
+			</div> <!-- modal-dialog -->
+		</div> <!-- modal -->
         
         <?php FormElements::scriptRefs(); ?>
         <script type="text/javascript">
@@ -502,73 +502,42 @@ if (! $res->isOK())
         </script>
         <script type="text/javascript">
             /* global $ */
-            $('#mth_result').click(function (e) {
-                var elem = e.target;
-                var trgElem = null;
-                var imgName = null;
-                if (elem.id.startsWith("res_img")) {
-                    elem.parentElement.click();
-                    return;
-                }
-                if (elem.id.startsWith("res_tgl")) {
-                    trgElem = elem;
-                    var chld = elem.children;
-                    for(var i = 0; i < chld.length; i++) {
-                        if (chld[i].id.startsWith("res_img")) {
-                            imgName = chld[i].id;
-                        }
-                    }
-                }
-                if (elem.id.startsWith("res_btn")) {
-                    chld = elem.children;
-                    for(i = 0; i < chld.length; i++) {
-                        if (chld[i].id.startsWith("res_tgl")) {
-                            trgElem = chld[i];
-                            var subChld = chld[i].children;
-                            if (subChld[i].id.startsWith("res_img")) {
-                                imgName = subChld[i].id;
-                            }
-                        }
-                    }
-                }
-                // alert($(trgElem).html());
-                if ($(trgElem).html().indexOf("fa-caret-right") > 0) {
-                    $(trgElem).html('<i id="' + imgName + '" class="fa fa-caret-down"></i>');
-                }
-                else {
-                    $(trgElem).html('<i id="' + imgName + '" class="fa fa-caret-right"></i>');
-                }
-                // alert($(trgElem).html());
-            });
-        </script>
-        <script type="text/javascript">
-            /* global $ */
             $('#ratingModal').on('show.bs.modal', function (event) {
                 var button = $(event.relatedTarget);
                 var mth_id = button.data('mthid'); 
                 var mth_name = button.data('mthname');
                 var modal = $(this);
-                modal.find('.modal-title').text('Bewerten: ' + mth_name);
-                modal.find('.mthid').val(mth_id);
-                
-                $('#mth_rtg_1').prop("checked", false);
-                $('#mth_rtg_2').prop("checked", false);
-                $('#mth_rtg_3').prop("checked", false);
-                $('#mth_rtg_4').prop("checked", false);
-                $('#mth_rtg_5').prop("checked", false);
-                $('#rtg_comment').val("");
-            }); 
+                modal.find('.modal-title').text('Methode Bewerten: "' + mth_name + '"');
+
+				$.post(
+					"/mbx/ctrl/mth_rating.php",
+					{
+						rtg_action: 'RTG_MODAL_BDY',
+						mth_id: mth_id
+					},
+					function(data, status) {
+						$('#rtg_modal_bd').html(data);
+					}
+				);
+				
+				$.post(
+					"/mbx/ctrl/mth_rating.php",
+					{
+						rtg_action: 'RTG_MODAL_FOOTER',
+						mth_id: mth_id
+					},
+					function(data, status) {
+						$('#rtg_modal_ft').html(data);
+					}
+				);
+				
+			});
 			
 			$('#ratingModal').on('hidden.bs.modal', function(event) {
-				$('#rtg_feedback').html('');
-				
-				var x = document.getElementById("rtg_hide");
-				x.style.display = "initial";
-
 				load_contents();
 			});
             
-            function saveRating() {
+            function saveRating(mth_id, usr_id) {
                 var mth_rtg_val = null;
                 var radios = document.getElementsByName('mth_rate');
                 for (var i = 0, length = radios.length; i < length; i++) {
@@ -580,24 +549,18 @@ if (! $res->isOK())
                 $.post(
                     "/mbx/ctrl/mth_rating.php",
                     {
-                        mth_id: $('#mth_id').val(),
+						rtg_action: 'RTG_SUBMIT',
+                        mth_id: mth_id,
+						usr_id: usr_id,
                         mth_rtg_val: mth_rtg_val,
                         mth_rtg_comm: $('#rtg_comment').val()
                     },
                     function(data, status) {
-						// load_contents();
-						$('#rtg_feedback').html('<div class="alert alert-success" role="alert" ><h4>Vielen Dank f&uuml;r die Bewertung</h4></div>');
-						// $('#rtg_save').prop("disabled", true);
-						
-						var x = document.getElementById("rtg_hide");
-						x.style.display = "none";
+						$('#rtg_feedback').html(data);
+						$('#rtg_modal_ft').html('<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Schlie&szlig;en</button>');
                     }
                 );
             };
-            
-            function selectRate() {
-                $('#rtg_save').prop("disabled", false);
-            }
         </script>
         <script type="text/javascript">
             /* global $ */

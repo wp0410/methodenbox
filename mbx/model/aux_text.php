@@ -16,6 +16,10 @@ class GlobalResultText
     public static $resultText = array (
             // Error Messages
             'E_100' => 'E_100 Interner Verarbeitungsfehler. Bitte kontaktieren Sie einen Administrator',
+			
+			// Section: System functions
+			'E_201' => 'E_201 Fehler beim Zugriff auf eine Datei. Die Datei existiert nicht. Bitte kontaktieren Sie einen Administrator.',
+			'E_202' => 'E_202 Fehler beim Zugriff auf eine Datei. Die Datei kann nicht gelesen werden. Bitte kontaktieren Sie einen Administrator.',
             
             // Section: User Account
             'E_400' => 'E_400 Anmeldung fehlgeschlagen',
@@ -43,6 +47,7 @@ class GlobalResultText
             'E_602' => 'E_602 Die Unterrichtsmethode wurde nicht gefunden. Bitte kontaktieren Sie einen Administrator',
             'E_603' => 'E_603 Fehler beim Laden der Unterrichtsmethode. Bitte kontaktieren Sie einen Administrator',
             'E_604' => 'E_604 Fehler beim L&ouml;schen der Unterrichtsmethode. Bitte kontaktieren Sie einen Administrator',
+			'E_605' => 'E_605 Fehler bei der Freigabe einer Unterrichtsmethode. Bitte kontaktieren Sie einen Administrator',
             'E_651' => 'E_651 Der Dateityp ist ung&uuml;ltig oder nicht zul&auml;ssig. Es d&uuml;rfen nur komprimierte Archivdateien hochgeladen werden.',
             'E_652' => 'E_652 Die Datei konnte leider nicht erfolgreich hochgeladen werden. Bitte kontaktieren Sie einen Administrator',
             'E_653' => 'E_653 Fehler beim Speichern der hochgeladenen Datei im File Store. Bitte konnte Sie einen Administrator',
@@ -51,7 +56,7 @@ class GlobalResultText
             'E_671' => 'E_671 Fehler beim Speichern der Bewertung. Bitte kontaktieren Sie einen Administrator',
             'E_681' => 'E_681 Fehler beim Speichern des Downloads. Bitte kontaktieren Sie einen Administrator',
         
-            // SEction: Contact Request
+            // Section: Contact Request
             'E_701' => 'E_701 Fehler beim Zugriff auf die Datenbank. Bitte kontaktieren Sie einen Administrator',
             'E_702' => 'E_702 Fehler: die Kontaktanfrage kann in der Datenbank nicht gefunden werden. Bitte kontaktieren Sie einen Administrator',
 			'E_703' => 'E_703 Fehler: die Antwort kann nicht gespeichert werden. Bitte kontaktieren Sie einen Administrator',

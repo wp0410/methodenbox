@@ -35,7 +35,7 @@ class GlobalParameter
      * @var array List of global application parameters.
      */
     public static $applicationConfig = array (
-        'appVersion'             => 'v1.2.48b (2019-08-05)',
+        'appVersion'             => 'v1.2.49b (2019-08-12)',
         'applicationTitle'       => 'Methodenbox',
 		'applicationDefaultLink' => '../view/mth_search_pg.php',
 		'applicationHelpLink'    => '../view/aux_help.php',
@@ -71,6 +71,8 @@ class GlobalParameter
         'formSkin'               => 'lumen',
         'formAvailableSkins'     => array('lumen', 'flatly', 'materia', 'pulse', 'sandstone', 'simplex', 'sketchy', 'slate', 'solar', 'superhero', 'united', 'yeti'),
         
+		'staticBlockDir'         => '../static',
+		
         'void'                   => ''
     );
         

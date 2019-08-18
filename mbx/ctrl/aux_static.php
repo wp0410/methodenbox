@@ -12,19 +12,29 @@
 //----------------------------------------------------------------------------------------
 include_once '../model/aux_static.php';
 
-if (empty($_POST) || empty($_POST['hlp_topic']))
+if (empty($_POST) || empty($_POST['static_block_id']))
 {
-	$help_contents = '<div class="alert alert-primary mt-4 pl-5 pr-5"><h3>Das Hilfethema konnte nicht gefunden werden</h3></div>';
+	$result_text = '<div class="alert alert-danger" role="alert"><h5>Fehler: ein notwendiger Parameter fehlt. Bitte kontaktieren Sie einen Administrator.</h5></div>';
+	
+	$line_num = 0;
+	$result_text = $result_text . '<div class="alert alert-danger" role="alert"><h5>';
+	foreach($_POST as $par_name => $par_value)
+	{
+		if ($line_num++ == 0)
+		{
+			$result_text = $result_text . '"' . $par_name . '": "' . $par_value . '"';			
+		}
+		else
+		{
+			$result_text = $result_text . '<br><hr>"' . $par_name . '": "' . $par_value . '"';			
+		}
+	}
+	$result_text = $result_text . '</h5></div>';
 }
 else
 {
-	$hlp_block = new StaticHtmlBlock();
-	$help_contents = $hlp_block->retrieveBlockById('aux_help_' . $_POST['hlp_topic']);
-	if (! $hlp_block->app_result->isOK())
-	{
-		$help_contents = '<div class="alert alert-danger mt-5" role="alert"><h5>' . $hlp_block->app_result->text . '</h5></div>';
-	}
+	$result_text = StaticHtmlBlock::retrieveBlockById($_POST['static_block_id']);
 }
 
-echo $help_contents;
+echo $result_text;
 ?>

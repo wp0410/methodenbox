@@ -1,0 +1,79 @@
+<form id="mth_rtg_form">
+	<div class="form-row">
+		<div class="col">
+			<div class="card">
+				<div class="card-header">Bewertung</div>
+				<div class="card-body">
+					<div class="form-check">
+						<input class="form-check-input" type="radio" id="mth_rtg_5" name="mth_rate" value="5">
+						<label class="form-check-label" for="mth_rtg_5">
+							<span class="badge badge-success">
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+							</span>
+						</label>
+					</div> <!-- form-check -->
+					<div class="form-check">
+						<input class="form-check-input" type="radio" id="mth_rtg_4" name="mth_rate" value="4">
+						<label class="form-check-label" for="mth_rtg_4">
+							<span class="badge badge-success">
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+							</span>
+						</label>
+					</div> <!-- form-check -->
+					<div class="form-check">
+						<input class="form-check-input" type="radio" id="mth_rtg_3" name="mth_rate" value="3" checked>
+						<label class="form-check-label" for="mth_rtg_3">
+							<span class="badge badge-warning">
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+							</span>
+						</label>
+					</div> <!-- form-check -->
+					<div class="form-check">
+						<input class="form-check-input" type="radio" id="mth_rtg_2" name="mth_rate" value="2">
+						<label class="form-check-label" for="mth_rtg_2">
+							<span class="badge badge-danger">
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+							</span>
+						</label>
+					</div> <!-- form-check -->
+					<div class="form-check">
+						<input class="form-check-input" type="radio" id="mth_rtg_1" name="mth_rate" value="1">
+						<label class="form-check-label" for="mth_rtg_1">
+							<span class="badge badge-danger">
+								<i class="fa fa-star"></i>
+							</span>
+						</label>
+					</div> <!-- form-check -->
+				</div> <!-- card-body -->
+			</div> <!-- card -->
+		</div> <!-- col -->
+	</div> <!-- row -->
+	<div class="form-row"><div class="col"><p></p></div></div>
+	<div class="form-row">
+		<div class="col">
+			<div class="card">
+				<div class="card-header">Kommentar</div>
+				<div class="card-body">
+					<div class="form-group">
+						<textarea id="rtg_comment" class="form-control" name="rtg_comment" form="mth_rtg_form" rows="5" placeholder="Kommentar"></textarea>
+					</div>    
+				</div>
+			</div> <!-- card -->
+		</div> <!-- col -->
+	</div> <!-- row -->
+	<div class="form-row">
+		<div class="col">
+			<div id="rtg_feedback"></div>
+		</div>
+	</div>
+</form>
